@@ -1,0 +1,589 @@
+{
+ "rti|How do I file an RTI application?": {
+  "topic": "Information Request Procedure and Fees",
+  "queries": [
+   "file information request to public information officer with prescribed fee",
+   "procedure for submitting information request and paying information request fee",
+   "time limit for response to information request and appeal process"
+  ],
+  "keywords": [
+   "information request",
+   "public information officer",
+   "information request fee",
+   "time limit",
+   "first appeal",
+   "second appeal"
+  ]
+ },
+ "rti|Do I need to give a reason for asking for information?": {
+  "topic": "Requirement of Reason for Information Request",
+  "queries": [
+   "Is a reason required for filing a request for information under the Act?",
+   "Do applicants need to state a purpose when submitting a request for records?",
+   "Is a justification mandatory for a request for information under the statutory provisions?"
+  ],
+  "keywords": [
+   "reason",
+   "purpose",
+   "justification",
+   "request",
+   "information",
+   "submission",
+   "mandatory",
+   "applicant"
+  ]
+ },
+ "rti|How much is the RTI application fee in Andhra Pradesh?": {
+  "topic": "Application Fee for Information Request under the Act",
+  "queries": [
+   "Fee payable for filing an information request under the Act in Andhra Pradesh",
+   "Charges applicable for submitting a request for public information in Andhra Pradesh",
+   "Cost of filing a request for information under the Act in Andhra Pradesh"
+  ],
+  "keywords": [
+   "fee",
+   "application",
+   "information request",
+   "public information",
+   "Andhra Pradesh"
+  ]
+ },
+ "rti|How long does the department have to reply to my RTI request?": {
+  "topic": "Time limit for response to information request",
+  "queries": [
+   "Information Request Response Time Limit",
+   "Time Frame for Information Disclosure",
+   "Period for Reply to Information Request"
+  ],
+  "keywords": [
+   "time limit",
+   "reply",
+   "information request",
+   "department",
+   "within"
+  ]
+ },
+ "rti|How fast must they reply if the information concerns someone's life or liberty?": {
+  "topic": "Time limit for urgent information concerning life or liberty",
+  "queries": [
+   "time limit for urgent information concerning life or liberty",
+   "time limit for urgent information under Section 6(1)(b)",
+   "time limit for urgent information concerning life liberty"
+  ],
+  "keywords": [
+   "time limit",
+   "urgent information",
+   "life or liberty",
+   "Section 6(1)(b)",
+   "48 hours"
+  ]
+ },
+ "rti|What happens if they do not reply within the time limit?": {
+  "topic": "Failure to comply with time limit for information request",
+  "queries": [
+   "failure to comply with time limit for information request",
+   "non‑response within prescribed time limit for information request",
+   "penalty for not replying within time limit for information request"
+  ],
+  "keywords": [
+   "failure to comply",
+   "time limit",
+   "information request",
+   "non‑response",
+   "penalty"
+  ]
+ },
+ "rti|Do I still have to pay if they miss the deadline?": {
+  "topic": "Penalty for non‑payment of RTI fee after deadline",
+  "queries": [
+   "Penalty for failure to pay RTI fee within prescribed time limit",
+   "Consequences of non‑payment of RTI fee after deadline",
+   "Fine for late payment of RTI fee as per statutory provisions"
+  ],
+  "keywords": [
+   "penalty",
+   "non‑payment",
+   "RTI fee",
+   "deadline",
+   "fine",
+   "late payment"
+  ]
+ },
+ "rti|How do I appeal if I am not satisfied with the reply?": {
+  "topic": "First and Second Appeal Procedure",
+  "queries": [
+   "procedure for filing first appeal against information officer decision",
+   "process for second appeal under information law after first appeal denial",
+   "steps to appeal to State Information Commission following refusal"
+  ],
+  "keywords": [
+   "first appeal",
+   "second appeal",
+   "information officer",
+   "State Information Commission",
+   "appeal procedure",
+   "refusal",
+   "information law"
+  ]
+ },
+ "rti|Where do I file a second appeal?": {
+  "topic": "Second Appeal under the Right to Information Act",
+  "queries": [
+   "file second appeal under the Right to Information Act",
+   "second appeal to the State Information Commission",
+   "procedure for second appeal in the Right to Information Act"
+  ],
+  "keywords": [
+   "second appeal",
+   "State Information Commission",
+   "file",
+   "procedure",
+   "Right to Information Act"
+  ]
+ },
+ "rti|What information can the government refuse to give?": {
+  "topic": "Exemptions under the Right to Information Act",
+  "queries": [
+   "Section 8 exemptions under the Right to Information Act 2005",
+   "Information exempted from disclosure under the Right to Information Act 2005",
+   "Grounds for refusal of information under the Right to Information Act 2005"
+  ],
+  "keywords": [
+   "Section 8",
+   "exemptions",
+   "confidential",
+   "national security",
+   "public interest",
+   "personal data",
+   "commercial information",
+   "sensitive information",
+   "public office holder"
+  ]
+ },
+ "rti|What penalty can be imposed on an officer who delays information?": {
+  "topic": "Penalty for delay in furnishing information",
+  "queries": [
+   "Penalty for delay in furnishing information under Section 14",
+   "Sanctions for delay in furnishing information by public servant",
+   "Disciplinary action for delay in furnishing information to applicant"
+  ],
+  "keywords": [
+   "penalty",
+   "delay",
+   "furnishing information",
+   "public servant",
+   "disciplinary action",
+   "Section 14",
+   "sanctions",
+   "applicant"
+  ]
+ },
+ "rti|Are people below the poverty line exempt from the RTI fee?": {
+  "topic": "Exemption of Persons Below Poverty Line from Information Fee",
+  "queries": [
+   "Poverty line persons fee exemption under information law",
+   "Fee exemption for persons below poverty line in information request",
+   "Information fee exemption for PPL under statutory provisions"
+  ],
+  "keywords": [
+   "poverty line",
+   "fee exemption",
+   "persons below poverty line",
+   "information fee",
+   "exempt"
+  ]
+ },
+ "rti|How much do photocopies cost under RTI?": {
+  "topic": "Photocopy Charges under Information Act",
+  "queries": [
+   "photocopy charges under Information Act 2005",
+   "cost of photocopies under Information Act 2005",
+   "photocopy fees under Information Act 2005"
+  ],
+  "keywords": [
+   "photocopy charges",
+   "photocopy fees",
+   "Information Act 2005",
+   "cost of photocopies",
+   "photocopy cost"
+  ]
+ },
+ "rti|Can I pay the RTI fee with court fee stamps?": {
+  "topic": "Payment of RTI fees using court fee stamps",
+  "queries": [
+   "Can court fee stamps be used for payment of RTI fee under Section 14?",
+   "Is payment of RTI fee permissible with court fee stamps as per guidelines?",
+   "Use of court fee stamps for RTI fee payment – permissible or prohibited?"
+  ],
+  "keywords": [
+   "court fee stamps",
+   "payment of fee",
+   "RTI fee",
+   "payment mode",
+   "stamp duty"
+  ]
+ },
+ "rti|Who is the State Chief Information Commissioner of Andhra Pradesh?": {
+  "topic": "State Chief Information Commissioner",
+  "queries": [
+   "State Information Commission Andhra Pradesh Chief Information Commissioner appointed",
+   "Chief Information Commissioner Andhra Pradesh term of office",
+   "State Chief Information Commissioner Andhra Pradesh name and appointment"
+  ],
+  "keywords": [
+   "Chief Information Commissioner",
+   "State Information Commission",
+   "appointed",
+   "term",
+   "office"
+  ]
+ },
+ "rti|Can I get records that are more than twenty years old?": {
+  "topic": "Exemption for records older than twenty years",
+  "queries": [
+   "Section 4(1)(c) exemption for records older than twenty years",
+   "Information not required under Section 4(1)(c) for records exceeding twenty years",
+   "Exemption for records older than twenty years under Section 4(1)(c)"
+  ],
+  "keywords": [
+   "Section 4(1)(c)",
+   "exemption",
+   "records older than twenty years",
+   "not required",
+   "information"
+  ]
+ },
+ "rti|Does the RTI Act override the Official Secrets Act?": {
+  "topic": "Supersession of Official Secrets Act by Information Act, 2005",
+  "queries": [
+   "Does Information Act, 2005 supersede Official Secrets Act provisions?",
+   "Interaction between Information Act, 2005 and Official Secrets Act",
+   "Does Information Act, 2005 override Official Secrets Act in public disclosure?"
+  ],
+  "keywords": [
+   "supersede",
+   "Official Secrets Act",
+   "Information Act, 2005",
+   "public disclosure",
+   "confidentiality",
+   "legal hierarchy",
+   "statutory authority",
+   "information disclosure",
+   "public interest"
+  ]
+ },
+ "rti|What if I send my application to the wrong department?": {
+  "topic": "Application Sent to Wrong Department",
+  "queries": [
+   "Procedure for application submitted to incorrect department under information request act",
+   "Guidelines for correcting misdirected application to wrong office",
+   "Steps to rectify application sent to wrong department in public information request"
+  ],
+  "keywords": [
+   "misdirected application",
+   "wrong department",
+   "rectify",
+   "procedure",
+   "submission"
+  ]
+ },
+ "rti|Is there a fee to inspect government records?": {
+  "topic": "Fees for accessing public information",
+  "queries": [
+   "public information officer fee for inspection of records",
+   "fee payable for request of public information under information law",
+   "cost of accessing government records as per public information provisions"
+  ],
+  "keywords": [
+   "fee",
+   "public information officer",
+   "inspection",
+   "records",
+   "cost",
+   "payment"
+  ]
+ },
+ "rti|What must a department publish on its own without being asked?": {
+  "topic": "Mandatory Publication by Public Authority",
+  "queries": [
+   "public authority shall publish information without request under information law",
+   "mandatory disclosure by department without prior application as per statutory provision",
+   "information to be released by public office without solicitation under act"
+  ],
+  "keywords": [
+   "mandatory publication",
+   "without request",
+   "public authority",
+   "information disclosure",
+   "statutory provision"
+  ]
+ },
+ "rti|i want some info from a govt office, whats the procedure to ask for it?": {
+  "topic": "Procedure for Requesting Information from Public Authority",
+  "queries": [
+   "How to file a request for information under the Information Act to a public office",
+   "Steps to submit a written application for records to a government department",
+   "Process for seeking disclosure of documents from a public authority"
+  ],
+  "keywords": [
+   "request for information",
+   "public authority",
+   "written application",
+   "submission",
+   "records"
+  ]
+ },
+ "rti|how much money do i need to pay for an rti in AP": {
+  "topic": "Fees for Information Request under the Act",
+  "queries": [
+   "Fee schedule for filing a request for information under the Act",
+   "Charges applicable to a citizen’s information request under the Act",
+   "Payment requirements for a request for information under the Act"
+  ],
+  "keywords": [
+   "fee",
+   "payment",
+   "information request",
+   "charge",
+   "application"
+  ]
+ },
+ "rti|govt office is not answering my rti for 2 months what do i do": {
+  "topic": "First Appeal under Information Request Act",
+  "queries": [
+   "file a first appeal against non‑response by Information Officer within prescribed time",
+   "procedure for filing first appeal when government office fails to provide information",
+   "rights of applicant to lodge first appeal after 60 days of non‑response"
+  ],
+  "keywords": [
+   "first appeal",
+   "Information Officer",
+   "non‑response",
+   "60 days",
+   "applicant"
+  ]
+ },
+ "rti|is rti free for BPL families": {
+  "topic": "Fee Exemption for BPL Families under RTI Act",
+  "queries": [
+   "fee exemption for BPL families under RTI Act",
+   "RTI fee exemption BPL families",
+   "BPL families RTI fee waiver"
+  ],
+  "keywords": [
+   "fee exemption",
+   "BPL families",
+   "RTI",
+   "fee waiver",
+   "public information officer"
+  ]
+ },
+ "rti|can the officer just say no to my rti?": {
+  "topic": "Refusal of Information by Public Information Officer",
+  "queries": [
+   "Public Information Officer refusal of information under information law",
+   "procedure for appeal against refusal by Public Information Officer",
+   "penalties for unlawful refusal of information by Public Information Officer"
+  ],
+  "keywords": [
+   "Public Information Officer",
+   "refusal",
+   "appeal",
+   "penalty",
+   "information request",
+   "first appeal",
+   "second appeal"
+  ]
+ },
+ "rti|the officer keeps delaying my rti, will he get punished?": {
+  "topic": "Punishment for non‑compliance by Public Information Officer",
+  "queries": [
+   "Public Information Officer penalty for failure to provide information within prescribed time",
+   "Sanctions imposed on officer for delay in furnishing records under information law",
+   "Disciplinary action against officer refusing to comply with information request"
+  ],
+  "keywords": [
+   "penalty",
+   "non‑compliance",
+   "Public Information Officer",
+   "delay",
+   "disciplinary action",
+   "sanctions",
+   "failure to provide information",
+   "time limit",
+   "information request"
+  ]
+ },
+ "rti|do i have to explain why i want the information": {
+  "topic": "Requirement to state purpose of information request",
+  "queries": [
+   "Applicant must specify purpose of information under Section 6(1)(a)",
+   "Explanation of purpose required in application for information under Section 6(1)(a)",
+   "Purpose of information must be stated in application as per Section 6(1)(a)"
+  ],
+  "keywords": [
+   "purpose of information",
+   "Section 6(1)(a)",
+   "application",
+   "state",
+   "explanation"
+  ]
+ },
+ "rti|whats the deadline for them to give me the info": {
+  "topic": "Time limit for furnishing information under the Act",
+  "queries": [
+   "time limit for furnishing information under the Act",
+   "period within which information must be provided under the Act",
+   "deadline for furnishing information as per the Act"
+  ],
+  "keywords": [
+   "time limit",
+   "furnishing information",
+   "deadline",
+   "within 30 days",
+   "information must be provided"
+  ]
+ },
+ "rti|my first appeal also failed, what next": {
+  "topic": "Second Appeal under the Right to Information Act",
+  "queries": [
+   "file second appeal under the Right to Information Act 2005",
+   "submit second appeal to State Information Commission under RTI Act",
+   "procedure for second appeal in the State Information Commission"
+  ],
+  "keywords": [
+   "second appeal",
+   "State Information Commission",
+   "Right to Information Act 2005",
+   "file",
+   "procedure",
+   "appeal"
+  ]
+ },
+ "rti|cost of getting the information on a CD": {
+  "topic": "Fee for CD under RTI",
+  "queries": [
+   "fee for CD under RTI",
+   "cost of CD for information request",
+   "charge for CD in RTI"
+  ],
+  "keywords": [
+   "CD",
+   "fee",
+   "cost",
+   "information",
+   "request"
+  ]
+ },
+ "rti|who heads the AP information commission": {
+  "topic": "Chairperson of Andhra Pradesh State Information Commission",
+  "queries": [
+   "\"Chairperson\" \"Andhra Pradesh State Information Commission\"",
+   "\"Head\" \"State Information Commission\" \"Andhra Pradesh\"",
+   "\"Chief\" \"Information Commission\" \"AP\""
+  ],
+  "keywords": [
+   "Chairperson",
+   "State Information Commission",
+   "Andhra Pradesh",
+   "Head",
+   "Chief"
+  ]
+ },
+ "rti|its a life and death matter, how quickly will i get the info": {
+  "topic": "Time limit for furnishing information under the Act",
+  "queries": [
+   "time limit for furnishing information under the Act",
+   "information officer must furnish information within prescribed time limit",
+   "time limit for responding to information request under the Act"
+  ],
+  "keywords": [
+   "time limit",
+   "furnishing of information",
+   "information officer",
+   "within 30 days",
+   "within 48 hours"
+  ]
+ },
+ "rti|can i ask the govt for information by email or does it have to be on paper": {
+  "topic": "Mode of Request for Information",
+  "queries": [
+   "Can information be requested via electronic mail under the Act?",
+   "Is a written application mandatory for information requests?",
+   "Does the Act permit electronic submissions for information requests?"
+  ],
+  "keywords": [
+   "electronic mail",
+   "written application",
+   "information request",
+   "submission mode",
+   "electronic submission"
+  ]
+ },
+ "rti|what id or personal info do i have to give when i file an rti": {
+  "topic": "Information required from applicant under Section 6(1)",
+  "queries": [
+   "Section 6(1) applicant details required for information request",
+   "Information to be furnished by applicant under Section 6(1) of the Act",
+   "Applicant particulars mandated by Section 6(1) for filing a request"
+  ],
+  "keywords": [
+   "Section 6(1)",
+   "applicant",
+   "personal details",
+   "name",
+   "address",
+   "contact number",
+   "email address",
+   "identity proof",
+   "date of birth"
+  ]
+ },
+ "rti|i sent my rti to the wrong office, will they forward it": {
+  "topic": "Forwarding of RTI application to correct office",
+  "queries": [
+   "procedure for forwarding RTI application to correct office",
+   "rules on forwarding RTI request to appropriate department",
+   "guidelines for redirecting RTI application to correct authority"
+  ],
+  "keywords": [
+   "forwarding",
+   "correct office",
+   "RTI application",
+   "redirect",
+   "procedure"
+  ]
+ },
+ "rti|how many days do i get to file the first appeal": {
+  "topic": "Time limit for filing first appeal under the Act",
+  "queries": [
+   "\"time limit\" \"first appeal\" \"information officer\" \"information commission\"",
+   "\"first appeal\" \"within\" \"days\" \"information commission\"",
+   "\"first appeal\" \"time frame\" \"information officer\" \"information commission\""
+  ],
+  "keywords": [
+   "first appeal",
+   "time limit",
+   "days",
+   "information officer",
+   "information commission"
+  ]
+ },
+ "rti|can i get copies of govt files on a pen drive or disc and whats the charge": {
+  "topic": "Request for copies of government records on portable media and applicable fees",
+  "queries": [
+   "request for copies of government records on portable media and applicable fees",
+   "obtain copies of government records on pen drive or disc and charge",
+   "request for copies of government records on portable media and fee schedule"
+  ],
+  "keywords": [
+   "copies of government records",
+   "portable media",
+   "pen drive",
+   "disc",
+   "charge",
+   "fee",
+   "request"
+  ]
+ }
+}

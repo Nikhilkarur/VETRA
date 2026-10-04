@@ -1,5 +1,5 @@
 {
-  "about": "Frozen agriculture question set, same method as demo_questions.json. Written and verified against the extracted text of ingest/incoming/agriculture BEFORE any agriculture retrieval code existed (2026-10-04). A question counts as retrieved when every probe appears in the top-k chunks (whitespace removed, case-insensitive). 'dev' is fairly formal and is used while iterating. 'heldout' is casual farmer phrasing and is run only at the end; it must not drive any decision. 'dev_casual' (added the same day, after dev had been run, before heldout was ever run) is casual phrasing on topics and wordings unlike heldout, so HyDE -- whose value is on casual wording -- can be tuned without touching heldout. 'heldout' was run once on 2026-10-04 with the round-1 pipeline (69%; 50% without HyDE) and its misses were read, so it is no longer clean. 'heldout2' was written after that and BEFORE the round-2 changes (abbreviation glossary, HyDE v3); it is the clean test for them.",
+  "about": "Frozen agriculture question set, same method as demo_questions.json. Written and verified against the extracted text of ingest/incoming/agriculture BEFORE any agriculture retrieval code existed (2026-10-04). A question counts as retrieved when every probe appears in the top-k chunks (whitespace removed, case-insensitive). 'dev' is fairly formal and is used while iterating. 'heldout' is casual farmer phrasing and is run only at the end; it must not drive any decision. 'dev_casual' (added the same day, after dev had been run, before heldout was ever run) is casual phrasing on topics and wordings unlike heldout, so HyDE -- whose value is on casual wording -- can be tuned without touching heldout. 'heldout' was run once on 2026-10-04 with the round-1 pipeline (69%; 50% without HyDE) and its misses were read, so it is no longer clean. 'heldout2' was written after that and BEFORE the round-2 changes (abbreviation glossary, HyDE v3); it is the clean test for them. 'heldout3' (14, casual) was written on 2026-10-04 before the router and the reranking / fusion experiments of that day; it is the clean test for them. 'final' (14) was written on 2026-10-04 after the baseline run and BEFORE any of that day's retrieval experiments, in deliberately mixed styles (Telugu-English, typos, long stories, two-word queries). It is run only twice: baseline and the chosen configuration.",
   "created": "2026-10-04",
   "dev": [
     {
@@ -397,6 +397,179 @@
       "q": "are there any free seed kits for pulses or millets",
       "probes": [
         "free of cost (100% subsidy)"
+      ]
+    }
+  ],
+  "heldout3": [
+    {
+      "q": "how much premium do i pay for crop insurance in kharif",
+      "probes": [
+        "2% for Kharif"
+      ]
+    },
+    {
+      "q": "i didnt take a crop loan, can i still get crop insurance",
+      "probes": [
+        "non-loanee farmers at their option"
+      ]
+    },
+    {
+      "q": "how many days does the insurance company take to pay after the claim is calculated",
+      "probes": [
+        "Within 21 Days from calculation of claims"
+      ]
+    },
+    {
+      "q": "do shops need a licence to sell seeds",
+      "probes": [
+        "Dealer to obtain licence"
+      ]
+    },
+    {
+      "q": "does the pesticide shop have to give me a bill",
+      "probes": [
+        "made by a bill or cash memo"
+      ]
+    },
+    {
+      "q": "how much will govt give if my cow dies in a flood",
+      "probes": [
+        "Milch Animals:- Rs.37,500"
+      ]
+    },
+    {
+      "q": "how much rice does the mill have to give back for the paddy",
+      "probes": [
+        "Brokens at mill premises is 67%"
+      ]
+    },
+    {
+      "q": "i am a lawyer with farm land, can i get annadata sukhibhava money",
+      "probes": [
+        "Professionals like Doctors, Engineers, Lawyers"
+      ]
+    },
+    {
+      "q": "who checks if the pesticides sold in shops are fake",
+      "probes": [
+        "to enter and search, at all reasonable times"
+      ]
+    },
+    {
+      "q": "what age can i join the farmers pension scheme",
+      "probes": [
+        "entry age group of 18 to 40 years"
+      ]
+    },
+    {
+      "q": "subsidy for polyhouse farming",
+      "probes": [
+        "Retractable structures 50% of cost"
+      ]
+    },
+    {
+      "q": "i am a big farmer with 15 acres, how much subsidy for drip",
+      "probes": [
+        "Big farmers 27 18 5 23 50 50"
+      ]
+    },
+    {
+      "q": "can kcc loan be used for dairy or fish farming",
+      "probes": [
+        "including AnimalHusbandry Dairy Fisheries"
+      ]
+    },
+    {
+      "q": "how much subsidy for a tractor hiring centre in the village",
+      "probes": [
+        "Community Hiring Centres Rs.15 lakhs Rs.6.00 lakhs"
+      ]
+    }
+  ],
+  "final": [
+    {
+      "q": "annadata sukhibhava dabbulu enni installments lo vastayi",
+      "probes": [
+        "No of Installments and Installment wise split up"
+      ]
+    },
+    {
+      "q": "annadata money ki ekyc avasarama",
+      "probes": [
+        "e-KYC will be taken for all validated beneficiaries"
+      ]
+    },
+    {
+      "q": "My father has 3 acres in his name but I do all the farming. He is a retired government teacher with a pension above Rs.10,000. Can our family get Annadata Sukhibhava?",
+      "probes": [
+        "monthly pension is Rs. 10,000/-or more"
+      ]
+    },
+    {
+      "q": "crop insurance last date for rabi this year",
+      "probes": [
+        "15th December 2026"
+      ]
+    },
+    {
+      "q": "I am ST farmer with 3 acres, how much drip subsidy",
+      "probes": [
+        "Belonging to SC/ST Category 33 22 45 67 100"
+      ]
+    },
+    {
+      "q": "Heavy rains last week washed away my paddy. I have 4 acres of irrigated land. How much input subsidy per hectare will I get and is there a limit on area?",
+      "probes": [
+        "Rs.17,000/- per ha, in assured irrigated",
+        "ceiling of 2 ha. per farmer"
+      ]
+    },
+    {
+      "q": "mango insurance premium farmer share",
+      "probes": [
+        "premium of 5% based on the sum insured of mango"
+      ]
+    },
+    {
+      "q": "after the loss is assessed, how fast must the insurance company pay the farmer",
+      "probes": [
+        "payment to the farmers to be completed in next 15 days"
+      ]
+    },
+    {
+      "q": "what is per drop more crop scheme for",
+      "probes": [
+        "enhance water use efficiency in the agriculture sector"
+      ]
+    },
+    {
+      "q": "do women farmers get priority for horticulture subsidy",
+      "probes": [
+        "Priority should be given to the small, marginal farmers and women farmers"
+      ]
+    },
+    {
+      "q": "can govt stop sale of a pesticide in my district",
+      "probes": [
+        "prohibit the sale, distribution or use of the insecticide"
+      ]
+    },
+    {
+      "q": "seed subsidy app",
+      "probes": [
+        "authenticating through D Krishi App"
+      ]
+    },
+    {
+      "q": "sunna vaddi limit",
+      "probes": [
+        "crop loans upto Rs.1.00 Lakh"
+      ]
+    },
+    {
+      "q": "subsidy to start a small nursery for fruit plants",
+      "probes": [
+        "Small Nursery (0.4 to 1 Ha.)"
       ]
     }
   ]

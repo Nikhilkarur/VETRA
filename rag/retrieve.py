@@ -307,25 +307,94 @@ def _top_k(ranking: list[int], metas: list[dict], k: int) -> list[int]:
     return chosen
 
 
+def _expanded(question: str, ranking: list[int], passage: str | None, domain: str) -> list[int]:
+    """
+    The domain's extra signals (rag/domains.py: expansion, doc_boost, rerank), each
+    measured in eval/experiments.py. With none configured the ranking is unchanged.
+
+    Every extra LLM ranking joins the SAME fusion as the question and HyDE rankings,
+    as one more vote -- exactly how the experiments combined them.
+    """
+    import query_expansion as QX
+
+    d = domains.get(domain)
+    if d.expansion:
+        votes, weights = [_hybrid(question, domain)], [1.0]
+        if passage:
+            votes.append(_hybrid(passage, domain))
+            weights.append(float(os.environ.get("HYDE_WEIGHT") or d.hyde_weight))
+        b = QX.rewrites(question, domain) or {}
+        if "topic" in d.expansion and b.get("topic"):
+            votes.append(_hybrid(b["topic"], domain))
+            weights.append(1.0)
+        if "mq" in d.expansion and b.get("queries"):
+            bm25 = _corpus(domain)[3]
+            votes.append(_rrf(*[r for x in b["queries"] for r in (_dense(x, domain), bm25.rank(x))]))
+            weights.append(1.0)
+        if "kw" in d.expansion and b.get("keywords"):
+            votes.append(_corpus(domain)[3].rank(" ".join(b["keywords"])))
+            weights.append(1.0)
+        if len(votes) > (2 if passage else 1):   # at least one rewrite arrived
+            ranking = _rrf(*votes, weights=tuple(weights))
+
+    if d.doc_boost:
+        picked = set(QX.select_documents(question, domain) or [])
+        if picked:
+            metas = _corpus(domain)[2]
+            inside = [i for i in ranking if QX.unit_key(metas[i]) in picked]
+            ranking = _rrf(ranking, inside, weights=(1.0, d.doc_boost))
+
+    if d.rerank:
+        ranking = _reranked(question, ranking, domain, **d.rerank)
+    return ranking
+
+
+@lru_cache(maxsize=None)
+def _cross_encoder(name: str):
+    from sentence_transformers import CrossEncoder
+
+    try:
+        return CrossEncoder(name, max_length=512, local_files_only=True)
+    except Exception:
+        return CrossEncoder(name, max_length=512)
+
+
+def _reranked(question: str, ranking: list[int], domain: str, model: str, n: int = 30,
+              doc: str = "text", mode: str = "replace", ce_weight: float = 1.0) -> list[int]:
+    """Re-score the top n with a cross-encoder; "fuse" keeps the fused order as a second vote."""
+    _, texts, metas, _ = _corpus(domain)
+    cand = ranking[:n]
+    docs = [f"{metas[i].get('title', '')}\n{texts[i]}" if doc == "title+text" else texts[i] for i in cand]
+    scores = _cross_encoder(model).predict([(question, x) for x in docs], batch_size=16)
+    order = [cand[j] for j in sorted(range(len(cand)), key=lambda j: -scores[j])]
+    if mode == "fuse":
+        order = _rrf(cand, order, weights=(1.0, ce_weight))
+    return order + ranking[n:]
+
+
 def retrieve_with_trace(question: str, k: int = TOP_K, hyde: bool = True, domain: str = "rti"):
     """Like retrieve(), but also returns the hypothetical passage used (or None)."""
     _, texts, metas, _ = _corpus(domain)
     # "RBK" -> "RBK (Rythu Bharosa Kendram, ...)": only the SEARCH text is expanded
     # (agriculture's glossary; RTI has none). HyDE once wrote "Rural Business
     # Knowledge Centre" for RBK; with the expansion it knows what is meant.
-    question = domains.expand_abbreviations(question, domains.get(domain))
+    d = domains.get(domain)
+    question = domains.expand_abbreviations(question, d)
     ranking = _hybrid(question, domain)
     passage = hypothetical_passage(question, domain) if hyde else None
     if passage:
         # The HyDE ranking's vote relative to the question's (1.0 = equal, as RTI was tuned).
-        weight = float(os.environ.get("HYDE_WEIGHT") or domains.get(domain).hyde_weight)
-        mode = os.environ.get("HYDE_MODE") or domains.get(domain).hyde_mode
+        weight = float(os.environ.get("HYDE_WEIGHT") or d.hyde_weight)
+        mode = os.environ.get("HYDE_MODE") or d.hyde_mode
         if mode == "dense":      # passage searched by meaning only, not keywords
             ranking = _rrf(ranking, _dense(passage, domain), weights=(1.0, weight))
         elif mode == "concat":   # one hybrid search with question + passage
             ranking = _hybrid(f"{question}\n{passage}", domain)
         else:                    # "rrf": two hybrid searches fused (RTI's tuned setting)
             ranking = _rrf(ranking, _hybrid(passage, domain), weights=(1.0, weight))
+    # hyde=False means no search-time LLM call at all, so it also turns these off.
+    if hyde:
+        ranking = _expanded(question, ranking, passage, domain)
 
     chosen = _top_k(ranking, metas, k)
     hits = [{"text": texts[i], "rank": r + 1, **metas[i]} for r, i in enumerate(chosen)]

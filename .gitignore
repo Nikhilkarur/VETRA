@@ -11,3 +11,6 @@ README.jpeg
 
 # Local editor / tool settings
 .claude/
+
+# Re-embedded corpora for embedding-model experiments (eval/experiments.py); rebuilt on demand
+eval/cache/*.npy

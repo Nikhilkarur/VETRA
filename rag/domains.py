@@ -7,11 +7,13 @@ supplies its documents, its index name and the three prompts that speak its
 language: the HyDE search passage, the answer rules, and the follow-up rewrite.
 
 Domains today: "rti" (the original assistant, settings unchanged) and
-"agriculture". Finance comes later, as one domain with subcategories; the
-question router that picks a domain is the last step (see context.md).
+"agriculture". Finance comes later, as one domain with subcategories. Each
+domain's router_hint tells the question router (rag/router.py) what it covers,
+so adding a domain here is all the router needs.
 
 Every script takes --domain; the default is "rti" so existing commands behave
-exactly as before.
+exactly as before. (The router is a prototype, not yet wired into the web page
+or chat.)
 """
 
 from __future__ import annotations
@@ -39,7 +41,14 @@ class Domain:
     embed_title: bool = False  # embed "document title + chunk" (build_index.py)
     hyde_weight: float = 1.0   # HyDE ranking's RRF vote relative to the question's
     hyde_mode: str = "rrf"     # how the HyDE passage is used (retrieve.py)
+    # Extra search signals, chosen per domain by eval/experiments.py (see
+    # docs/RETRIEVAL_EXPERIMENTS.md). All off by default.
+    expansion: tuple = ()      # LLM rewrites searched too: "topic", "mq", "kw" (query_expansion.py)
+    doc_boost: float = 0.0     # RRF vote for chunks of LLM-selected documents (0 = off)
+    rerank: dict | None = None # cross-encoder over the fused top n: {"model", "n", "doc", "mode"}
     abbreviations: dict | None = None  # expanded in the question before searching
+    router_hint: str = ""      # what this domain covers, for the question router (router.py)
+    common_terms: tuple = ()   # words in nearly every document; query expansion must not add them
 
 
 # ====================================================================== RTI
@@ -249,10 +258,16 @@ DOMAINS = {
         manifest=ROOT / "ingest" / "corpus_manifest.json",
         chunks=ROOT / "ingest" / "chunks.json",
         collection="ap_rti",
+        common_terms=("Right to Information Act", "Andhra Pradesh", "RTI"),
         hyde_prompt=RTI_HYDE,
         system_prompt=RTI_SYSTEM,
         condense_prompt=RTI_CONDENSE,
         placeholder="Ask a question about RTI…",
+        router_hint="The Right to Information Act 2005 and using it in Andhra Pradesh: "
+                    "asking any government office for information or records, RTI fees, "
+                    "time limits, refusals and exemptions, first and second appeals, "
+                    "complaints and penalties, the State Information Commission and its "
+                    "commissioners, and Public Information Officers.",
         examples=("how do i file an rti application",
                   "how much money do i need to pay for an rti in andhra pradesh",
                   "the officer keeps delaying it what should i do",
@@ -270,10 +285,19 @@ DOMAINS = {
         manifest=ROOT / "ingest" / "incoming" / "agriculture" / "manifest.json",
         chunks=ROOT / "ingest" / "chunks_agriculture.json",
         collection="ap_agriculture",
+        common_terms=("Andhra Pradesh",),
         hyde_prompt=AGRI_HYDE,
         system_prompt=AGRI_SYSTEM,
         condense_prompt=AGRI_CONDENSE,
         placeholder="Ask about a farm scheme, subsidy or crop insurance…",
+        router_hint="Farming in Andhra Pradesh: farmer income support (Annadata Sukhibhava, "
+                    "PM-KISAN), crop insurance, crop loans and Kisan Credit Cards, interest-free "
+                    "loans, tenant farmers' cultivator cards, subsidies for seeds, drip and "
+                    "sprinkler irrigation, farm machinery and horticulture, minimum support "
+                    "prices and paddy or cotton procurement, relief for crops and livestock "
+                    "lost to floods, cyclones or drought, the laws on seeds, fertilisers and "
+                    "pesticides, Rythu Seva Kendrams, farmer pensions, free farm power, and "
+                    "the Agriculture and Horticulture departments' own offices and officers.",
         examples=("i take land on lease, can i get annadata sukhibhava money",
                   "what is rythu bharosa called now",
                   "do i have to pay for crop insurance now",
