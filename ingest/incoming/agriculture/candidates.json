@@ -1,5 +1,19 @@
 [
   {
+    "title": "G.O.Ms.No.79 Agri&Coop (Agri.II) Dt.02.09.2024 - Change of name of Schemes/Programmes (e-Crop -> e-Panta, YSR Rythu Bharosa-PM Kisan -> Annadata Sukhibhava, Sunna Vaddi -> Vaddi Leni Runalu, Free Crop Insurance -> PMFBY, RBK -> Rythu Seva Kendram, ...)",
+    "department": "Agriculture & Cooperation",
+    "group": "GOIR: AGC01 - AGRICULTURE AND COOPERATION / AGRI-II",
+    "source_url": "https://goir.ap.gov.in/dgo.ashx?gid=478514&fileType=E",
+    "source_page": "https://goir.ap.gov.in/",
+    "doc_type": "go",
+    "number": "G.O.Ms.No.79",
+    "date": "2024-09-02",
+    "decision": "keep",
+    "in_force": "yes",
+    "why": "What is the new name of Rythu Bharosa / RBK / e-Crop / Sunna Vaddi / YSR Yantra Seva / YSR Agri Labs?",
+    "reason": "The official old->new name table for 11 schemes and institutions (brief: record old and new names and the order that changed them). GOIR copy has text; the copy on agriculture.ap.gov.in ('Renaming of Schemes-3') is a 1-page scan"
+  },
+  {
     "title": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines",
     "department": "Agriculture & Cooperation",
     "group": "GOIR: AGC01 - AGRICULTURE AND COOPERATION / AGRI-II",
@@ -15,7 +29,7 @@
     ],
     "why": "Who gets the Rs.20,000/yr (Rs.14,000 state + Rs.6,000 PM-KISAN), tenant and RoFR farmers, exclusions, definitions of farmer family",
     "reason": "Current state income-support scheme; replaces YSR Rythu Bharosa. Text layer, 7pp",
-    "notes": "Old name: YSR Rythu Bharosa (2019-2024, G.O.Ms.96); before that Annadata Sukhibhava (2014-19). The GO does not itself state the rename; the name change is reported in the press (Deccan Chronicle, June 2024)"
+    "notes": "Old name: YSR Rythu Bharosa - PM Kisan (2019-2024, G.O.Ms.96); renamed Annadata Sukhibhava by G.O.Ms.79 (02-09-2024)"
   },
   {
     "title": "G.O.Ms.No.96 Agri&Coop Dt.19.09.2019 - 'YSR Rythu Bharosa' Scheme - Financial assistance to farmer families",
@@ -133,9 +147,9 @@
     "number": "G.O.Rt.No.464",
     "date": "2020-06-30",
     "decision": "keep",
-    "in_force": "unknown - no order after 2021 found on GOIR; the scheme name carries the former government's prefix and may have been renamed or discontinued",
-    "why": "Interest-free crop loan up to Rs.1 lakh if repaid on time - how it worked",
-    "reason": "Only state order on crop-loan interest relief found; status must be verified before answers rely on it"
+    "in_force": "unknown - scheme renamed 'Vaddi Leni Runalu' by G.O.Ms.79 (2024), so it continues under a new name; no newer operational guidelines found",
+    "why": "Interest-free crop loan up to Rs.1 lakh if repaid on time (now called Vaddi Leni Runalu)",
+    "reason": "Only operational guidelines found for the state crop-loan interest relief; the 2024 rename order shows the scheme still exists"
   },
   {
     "title": "G.O.Rt.No.538 Agri&Coop Dt.04.07.2025 - Seeds - SOP for distribution of subsidy seed through D-Krishi application - modifications",
@@ -271,7 +285,7 @@
     "source_page": "https://goir.ap.gov.in/",
     "doc_type": "go",
     "decision": "skip",
-    "reason": "Amendment without the original establishment order (not found on GOIR); governance detail. The centres were renamed Rythu Seva Kendras in July 2024 (press: The Hans India) - no G.O. found for the rename"
+    "reason": "G.O.Ms.83 amends the establishment order G.O.Ms.37 (2020), which is kept from agriculture.ap.gov.in; advisory boards are governance detail. RBK -> Rythu Seva Kendram rename is in G.O.Ms.79 (2024)"
   },
   {
     "title": "APCNF natural farming (G.O.Rt.594/2021), farm machinery banks with Kisan drones (G.O.Rt.317/2026)",
@@ -464,14 +478,345 @@
     "reason": "Keep the Act with its Rules (G.O.Ms.410)"
   },
   {
-    "title": "Department of Agriculture, AP website (schemes, 4(1)(b) manual, citizen charter)",
+    "title": "G.O.Ms.No.37 Agri&Coop (Agri.II) Dt.04.02.2020 - Establishment of Rythu Bharosa Kendralu (RBKs) in the State",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Notifications / Government G.O._s",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/1e305ba1-6674-4dea-953d-448ea6b95a89",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/governemet-go",
+    "doc_type": "go",
+    "date": "2020-02-04",
+    "number": "G.O.Ms.No.37",
+    "decision": "keep",
+    "in_force": "yes, as amended - centres renamed Rythu Seva Kendram by G.O.Ms.79 (2024); amended by G.O.Ms.83 (2020)",
+    "why": "What does the village farmer centre (RSK, formerly RBK) do and offer",
+    "reason": "Founding order of the village-level service centres the brief asks about; 15pp text"
+  },
+  {
+    "title": "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State",
+    "department": "Revenue (Disaster Management)",
+    "group": "agriculture.ap.gov.in: Notifications / Government G.O._s",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/7c822e1b-00e4-49ad-a5a7-6b3b89268dbc",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/governemet-go",
+    "doc_type": "go",
+    "date": "2025-01-07",
+    "number": "G.O.No.2",
+    "decision": "keep",
+    "in_force": "yes - applies to future calamities",
+    "amends": [
+      "G.O.Ms.No.1 Revenue (DM) 2023 - enhanced state rates over SDRF norms"
+    ],
+    "why": "How much input subsidy / relief per hectare when crops are lost to floods or cyclone",
+    "reason": "Fills the input-subsidy-rate gap; text"
+  },
+  {
+    "title": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption",
+    "department": "Revenue (Disaster Management)",
+    "group": "agriculture.ap.gov.in: Notifications / Government G.O._s",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/governemet-go",
+    "doc_type": "go",
+    "date": "2023-11-14",
+    "number": "G.O.Ms.No.1",
+    "decision": "keep",
+    "in_force": "yes - norms period 2022-23 to 2025-26; enhanced by G.O.No.2 (2025); check for 2026-31 norms",
+    "why": "Which losses qualify (33% crop loss), the per-hectare relief rates under SDRF",
+    "reason": "The SDRF norms behind every input-subsidy sanction; text, 21pp"
+  },
+  {
+    "title": "Natural Calamities - Norms adopted for sanction and release of input subsidy (department note, English)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Schemes / Natural Disasters",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/23d7e2e1-96bb-4cfa-86e5-750d30a5aa9b",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "other",
+    "date": null,
+    "decision": "keep",
+    "in_force": "unknown - undated note",
+    "why": "Plain-language input subsidy rules: notified calamities, 33% damage, who is eligible",
+    "reason": "Department's own summary of the SDRF rules; Telugu version recorded as a lead"
+  },
+  {
+    "title": "Memo - Seeds - Distribution of seeds on subsidy 2026-27 - sale price, subsidy pattern and number of bags of groundnut seed (Kharif 2026)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: News",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/b595a73d-2984-4884-9d1b-8863c472d7cc",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "circular",
+    "date": "2026-05-14",
+    "decision": "keep",
+    "in_force": "yes - Kharif 2026",
+    "why": "What does subsidised groundnut seed cost this season and how many bags can I get",
+    "reason": "Current seed subsidy rates; complements the D-Krishi SOP (G.O.Rt.538)"
+  },
+  {
+    "title": "Farm Mechanisation (SMAM) - implementation and farmer registration guide (eseed.ap.gov.in/FM)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Farm mechanization",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/948c3a6d-63bf-4ddc-92dd-ce908fee6c47",
+    "source_page": "https://agriculture.ap.gov.in/reports/farm-mechanization",
+    "doc_type": "manual",
+    "date": "2026-04-30",
+    "decision": "keep",
+    "in_force": "yes - 2025-26",
+    "why": "How to apply for a subsidised farm implement / drone; where to see approved prices",
+    "reason": "Step-by-step farmer guide for the Farm Mechanization Scheme (formerly YSR Yantra Seva)"
+  },
+  {
+    "title": "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Schemes / Farm Mechanisation",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/b3976927-435a-45f4-935b-56187f49417d",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "scheme_guideline",
+    "date": null,
+    "decision": "keep",
+    "in_force": "unknown - undated note",
+    "why": "What CHCs are, how farmers hire machinery, subsidy pattern",
+    "reason": "Scheme overview from the department"
+  },
+  {
+    "title": "Note on Integrated Agri Labs",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Schemes / Agri Labs",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d86f5dc8-c7d1-463c-a344-f1ec8653368c",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "scheme_guideline",
+    "date": null,
+    "decision": "keep",
+    "in_force": "yes - renamed from Dr. YSR Agri Testing Labs by G.O.Ms.79 (2024)",
+    "why": "Where can I get my seed, fertiliser or soil tested",
+    "reason": "Scheme overview; links to the rename"
+  },
+  {
+    "title": "Food and Nutrition Security (formerly NFSM) and NMEO-Oilseeds - scheme notes",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Schemes / NFSM",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/9a234565-348a-4120-9452-359f2a23e143",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "scheme_guideline",
+    "date": null,
+    "decision": "keep",
+    "in_force": "unknown - undated note",
+    "why": "Seed minikits, demonstrations and subsidies for rice, pulses, millets, oilseeds",
+    "reason": "Centrally sponsored schemes as implemented in AP"
+  },
+  {
+    "title": "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: RTI",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d6c6861b-6c82-4707-bc2b-7dc122ccfa6f",
+    "source_page": "https://agriculture.ap.gov.in/rti",
+    "doc_type": "manual",
+    "date": "2025-12-18",
+    "decision": "keep",
+    "in_force": "yes - 2025-26 edition",
+    "why": "Functions, schemes, officers, budget and services of the Agriculture Department",
+    "reason": "Brief asks for the department's 4(1)(b) manual; current edition, 263pp, mostly text (13 scanned pages)"
+  },
+  {
+    "title": "The Seeds Act, 1966",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Seeds Acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/5fb5ffcb-317b-459e-92a3-979eea61114d",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "act",
+    "date": null,
+    "number": "Act No. 54 of 1966",
+    "decision": "keep",
+    "in_force": "yes",
+    "why": "Seed quality, labelling, certification; what to do about bad seed",
+    "reason": "Law behind seed complaints; listed by the department under Acts"
+  },
+  {
+    "title": "The Seeds Rules, 1968",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Seeds Acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/b65c68be-0bef-4bcb-aede-61c7329f430b",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "rules",
+    "date": null,
+    "decision": "keep",
+    "in_force": "yes",
+    "why": "Seed inspectors, sampling, germination standards",
+    "reason": "Keep with the Seeds Act"
+  },
+  {
+    "title": "The Seeds (Control) Order, 1983",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Seeds Acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/75d53539-926f-483a-b8ca-dad251886ed0",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "rules",
+    "date": null,
+    "number": "G.S.R. 932(E)",
+    "decision": "keep",
+    "in_force": "yes, as amended (2019 licence amendment)",
+    "why": "Seed dealer licences; can a dealer sell without a licence",
+    "reason": "Dealer licensing"
+  },
+  {
+    "title": "Seeds (Control) Amendment Order, 2019 - dealer licence validity five years",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Seeds Acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/ac639188-6d8f-445f-9303-e43a2ce52d35",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "rules",
+    "date": "2019-08-22",
+    "decision": "keep",
+    "in_force": "yes",
+    "amends": [
+      "Seeds (Control) Order, 1983"
+    ],
+    "why": "How long a seed dealer licence is valid",
+    "reason": "Keep the amendment with the order it amends"
+  },
+  {
+    "title": "The Fertiliser (Control) Order, 1985",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Fertilizer acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/ad82ef5f-c84c-474f-8d3f-be2330344b17",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "rules",
+    "date": null,
+    "number": "G.S.R. 758(E)",
+    "decision": "keep",
+    "in_force": "yes, as amended",
+    "why": "Fertiliser quality, dealer registration, overcharging above MRP",
+    "reason": "Law behind fertiliser complaints"
+  },
+  {
+    "title": "Fertiliser (Control) Order - amendment order and instructions dated 20-12-2024",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: News",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/2d1fe44b-2580-45b0-8d61-b723ad66ff24",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "circular",
+    "date": "2024-12-20",
+    "decision": "keep",
+    "in_force": "unknown",
+    "language": "en",
+    "amends": [
+      "Fertiliser (Control) Order, 1985"
+    ],
+    "why": "Latest FCO changes",
+    "reason": "Keep with the FCO; scan, marked for OCR"
+  },
+  {
+    "title": "The Insecticides Act, 1968",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Pesticides Acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/2fb2a047-d90c-4ded-93ac-cc6729f4dd28",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "act",
+    "date": null,
+    "number": "Act No. 46 of 1968",
+    "decision": "keep",
+    "in_force": "yes",
+    "why": "Pesticide registration, misbranding, complaints",
+    "reason": "Law behind pesticide complaints"
+  },
+  {
+    "title": "The Insecticides Rules, 1971",
+    "department": "central",
+    "group": "agriculture.ap.gov.in: Acts / Pesticides Acts",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/eb9d74f0-abc2-4fbd-b8b7-779432822808",
+    "source_page": "https://agriculture.ap.gov.in/acts-gos/acts",
+    "doc_type": "rules",
+    "date": null,
+    "number": "G.S.R. 1650",
+    "decision": "keep",
+    "in_force": "yes",
+    "why": "Pesticide dealer licences, labelling, safety",
+    "reason": "Keep with the Act"
+  },
+  {
+    "title": "agriculture.ap.gov.in: daily fertiliser availability (42), seasonal condition reports (382), weekly agro-advisories (129), Paadi Pantalu e-magazines (70), staff seniority lists and memos",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in",
+    "source_url": "https://agriculture.ap.gov.in/",
+    "source_page": "https://agriculture.ap.gov.in/",
+    "doc_type": "other",
+    "decision": "skip",
+    "reason": "Periodic statistics/advisories and internal staff matters (brief: skip statistical returns and internal service orders). Catalogued in _catalog/agri_site.json"
+  },
+  {
+    "title": "agriculture.ap.gov.in: copies of G.O.Ms.80/81/98 crop insurance notifications, G.O.Ms.79 rename (scan), G.O.Ms.31 Finance (HR web portal), G.O.Rt.1201 (state function), G.O.Ms.109/110 2025 (untitled scans), SCA Digital Agriculture guidelines, RKVY app manuals, ATMA/Digital Agriculture Mission files (404)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in",
+    "source_url": "https://agriculture.ap.gov.in/acts-gos/governemet-go",
+    "source_page": "https://agriculture.ap.gov.in/",
+    "doc_type": "go",
+    "decision": "skip",
+    "reason": "Duplicates of kept GOIR copies, not citizen-facing, or broken links on the site"
+  },
+  {
+    "title": "Agriculture Department - 4(1)(b) Information Manual (Telugu)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: RTI",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/681b690c-d11e-4e15-b2e3-7da18afae8ab",
+    "source_page": "https://agriculture.ap.gov.in/rti",
+    "doc_type": "manual",
+    "date": "2025-12-18",
+    "language": "te",
+    "decision": "lead",
+    "reason": "Telugu edition, for the multilingual phase"
+  },
+  {
+    "title": "Annadatha Sukhibhava - PM Kisan: FAQs in Telugu (authorised signed copy)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Others / Farmers Corner",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/7341e5ba-1a7a-4849-8035-b9f94cd8916a",
+    "source_page": "https://agriculture.ap.gov.in/others/department-activities",
+    "doc_type": "faq",
+    "date": "2025-08-23",
+    "language": "te",
+    "decision": "lead",
+    "reason": "Official scheme FAQ, Telugu only; legacy-font text extraction is garbled - needs Unicode conversion or OCR. Strong candidate for the multilingual phase and for questions.json"
+  },
+  {
+    "title": "PM Kisan Scheme - Frequently Asked Queries (FAQs) in Telugu",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Others / Farmers Corner",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/155bf9bf-4138-4dcc-8294-4aaa354e5401",
+    "source_page": "https://agriculture.ap.gov.in/others/department-activities",
+    "doc_type": "faq",
+    "date": "2025-08-23",
+    "language": "te",
+    "decision": "lead",
+    "reason": "Telugu edition of the PM-KISAN FAQ"
+  },
+  {
+    "title": "Natural Calamities - input subsidy norms (department note, Telugu)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Schemes / Natural Disasters",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/9d9360e0-fb78-46b7-8e99-9a575d272c78",
+    "source_page": "https://agriculture.ap.gov.in/home",
+    "doc_type": "other",
+    "date": null,
+    "language": "te",
+    "decision": "lead",
+    "reason": "Telugu twin of the kept English note"
+  },
+  {
+    "title": "Farm Mechanization - approved price list 2025-26 (implements, manufacturers)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: Farm mechanization",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/58ee135b-7d62-4858-91cf-15909eb01080",
+    "source_page": "https://agriculture.ap.gov.in/reports/farm-mechanization",
+    "doc_type": "other",
+    "date": "2026-09-11",
+    "decision": "lead",
+    "reason": "106-page price table; useful for 'what does implement X cost after subsidy' but table-heavy - decide on table handling first"
+  },
+  {
+    "title": "Department of Agriculture, AP - old website apagrisnet.gov.in",
     "department": "Agriculture & Cooperation",
     "group": "apagrisnet.gov.in",
     "source_url": "https://apagrisnet.gov.in/",
     "source_page": "https://apagrisnet.gov.in/",
-    "doc_type": "manual",
-    "decision": "blocked",
-    "reason": "HTTPS certificate expired (SEC_E_CERT_EXPIRED, 2026-10-04); plain HTTP returns 404. Not bypassed - needs a decision (see REPORT)"
+    "doc_type": "other",
+    "decision": "broken",
+    "reason": "Retired. With TLS verification waived (approved 2026-10-04) the server answers 403 'Server unable to read htaccess file' on every path, for every client; it presents an expired certificate issued to aptribes.gov.in. The department's current site is agriculture.ap.gov.in (collected above)"
   },
   {
     "title": "ap.gov.in Public Forms - Agriculture: Crop Insurance Application Form; Farm Mechanization Application Form (English, Telugu); Subsidy Seed Distribution Application Form; Horticulture APMIP Farmer Registration Form; Revenue: Small and Marginal Farmers Certificate, Loan Eligibility Card, Agricultural Income Certificate",
@@ -492,15 +837,5 @@
     "doc_type": "other",
     "decision": "lead",
     "reason": "Portal has no documents; status check needs Aadhaar + CAPTCHA. Useful as the answer to 'where do I check my payment'"
-  },
-  {
-    "title": "SDRF norms / items and norms of assistance (input subsidy rates for crop loss)",
-    "department": "central",
-    "group": "-",
-    "source_url": "",
-    "source_page": "https://ndmindia.mha.gov.in/",
-    "doc_type": "other",
-    "decision": "lead",
-    "reason": "Input subsidy amounts follow the MHA SDRF/NDRF norms; not collected in this pass"
   }
 ]

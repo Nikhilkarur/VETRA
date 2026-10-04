@@ -33,6 +33,10 @@ except ImportError:
 truststore.inject_into_ssl()
 
 import requests  # noqa: E402
+import urllib3  # noqa: E402
+
+# the per-host exception below is deliberate and recorded; don't spam a warning per request
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -49,6 +53,21 @@ TIMEOUT_S = 60
 _session = requests.Session()
 _session.headers["User-Agent"] = UA
 _last_hit: dict[str, float] = {}
+
+# Hosts fetched WITHOUT certificate verification - each one approved by the project owner,
+# with the evidence for why the server is still believed genuine. Files from these hosts
+# get this note in their manifest entry. Nothing else is ever fetched unverified.
+UNVERIFIED_TLS = {
+    "apagrisnet.gov.in": (
+        "TLS not verified (approved by project owner 2026-10-04): server presents an expired "
+        "certificate issued to aptribes.gov.in (Let's Encrypt R3, expired 2022-06-17, sha256 "
+        "0e8e5dc7...1012642); host resolves to 164.100.187.11, NIC HYD-DC block"),
+}
+
+
+def unverified_note(url: str) -> str:
+    host = requests.utils.urlparse(url).hostname or ""
+    return UNVERIFIED_TLS.get(host.removeprefix("www."), "")
 
 
 def today() -> str:
@@ -74,7 +93,8 @@ def fetch(url: str, *, tries: int = 3, stream_limit: int = 80_000_000) -> dict:
     for attempt in range(tries):
         _polite(url)
         try:
-            r = _session.get(url, timeout=TIMEOUT_S, allow_redirects=True)
+            r = _session.get(url, timeout=TIMEOUT_S, allow_redirects=True,
+                             verify=not unverified_note(url))
         except requests.RequestException as e:
             out["error"] = f"{type(e).__name__}: {e}"[:300]
             time.sleep(2 * (attempt + 1))

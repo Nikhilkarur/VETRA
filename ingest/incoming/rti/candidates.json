@@ -596,6 +596,20 @@
     "reason": "Single-office PIO designations; the statewide PIO directory is RTIMIS (blocked). Recorded in _catalog/goir_rti.json"
   },
   {
+    "title": "Proceedings of the Director of Agriculture - RTI Act 2005 ss.5(1), 5(2), 19(1) - Appointment of Appellate Authority, PIOs and APIOs of the Commissionerate and Directorate of Agriculture (Dec 2025)",
+    "department": "Agriculture & Cooperation",
+    "group": "agriculture.ap.gov.in: RTI",
+    "source_url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/f0aab900-df0a-4da4-a6d6-141ec6ae4864",
+    "source_page": "https://agriculture.ap.gov.in/rti",
+    "doc_type": "other",
+    "number": "No.AGCO2/46/2023 RTI SEC",
+    "date": "2025-12-18",
+    "in_force": "yes - current list on the department's RTI page (older edition archived)",
+    "why": "To whom do I send an RTI about an agriculture scheme; who hears my first appeal",
+    "decision": "keep",
+    "reason": "Known gap: current PIO lists. Official designation order with names and office contacts (brief rule 4 allows these)"
+  },
+  {
     "title": "PIOs & APIOs of the Department of Horticulture - names, mobile numbers, e-mail (state and district offices)",
     "department": "Horticulture",
     "group": "Downloads - PIO's & APIO's Contact Numbers",

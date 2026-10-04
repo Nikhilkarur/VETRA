@@ -1,6 +1,6 @@
 # RTI — gap-filling report (collected 2026-10-04)
 
-**26 documents kept** (161 pages, 13.8 MB) · 16 skipped · 4 leads · 3 broken · 1 blocked.
+**27 documents kept** (168 pages, 14 MB) · 16 skipped · 4 leads · 3 broken · 1 blocked.
 Every candidate and its reason is in `inventory.json`; kept files and their provenance are in
 `manifest.json`. Nothing was written to `ingest/documents/`.
 
@@ -46,13 +46,13 @@ Every candidate and its reason is in `inventory.json`; kept files and their prov
 | manual | "How does the Commission hear second appeals?" | APIC 4(1)(b) handbook |
 | faq | "What is the time limit? +5 days via APIO? 40 days with a third party?" | APIC Procedure for Request |
 | other | "Which commissioner hears appeals for my department?" | APIC work allocation *(scan)* |
-| other | "Who is the Horticulture PIO in my district?" | Horticulture PIO & APIO list |
+| other | "Who is the PIO for agriculture / horticulture in my district?" | Agriculture PIO/APIO/FAA proceedings (Dec 2025); Horticulture PIO & APIO list |
 
 ## 2. Common questions they still cannot answer
 
 | Question | Where the answer probably lives |
 |---|---|
-| Current PIO / FAA for department X in district Y | RTIMIS directory (`rti_ap_info.php`), behind a "Security Verification" step. Only Horticulture's list was found as a file. |
+| Current PIO / FAA for department X in district Y | RTIMIS directory (`rti_ap_info.php`), behind a "Security Verification" step. Found as files only for Agriculture (Dec 2025) and Horticulture. |
 | Official sample application / appeal format | No statewide prescribed format found. RTIMIS online form; a few departments publish their own (e.g. APPCB citizen-charter page). |
 | Current RTI fee in one table | No consolidated notice exists. The answer still has to be assembled from G.O.Ms.454 + 530 + 545 + 740 (corpus) + 79 (here). |
 | Status of a filed request or appeal | RTIMIS (login). |
@@ -72,7 +72,7 @@ Every candidate and its reason is in `inventory.json`; kept files and their prov
 
 ## 4. Scans and Telugu
 
-- **7 of 26 kept files are scans** with no text version, all marked `needs_ocr`: five GAD
+- **7 of 27 kept files are scans** with no text version, all marked `needs_ocr`: five GAD
   circulars on fees and receipts, G.O.Ms.86 (APSDRI exemption) and the APIC work allocation.
   Where a scan had a text twin, the twin was kept. G.O.Ms.25 and G.O.Ms.259 are scans on
   their portals but text on GOIR.
@@ -87,5 +87,5 @@ Every candidate and its reason is in `inventory.json`; kept files and their prov
 `sic.ap.gov.in` (pages, G.O. and circular listings, its `getDataController.php` public data
 endpoint) · `rtionline.ap.gov.in` · `goir.ap.gov.in` (GAD search, 2008-2026; results in
 `../_catalog/goir_rti.json`) · `cic.gov.in/rti-notifications` · `egazette.gov.in` ·
-`meity.gov.in` · `horticulture.ap.gov.in` · `ap.gov.in` JSON API (catalogue in
+`meity.gov.in` · `horticulture.ap.gov.in` · `agriculture.ap.gov.in` · `ap.gov.in` JSON API (catalogue in
 `../_catalog/apgov.json`).

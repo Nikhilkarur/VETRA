@@ -21,7 +21,7 @@ import re
 from html import unescape
 
 from common import (INCOMING, fetch, file_name, inspect_html, inspect_pdf, kind_of,
-                    load_json, save_json, sha256, today)
+                    load_json, save_json, sha256, today, unverified_note)
 
 DOMAINS = ("rti", "agriculture", "finance", "questions")
 BIFURCATION = "2014-06-02"
@@ -120,7 +120,7 @@ def main() -> None:
                      text_layer=c.get("text_layer", info["text_layer"]))
         entry["pre_bifurcation"] = bool(c.get("date") and c["date"] < BIFURCATION)
         entry["needs_ocr"] = entry["text_layer"] is False
-        entry["notes"] = c.get("notes", "")
+        entry["notes"] = " ".join(x for x in (c.get("notes", ""), unverified_note(url)) if x)
         manifest.append({k: entry.get(k) for k in MANIFEST_FIELDS + EXTRA_FIELDS})
         inv.update(file=fname, pages=info["pages"], text_layer=entry["text_layer"],
                    language=entry["language"])

@@ -440,6 +440,18 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-04** — **Agriculture: department site found, renames confirmed.** On the
+  owner's approval, TLS verification was waived for apagrisnet.gov.in only (`UNVERIFIED_TLS`
+  in `common.py`). Its certificate belongs to aptribes.gov.in (expired 2022), and behind it
+  Apache returns 403 "unable to read htaccess file" on every path: the site is retired.
+  The department now publishes on **agriculture.ap.gov.in**; new `catalog_agri.py` reads
+  its document API (825 files). Added 19 agriculture documents (now **46**): **G.O.Ms.79
+  (02-09-2024), the official rename table** (e-Crop -> e-Panta, YSR Rythu Bharosa ->
+  Annadata Sukhibhava, Sunna Vaddi -> Vaddi Leni Runalu, Free Crop Insurance -> PMFBY,
+  RBK -> Rythu Seva Kendram, ...), RBK founding G.O.Ms.37/2020, SDRF input-subsidy norms
+  (Revenue DM G.O.Ms.1/2023, G.O.No.2/2025), Agriculture 4(1)(b) 2025-26, Kharif 2026 seed
+  subsidy, farm mechanisation guide, Seeds/Fertiliser/Insecticides Acts and Orders. RTI
+  gained the Agriculture PIO/FAA list (Dec 2025): **27**.
 - **2026-10-04** — **Data collection for the multi-domain assistant** (branch
   `data-collection`, local only), following `docs/DATA_COLLECTION_BRIEF.md`. New tools in
   `ingest/collect/`: `catalog_apgov.py` (whole ap.gov.in API, 715 file links),

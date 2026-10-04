@@ -6498,6 +6498,60 @@
         "to": "04-10-2026",
         "accessed": "2026-10-04"
       }
+    },
+    {
+      "number": "G.O.Ms.No.79",
+      "date": "2024-09-02",
+      "category": "Others",
+      "abstract": "Scheme/Programme – Change of name of the Scheme/Program – Post facto Permission",
+      "department": "AGC01 - AGRICULTURE AND COOPERATION",
+      "section": "AGRI-II",
+      "url": "https://goir.ap.gov.in/dgo.ashx?gid=478514&fileType=E",
+      "url_te": null,
+      "query": {
+        "dept": "-1",
+        "text": "",
+        "go": "79",
+        "from": "02-09-2024",
+        "to": "02-09-2024",
+        "accessed": "2026-10-04"
+      }
+    },
+    {
+      "number": "G.O.Ms.No.31",
+      "date": "2025-06-16",
+      "category": "Service Matter",
+      "abstract": "Finance Department - Implementation of Web Portal for Human Resource mapping in Government offices to strengthen Human Resource Management – Orders – Issued.",
+      "department": "FIN01 - FINANCE",
+      "section": "HR-I-PLG-POLICY-NMR-MATTERS",
+      "url": "https://goir.ap.gov.in/dgo.ashx?gid=553520&fileType=E",
+      "url_te": null,
+      "query": {
+        "dept": "-1",
+        "text": "",
+        "go": "31",
+        "from": "16-06-2025",
+        "to": "16-06-2025",
+        "accessed": "2026-10-04"
+      }
+    },
+    {
+      "number": "G.O.Rt.No.1201",
+      "date": "2025-06-19",
+      "category": "Others",
+      "abstract": "State Function - Celebration of \"Suparipalana-Tholi Adugu\" (సుపరిపాలన - తొలి అడుగు) on the eve of completion of 1st year of the Government formation after General Election 2024, on 23.06.2025 at 5.00 PM behind A.P.Secretariat at Amaravati – Orders - Issued.",
+      "department": "GAD01 - GENERAL ADMINISTRATION",
+      "section": "PRO-B",
+      "url": "https://goir.ap.gov.in/dgo.ashx?gid=553804&fileType=E",
+      "url_te": null,
+      "query": {
+        "dept": "-1",
+        "text": "",
+        "go": "1201",
+        "from": "19-06-2025",
+        "to": "19-06-2025",
+        "accessed": "2026-10-04"
+      }
     }
   ]
 }
