@@ -1,5 +1,5 @@
 {
-  "about": "Frozen demo question set. Written and verified against the corpus BEFORE any retrieval change, so improvements cannot be tuned toward it. A question counts as retrieved when every one of its probes appears in the top-k chunks. Probes are matched with all whitespace removed, so the corpus's extraction artifacts ('rup ees', 'Informati on') do not cause false misses. Use 'dev' while iterating. Check 'heldout' only at the end -- it is casual phrasing, deliberately unlike anything in the corpus. 'heldout2' was written after 'heldout' had been looked at once, and before query rewriting was built -- it is the clean final test for the query-rewrite step. 'heldout3' was written after all earlier sets had been used, and before testing section titles in Act embeddings and the answer-prompt changes of 2026-09-13; it is the clean test for those.",
+  "about": "Frozen demo question set. Written and verified against the corpus BEFORE any retrieval change, so improvements cannot be tuned toward it. A question counts as retrieved when every one of its probes appears in the top-k chunks. Probes are matched with all whitespace removed, so the corpus's extraction artifacts ('rup ees', 'Informati on') do not cause false misses. Use 'dev' while iterating. Check 'heldout' only at the end -- it is casual phrasing, deliberately unlike anything in the corpus. 'heldout2' was written after 'heldout' had been looked at once, and before query rewriting was built -- it is the clean final test for the query-rewrite step. 'heldout3' was written after all earlier sets had been used, and before testing section titles in Act embeddings and the answer-prompt changes of 2026-09-13; it is the clean test for those. 'heldout4' (13, casual) was written on 2026-10-04 before the router and the reranking / fusion experiments of that day; it is the clean test for them. 'final' (15) was written on 2026-10-04 after the baseline run and BEFORE any of that day's retrieval experiments, in deliberately mixed styles (Telugu-English, typos, long stories, two-word queries). It is run only twice: baseline and the chosen configuration.",
   "created": "2026-09-13",
   "dev": [
     {
@@ -330,6 +330,178 @@
       "q": "does rti apply to private companies",
       "probes": [
         "private body"
+      ]
+    }
+  ],
+  "heldout4": [
+    {
+      "q": "can i write my rti application in telugu",
+      "probes": [
+        "official language of the area"
+      ]
+    },
+    {
+      "q": "i cant read or write, how can i ask for information",
+      "probes": [
+        "reasonable assistance to the person making the request orally"
+      ]
+    },
+    {
+      "q": "can the information commission make the department pay me for the trouble",
+      "probes": [
+        "compensate the complainant"
+      ]
+    },
+    {
+      "q": "the info i want is about another person, will that person be told",
+      "probes": [
+        "notice to such third party"
+      ]
+    },
+    {
+      "q": "i want the info as a soft copy, do they have to give it that way",
+      "probes": [
+        "form in which it is sought"
+      ]
+    },
+    {
+      "q": "can the PIO take help from other officers to find my info",
+      "probes": [
+        "assistance of any other officer"
+      ]
+    },
+    {
+      "q": "what happens if an officer destroys the records i asked for",
+      "probes": [
+        "destroyed information which was the subject"
+      ]
+    },
+    {
+      "q": "they asked me to pay extra fees, do they have to show how they worked it out",
+      "probes": [
+        "together with the calculations made"
+      ]
+    },
+    {
+      "q": "is there an official guide for citizens on how to use rti",
+      "probes": [
+        "easily comprehensible form"
+      ]
+    },
+    {
+      "q": "who chooses the state information commissioners",
+      "probes": [
+        "appointed by the Governor on the recommendation of a committee"
+      ]
+    },
+    {
+      "q": "how long does an information commissioner stay in office",
+      "probes": [
+        "term of five years"
+      ]
+    },
+    {
+      "q": "can i use rti to get info from an ngo",
+      "probes": [
+        "non-Government organisation substantially financed"
+      ]
+    },
+    {
+      "q": "can i pay the rti fee by demand draft in AP",
+      "probes": [
+        "by demand draft or by bankers"
+      ]
+    }
+  ],
+  "final": [
+    {
+      "q": "naa rti ki 30 rojulu ainaa reply raaledu, ippudu em cheyali",
+      "probes": [
+        "senior in rank"
+      ]
+    },
+    {
+      "q": "wat is the time limt for second apeal",
+      "probes": [
+        "within ninety days"
+      ]
+    },
+    {
+      "q": "I sent an RTI to the municipal office asking for the building permission file of my neighbour's house. The PIO wrote back saying I must first explain why I need it. Is that correct?",
+      "probes": [
+        "required to give any reason"
+      ]
+    },
+    {
+      "q": "rti penalty amount",
+      "probes": [
+        "two hundred and fifty"
+      ]
+    },
+    {
+      "q": "who is first appellate authority",
+      "probes": [
+        "senior in rank"
+      ]
+    },
+    {
+      "q": "can i get information about a private hospital through rti",
+      "probes": [
+        "private body"
+      ]
+    },
+    {
+      "q": "my rti was sent to another department, how many days do they have to transfer it",
+      "probes": [
+        "no case later than five days"
+      ]
+    },
+    {
+      "q": "can the information commission order the department to appoint a PIO",
+      "probes": [
+        "by appointing a Central Public Information Officer"
+      ]
+    },
+    {
+      "q": "rti lo information ivvakapothe officer ki maximum fine entha",
+      "probes": [
+        "twenty-five thousand"
+      ]
+    },
+    {
+      "q": "does the rti act apply in jammu and kashmir",
+      "probes": [
+        "except the State of Jammu"
+      ]
+    },
+    {
+      "q": "do departments have to publish their budget details",
+      "probes": [
+        "budget allocated to each"
+      ]
+    },
+    {
+      "q": "can i get information about a case that is pending in court",
+      "probes": [
+        "expressly forbidden to be published by any court"
+      ]
+    },
+    {
+      "q": "they refused saying it is a trade secret, but it affects the public. can they still be made to give it",
+      "probes": [
+        "larger public interest warrants"
+      ]
+    },
+    {
+      "q": "rti fees AP",
+      "probes": [
+        "per application"
+      ]
+    },
+    {
+      "q": "can i ask for their opinions and advice notes or only for documents",
+      "probes": [
+        "opinions, advices"
       ]
     }
   ]

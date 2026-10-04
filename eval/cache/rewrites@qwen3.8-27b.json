@@ -1,0 +1,3172 @@
+{
+ "rti|How do I file an RTI application?": {
+  "topic": "Procedure for filing application to Public Information Officer",
+  "queries": [
+   "procedure for submitting application to Public Information Officer",
+   "format and manner of filing request for information",
+   "steps to present application under section 6"
+  ],
+  "keywords": [
+   "Public Information Officer",
+   "application",
+   "section 6",
+   "manner",
+   "fee",
+   "prescribed form",
+   "submission",
+   "request"
+  ]
+ },
+ "rti|Do I need to give a reason for asking for information?": {
+  "topic": "Grounds for refusal of request for information",
+  "queries": [
+   "whether applicant required to disclose purpose of request",
+   "grounds for refusal of request for information",
+   "obligation of applicant to state reasons for seeking information"
+  ],
+  "keywords": [
+   "purpose",
+   "reasons",
+   "grounds",
+   "refusal",
+   "applicant",
+   "request",
+   "information",
+   "disclose"
+  ]
+ },
+ "rti|How much is the RTI application fee in Andhra Pradesh?": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for application under section 7",
+   "amount payable for request for information",
+   "cost of filing application to Public Information Officer"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "prescribed fee",
+   "section 7",
+   "payment",
+   "cash",
+   "postal order",
+   "bank draft"
+  ]
+ },
+ "rti|How long does the department have to reply to my RTI request?": {
+  "topic": "Time limit for furnishing information",
+  "queries": [
+   "period within which Public Information Officer shall provide information",
+   "time limit for response to request for information",
+   "days allowed for furnishing information to applicant"
+  ],
+  "keywords": [
+   "thirty days",
+   "Public Information Officer",
+   "furnish information",
+   "time limit",
+   "request",
+   "reply",
+   "days"
+  ]
+ },
+ "rti|How fast must they reply if the information concerns someone's life or liberty?": {
+  "topic": "Time limit for furnishing information in urgent cases",
+  "queries": [
+   "time limit for providing information affecting life and liberty",
+   "48 hours deadline for urgent information requests",
+   "provision for immediate disclosure of information in cases of life or liberty"
+  ],
+  "keywords": [
+   "life and liberty",
+   "48 hours",
+   "urgent",
+   "time limit",
+   "furnishing information",
+   "immediate",
+   "disclosure",
+   "Public Information Officer"
+  ]
+ },
+ "rti|What happens if they do not reply within the time limit?": {
+  "topic": "Consequences of failure to provide information within prescribed time",
+  "queries": [
+   "deemed refusal of information under section 7",
+   "penalty for delay in furnishing information by Public Information Officer",
+   "first appeal against non-response to application"
+  ],
+  "keywords": [
+   "deemed refusal",
+   "penalty",
+   "first appeal",
+   "Public Information Officer",
+   "prescribed time",
+   "section 7",
+   "non-compliance",
+   "appellate authority"
+  ]
+ },
+ "rti|Do I still have to pay if they miss the deadline?": {
+  "topic": "Fee payment upon delay in furnishing information",
+  "queries": [
+   "obligation to pay prescribed fee when Public Information Officer fails to provide information within thirty days",
+   "consequence of non-compliance with time limit for furnishing information regarding fee refund or waiver",
+   "payment of application fee in case of delay by Central or State Public Information Officer"
+  ],
+  "keywords": [
+   "prescribed fee",
+   "thirty days",
+   "furnishing of information",
+   "Public Information Officer",
+   "delay",
+   "application",
+   "payment",
+   "time limit",
+   "deemed refusal"
+  ]
+ },
+ "rti|How do I appeal if I am not satisfied with the reply?": {
+  "topic": "First Appeal to the First Appellate Authority",
+  "queries": [
+   "procedure for filing first appeal against refusal or delay in providing information",
+   "timeline and format for submitting appeal to First Appellate Authority",
+   "consequences of non-compliance with first appeal order by Public Information Officer"
+  ],
+  "keywords": [
+   "First Appellate Authority",
+   "thirty days",
+   "refusal to provide",
+   "delay in providing",
+   "appeal fee",
+   "hearing",
+   "order",
+   "Public Information Officer"
+  ]
+ },
+ "rti|Where do I file a second appeal?": {
+  "topic": "Second Appeal to State Information Commission",
+  "queries": [
+   "jurisdiction of State Information Commission for second appeal",
+   "procedure for filing second appeal against first appellate authority order",
+   "venue and address for submission of second appeal petition"
+  ],
+  "keywords": [
+   "State Information Commission",
+   "second appeal",
+   "first appellate authority",
+   "jurisdiction",
+   "filing",
+   "commissioner",
+   "venue",
+   "petition"
+  ]
+ },
+ "rti|What information can the government refuse to give?": {
+  "topic": "Exemptions from disclosure of information",
+  "queries": [
+   "categories of information exempted from disclosure under Section 8",
+   "grounds for refusal of information by Public Information Officer",
+   "excluded information and non-disclosure provisions in the Act"
+  ],
+  "keywords": [
+   "exempted",
+   "Section 8",
+   "refusal",
+   "disclosure",
+   "excluded",
+   "grounds",
+   "confidentiality",
+   "national security",
+   "personal information",
+   "trade secrets"
+  ]
+ },
+ "rti|What penalty can be imposed on an officer who delays information?": {
+  "topic": "Penalty for delay in furnishing information",
+  "queries": [
+   "penalty imposed on Public Information Officer for failure to provide information within time limit",
+   "Section 20 penalty for delay in furnishing information under the Act",
+   "fine for non-compliance with time limits by Central or State Public Information Officer"
+  ],
+  "keywords": [
+   "penalty",
+   "delay",
+   "furnishing information",
+   "time limit",
+   "Public Information Officer",
+   "fine",
+   "Section 20",
+   "officer",
+   "imposed"
+  ]
+ },
+ "rti|Are people below the poverty line exempt from the RTI fee?": {
+  "topic": "Exemption of application fee for Below Poverty Line persons",
+  "queries": [
+   "exemption from payment of application fee for persons below poverty line",
+   "waiver of prescribed fee for BPL applicants under the Act",
+   "provision for free access to information for Below Poverty Line individuals"
+  ],
+  "keywords": [
+   "Below Poverty Line",
+   "application fee",
+   "exempt",
+   "prescribed fee",
+   "waiver",
+   "free of cost",
+   "applicant",
+   "payment"
+  ]
+ },
+ "rti|How much do photocopies cost under RTI?": {
+  "topic": "Charges for inspection and copies of records",
+  "queries": [
+   "fees for providing photocopies of documents",
+   "cost per page for reproduction of records",
+   "payment of charges for inspection and copies"
+  ],
+  "keywords": [
+   "photocopies",
+   "per page",
+   "charges",
+   "inspection",
+   "reproduction",
+   "fees",
+   "records",
+   "Rupees"
+  ]
+ },
+ "rti|Can I pay the RTI fee with court fee stamps?": {
+  "topic": "Modes of payment of application fee",
+  "queries": [
+   "payment of application fee by court fee stamps",
+   "acceptance of court fee stamps for information request charges",
+   "modes of payment for application fee under section 7"
+  ],
+  "keywords": [
+   "court fee stamps",
+   "application fee",
+   "payment",
+   "cash",
+   "demand draft",
+   "postal order",
+   "banker's cheque",
+   "electronic transfer"
+  ]
+ },
+ "rti|Who is the State Chief Information Commissioner of Andhra Pradesh?": {
+  "topic": "State Chief Information Commissioner appointment",
+  "queries": [
+   "current State Chief Information Commissioner name",
+   "appointment order State Chief Information Commissioner",
+   "who is the State Chief Information Commissioner"
+  ],
+  "keywords": [
+   "State Chief Information Commissioner",
+   "appointment",
+   "commissioner",
+   "name",
+   "office",
+   "State Information Commission"
+  ]
+ },
+ "rti|Can I get records that are more than twenty years old?": {
+  "topic": "Exemption of records older than twenty years",
+  "queries": [
+   "exemption clause for records exceeding twenty years age",
+   "provision regarding destruction or retention of old records",
+   "grounds for refusal of information based on record age"
+  ],
+  "keywords": [
+   "twenty years",
+   "exemption",
+   "records",
+   "age",
+   "refusal",
+   "clause",
+   "information",
+   "old"
+  ]
+ },
+ "rti|Does the RTI Act override the Official Secrets Act?": {
+  "topic": "Exemption under Section 8 of the Act",
+  "queries": [
+   "Section 8 exemption Official Secrets Act 1923",
+   "Does the Act override the Official Secrets Act",
+   "Exemption of information under Official Secrets Act"
+  ],
+  "keywords": [
+   "Section 8",
+   "Official Secrets Act",
+   "exemption",
+   "override",
+   "1923",
+   "information",
+   "exempted"
+  ]
+ },
+ "rti|What if I send my application to the wrong department?": {
+  "topic": "Transfer of application to competent Public Information Officer",
+  "queries": [
+   "procedure for forwarding application received by wrong Public Information Officer",
+   "obligation of PIO to transfer request to correct department within seven days",
+   "handling of application sent to non-competent authority under Section 6"
+  ],
+  "keywords": [
+   "transfer",
+   "competent",
+   "Public Information Officer",
+   "seven days",
+   "forward",
+   "application",
+   "department",
+   "Section 6"
+  ]
+ },
+ "rti|Is there a fee to inspect government records?": {
+  "topic": "Fees for inspection of records",
+  "queries": [
+   "fee for inspection of records under the Act",
+   "payment of fee for inspection of documents",
+   "cost of inspecting public records"
+  ],
+  "keywords": [
+   "inspection",
+   "records",
+   "fee",
+   "documents",
+   "payment"
+  ]
+ },
+ "rti|What must a department publish on its own without being asked?": {
+  "topic": "Proactive disclosure of information by public authorities",
+  "queries": [
+   "obligation of public authority to proactively disseminate information",
+   "categories of information to be published without application",
+   "duty to display information on website and notice boards"
+  ],
+  "keywords": [
+   "proactive disclosure",
+   "public authority",
+   "disseminate",
+   "notice board",
+   "website",
+   "periodically",
+   "fee structure",
+   "organizational structure",
+   "decisions",
+   "budget"
+  ]
+ },
+ "rti|i want some info from a govt office, whats the procedure to ask for it?": {
+  "topic": "Procedure for filing application to Public Information Officer",
+  "queries": [
+   "procedure for submitting application to Public Information Officer",
+   "method of making request for information under section 6",
+   "steps to file application with designated officer"
+  ],
+  "keywords": [
+   "application",
+   "Public Information Officer",
+   "section 6",
+   "written request",
+   "fee",
+   "designated officer",
+   "submission",
+   "acknowledgement"
+  ]
+ },
+ "rti|how much money do i need to pay for an rti in AP": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for filing application under Section 7",
+   "amount payable for obtaining information from Public Authority",
+   "payment of application fee to Public Information Officer"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "Section 7",
+   "prescribed fee",
+   "Public Information Officer",
+   "payment",
+   "application",
+   "information"
+  ]
+ },
+ "rti|govt office is not answering my rti for 2 months what do i do": {
+  "topic": "First Appeal to Appellate Authority",
+  "queries": [
+   "procedure for filing first appeal against refusal to provide information",
+   "time limit for filing appeal to Appellate Authority under Section 19",
+   "remedy for Public Information Officer failure to respond within thirty days"
+  ],
+  "keywords": [
+   "Appellate Authority",
+   "first appeal",
+   "thirty days",
+   "Section 19",
+   "refusal",
+   "deemed refusal",
+   "filing",
+   "fee"
+  ]
+ },
+ "rti|is rti free for BPL families": {
+  "topic": "Exemption from payment of fees for BPL cardholders",
+  "queries": [
+   "waiver of application fee for Below Poverty Line cardholders",
+   "exemption from payment of prescribed fees for BPL families",
+   "provision for free access to information for BPL cardholders"
+  ],
+  "keywords": [
+   "BPL cardholder",
+   "exemption",
+   "prescribed fees",
+   "waiver",
+   "Below Poverty Line",
+   "application fee",
+   "free of cost",
+   "cardholder"
+  ]
+ },
+ "rti|can the officer just say no to my rti?": {
+  "topic": "Grounds for refusal of information and exemptions",
+  "queries": [
+   "Section 8 exemptions and refusal of information by Public Information Officer",
+   "Prohibition on refusal of information without valid grounds under the Act",
+   "Conditions for denial of access to records and mandatory reasons for refusal"
+  ],
+  "keywords": [
+   "refusal",
+   "exemption",
+   "Section 8",
+   "reasons",
+   "denial",
+   "Public Information Officer",
+   "grounds",
+   "mandatory"
+  ]
+ },
+ "rti|the officer keeps delaying my rti, will he get punished?": {
+  "topic": "Penalty for delay in furnishing information",
+  "queries": [
+   "Section 20 penalty for delay in providing information by Public Information Officer",
+   "Punishment for failure to provide information within prescribed time limit",
+   "Fine imposed on officer for not responding to application within thirty days"
+  ],
+  "keywords": [
+   "penalty",
+   "delay",
+   "furnishing",
+   "information",
+   "Public Information Officer",
+   "Section 20",
+   "fine",
+   "time limit"
+  ]
+ },
+ "rti|do i have to explain why i want the information": {
+  "topic": "Application for information under Section 6",
+  "queries": [
+   "obligation to state purpose of request in application",
+   "whether applicant must disclose reason for seeking records",
+   "contents of application under Section 6(3) of the Act"
+  ],
+  "keywords": [
+   "purpose",
+   "reason",
+   "application",
+   "Section 6",
+   "disclose",
+   "identity",
+   "contact details",
+   "no obligation"
+  ]
+ },
+ "rti|whats the deadline for them to give me the info": {
+  "topic": "Time limit for furnishing information",
+  "queries": [
+   "period within which Public Information Officer shall provide information",
+   "thirty days limit for response to request",
+   "time limit for furnishing information under section 7"
+  ],
+  "keywords": [
+   "thirty days",
+   "Public Information Officer",
+   "furnishing information",
+   "time limit",
+   "section 7",
+   "request",
+   "response"
+  ]
+ },
+ "rti|my first appeal also failed, what next": {
+  "topic": "Second Appeal to State Information Commission",
+  "queries": [
+   "procedure for filing second appeal against first appellate authority decision",
+   "jurisdiction of State Information Commission for second appeal",
+   "time limit and fee for second appeal under section 19"
+  ],
+  "keywords": [
+   "second appeal",
+   "State Information Commission",
+   "first appellate authority",
+   "section 19",
+   "filing",
+   "jurisdiction",
+   "commissioner",
+   "time limit"
+  ]
+ },
+ "rti|cost of getting the information on a CD": {
+  "topic": "Reproduction charges for information on electronic media",
+  "queries": [
+   "fees for providing information on CD or electronic media",
+   "cost of reproduction of records on compact disc",
+   "payment of charges for electronic format of information"
+  ],
+  "keywords": [
+   "reproduction charges",
+   "electronic media",
+   "compact disc",
+   "fees",
+   "cost",
+   "information",
+   "copy",
+   "payment"
+  ]
+ },
+ "rti|who heads the AP information commission": {
+  "topic": "Chairperson of the State Information Commission",
+  "queries": [
+   "appointment and designation of the Chairperson of the State Information Commission",
+   "who is the head of the State Information Commission",
+   "powers and functions of the Chairperson of the State Information Commission"
+  ],
+  "keywords": [
+   "Chairperson",
+   "State Information Commission",
+   "Commissioner",
+   "appointment",
+   "head",
+   "presiding officer"
+  ]
+ },
+ "rti|its a life and death matter, how quickly will i get the info": {
+  "topic": "Time limit for furnishing information",
+  "queries": [
+   "time limit for providing information under section 6",
+   "period within which Public Information Officer must furnish information",
+   "consequences of delay in providing information to applicant"
+  ],
+  "keywords": [
+   "thirty days",
+   "furnish information",
+   "Public Information Officer",
+   "time limit",
+   "section 7",
+   "delay",
+   "applicant",
+   "records"
+  ]
+ },
+ "rti|can i ask the govt for information by email or does it have to be on paper": {
+  "topic": "Mode of submission of request for information",
+  "queries": [
+   "whether request for information can be submitted through electronic means or email",
+   "provisions regarding written request for information in electronic form",
+   "acceptance of online or email applications for disclosure of records"
+  ],
+  "keywords": [
+   "electronic form",
+   "written request",
+   "email",
+   "mode of submission",
+   "disclosure of information",
+   "public authority",
+   "application",
+   "records"
+  ]
+ },
+ "rti|what id or personal info do i have to give when i file an rti": {
+  "topic": "Applicant particulars in the application form",
+  "queries": [
+   "particulars of the applicant required in the application",
+   "identity proof and address details for filing application",
+   "mandatory fields in the application form for information"
+  ],
+  "keywords": [
+   "applicant",
+   "particulars",
+   "address",
+   "identity",
+   "proof",
+   "application",
+   "form",
+   "name",
+   "signature"
+  ]
+ },
+ "rti|i sent my rti to the wrong office, will they forward it": {
+  "topic": "Forwarding of application to competent authority",
+  "queries": [
+   "procedure for forwarding application received by wrong office",
+   "obligation of Public Information Officer to forward application to correct authority",
+   "transfer of request to competent authority under section 6"
+  ],
+  "keywords": [
+   "forward",
+   "competent authority",
+   "Public Information Officer",
+   "application",
+   "wrong office",
+   "transfer",
+   "section 6",
+   "seven days"
+  ]
+ },
+ "rti|how many days do i get to file the first appeal": {
+  "topic": "Time limit for filing first appeal",
+  "queries": [
+   "period for filing first appeal under section 19",
+   "time limit for first appeal to first appellate authority",
+   "days allowed for filing first appeal against refusal"
+  ],
+  "keywords": [
+   "thirty days",
+   "first appeal",
+   "first appellate authority",
+   "section 19",
+   "time limit",
+   "filing",
+   "appeal"
+  ]
+ },
+ "rti|officer didnt give the info on time, do i get it free now": {
+  "topic": "Consequences of delay in furnishing information",
+  "queries": [
+   "fee waiver for delay in providing information by Public Information Officer",
+   "exemption from payment of fees when information not furnished within prescribed time limit",
+   "provision for free information if response exceeds statutory period"
+  ],
+  "keywords": [
+   "delay",
+   "prescribed time",
+   "fee",
+   "waiver",
+   "exempt",
+   "furnishing",
+   "information",
+   "officer",
+   "free",
+   "charge"
+  ]
+ },
+ "rti|can i get copies of govt files on a pen drive or disc and whats the charge": {
+  "topic": "Reproduction charges for inspection of records",
+  "queries": [
+   "fees for providing copies of records on electronic media",
+   "charge for inspection and reproduction of documents on pen drive",
+   "payment of additional fee for electronic format of information"
+  ],
+  "keywords": [
+   "reproduction",
+   "electronic media",
+   "pen drive",
+   "inspection",
+   "fees",
+   "copies",
+   "records",
+   "charge"
+  ]
+ },
+ "rti|how much per page for xerox copies under rti": {
+  "topic": "Charges for providing copies of documents",
+  "queries": [
+   "fee per page for photocopy of records",
+   "cost of xerox copies under section 7",
+   "prescribed charges for reproduction of information"
+  ],
+  "keywords": [
+   "photocopy",
+   "per page",
+   "fee",
+   "reproduction",
+   "charges",
+   "Rupees",
+   "copy",
+   "document"
+  ]
+ },
+ "rti|is rti free if i ask a village panchayat office": {
+  "topic": "Fees for obtaining information from Panchayat offices",
+  "queries": [
+   "fee structure for application to Gram Panchayat",
+   "exemption from payment of fees for BPL applicants",
+   "cost of inspection and photocopying records in local self government"
+  ],
+  "keywords": [
+   "Gram Panchayat",
+   "fee",
+   "exemption",
+   "BPL",
+   "photocopy",
+   "inspection",
+   "application",
+   "payment"
+  ]
+ },
+ "rti|what kind of info is secret and cant be shared with public": {
+  "topic": "Exemptions from disclosure of information",
+  "queries": [
+   "Section 8 exemptions from disclosure of information",
+   "Categories of information not to be disclosed under the Act",
+   "Grounds for refusal of information under Section 8"
+  ],
+  "keywords": [
+   "Section 8",
+   "exemptions",
+   "disclosure",
+   "national security",
+   "cabinet papers",
+   "personal information",
+   "trade secrets",
+   "commercial confidence",
+   "prejudice",
+   "law enforcement"
+  ]
+ },
+ "rti|can i complain straight to the information commission instead of appealing": {
+  "topic": "Complaints to State Information Commission",
+  "queries": [
+   "procedure for filing complaint directly with State Information Commission",
+   "conditions for lodging complaint without first appeal",
+   "jurisdiction of State Information Commission regarding complaints"
+  ],
+  "keywords": [
+   "complaint",
+   "State Information Commission",
+   "first appeal",
+   "jurisdiction",
+   "lodging",
+   "directly",
+   "Section 18",
+   "appellant",
+   "respondent",
+   "procedure"
+  ]
+ },
+ "rti|does rti work for intelligence agencies like IB": {
+  "topic": "Exclusion of intelligence agencies from the Act",
+  "queries": [
+   "Section 2(1)(f) definition of information excluding intelligence agencies",
+   "Exemption of intelligence agencies from disclosure under Section 9",
+   "Scope of the Act regarding intelligence agencies and security forces"
+  ],
+  "keywords": [
+   "intelligence agencies",
+   "Section 2(1)(f)",
+   "excluded",
+   "Section 9",
+   "national security",
+   "public interest",
+   "disclosure",
+   "information"
+  ]
+ },
+ "rti|how long will the appeal officer take to decide my appeal": {
+  "topic": "Time limit for disposal of first appeal",
+  "queries": [
+   "period within which First Appellate Authority shall dispose of appeal",
+   "time limit for decision on appeal against refusal to provide information",
+   "duration for passing order on appeal by Appellate Authority"
+  ],
+  "keywords": [
+   "First Appellate Authority",
+   "thirty days",
+   "dispose of appeal",
+   "time limit",
+   "order",
+   "appeal",
+   "decision",
+   "period"
+  ]
+ },
+ "rti|if they refuse my rti do they have to tell me why": {
+  "topic": "Mandatory reasons for refusal of information",
+  "queries": [
+   "obligation to communicate reasons for refusal of request",
+   "grounds for denial of information under section 8",
+   "written notice specifying reasons for rejection of application"
+  ],
+  "keywords": [
+   "refusal",
+   "reasons",
+   "communicate",
+   "grounds",
+   "denial",
+   "written",
+   "notice",
+   "exemption",
+   "section 8",
+   "justification"
+  ]
+ },
+ "rti|can the govt refuse to share info saying it affects national security": {
+  "topic": "Exemption of information relating to national security",
+  "queries": [
+   "Section 8(1)(a) exemption national security",
+   "Grounds for refusal of information national security",
+   "Exempted information under Section 8 national security"
+  ],
+  "keywords": [
+   "national security",
+   "Section 8",
+   "exemption",
+   "refusal",
+   "information",
+   "sovereign",
+   "defence",
+   "public interest"
+  ]
+ },
+ "rti|can i get information about cabinet decisions": {
+  "topic": "Exemption of cabinet decisions under Section 8",
+  "queries": [
+   "exemption of cabinet decisions from disclosure",
+   "Section 8(1)(a) deliberative process and cabinet papers",
+   "grounds for refusal of information regarding cabinet decisions"
+  ],
+  "keywords": [
+   "cabinet decisions",
+   "Section 8",
+   "exemption",
+   "deliberative process",
+   "refusal",
+   "public interest",
+   "confidential",
+   "disclosure"
+  ]
+ },
+ "rti|can i ask for someone elses personal details using rti": {
+  "topic": "Exemption of personal information under Section 8",
+  "queries": [
+   "Section 8(1)(j) personal information unrelated to public activity",
+   "Exemption of information relating to personal privacy",
+   "Grounds for refusal of request for personal details"
+  ],
+  "keywords": [
+   "Section 8",
+   "personal information",
+   "unrelated to public activity",
+   "privacy",
+   "exemption",
+   "refusal",
+   "third party",
+   "disclosure"
+  ]
+ },
+ "rti|what happens to an officer who knowingly gives me wrong info": {
+  "topic": "Penalty for providing incorrect information",
+  "queries": [
+   "penalty for knowingly giving false information",
+   "punishment for Public Information Officer providing wrong records",
+   "offence of furnishing incorrect information under section 20"
+  ],
+  "keywords": [
+   "penalty",
+   "knowingly",
+   "false information",
+   "offence",
+   "punishment",
+   "Public Information Officer",
+   "incorrect",
+   "section 20"
+  ]
+ },
+ "rti|how many extra days do they get if i hand my application to an assistant PIO": {
+  "topic": "Time limit for transfer of application to Public Information Officer",
+  "queries": [
+   "additional period of three days for transfer of request to PIO",
+   "timeline for forwarding application received by Assistant Public Information Officer",
+   "extension of time limit for response when application transferred to PIO"
+  ],
+  "keywords": [
+   "three days",
+   "Assistant Public Information Officer",
+   "transfer",
+   "application",
+   "Public Information Officer",
+   "additional period",
+   "forwarding",
+   "response"
+  ]
+ },
+ "rti|do i need to pay for rti at a mandal office": {
+  "topic": "Application fee for information request at Mandal level",
+  "queries": [
+   "fee payable for application to Public Information Officer at Mandal office",
+   "cost of obtaining records from Mandal Revenue Officer under Section 7",
+   "payment of application fee to PIA in Mandal administration"
+  ],
+  "keywords": [
+   "application fee",
+   "Public Information Officer",
+   "Mandal",
+   "Section 7",
+   "payment",
+   "records",
+   "request",
+   "ten rupees"
+  ]
+ },
+ "rti|can i go and look at the files myself instead of getting copies": {
+  "topic": "Inspection of documents by applicant",
+  "queries": [
+   "provision for inspection of records by applicant",
+   "right to inspect documents instead of obtaining copies",
+   "procedure for physical examination of files by citizen"
+  ],
+  "keywords": [
+   "inspection",
+   "records",
+   "applicant",
+   "documents",
+   "examination",
+   "files",
+   "access",
+   "view"
+  ]
+ },
+ "rti|what powers does the information commission have when it looks into my complaint": {
+  "topic": "Powers of the State Information Commission in disposing of complaints",
+  "queries": [
+   "powers of the State Information Commission to dispose of complaints under Section 18",
+   "authority of the Commission to order disclosure of information or impose penalty",
+   "provisions for the State Information Commission to pass orders on complaints"
+  ],
+  "keywords": [
+   "State Information Commission",
+   "complaint",
+   "powers",
+   "dispose",
+   "order",
+   "penalty",
+   "disclosure",
+   "Section 18"
+  ]
+ },
+ "rti|does rti apply to private companies": {
+  "topic": "Applicability to private bodies and non-governmental organizations",
+  "queries": [
+   "Section 2(n) definition of private body holding information of substantial public interest",
+   "Scope of application to private entities not receiving government funding",
+   "Exclusion of private companies from the purview of the Act"
+  ],
+  "keywords": [
+   "private body",
+   "substantial public interest",
+   "Section 2(n)",
+   "non-governmental organization",
+   "excluded",
+   "private company",
+   "public interest",
+   "information"
+  ]
+ },
+ "rti|can i write my rti application in telugu": {
+  "topic": "Language of application under Section 6",
+  "queries": [
+   "language in which application may be submitted",
+   "provision for vernacular language in request for information",
+   "Section 6(3) language of application"
+  ],
+  "keywords": [
+   "vernacular",
+   "language",
+   "application",
+   "Section 6",
+   "request",
+   "written",
+   "form"
+  ]
+ },
+ "rti|i cant read or write, how can i ask for information": {
+  "topic": "Procedure for oral request by illiterate applicant",
+  "queries": [
+   "procedure for making oral request to Public Information Officer",
+   "requirements for applicant unable to read or write",
+   "role of Public Information Officer in assisting illiterate citizen"
+  ],
+  "keywords": [
+   "oral request",
+   "illiterate",
+   "Public Information Officer",
+   "assistance",
+   "signature",
+   "thumb impression",
+   "application",
+   "written request"
+  ]
+ },
+ "rti|can the information commission make the department pay me for the trouble": {
+  "topic": "Compensation for loss caused by delay or refusal",
+  "queries": [
+   "power of Information Commission to award compensation",
+   "remedy for loss or damage caused by delay in furnishing information",
+   "penalty and compensation for refusal to provide records"
+  ],
+  "keywords": [
+   "compensation",
+   "loss",
+   "damage",
+   "delay",
+   "refusal",
+   "Information Commission",
+   "remedy",
+   "award"
+  ]
+ },
+ "rti|the info i want is about another person, will that person be told": {
+  "topic": "Third party disclosure of information",
+  "queries": [
+   "procedure for informing third party before disclosing information",
+   "notice to third party regarding request for information",
+   "obligation to communicate to third party before granting access to records"
+  ],
+  "keywords": [
+   "third party",
+   "notice",
+   "disclosure",
+   "information",
+   "communication",
+   "objection",
+   "records",
+   "public authority"
+  ]
+ },
+ "rti|i want the info as a soft copy, do they have to give it that way": {
+  "topic": "Form of providing information under Section 5",
+  "queries": [
+   "Section 5 form of providing information soft copy",
+   "Requester choice of format for information disclosure",
+   "Provision of information in electronic form or soft copy"
+  ],
+  "keywords": [
+   "form of providing",
+   "soft copy",
+   "electronic form",
+   "requester's choice",
+   "Section 5",
+   "disclosure",
+   "format",
+   "copy"
+  ]
+ },
+ "rti|can the PIO take help from other officers to find my info": {
+  "topic": "Duty of Public Information Officer to assist in obtaining information",
+  "queries": [
+   "obligation of Public Information Officer to seek assistance from other officers",
+   "procedure for PIO to obtain records from subordinate departments",
+   "responsibility of PIO to facilitate access to information held by other officers"
+  ],
+  "keywords": [
+   "Public Information Officer",
+   "assist",
+   "other officers",
+   "obtain information",
+   "records",
+   "facilitate",
+   "access",
+   "department",
+   "cooperation",
+   "records"
+  ]
+ },
+ "rti|what happens if an officer destroys the records i asked for": {
+  "topic": "Penalty for destruction of records by Public Information Officer",
+  "queries": [
+   "punishment for destruction of records under section 20",
+   "penalty imposed on PIO for destroying information",
+   "offence of destroying records sought under section 20"
+  ],
+  "keywords": [
+   "destruction",
+   "records",
+   "penalty",
+   "section 20",
+   "Public Information Officer",
+   "imprisonment",
+   "fine",
+   "offence"
+  ]
+ },
+ "rti|they asked me to pay extra fees, do they have to show how they worked it out": {
+  "topic": "Calculation of additional fees for information requests",
+  "queries": [
+   "procedure for calculating additional fees for certified copies",
+   "requirement to provide detailed calculation of extra charges",
+   "justification for demanding additional fees beyond prescribed amount"
+  ],
+  "keywords": [
+   "additional fees",
+   "calculation",
+   "certified copies",
+   "prescribed fee",
+   "justification",
+   "breakdown",
+   "charges",
+   "information request"
+  ]
+ },
+ "rti|is there an official guide for citizens on how to use rti": {
+  "topic": "Citizen's Guide to filing applications",
+  "queries": [
+   "official handbook for applicants on procedure",
+   "step-by-step instructions for submitting requests",
+   "guidelines for citizens on drafting applications"
+  ],
+  "keywords": [
+   "citizen's guide",
+   "application format",
+   "procedure",
+   "handbook",
+   "instructions",
+   "request",
+   "applicant",
+   "guidelines"
+  ]
+ },
+ "rti|who chooses the state information commissioners": {
+  "topic": "Appointment of State Information Commissioners",
+  "queries": [
+   "procedure for selection and appointment of State Information Commissioners",
+   "role of Governor in appointing State Information Commissioners",
+   "criteria for choosing State Information Commissioners"
+  ],
+  "keywords": [
+   "Governor",
+   "appointment",
+   "State Information Commissioner",
+   "selection",
+   "consultation",
+   "Chief Minister",
+   "Chief Justice",
+   "High Court"
+  ]
+ },
+ "rti|how long does an information commissioner stay in office": {
+  "topic": "Term of office of Information Commissioner",
+  "queries": [
+   "duration of tenure for State Information Commissioner",
+   "period of appointment of Information Commissioner",
+   "term of office of the Commissioner under the Act"
+  ],
+  "keywords": [
+   "term of office",
+   "three years",
+   "Information Commissioner",
+   "tenure",
+   "appointment",
+   "State Information Commission",
+   "re-appointment",
+   "commissioner"
+  ]
+ },
+ "rti|can i use rti to get info from an ngo": {
+  "topic": "Definition of public authority and private body",
+  "queries": [
+   "definition of public authority under section 2(h)",
+   "application of Act to private bodies receiving substantial funding",
+   "exclusion of non-governmental organizations from scope of Act"
+  ],
+  "keywords": [
+   "public authority",
+   "private body",
+   "substantial funding",
+   "non-governmental organization",
+   "section 2(h)",
+   "scope of Act",
+   "excluded"
+  ]
+ },
+ "rti|can i pay the rti fee by demand draft in AP": {
+  "topic": "Modes of payment of application fee",
+  "queries": [
+   "acceptance of demand draft for application fee",
+   "payment of fee by bank draft or cheque",
+   "modes of payment for information request fee"
+  ],
+  "keywords": [
+   "demand draft",
+   "application fee",
+   "payment",
+   "bank draft",
+   "cheque",
+   "cash",
+   "postal order"
+  ]
+ },
+ "agriculture|How much financial assistance is given per year under the Annadatha Sukhibhava scheme?": {
+  "topic": "Annadatha Sukhibhava Scheme financial assistance",
+  "queries": [
+   "Annadatha Sukhibhava Scheme annual financial assistance amount per farmer",
+   "PM-KISAN and Annadatha Sukhibhava combined benefit amount per year",
+   "Government order on Annadatha Sukhibhava Scheme disbursement amount"
+  ],
+  "keywords": [
+   "Annadatha Sukhibhava",
+   "financial assistance",
+   "per year",
+   "PM-KISAN",
+   "farmer",
+   "scheme",
+   "amount",
+   "benefit"
+  ]
+ },
+ "agriculture|What is the minimum land holding required to be eligible for Annadatha Sukhibhava?": {
+  "topic": "Annadatha Sukhibhava eligibility criteria land holding",
+  "queries": [
+   "Annadatha Sukhibhava scheme minimum land holding eligibility",
+   "Annadatha Sukhibhava guidelines land area requirement for farmers",
+   "Annadatha Sukhibhava beneficiary qualification land holding size"
+  ],
+  "keywords": [
+   "Annadatha Sukhibhava",
+   "minimum land holding",
+   "eligibility",
+   "acre",
+   "hectare",
+   "farmer",
+   "beneficiary",
+   "guidelines",
+   "land records",
+   "cultivation"
+  ]
+ },
+ "agriculture|Are income tax payers eligible for Annadatha Sukhibhava?": {
+  "topic": "Annadatha Sukhibhava eligibility criteria",
+  "queries": [
+   "Annadatha Sukhibhava scheme eligibility income tax payers",
+   "Annadatha Sukhibhava exclusion criteria income tax returns",
+   "Annadatha Sukhibhava guidelines eligible beneficiaries income tax"
+  ],
+  "keywords": [
+   "Annadatha Sukhibhava",
+   "eligibility",
+   "income tax",
+   "exclusion",
+   "beneficiaries",
+   "guidelines",
+   "criteria",
+   "taxpayers"
+  ]
+ },
+ "agriculture|What is the new name of the YSR Rythu Bharosa - PM Kisan scheme?": {
+  "topic": "YSR Rythu Bharosa - PM Kisan Scheme",
+  "queries": [
+   "new name YSR Rythu Bharosa PM Kisan scheme",
+   "renamed YSR Rythu Bharosa PM Kisan farmer income support",
+   "current designation YSR Rythu Bharosa PM Kisan"
+  ],
+  "keywords": [
+   "YSR Rythu Bharosa",
+   "PM Kisan",
+   "new name",
+   "renamed",
+   "farmer income support",
+   "scheme",
+   "designation"
+  ]
+ },
+ "agriculture|What are the Rythu Bharosa Kendras called now?": {
+  "topic": "Rythu Seva Kendra",
+  "queries": [
+   "Rythu Bharosa Kendra renamed Rythu Seva Kendra",
+   "current name of Rythu Bharosa Kendra scheme",
+   "Rythu Seva Kendra establishment and nomenclature"
+  ],
+  "keywords": [
+   "Rythu Seva Kendra",
+   "Rythu Bharosa Kendra",
+   "renamed",
+   "rechristened",
+   "centre",
+   "Agriculture Department",
+   "farmer service",
+   "nomenclature"
+  ]
+ },
+ "agriculture|What is the e-Crop (e-Panta) app called now?": {
+  "topic": "e-Crop (e-Panta) application name change",
+  "queries": [
+   "current name of e-Crop e-Panta mobile application",
+   "renaming of e-Crop e-Panta app for crop loan sanction",
+   "official notification regarding e-Crop e-Panta app title"
+  ],
+  "keywords": [
+   "e-Crop",
+   "e-Panta",
+   "application",
+   "renamed",
+   "mobile app",
+   "crop loan",
+   "sanction",
+   "current name"
+  ]
+ },
+ "agriculture|How are crop insurance claims settled under PMFBY (Pradhan Mantri Fasal Bima Yojana) in Andhra Pradesh?": {
+  "topic": "PMFBY claim settlement procedure",
+  "queries": [
+   "Pradhana Mantri Fasal Bima Yojana claim settlement process and timeline",
+   "PMFBY crop insurance claim payment calculation and disbursement rules",
+   "Procedure for settlement of crop insurance claims under PMFBY guidelines"
+  ],
+  "keywords": [
+   "claim settlement",
+   "PMFBY",
+   "crop insurance",
+   "disbursement",
+   "assessment",
+   "loss",
+   "premium",
+   "reimbursement",
+   "procedure",
+   "timeline"
+  ]
+ },
+ "agriculture|Is enrolment in crop insurance compulsory or voluntary for farmers?": {
+  "topic": "Crop Insurance Scheme enrolment eligibility",
+  "queries": [
+   "Is participation in the Pradhan Mantri Fasal Bima Yojana mandatory or voluntary for cultivators?",
+   "Compulsory nature of crop insurance premium payment under PMFBY guidelines",
+   "Voluntary enrolment provisions for farmers in the state crop insurance scheme"
+  ],
+  "keywords": [
+   "voluntary",
+   "compulsory",
+   "enrolment",
+   "crop insurance",
+   "PMFBY",
+   "cultivators",
+   "participation",
+   "premium"
+  ]
+ },
+ "agriculture|Who heads the District Level Grievance Redressal Committee for crop insurance?": {
+  "topic": "District Level Grievance Redressal Committee crop insurance",
+  "queries": [
+   "Chairman District Level Grievance Redressal Committee crop insurance",
+   "Composition and head of District Level Grievance Redressal Committee",
+   "Who is the Chairman of the District Level Grievance Redressal Committee for crop insurance claims"
+  ],
+  "keywords": [
+   "Chairman",
+   "District Level Grievance Redressal Committee",
+   "crop insurance",
+   "District Collector",
+   "grievance redressal",
+   "insurance claims",
+   "committee composition"
+  ]
+ },
+ "agriculture|What is the maximum crop loan eligible for interest-free benefit under the Sunna Vaddi Panta Runalu scheme?": {
+  "topic": "Sunna Vaddi Panta Runalu interest-free loan limit",
+  "queries": [
+   "maximum crop loan amount eligible for interest-free benefit under Sunna Vaddi Panta Runalu",
+   "Sunna Vaddi Panta Runalu scheme guidelines for zero interest crop loans",
+   "limit of agricultural loan covered by Sunna Vaddi Panta Runalu interest waiver"
+  ],
+  "keywords": [
+   "Sunna Vaddi Panta Runalu",
+   "interest-free",
+   "crop loan",
+   "maximum limit",
+   "agricultural loan",
+   "zero interest",
+   "eligible amount"
+  ]
+ },
+ "agriculture|How is subsidy seed distributed to farmers?": {
+  "topic": "Distribution of subsidy seeds to farmers",
+  "queries": [
+   "procedure for distribution of subsidy seeds to farmers",
+   "mechanism for supply of subsidised seeds through Agriculture Department",
+   "guidelines for issuance of subsidy seeds to eligible farmers"
+  ],
+  "keywords": [
+   "subsidy seeds",
+   "distribution",
+   "farmers",
+   "Agriculture Department",
+   "supply",
+   "eligible",
+   "procurement",
+   "issuance"
+  ]
+ },
+ "agriculture|What is the sale price and subsidy for K-6 groundnut seed in Kharif 2026?": {
+  "topic": "K-6 groundnut seed subsidy and sale price Kharif 2026",
+  "queries": [
+   "K-6 groundnut seed sale price and subsidy Kharif 2026",
+   "Groundnut seed distribution scheme K-6 variety financial assistance Kharif 2026",
+   "Subsidized K-6 groundnut seed rate and government support Kharif 2026"
+  ],
+  "keywords": [
+   "K-6",
+   "groundnut",
+   "seed",
+   "subsidy",
+   "sale price",
+   "Kharif 2026",
+   "distribution",
+   "variety"
+  ]
+ },
+ "agriculture|What drip irrigation subsidy is given to SC/ST small farmers?": {
+  "topic": "Drip irrigation subsidy for SC/ST small farmers",
+  "queries": [
+   "subsidy rate for drip irrigation systems for Scheduled Caste and Scheduled Tribe small farmers",
+   "financial assistance for micro irrigation to SC/ST small and marginal farmers",
+   "government subsidy percentage for sprinkler and drip irrigation for SC/ST category farmers"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "subsidy",
+   "SC/ST",
+   "small farmers",
+   "micro irrigation",
+   "financial assistance",
+   "sprinkler",
+   "percentage",
+   "scheme"
+  ]
+ },
+ "agriculture|For how long is a Crop Cultivator Rights Card valid?": {
+  "topic": "Validity period of Crop Cultivator Rights Card",
+  "queries": [
+   "validity period of Crop Cultivator Rights Card for tenant farmers",
+   "duration of validity for cultivator card issued under tenant farmer scheme",
+   "renewal and validity timeline of Crop Cultivator Rights Card"
+  ],
+  "keywords": [
+   "validity",
+   "Crop Cultivator Rights Card",
+   "tenant farmer",
+   "cultivator card",
+   "period",
+   "renewal",
+   "one year",
+   "issuance"
+  ]
+ },
+ "agriculture|What is the minimum support price for common paddy in KMS (Kharif Marketing Season) 2025-26?": {
+  "topic": "Minimum Support Price for Common Paddy KMS 2025-26",
+  "queries": [
+   "Minimum Support Price MSP common paddy Kharif Marketing Season 2025-26",
+   "Government order fixing MSP for common paddy variety KMS 2025-26",
+   "Procurement price common paddy Kharif 2025-26 Agriculture Department"
+  ],
+  "keywords": [
+   "Minimum Support Price",
+   "common paddy",
+   "Kharif Marketing Season",
+   "2025-26",
+   "procurement",
+   "per quintal",
+   "Government Order",
+   "crop year"
+  ]
+ },
+ "agriculture|What extent of crop damage makes a farmer eligible for input subsidy?": {
+  "topic": "Crop damage threshold for input subsidy eligibility",
+  "queries": [
+   "minimum percentage of crop damage required for input subsidy",
+   "eligibility criteria for input subsidy based on crop loss assessment",
+   "threshold of crop damage for financial assistance under natural calamity relief"
+  ],
+  "keywords": [
+   "input subsidy",
+   "crop damage",
+   "eligibility",
+   "percentage",
+   "assessment",
+   "threshold",
+   "natural calamity",
+   "financial assistance"
+  ]
+ },
+ "agriculture|What is the SDRF (State Disaster Response Fund) input subsidy per hectare for crops in assured irrigated areas?": {
+  "topic": "SDRF input subsidy for assured irrigated areas",
+  "queries": [
+   "State Disaster Response Fund input subsidy rate per hectare assured irrigated crops",
+   "SDRF guidelines financial assistance for crop loss irrigated areas",
+   "Disaster management fund subsidy amount per acre for assured irrigation"
+  ],
+  "keywords": [
+   "SDRF",
+   "input subsidy",
+   "assured irrigated",
+   "per hectare",
+   "crop loss",
+   "disaster response",
+   "financial assistance",
+   "irrigated areas"
+  ]
+ },
+ "agriculture|How is a farmer family defined under PM-KISAN?": {
+  "topic": "PM-KISAN Farmer Family Definition",
+  "queries": [
+   "definition of farmer family under PM-KISAN scheme guidelines",
+   "criteria for identifying farmer family for income support",
+   "PM-KISAN eligibility farmer family composition rules"
+  ],
+  "keywords": [
+   "farmer family",
+   "PM-KISAN",
+   "definition",
+   "eligibility",
+   "landholding",
+   "beneficiary",
+   "family unit",
+   "guidelines"
+  ]
+ },
+ "agriculture|What pension does the PM Kisan Maan Dhan Yojana provide?": {
+  "topic": "PM Kisan Maan Dhan Yojana pension benefits",
+  "queries": [
+   "PM Kisan Maan Dhan Yojana monthly pension amount eligibility",
+   "Pradhan Mantri Kisan Maan Dhan Yojana pension scheme guidelines",
+   "PM-KISAN Maan Dhan Yojana retirement benefits for farmers"
+  ],
+  "keywords": [
+   "PM Kisan Maan Dhan Yojana",
+   "monthly pension",
+   "₹3000",
+   "eligibility",
+   "retirement",
+   "contributions",
+   "senior citizens",
+   "small farmers"
+  ]
+ },
+ "agriculture|What interest subvention is given on short-term crop loans through Kisan Credit Card?": {
+  "topic": "Interest subvention on short-term crop loans under Kisan Credit Card",
+  "queries": [
+   "Interest subvention rate for short-term crop loans Kisan Credit Card",
+   "Subsidy on interest for KCC loans up to 3 lakh rupees",
+   "Terms and conditions of interest subvention Kisan Credit Card scheme"
+  ],
+  "keywords": [
+   "interest subvention",
+   "Kisan Credit Card",
+   "short-term crop loans",
+   "2% per annum",
+   "subsidy",
+   "credit facility",
+   "repayment",
+   "timely repayment"
+  ]
+ },
+ "agriculture|Up to what limit can banks give KCC (Kisan Credit Card) loans without collateral security under tie-up arrangements?": {
+  "topic": "Kisan Credit Card collateral-free loan limit",
+  "queries": [
+   "Kisan Credit Card collateral free limit tie up arrangement",
+   "KCC loan amount without security collateral bank guidelines",
+   "Kisan Credit Card scheme collateral free threshold limit"
+  ],
+  "keywords": [
+   "Kisan Credit Card",
+   "collateral",
+   "security",
+   "tie-up",
+   "limit",
+   "KCC",
+   "loan",
+   "bank"
+  ]
+ },
+ "agriculture|Where can farmers register for the farm mechanization subsidy?": {
+  "topic": "Farm Mechanization Subsidy Registration Procedure",
+  "queries": [
+   "procedure for farmers to register for farm mechanization subsidy",
+   "application process for agricultural machinery subsidy scheme",
+   "steps to apply for farm equipment financial assistance"
+  ],
+  "keywords": [
+   "registration",
+   "farm mechanization",
+   "subsidy",
+   "application",
+   "agricultural machinery",
+   "financial assistance",
+   "online portal",
+   "district agriculture office"
+  ]
+ },
+ "agriculture|What services does the Agriculture Department provide at Rythu Bharosa Kendras?": {
+  "topic": "Rythu Bharosa Kendra services",
+  "queries": [
+   "list of services provided at Rythu Bharosa Kendra by Agriculture Department",
+   "functions and activities of Rythu Bharosa Kendra under Agriculture Department",
+   "scope of Rythu Bharosa Kendra for farmers in the state"
+  ],
+  "keywords": [
+   "Rythu Bharosa Kendra",
+   "Agriculture Department",
+   "services",
+   "farmers",
+   "extension",
+   "advisory",
+   "input supply",
+   "market linkage"
+  ]
+ },
+ "agriculture|What was the free agriculture power scheme renamed as?": {
+  "topic": "Renaming of Free Agriculture Power Scheme",
+  "queries": [
+   "notification renaming free agriculture power supply scheme",
+   "order changing name of agricultural power subsidy scheme",
+   "gazette notification new title for free power to farmers scheme"
+  ],
+  "keywords": [
+   "renamed",
+   "free agriculture power",
+   "scheme",
+   "notification",
+   "gazette",
+   "agricultural power",
+   "subsidy",
+   "order"
+  ]
+ },
+ "agriculture|how much money will govt give me every year as a farmer in AP": {
+  "topic": "PM-KISAN and Annadata Sukhibhava income support",
+  "queries": [
+   "annual direct benefit transfer amount PM-KISAN scheme guidelines",
+   "Annadata Sukhibhava scheme financial assistance per acre per year",
+   "farmer income support scheme total annual cash benefit eligibility"
+  ],
+  "keywords": [
+   "PM-KISAN",
+   "Annadata Sukhibhava",
+   "direct benefit transfer",
+   "annual assistance",
+   "per acre",
+   "cash benefit",
+   "farmer income",
+   "financial support"
+  ]
+ },
+ "agriculture|i dont own land, i take land on lease. can i still get the 20k farmer money?": {
+  "topic": "PM-KISAN eligibility for tenant farmers",
+  "queries": [
+   "eligibility criteria for PM-KISAN beneficiary tenant farmer",
+   "PM-KISAN scheme guidelines for cultivators without land ownership",
+   "tenant farmer cultivator card PM-KISAN benefit entitlement"
+  ],
+  "keywords": [
+   "tenant farmer",
+   "PM-KISAN",
+   "eligibility",
+   "cultivator card",
+   "land lease",
+   "beneficiary",
+   "income support",
+   "ownership"
+  ]
+ },
+ "agriculture|my crop got destroyed in the cyclone, will govt pay me anything": {
+  "topic": "Relief for crops damaged by cyclones",
+  "queries": [
+   "compensation for crop loss due to cyclone",
+   "relief measures for natural calamities agriculture",
+   "financial assistance for cyclone damaged crops"
+  ],
+  "keywords": [
+   "relief",
+   "compensation",
+   "crop loss",
+   "natural calamity",
+   "damaged",
+   "agricultural produce",
+   "financial assistance",
+   "disaster management"
+  ]
+ },
+ "agriculture|do i have to pay for crop insurance now or is it still free": {
+  "topic": "Premium subsidy for crop insurance under PMFBY",
+  "queries": [
+   "farmer contribution percentage crop insurance premium subsidy",
+   "PMFBY premium sharing pattern for small and marginal farmers",
+   "is crop insurance premium free for farmers in AP"
+  ],
+  "keywords": [
+   "premium subsidy",
+   "farmer contribution",
+   "PMFBY",
+   "crop insurance",
+   "premium sharing",
+   "subsidy",
+   "marginal farmers",
+   "small farmers"
+  ]
+ },
+ "agriculture|insurance company didnt pay my claim, who do i complain to": {
+  "topic": "Crop Insurance Scheme grievance redressal mechanism",
+  "queries": [
+   "procedure to file complaint against insurance company for non-payment of crop insurance claim",
+   "role of District Collector and State Crop Insurance Authority in resolving farmer grievances",
+   "contact details for Crop Insurance Authority office for claim settlement disputes"
+  ],
+  "keywords": [
+   "insurance company",
+   "claim settlement",
+   "grievance redressal",
+   "District Collector",
+   "State Crop Insurance Authority",
+   "non-payment",
+   "farmer complaint",
+   "crop insurance"
+  ]
+ },
+ "agriculture|whats the price govt pays for paddy this season": {
+  "topic": "Minimum Support Price for paddy procurement",
+  "queries": [
+   "current season Minimum Support Price MSP for paddy procurement",
+   "government purchase rate for paddy this marketing season",
+   "MSP notification for paddy crop procurement by APMC"
+  ],
+  "keywords": [
+   "Minimum Support Price",
+   "paddy",
+   "procurement",
+   "MSP",
+   "marketing season",
+   "APMC",
+   "purchase rate",
+   "crop year"
+  ]
+ },
+ "agriculture|can i get a loan without interest for farming": {
+  "topic": "Interest-free crop loans for farmers",
+  "queries": [
+   "eligibility criteria for interest-free agricultural loans",
+   "scheme guidelines for zero interest rate farm credit",
+   "procedure to avail interest-free loan for cultivation"
+  ],
+  "keywords": [
+   "interest-free",
+   "agricultural loan",
+   "cultivation",
+   "eligibility",
+   "credit",
+   "farmer",
+   "subsidy",
+   "scheme"
+  ]
+ },
+ "agriculture|where do i get cheap seeds from the govt": {
+  "topic": "Subsidised seed distribution through Agriculture Department",
+  "queries": [
+   "procurement of subsidised seeds from Agriculture Department",
+   "availability of government seeds at Rythu Seva Kendrams",
+   "scheme for distribution of quality seeds to farmers"
+  ],
+  "keywords": [
+   "subsidised seeds",
+   "Agriculture Department",
+   "Rythu Seva Kendram",
+   "seed distribution",
+   "quality seeds",
+   "government subsidy",
+   "procurement"
+  ]
+ },
+ "agriculture|what do they call the RBK (Rythu Bharosa Kendram / Rythu Seva Kendram) centre now": {
+  "topic": "Rythu Bharosa Kendram",
+  "queries": [
+   "Rythu Bharosa Kendram name change from Rythu Seva Kendram",
+   "current designation of Rythu Seva Kendram centres",
+   "Rythu Bharosa Kendram scheme guidelines and nomenclature"
+  ],
+  "keywords": [
+   "Rythu Bharosa Kendram",
+   "Rythu Seva Kendram",
+   "renamed",
+   "centre",
+   "designation",
+   "agriculture",
+   "farmer",
+   "service"
+  ]
+ },
+ "agriculture|i am SC farmer with 2 acres, how much do i pay for a drip system": {
+  "topic": "Subsidy for drip and sprinkler irrigation",
+  "queries": [
+   "subsidy rate for drip irrigation system for SC farmer with 2 acres",
+   "financial assistance for micro irrigation schemes under Agriculture Department",
+   "cost sharing for sprinkler and drip irrigation equipment for small and marginal farmers"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "subsidy",
+   "SC farmer",
+   "2 acres",
+   "micro irrigation",
+   "financial assistance",
+   "cost sharing",
+   "sprinkler"
+  ]
+ },
+ "agriculture|the seeds i bought didnt grow, can someone check the seed": {
+  "topic": "Seed Quality Control and Testing Procedures",
+  "queries": [
+   "procedure for testing seed samples for germination and purity",
+   "complaint mechanism for substandard seeds under Seed Act",
+   "role of Seed Certification Officer in verifying seed quality"
+  ],
+  "keywords": [
+   "germination",
+   "purity",
+   "seed sample",
+   "Seed Act",
+   "quality control",
+   "certification",
+   "complaint",
+   "analysis",
+   "germination test",
+   "moisture content"
+  ]
+ },
+ "agriculture|shop is selling fertilizer above the price, is that allowed": {
+  "topic": "Control of Essential Commodities Act fertilizer price limits",
+  "queries": [
+   "penalty for selling fertilizer above maximum retail price",
+   "prohibition of hoarding and profiteering of fertilizers",
+   "legal action against shops violating fertilizer price control orders"
+  ],
+  "keywords": [
+   "fertilizer",
+   "maximum retail price",
+   "profiteering",
+   "penalty",
+   "hoarding",
+   "essential commodities",
+   "violation",
+   "shop"
+  ]
+ },
+ "agriculture|what is CCRC (Crop Cultivator Rights Card) and how long is it valid": {
+  "topic": "Crop Cultivator Rights Card validity period",
+  "queries": [
+   "validity period of Crop Cultivator Rights Card for tenant farmers",
+   "CCRC issuance and renewal duration under tenant farmer scheme",
+   "legal validity of cultivator card for sharecroppers"
+  ],
+  "keywords": [
+   "Crop Cultivator Rights Card",
+   "CCRC",
+   "validity",
+   "tenant farmers",
+   "cultivator card",
+   "sharecroppers",
+   "renewal",
+   "period"
+  ]
+ },
+ "agriculture|my father died and the land came to me, can i get pm kisan": {
+  "topic": "PM-KISAN beneficiary eligibility for legal heirs",
+  "queries": [
+   "PM-KISAN scheme guidelines eligibility criteria for legal heirs of deceased farmer",
+   "Procedure to transfer PM-KISAN benefit to successor or legal heir after death of beneficiary",
+   "PM-KISAN registration process for land inherited by family member of deceased cultivator"
+  ],
+  "keywords": [
+   "legal heir",
+   "deceased",
+   "successor",
+   "PM-KISAN",
+   "beneficiary",
+   "eligibility",
+   "land records",
+   "transfer",
+   "cultivator",
+   "inheritance"
+  ]
+ },
+ "agriculture|is there a pension for small farmers when they get old": {
+  "topic": "Old Age Pension for Small Farmers",
+  "queries": [
+   "eligibility criteria for old age pension scheme for small and marginal farmers",
+   "age limit and income ceiling for farmer pension benefits",
+   "application procedure for senior citizen pension for agricultural workers"
+  ],
+  "keywords": [
+   "old age pension",
+   "small farmers",
+   "marginal farmers",
+   "eligibility",
+   "age limit",
+   "income ceiling",
+   "senior citizens",
+   "pension scheme"
+  ]
+ },
+ "agriculture|kcc (Kisan Credit Card) loan interest if i pay back on time": {
+  "topic": "Kisan Credit Card interest subvention for timely repayment",
+  "queries": [
+   "Kisan Credit Card interest subvention benefit for timely repayment of loan",
+   "conditions for full interest subvention on KCC loans under PM-KISAN guidelines",
+   "interest rate applicable to Kisan Credit Card holders repaying within stipulated period"
+  ],
+  "keywords": [
+   "Kisan Credit Card",
+   "interest subvention",
+   "timely repayment",
+   "credit facility",
+   "subsidy",
+   "loan",
+   "repayment",
+   "benefit"
+  ]
+ },
+ "agriculture|how much land do i need to have to get annadata money": {
+  "topic": "Annadata Sukhibhava eligibility land holding criteria",
+  "queries": [
+   "Annadata Sukhibhava scheme land holding limit eligibility",
+   "minimum acreage requirement for Annadata Sukhibhava benefit",
+   "Annadata Sukhibhava guidelines on cultivator land ownership"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "land holding",
+   "eligibility",
+   "acre",
+   "cultivator",
+   "beneficiary",
+   "guidelines",
+   "limit"
+  ]
+ },
+ "agriculture|i am a govt employee and i also have some farm land, will i get annadata sukhibhava": {
+  "topic": "Annadata Sukhibhava eligibility for government employees",
+  "queries": [
+   "Annadata Sukhibhava scheme eligibility criteria government servants",
+   "exclusion of government employees from Annadata Sukhibhava benefits",
+   "Annadata Sukhibhava guidelines on dual income sources and land ownership"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "eligibility",
+   "government employees",
+   "exclusion",
+   "land ownership",
+   "benefits",
+   "guidelines",
+   "farmer"
+  ]
+ },
+ "agriculture|is e-crop (e-Panta) and e-panta the same thing": {
+  "topic": "e-Panta and e-Crop loan schemes",
+  "queries": [
+   "difference between e-Panta and e-Crop loan schemes",
+   "e-Panta digital crop loan application process",
+   "e-Crop loan scheme guidelines and eligibility"
+  ],
+  "keywords": [
+   "e-Panta",
+   "e-Crop",
+   "loan",
+   "scheme",
+   "digital",
+   "application",
+   "difference",
+   "guidelines"
+  ]
+ },
+ "agriculture|will the insurance people believe me if i tell them my crop failed": {
+  "topic": "Crop Insurance claim settlement procedure",
+  "queries": [
+   "procedure for verification of crop failure by insurance company",
+   "evidence required for settlement of crop insurance claim",
+   "role of survey team in assessing crop loss for insurance payout"
+  ],
+  "keywords": [
+   "crop failure",
+   "claim settlement",
+   "verification",
+   "survey team",
+   "insurance company",
+   "evidence",
+   "assessment",
+   "loss"
+  ]
+ },
+ "agriculture|narayani groundnut seed rate this year after subsidy": {
+  "topic": "Narayani groundnut seed rate and subsidy",
+  "queries": [
+   "Narayani groundnut variety seed rate per acre",
+   "Subsidy on groundnut seeds for current agricultural year",
+   "Recommended seed rate for Narayani groundnut variety"
+  ],
+  "keywords": [
+   "Narayani",
+   "groundnut",
+   "seed rate",
+   "subsidy",
+   "per acre",
+   "variety",
+   "agricultural year"
+  ]
+ },
+ "agriculture|im a tribal farmer, how much discount on groundnut seeds": {
+  "topic": "Subsidy on groundnut seeds for tribal farmers",
+  "queries": [
+   "subsidy percentage groundnut seeds tribal farmers",
+   "seed subsidy scheme groundnut tribal category",
+   "financial assistance groundnut seeds tribal farmers"
+  ],
+  "keywords": [
+   "groundnut",
+   "seeds",
+   "tribal",
+   "subsidy",
+   "percentage",
+   "farmer",
+   "assistance",
+   "category"
+  ]
+ },
+ "agriculture|if i give my land to a tenant with ccrc (Crop Cultivator Rights Card) will i lose my land": {
+  "topic": "Tenant farmer cultivator card land rights",
+  "queries": [
+   "legal status of land ownership when tenant holds Crop Cultivator Rights Card",
+   "impact of CCRC issuance on landlord title and tenancy agreement validity",
+   "provisions regarding transfer of land rights to tenant farmers under cultivator card scheme"
+  ],
+  "keywords": [
+   "Crop Cultivator Rights Card",
+   "tenant farmer",
+   "land ownership",
+   "tenancy agreement",
+   "landlord",
+   "cultivator card",
+   "legal title",
+   "lease deed"
+  ]
+ },
+ "agriculture|can i get my soil tested at the village rbk (Rythu Bharosa Kendram / Rythu Seva Kendram)": {
+  "topic": "Soil testing services at Rythu Seva Kendrams",
+  "queries": [
+   "availability of soil testing facilities at Rythu Seva Kendram",
+   "procedure for soil sample collection at village level Rythu Bharosa Kendram",
+   "services provided by Rythu Seva Kendram including soil analysis"
+  ],
+  "keywords": [
+   "soil testing",
+   "Rythu Seva Kendram",
+   "soil sample",
+   "analysis",
+   "village level",
+   "services",
+   "agricultural extension",
+   "soil health card"
+  ]
+ },
+ "agriculture|grade A paddy rate this year": {
+  "topic": "Minimum Support Price for Grade A paddy",
+  "queries": [
+   "current year Minimum Support Price Grade A paddy procurement rate",
+   "government order fixing MSP for Grade A paddy this season",
+   "paddy procurement rates Grade A this year"
+  ],
+  "keywords": [
+   "Minimum Support Price",
+   "Grade A",
+   "paddy",
+   "procurement",
+   "rate",
+   "current year",
+   "government order"
+  ]
+ },
+ "agriculture|where can i sell cotton to cci (Cotton Corporation of India) at msp (Minimum Support Price)": {
+  "topic": "Cotton procurement at MSP by CCI",
+  "queries": [
+   "Cotton Corporation of India procurement centres list MSP",
+   "Cotton marketing centres CCI minimum support price",
+   "Cotton procurement schedule CCI MSP rates"
+  ],
+  "keywords": [
+   "Cotton Corporation of India",
+   "procurement centres",
+   "minimum support price",
+   "cotton",
+   "marketing",
+   "MSP",
+   "CCI",
+   "procurement"
+  ]
+ },
+ "agriculture|pm kisan 6000 comes in how many parts": {
+  "topic": "PM-KISAN instalment disbursement schedule",
+  "queries": [
+   "PM-KISAN 6000 rupees three equal instalments",
+   "Pradhan Mantri Kisan Samman Nidhi annual benefit 6000 split into three parts",
+   "PM-KISAN direct benefit transfer 2000 per instalment frequency"
+  ],
+  "keywords": [
+   "PM-KISAN",
+   "6000",
+   "three instalments",
+   "2000",
+   "annual benefit",
+   "direct benefit transfer",
+   "instalment"
+  ]
+ },
+ "agriculture|how much do i have to pay every month for the farmers pension scheme": {
+  "topic": "Farmer Pension Scheme contribution amount",
+  "queries": [
+   "Farmer Pension Scheme monthly contribution amount",
+   "Rythu Bharosa pension scheme premium payment",
+   "Farmer pension scheme eligibility and contribution details"
+  ],
+  "keywords": [
+   "Farmer Pension Scheme",
+   "monthly contribution",
+   "premium",
+   "Rythu Bharosa",
+   "pension",
+   "farmer",
+   "amount",
+   "payment"
+  ]
+ },
+ "agriculture|after a flood who comes to check how much of my crop got damaged": {
+  "topic": "Crop damage assessment committee for natural calamities",
+  "queries": [
+   "composition of committee to assess crop loss due to floods",
+   "procedure for verification of agricultural damage by local officials",
+   "role of Tahsildar and Agriculture Officer in flood damage estimation"
+  ],
+  "keywords": [
+   "assessment committee",
+   "crop damage",
+   "flood",
+   "Tahsildar",
+   "Agriculture Officer",
+   "verification",
+   "natural calamity",
+   "loss estimation"
+  ]
+ },
+ "agriculture|my name is missing from the pm kisan list, what can i do": {
+  "topic": "PM-KISAN beneficiary list grievance redressal",
+  "queries": [
+   "procedure to include name in PM-KISAN beneficiary list",
+   "grievance mechanism for missing farmer in PM-KISAN database",
+   "application process for PM-KISAN registration correction"
+  ],
+  "keywords": [
+   "PM-KISAN",
+   "beneficiary list",
+   "grievance",
+   "registration",
+   "correction",
+   "database",
+   "farmer",
+   "application"
+  ]
+ },
+ "agriculture|is my cashew crop covered by insurance": {
+  "topic": "Crop Insurance Scheme coverage for cashew",
+  "queries": [
+   "list of covered crops under Pradhan Mantri Fasal Bima Yojana",
+   "eligibility of cashew crop for crop insurance premium subsidy",
+   "horticulture crops covered under PMFBY guidelines"
+  ],
+  "keywords": [
+   "cashew",
+   "covered crops",
+   "PMFBY",
+   "Pradhan Mantri Fasal Bima Yojana",
+   "horticulture",
+   "insurance",
+   "eligibility",
+   "crop list"
+  ]
+ },
+ "agriculture|last date to enrol for crop insurance this kharif": {
+  "topic": "Kharif season crop insurance enrollment deadline",
+  "queries": [
+   "last date for enrollment in PMFBY Kharif season",
+   "deadline for crop insurance premium payment Kharif",
+   "final date to register for crop insurance Kharif sowing"
+  ],
+  "keywords": [
+   "Kharif",
+   "enrollment",
+   "deadline",
+   "crop insurance",
+   "PMFBY",
+   "last date",
+   "premium",
+   "registration"
+  ]
+ },
+ "agriculture|can i rent a tractor from the village rsk (Rythu Seva Kendram / Rythu Bharosa Kendram)": {
+  "topic": "Rythu Seva Kendra farm machinery rental services",
+  "queries": [
+   "Rythu Seva Kendra tractor rental procedure and charges",
+   "Farm machinery availability at Rythu Bharosa Kendra for farmers",
+   "Rental of agricultural implements from Rythu Seva Kendra guidelines"
+  ],
+  "keywords": [
+   "tractor",
+   "rental",
+   "Rythu Seva Kendra",
+   "farm machinery",
+   "charges",
+   "availability",
+   "agricultural implements",
+   "service"
+  ]
+ },
+ "agriculture|mango trees damaged by bad weather, any insurance for that?": {
+  "topic": "Crop Insurance Scheme for Horticulture Crops",
+  "queries": [
+   "coverage for mango orchards under PMFBY for weather perils",
+   "insurance claim procedure for horticulture crops damaged by cyclone or hail",
+   "eligibility of mango farmers for crop insurance against natural calamities"
+  ],
+  "keywords": [
+   "mango",
+   "horticulture",
+   "PMFBY",
+   "weather perils",
+   "insurance claim",
+   "natural calamity",
+   "orchard",
+   "premium",
+   "indemnity"
+  ]
+ },
+ "agriculture|do pesticide shops need a licence": {
+  "topic": "Licence for sale of pesticides",
+  "queries": [
+   "requirements for obtaining a licence to sell pesticides",
+   "Pesticides Act provisions for retail dealers and shop licences",
+   "procedure for issuing pesticide dealer licence to shops"
+  ],
+  "keywords": [
+   "licence",
+   "pesticides",
+   "dealer",
+   "sale",
+   "shop",
+   "Pesticides Act",
+   "application",
+   "eligibility"
+  ]
+ },
+ "agriculture|how much subsidy if we buy a drone for spraying": {
+  "topic": "Subsidy for purchase of agricultural drones",
+  "queries": [
+   "subsidy amount for purchase of agricultural drones for crop spraying",
+   "PM-KISAN or state scheme guidelines for drone procurement subsidy",
+   "financial assistance for mechanization of crop protection using drones"
+  ],
+  "keywords": [
+   "drone",
+   "subsidy",
+   "crop spraying",
+   "mechanization",
+   "agricultural drone",
+   "financial assistance",
+   "procurement",
+   "pesticide application"
+  ]
+ },
+ "agriculture|is electricity free for my farm motor": {
+  "topic": "Free agricultural power supply to farmers",
+  "queries": [
+   "free electricity supply for agricultural pump sets",
+   "exemption from electricity charges for farm motors",
+   "policy on free power for irrigation purposes"
+  ],
+  "keywords": [
+   "free power",
+   "agricultural pump set",
+   "electricity charges",
+   "irrigation",
+   "exemption",
+   "farm motor",
+   "subsidy",
+   "power supply"
+  ]
+ },
+ "agriculture|i am a tenant, can i get a bank loan for my crops": {
+  "topic": "Tenant farmers' cultivator cards and bank loan eligibility",
+  "queries": [
+   "eligibility of tenant farmers for Kisan Credit Card and crop loans",
+   "issuance of cultivator card to tenants for availing agricultural credit",
+   "bank loan facilities for tenant farmers under Rythu Bandhu or PM-KISAN"
+  ],
+  "keywords": [
+   "tenant farmer",
+   "cultivator card",
+   "Kisan Credit Card",
+   "crop loan",
+   "eligibility",
+   "agricultural credit",
+   "land lease",
+   "bank loan"
+  ]
+ },
+ "agriculture|i farm on lease, will the govt buy my paddy at msp (Minimum Support Price)": {
+  "topic": "Eligibility of tenant farmers for MSP procurement",
+  "queries": [
+   "tenant farmer cultivator card paddy procurement MSP eligibility",
+   "lease land farmer minimum support price paddy purchase rules",
+   "tenant farmer rights MSP cotton paddy procurement guidelines"
+  ],
+  "keywords": [
+   "tenant farmer",
+   "cultivator card",
+   "MSP",
+   "procurement",
+   "paddy",
+   "lease",
+   "eligibility",
+   "minimum support price"
+  ]
+ },
+ "agriculture|my married son also farms, does he get annadata money separately": {
+  "topic": "Annadata Sukhibhava eligibility for joint cultivators",
+  "queries": [
+   "Annadata Sukhibhava scheme guidelines eligibility criteria for married son cultivating separately",
+   "PM-KISAN and Annadata Sukhibhava rules regarding joint family land and separate bank accounts",
+   "Farmer income support scheme conditions for son-in-law or married son holding cultivator card"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "eligibility",
+   "cultivator card",
+   "joint family",
+   "separate bank account",
+   "farmer income support",
+   "land records",
+   "beneficiary"
+  ]
+ },
+ "agriculture|are there any free seed kits for pulses or millets": {
+  "topic": "Free seed kits for pulses and millets",
+  "queries": [
+   "distribution of free seed kits for pulses and millets",
+   "subsidy on seeds for pulse and millet cultivation",
+   "government scheme for free seed distribution to farmers"
+  ],
+  "keywords": [
+   "free seed kits",
+   "pulses",
+   "millets",
+   "seed distribution",
+   "subsidy",
+   "cultivation",
+   "agricultural inputs"
+  ]
+ },
+ "agriculture|how much premium do i pay for crop insurance in kharif": {
+  "topic": "PMFBY Kharif season premium contribution",
+  "queries": [
+   "PMFBY Kharif season premium contribution percentage",
+   "Farmer share in crop insurance premium Kharif",
+   "Pradhan Mantri Fasal Bima Yojana Kharif premium rate"
+  ],
+  "keywords": [
+   "PMFBY",
+   "Kharif",
+   "premium",
+   "farmer contribution",
+   "crop insurance",
+   "percentage",
+   "subsidy",
+   "share"
+  ]
+ },
+ "agriculture|i didnt take a crop loan, can i still get crop insurance": {
+  "topic": "Crop Insurance eligibility without crop loan",
+  "queries": [
+   "eligibility criteria for crop insurance without availing crop loan",
+   "can farmer without KCC or crop loan enroll in PMFBY",
+   "conditions for crop insurance premium subsidy for non-borrowing farmers"
+  ],
+  "keywords": [
+   "eligibility",
+   "crop insurance",
+   "without loan",
+   "PMFBY",
+   "enrollment",
+   "premium subsidy",
+   "non-borrowing",
+   "farmer"
+  ]
+ },
+ "agriculture|how many days does the insurance company take to pay after the claim is calculated": {
+  "topic": "Crop Insurance claim settlement timeline",
+  "queries": [
+   "time limit for insurance company to pay claim amount after assessment",
+   "number of days for settlement of crop insurance claim under PMFBY",
+   "deadline for disbursement of crop insurance claim by insurer"
+  ],
+  "keywords": [
+   "claim settlement",
+   "insurance company",
+   "assessment",
+   "payment",
+   "days",
+   "PMFBY",
+   "disbursement",
+   "timeline"
+  ]
+ },
+ "agriculture|do shops need a licence to sell seeds": {
+  "topic": "Seed Dealers Licence under Seeds Act",
+  "queries": [
+   "requirement of licence for sale of seeds by dealers",
+   "conditions for issuing seed dealer licence under Seeds Act",
+   "penalty for selling seeds without valid licence"
+  ],
+  "keywords": [
+   "seed dealer",
+   "licence",
+   "Seeds Act",
+   "sale of seeds",
+   "registration",
+   "authority",
+   "penalty",
+   "certified seeds"
+  ]
+ },
+ "agriculture|does the pesticide shop have to give me a bill": {
+  "topic": "Invoicing requirements for pesticide dealers",
+  "queries": [
+   "mandatory invoice issuance by pesticide dealers under Insecticides Act",
+   "record keeping and billing obligations for retail sale of pesticides",
+   "legal requirement for written receipt or bill upon purchase of agricultural chemicals"
+  ],
+  "keywords": [
+   "invoice",
+   "pesticide dealer",
+   "retail sale",
+   "record",
+   "billing",
+   "written receipt",
+   "purchase",
+   "agronomist",
+   "registration",
+   "compliance"
+  ]
+ },
+ "agriculture|how much will govt give if my cow dies in a flood": {
+  "topic": "Compensation for livestock loss due to natural calamities",
+  "queries": [
+   "financial assistance for cattle death caused by flood",
+   "livestock insurance claim amount for cow loss in cyclone",
+   "relief measures for farmers regarding bovine mortality in natural disasters"
+  ],
+  "keywords": [
+   "livestock",
+   "compensation",
+   "flood",
+   "cattle",
+   "natural calamity",
+   "financial assistance",
+   "bovine",
+   "death",
+   "relief",
+   "insurance"
+  ]
+ },
+ "agriculture|how much rice does the mill have to give back for the paddy": {
+  "topic": "Minimum Support Price paddy procurement milling rate",
+  "queries": [
+   "procurement of paddy at MSP milling rate percentage",
+   "rice recovery rate for paddy procurement under APMC",
+   "minimum support price paddy procurement terms and conditions milling"
+  ],
+  "keywords": [
+   "milling rate",
+   "procurement",
+   "paddy",
+   "MSP",
+   "recovery",
+   "rice",
+   "percentage",
+   "APMC"
+  ]
+ },
+ "agriculture|i am a lawyer with farm land, can i get annadata sukhibhava money": {
+  "topic": "Annadata Sukhibhava Scheme eligibility criteria",
+  "queries": [
+   "Annadata Sukhibhava Scheme eligibility for landowners and lawyers",
+   "Annadata Sukhibhava direct benefit transfer to bank account of cultivator",
+   "Annadata Sukhibhava scheme guidelines for farmers holding agricultural land"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "eligibility",
+   "cultivator",
+   "bank account",
+   "agricultural land",
+   "direct benefit transfer",
+   "farmer",
+   "income support"
+  ]
+ },
+ "agriculture|who checks if the pesticides sold in shops are fake": {
+  "topic": "Inspection of Pesticides under Insecticides Act",
+  "queries": [
+   "procedure for inspection of pesticides by Pesticide Inspector",
+   "powers of Pesticide Inspector to seize spurious pesticides",
+   "role of Agriculture Department in checking fake pesticides in shops"
+  ],
+  "keywords": [
+   "Pesticide Inspector",
+   "Insecticides Act",
+   "spurious",
+   "inspection",
+   "seizure",
+   "sample",
+   "analysis",
+   "shop",
+   "officer"
+  ]
+ },
+ "agriculture|what age can i join the farmers pension scheme": {
+  "topic": "Farmer Pension Scheme eligibility age criteria",
+  "queries": [
+   "minimum age limit for enrollment in Rythu Bharosa Yojana",
+   "eligibility criteria regarding age for farmer pension scheme",
+   "age requirement to join the state government pension for farmers"
+  ],
+  "keywords": [
+   "age",
+   "eligibility",
+   "pension",
+   "farmer",
+   "enrollment",
+   "criteria",
+   "minimum",
+   "years"
+  ]
+ },
+ "agriculture|subsidy for polyhouse farming": {
+  "topic": "Subsidy for Polyhouse Construction under Horticulture",
+  "queries": [
+   "financial assistance for polyhouse construction in horticulture",
+   "subsidy rate for polyhouse farming under AP Horticulture Department",
+   "guidelines for polyhouse installation subsidy for farmers"
+  ],
+  "keywords": [
+   "polyhouse",
+   "subsidy",
+   "horticulture",
+   "construction",
+   "financial assistance",
+   "scheme",
+   "guidelines",
+   "farmer"
+  ]
+ },
+ "agriculture|i am a big farmer with 15 acres, how much subsidy for drip": {
+  "topic": "Subsidy for Drip Irrigation under PMKSY",
+  "queries": [
+   "subsidy rate for drip irrigation system for large farmers holding 15 acres",
+   "PMKSY guidelines on financial assistance for micro irrigation drip systems",
+   "eligibility criteria and subsidy percentage for drip irrigation based on land holding size"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "subsidy",
+   "large farmer",
+   "land holding",
+   "PMKSY",
+   "micro irrigation",
+   "financial assistance",
+   "15 acres"
+  ]
+ },
+ "agriculture|can kcc (Kisan Credit Card) loan be used for dairy or fish farming": {
+  "topic": "Kisan Credit Card loan utilisation for dairy and fish farming",
+  "queries": [
+   "Kisan Credit Card loan permissible uses for dairy farming and fishery activities",
+   "Guidelines on KCC loan utilization for livestock and aquaculture inputs",
+   "Scope of Kisan Credit Card for financing dairy and fish farming operations"
+  ],
+  "keywords": [
+   "Kisan Credit Card",
+   "dairy farming",
+   "fish farming",
+   "loan utilisation",
+   "permissible expenses",
+   "livestock",
+   "fishery",
+   "credit limit",
+   "guidelines",
+   "inputs"
+  ]
+ },
+ "agriculture|how much subsidy for a tractor hiring centre in the village": {
+  "topic": "Subsidy for Tractor Hiring Centres",
+  "queries": [
+   "subsidy amount for establishment of Tractor Hiring Centre in village",
+   "financial assistance for Tractor Pooling and Hiring Centres under agriculture scheme",
+   "guidelines for subsidy on Tractor Hiring Centres for farmers"
+  ],
+  "keywords": [
+   "Tractor Hiring Centre",
+   "subsidy",
+   "financial assistance",
+   "village",
+   "tractor",
+   "hiring",
+   "pooling",
+   "centre",
+   "establishment",
+   "agriculture"
+  ]
+ },
+ "rti|naa rti ki 30 rojulu ainaa reply raaledu, ippudu em cheyali": {
+  "topic": "First Appeal to Appellate Authority",
+  "queries": [
+   "procedure for filing first appeal when Public Information Officer fails to provide information within thirty days",
+   "time limit for filing appeal against non-disclosure of records by PIO",
+   "remedy available to applicant if response not received within statutory period"
+  ],
+  "keywords": [
+   "thirty days",
+   "first appeal",
+   "Appellate Authority",
+   "Public Information Officer",
+   "non-disclosure",
+   "statutory period",
+   "filing appeal",
+   "deemed refusal"
+  ]
+ },
+ "rti|wat is the time limt for second apeal": {
+  "topic": "Time limit for filing second appeal",
+  "queries": [
+   "period for filing second appeal before State Information Commission",
+   "time limit for second appeal under section 20",
+   "deadline for second appeal against first appellate authority order"
+  ],
+  "keywords": [
+   "second appeal",
+   "ninety days",
+   "first appellate authority",
+   "State Information Commission",
+   "filing",
+   "time limit",
+   "section 20"
+  ]
+ },
+ "rti|I sent an RTI to the municipal office asking for the building permission file of my neighbour's house. The PIO wrote back saying I must first explain why I need it. Is that correct?": {
+  "topic": "Prohibition of demand for reasons by Public Information Officer",
+  "queries": [
+   "Public Information Officer refusal to disclose information on grounds of applicant's purpose",
+   "Section 6(3) requirement to state reasons for seeking information",
+   "Municipal office PIO demand for justification of building permission file request"
+  ],
+  "keywords": [
+   "reasons",
+   "purpose",
+   "Section 6(3)",
+   "Public Information Officer",
+   "disclosure",
+   "justification",
+   "applicant",
+   "information"
+  ]
+ },
+ "rti|rti penalty amount": {
+  "topic": "Penalty for non-compliance with information requests",
+  "queries": [
+   "penalty amount for failure to provide information",
+   "financial penalty imposed on Public Information Officer",
+   "section 20 penalty for delay in furnishing information"
+  ],
+  "keywords": [
+   "penalty",
+   "amount",
+   "Public Information Officer",
+   "non-compliance",
+   "delay",
+   "fees",
+   "section 20",
+   "commissioner",
+   "impose",
+   "rupees"
+  ]
+ },
+ "rti|who is first appellate authority": {
+  "topic": "First Appellate Authority designation under Section 20",
+  "queries": [
+   "designation of First Appellate Authority under Section 20",
+   "who constitutes the First Appellate Authority for Public Information Officer",
+   "appointment of First Appellate Authority in public authority"
+  ],
+  "keywords": [
+   "First Appellate Authority",
+   "Section 20",
+   "Public Information Officer",
+   "senior officer",
+   "designated",
+   "appeal",
+   "public authority",
+   "officer"
+  ]
+ },
+ "rti|can i get information about a private hospital through rti": {
+  "topic": "Definition of public authority and private bodies",
+  "queries": [
+   "whether private hospital qualifies as public authority under section 2(h)",
+   "scope of information request regarding private bodies providing public services",
+   "exclusion of private entities from disclosure obligations under the Act"
+  ],
+  "keywords": [
+   "public authority",
+   "private body",
+   "section 2(h)",
+   "public service",
+   "disclosure",
+   "information",
+   "exclusion",
+   "obligation"
+  ]
+ },
+ "rti|my rti was sent to another department, how many days do they have to transfer it": {
+  "topic": "Transfer of request to other public authority",
+  "queries": [
+   "Time limit for transferring request to other public authority",
+   "Procedure for transfer of application to competent authority",
+   "Days allowed for forwarding request to other department"
+  ],
+  "keywords": [
+   "transfer",
+   "other public authority",
+   "five days",
+   "competent authority",
+   "forward",
+   "request",
+   "section 6",
+   "public information officer"
+  ]
+ },
+ "rti|can the information commission order the department to appoint a PIO": {
+  "topic": "Powers of the Information Commission regarding appointment of Public Information Officer",
+  "queries": [
+   "power of State Information Commission to direct public authority to appoint Public Information Officer",
+   "remedial action by Information Commission for non-appointment of PIO under Section 18",
+   "order to appoint Public Information Officer by Information Commission under Section 18(3)"
+  ],
+  "keywords": [
+   "Public Information Officer",
+   "Information Commission",
+   "appointment",
+   "public authority",
+   "remedial action",
+   "Section 18",
+   "direct",
+   "officer"
+  ]
+ },
+ "rti|rti lo information ivvakapothe officer ki maximum fine entha": {
+  "topic": "Penalty for failure to provide information",
+  "queries": [
+   "maximum fine imposed on Public Information Officer for non-compliance",
+   "penalty amount for refusal to furnish information under Section 20",
+   "financial penalty for delay in providing records to applicant"
+  ],
+  "keywords": [
+   "penalty",
+   "fine",
+   "Public Information Officer",
+   "Section 20",
+   "failure to provide",
+   "maximum amount",
+   "rupees",
+   "non-compliance"
+  ]
+ },
+ "rti|does the rti act apply in jammu and kashmir": {
+  "topic": "Geographical applicability of the Act",
+  "queries": [
+   "extent of application of the Act to all territories",
+   "provisions regarding territorial jurisdiction and applicability",
+   "does the legislation apply to all states and union territories"
+  ],
+  "keywords": [
+   "extent",
+   "application",
+   "territory",
+   "India",
+   "except",
+   "Article 370",
+   "geographical",
+   "jurisdiction"
+  ]
+ },
+ "rti|do departments have to publish their budget details": {
+  "topic": "Obligation to proactively disclose budget details",
+  "queries": [
+   "Section 4(1)(b) disclosure of budget estimates and accounts",
+   "Proactive disclosure of financial information by public authorities",
+   "Requirement to publish budget details and expenditure records"
+  ],
+  "keywords": [
+   "budget estimates",
+   "proactive disclosure",
+   "Section 4",
+   "financial information",
+   "public authority",
+   "expenditure",
+   "accounts",
+   "disclose"
+  ]
+ },
+ "rti|can i get information about a case that is pending in court": {
+  "topic": "Exemption of information relating to pending court proceedings",
+  "queries": [
+   "exemption of information relating to pending court proceedings",
+   "whether information about case pending in court is exempt",
+   "grounds for refusal of information regarding judicial proceedings"
+  ],
+  "keywords": [
+   "pending court proceedings",
+   "exemption",
+   "judicial proceedings",
+   "refusal",
+   "information",
+   "case",
+   "court",
+   "grounds"
+  ]
+ },
+ "rti|they refused saying it is a trade secret, but it affects the public. can they still be made to give it": {
+  "topic": "Exemption of trade secrets and public interest override",
+  "queries": [
+   "Section 8(1)(d) trade secret exemption and public interest override",
+   "Conditions for disclosing information affecting public interest despite trade secret claim",
+   "Appellate authority review of refusal based on trade secret exemption"
+  ],
+  "keywords": [
+   "trade secret",
+   "public interest",
+   "Section 8",
+   "exemption",
+   "override",
+   "disclosure",
+   "commercial interest",
+   "prejudice"
+  ]
+ },
+ "rti|rti fees AP": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for filing application under section 7",
+   "payment of application fee to Public Information Officer",
+   "amount payable for inspection of records or obtaining certified copies"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "Public Information Officer",
+   "prescribed fee",
+   "inspection of records",
+   "certified copies",
+   "payment",
+   "section 7"
+  ]
+ },
+ "rti|can i ask for their opinions and advice notes or only for documents": {
+  "topic": "Scope of information under Section 2(f) and 2(j)",
+  "queries": [
+   "definition of information includes records documents memos and advice notes",
+   "whether opinions and advice notes of officers are disclosable under Section 2(f)",
+   "scope of records and documents available for inspection under Section 2(j)"
+  ],
+  "keywords": [
+   "records",
+   "documents",
+   "advice notes",
+   "opinions",
+   "memos",
+   "Section 2(f)",
+   "Section 2(j)",
+   "disclosure",
+   "information"
+  ]
+ },
+ "agriculture|annadata sukhibhava dabbulu enni installments lo vastayi": {
+  "topic": "Annadata Sukhibhava Scheme installment schedule",
+  "queries": [
+   "Annadata Sukhibhava Scheme payment schedule quarterly installments",
+   "PM-KISAN and Annadata Sukhibhava benefit disbursement frequency",
+   "Farmer income support scheme installment release dates"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "installments",
+   "quarterly",
+   "disbursement",
+   "PM-KISAN",
+   "farmer income support",
+   "schedule",
+   "benefit"
+  ]
+ },
+ "agriculture|do women farmers get priority for horticulture subsidy": {
+  "topic": "Priority for women farmers in horticulture subsidy",
+  "queries": [
+   "eligibility criteria for horticulture subsidy women farmers priority",
+   "subsidy for horticulture crops women farmers benefit",
+   "guidelines for horticulture subsidy allocation women farmers"
+  ],
+  "keywords": [
+   "women farmers",
+   "horticulture subsidy",
+   "priority",
+   "eligibility",
+   "subsidy",
+   "horticulture",
+   "benefit",
+   "allocation"
+  ]
+ },
+ "agriculture|annadata money ki ekyc avasarama": {
+  "topic": "Annadata Sukhibhava eKYC verification procedure",
+  "queries": [
+   "Annadata Sukhibhava eKYC verification process for farmers",
+   "Procedure for completing eKYC to receive Annadata Sukhibhava benefits",
+   "eKYC requirements for Annadata Sukhibhava scheme beneficiaries"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "eKYC",
+   "verification",
+   "farmer",
+   "beneficiary",
+   "procedure",
+   "identity",
+   "bank account"
+  ]
+ },
+ "agriculture|crop insurance last date for rabi this year": {
+  "topic": "Rabi crop insurance enrollment deadline",
+  "queries": [
+   "Rabi season crop insurance last date for enrollment",
+   "PMFBY Rabi crop insurance premium payment deadline",
+   "Rabi crop insurance proposal form submission last date"
+  ],
+  "keywords": [
+   "Rabi",
+   "crop insurance",
+   "last date",
+   "enrollment",
+   "deadline",
+   "premium",
+   "PMFBY",
+   "proposal"
+  ]
+ },
+ "agriculture|My father has 3 acres in his name but I do all the farming. He is a retired government teacher with a pension above Rs.10,000. Can our family get Annadata Sukhibhava?": {
+  "topic": "Annadata Sukhibhava eligibility criteria for family members",
+  "queries": [
+   "Annadata Sukhibhava eligibility conditions for family members of pensioners",
+   "Criteria for claiming Annadata Sukhibhava when landowner is retired government employee",
+   "Annadata Sukhibhava scheme guidelines regarding pension income and land ownership"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "eligibility",
+   "pension",
+   "land ownership",
+   "family member",
+   "retired",
+   "cultivation",
+   "3 acres",
+   "beneficiary",
+   "conditions"
+  ]
+ },
+ "agriculture|I am ST farmer with 3 acres, how much drip subsidy": {
+  "topic": "Drip Irrigation Subsidy for ST Farmers",
+  "queries": [
+   "subsidy rate drip irrigation system Scheduled Tribe farmer 3 acres",
+   "financial assistance micro irrigation drip sprinkler ST category landholding",
+   "drip irrigation scheme guidelines subsidy percentage tribal farmers"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "subsidy",
+   "Scheduled Tribe",
+   "micro irrigation",
+   "financial assistance",
+   "landholding",
+   "sprinkler",
+   "scheme guidelines"
+  ]
+ },
+ "agriculture|Heavy rains last week washed away my paddy. I have 4 acres of irrigated land. How much input subsidy per hectare will I get and is there a limit on area?": {
+  "topic": "Input subsidy for crop loss due to natural calamities",
+  "queries": [
+   "Input subsidy per hectare for paddy crop loss due to heavy rains",
+   "Maximum area limit for input subsidy on irrigated land after natural calamity",
+   "Financial assistance for crop damage by floods or cyclones input subsidy rate"
+  ],
+  "keywords": [
+   "input subsidy",
+   "per hectare",
+   "paddy",
+   "natural calamity",
+   "irrigated land",
+   "area limit",
+   "crop loss",
+   "financial assistance"
+  ]
+ },
+ "agriculture|mango insurance premium farmer share": {
+  "topic": "Mango crop insurance premium contribution",
+  "queries": [
+   "Mango crop insurance farmer share premium percentage",
+   "Horticulture crop insurance scheme premium subsidy mango",
+   "PMFBY mango insurance premium contribution farmer and government"
+  ],
+  "keywords": [
+   "mango",
+   "premium",
+   "farmer share",
+   "insurance",
+   "subsidy",
+   "horticulture",
+   "contribution",
+   "PMFBY"
+  ]
+ },
+ "agriculture|after the loss is assessed, how fast must the insurance company pay the farmer": {
+  "topic": "Payment of claim amount under crop insurance",
+  "queries": [
+   "time limit for payment of claim amount after assessment of loss",
+   "period within which insurer must pay compensation to insured farmer",
+   "deadline for disbursement of crop insurance claim after loss assessment"
+  ],
+  "keywords": [
+   "claim amount",
+   "assessment of loss",
+   "payment",
+   "insurer",
+   "time limit",
+   "compensation",
+   "days",
+   "farmer"
+  ]
+ },
+ "agriculture|what is per drop more crop scheme for": {
+  "topic": "Per Drop More Crop scheme objectives",
+  "queries": [
+   "objectives of Per Drop More Crop scheme for water use efficiency",
+   "Per Drop More Crop scheme guidelines for micro irrigation adoption",
+   "scope of Per Drop More Crop scheme for horticulture and field crops"
+  ],
+  "keywords": [
+   "Per Drop More Crop",
+   "water use efficiency",
+   "micro irrigation",
+   "drip irrigation",
+   "sprinkler irrigation",
+   "water saving",
+   "crop productivity",
+   "subsidy",
+   "irrigation",
+   "scheme"
+  ]
+ },
+ "agriculture|can govt stop sale of a pesticide in my district": {
+  "topic": "Prohibition of sale of pesticides under Insecticides Act",
+  "queries": [
+   "procedure for prohibition of sale of specific pesticide in district",
+   "powers of District Agriculture Officer to ban pesticide sale",
+   "legal basis for stopping sale of banned or unapproved insecticides"
+  ],
+  "keywords": [
+   "prohibition",
+   "sale",
+   "pesticide",
+   "District Agriculture Officer",
+   "Insecticides Act",
+   "ban",
+   "unapproved",
+   "order"
+  ]
+ },
+ "agriculture|seed subsidy app": {
+  "topic": "Subsidy on Seeds and Seedlings",
+  "queries": [
+   "Application process for seed subsidy under Agriculture Department",
+   "Eligibility criteria for seed and seedling subsidy scheme",
+   "Procedure to claim financial assistance for certified seeds"
+  ],
+  "keywords": [
+   "seed subsidy",
+   "application",
+   "certified seeds",
+   "Agriculture Department",
+   "financial assistance",
+   "eligibility",
+   "seedlings",
+   "scheme guidelines"
+  ]
+ },
+ "agriculture|sunna vaddi limit": {
+  "topic": "Sunna Vaddi interest-free loan limit",
+  "queries": [
+   "maximum loan amount Sunna Vaddi scheme",
+   "interest-free loan limit for farmers Sunna Vaddi",
+   "Sunna Vaddi scheme financial assistance cap"
+  ],
+  "keywords": [
+   "Sunna Vaddi",
+   "interest-free",
+   "loan limit",
+   "maximum amount",
+   "financial assistance",
+   "farmer",
+   "scheme guidelines",
+   "credit facility"
+  ]
+ },
+ "agriculture|subsidy to start a small nursery for fruit plants": {
+  "topic": "Subsidy for establishment of fruit plant nurseries",
+  "queries": [
+   "financial assistance for establishment of fruit plant nurseries under horticulture scheme",
+   "subsidy guidelines for setting up small scale fruit plant nurseries",
+   "grant-in-aid for fruit plant nursery development and infrastructure"
+  ],
+  "keywords": [
+   "fruit plant nursery",
+   "subsidy",
+   "establishment",
+   "horticulture",
+   "financial assistance",
+   "infrastructure",
+   "grant",
+   "small scale"
+  ]
+ }
+}
