@@ -78,10 +78,14 @@ ap-rti-assistant/
 │   ├── documents/             # 41 corpus files (40 PDFs + 1 txt)
 │   ├── corpus_manifest.json   # title/department/source_url/sha256 per file
 │   ├── inventory_rti_acts.json# audit of all 546 docs on the site
-│   ├── load_and_chunk.py      # PDFs -> section-aware token chunks -> chunks.json
-│   ├── chunks.json            # 535 chunks + metadata (generated)
-│   └── build_index.py         # chunks -> bge-small -> Chroma
+│   ├── load_and_chunk.py      # PDFs -> token chunks (--domain rti|agriculture)
+│   ├── chunks.json            # RTI: 535 chunks + metadata (generated)
+│   ├── chunks_agriculture.json# agriculture: 1,895 chunks (generated)
+│   ├── build_index.py         # chunks -> bge-small -> Chroma, one collection per domain
+│   ├── collect/               # tools that collected the new domains' documents
+│   └── incoming/              # staged documents per domain (agriculture indexed from here)
 ├── rag/
+│   ├── domains.py             # per-domain documents, index, prompts, web text
 │   ├── retrieve.py            # HyDE + hybrid (dense+BM25) + RRF + amendment links
 │   ├── answer.py              # passages + question -> Groq -> cited answer; follow-up rewrite
 │   ├── chat.py                # terminal chat
@@ -90,7 +94,8 @@ ap-rti-assistant/
 ├── docs/
 │   └── AP RTI Assistant Knowledge Base.html   # self-contained explainer page
 ├── eval/
-│   ├── demo_questions.json    # frozen question sets: dev, heldout, heldout2, heldout3
+│   ├── demo_questions.json    # frozen RTI question sets: dev, heldout, heldout2, heldout3
+│   ├── agri_questions.json    # frozen agriculture sets: dev, dev_casual, heldout, heldout2
 │   ├── retrieval_eval.py      # does the answering text reach the top-k? (no LLM judge)
 │   ├── compare_embeddings.py  # older encoder comparison harness
 │   ├── testset.json + run_ragas.py   # RAGAS (LLM-judged) evaluation
@@ -414,6 +419,93 @@ Retrieval coverage doesn't catch these; a live demo would have:
 - **No clean held-out set remains.** Every set in `demo_questions.json` has now informed
   some decision. Any further tuning needs a fresh set written first.
 
+## Agriculture domain (2026-10-04)
+
+Goal of this step: agriculture answers through the same pipeline as RTI. No router yet
+(the user picks the domain), finance later, router last.
+
+### How it is wired
+
+- `rag/domains.py` holds everything that differs per domain: documents, chunks file,
+  Chroma collection, HyDE / answer / follow-up prompts, web text. Every script takes
+  `--domain` (default `rti`). RTI's three prompts were moved there verbatim (checked
+  byte-for-byte against git) and RTI still scores **47/54** on its sets.
+- Documents: the 46 staged in `ingest/incoming/agriculture/` (44 with text; 2 scans
+  skipped until OCR). **1,895 chunks** (RTI: 535), same 350/60 token chunking.
+- Page limits for 5 table-heavy documents (`AGRI_PAGES` in `load_and_chunk.py`):
+  G.O.Ms.80 PMFBY pp.1-47 of 864 (the rest is sowing calendars and village lists),
+  G.O.Ms.81 pp.1-32, G.O.Ms.98 pp.1-23 (weather term sheets), MIDH pp.1-115 (polyhouse
+  engineering specs), PDMC pp.1-42 (bill-of-quantity tables).
+- Amendment links come from the manifest's curated `amends` field (not text
+  heuristics); order keys include the year (`Ms.80/2024`) because numbers repeat.
+- Every chunk carries `in_force`; replaced documents are labelled "NOT IN FORCE (...)"
+  in the source line the answer model sees.
+
+### Measured (eval/agri_questions.json; probe-in-top-10, same method as RTI)
+
+Question sets were written before the code that they test: `dev` (24, formal), then
+`dev_casual` (12) and `heldout` (16, casual); `heldout2` (13) was written after round 1
+and before round 2.
+
+| change (cumulative) | dev | dev_casual | heldout | heldout2 |
+|---|---|---|---|---|
+| baseline, hybrid only | 88% | | | |
+| baseline + HyDE | 79% | | | |
+| + max one not-in-force chunk in the top k | 92% | | | |
+| + document title prefixed in the embedding, no HyDE | 100% | 83% | 50% | 54% |
+| + title prefix + HyDE v1 | 88% | 92% | | |
+| + HyDE v2 prompt (keep the question's names) — **round 1** | 92% | 92% | **69%** | **69%** |
+| + abbreviation glossary + HyDE v3 — **round 2 (final)** | 96% | 92% | 69%* | **69%** |
+
+\* heldout had been seen once by then. Also tried, no gain: HyDE weight 0.3 / 0.5 in
+the fusion, HyDE used for dense search only (78%), question+passage concatenated (89%).
+HyDE passages were cached to disk (`HYDE_CACHE`) so configurations were compared on
+identical passages — gpt-oss drifts even at temperature 0, ±1-2 questions per run.
+
+### What we learned
+
+- **Title prefixes help agriculture, though they hurt RTI.** RTI's titles all say
+  "Right to Information Act"; agriculture's name the scheme, crop and season
+  ("Change of name of Schemes ...", "RWBCIS ... Mango"). +13 points (81% -> 94%).
+  Caveat: several titles were written during collection, not copied from the source.
+- **A replaced document must not outrank its replacement.** The YSR Rythu Bharosa
+  order (12 chunks) took the top two places for every Annadata Sukhibhava question.
+  Capping not-in-force chunks at one per answer: 79% -> 92%.
+- **HyDE again earns its place on casual wording**: +15 to +19 points on both clean
+  casual sets (50 -> 69%, 54 -> 69%), while costing 1-3 formal questions.
+- **HyDE needs the local vocabulary.** It expanded "RBK" as "Rural Business Knowledge
+  Centre". A glossary of official names (not descriptions -- "Kisan Credit Card crop
+  loan" pulled in generic loan text) fixes that class without breaking others.
+- **Agriculture is harder than RTI on casual questions (69% vs 82%).** The corpus is
+  3.5x bigger and central guidelines (PMFBY OG: 465 chunks) crowd out short AP
+  orders; most remaining misses sit at ranks 13-22.
+
+### Answer quality (six farmer questions, read against the documents)
+
+Round 1 problems and the rules added for them (agriculture prompt only):
+- "the current Kharif 2024" in October 2026 -> the prompt now carries **today's date**
+  and says to answer for the period in force (latest/extension order).
+- a negative flipped ("must be recorded" for "name is NOT recorded") -> state
+  conditions in the passage's own words, negatives included.
+- a table put "tribal farmers" on the 40% rows -> prefer lists to tables.
+- old name only ("YSR Sunna Vaddi") -> ALWAYS give the current name.
+After: 5/6 right and cited, including the 2026 insurance cut-off dates. Still wrong:
+cyclone relief for paddy -- G.O.No.2 (2025 enhanced rates, Rs.25,000/ha) has a garbled
+text layer ("Padd Rs.17 000/- s.25 000/-"); needs OCR.
+
+**Groq 413 "Request too large"** (8,025 tokens vs 8,000 per request on the free tier)
+happened once with 14 long passages plus the longer rules: `answer.py` now drops the
+three lowest-ranked passages and retries on a 413. Normal requests are unchanged.
+
+### Known limitations (agriculture)
+
+- Casual-question retrieval 69% (RTI 82%); misses are mostly near (ranks 13-22).
+- 2 scans unindexed (fertiliser SOP 2024-25, FCO amendment 2024); G.O.No.2 garbled.
+  No OCR engine is installed (no Tesseract/EasyOCR/RapidOCR) -- a separate step.
+- Documents are still in `ingest/incoming/agriculture/` (staging), not promoted.
+- Several orders are season-bound (Kharif 2026, KMS 2025-26); they need refreshing
+  each season.
+
 ## Next steps
 
 **Next major goal (decided 2026-10-04): multi-domain agentic assistant for the AP
@@ -440,6 +532,17 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-04** — **Agriculture runs through the same pipeline as RTI.** New
+  `rag/domains.py` (per-domain documents, index, prompts); `--domain` on
+  load_and_chunk, build_index, retrieve, answer, chat, web and retrieval_eval. RTI
+  prompts moved verbatim; RTI retrieval unchanged at 47/54. Agriculture: 1,895 chunks,
+  page limits for table-heavy orders, manifest-based amendment links, not-in-force
+  labels and a one-chunk cap, title-prefixed embeddings, HyDE v3 + abbreviation
+  glossary. Frozen sets in `eval/agri_questions.json`: dev 96%, dev_casual 92%, clean
+  heldout2 69% (54% without HyDE). Agriculture answer rules: today's date, exact
+  negatives, no invented steps, current scheme names. `answer.py` retries with fewer
+  passages on Groq's 413 request-too-large. Web page text and suggestions per domain.
+  See "Agriculture domain".
 - **2026-10-04** — **Finance deferred; planned as one domain with subcategories.** A question
   routed to finance will be routed again to a subcategory (pensions, stamp duty &
   registration, vehicle tax, budget, professional tax, welfare payment status), each with its

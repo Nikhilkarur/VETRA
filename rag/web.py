@@ -7,6 +7,7 @@ as the terminal chat. Everything stays on this machine except the two Groq
 calls the pipeline already makes.
 
 Run:  python rag/web.py                 opens http://127.0.0.1:8000
+      python rag/web.py --domain agriculture   the agriculture assistant
       python rag/web.py --port 8080     if 8000 is busy
       python rag/web.py --no-browser    don't open a browser tab
 
@@ -19,6 +20,7 @@ free-tier limit together.
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import sys
 import threading
@@ -27,6 +29,7 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+import domains
 from answer import MissingKey, answer_question
 from retrieve import TOP_K, _collection, _corpus, _model
 
@@ -39,12 +42,22 @@ PIPELINE = threading.Lock()  # one question through the pipeline at a time
 
 
 class Handler(BaseHTTPRequestHandler):
+    domain = "rti"  # set from --domain in main()
+
     def do_GET(self) -> None:
         if self.path not in ("/", "/index.html"):
             self.send_error(404)
             return
         # Read on every request, so edits to web.html show up on refresh.
-        self._send(200, PAGE.read_bytes(), "text/html; charset=utf-8")
+        d = domains.get(self.domain)
+        page = PAGE.read_text(encoding="utf-8")
+        for key, value in {"PAGE_TITLE": d.title, "TITLE": d.title,
+                           "BLURB": f"{d.blurb} Not legal advice.", "PLACEHOLDER": d.placeholder}.items():
+            page = page.replace("{{" + key + "}}", html.escape(value))
+        chips = "\n".join(f'        <button class="chip" type="button">{html.escape(q)}</button>'
+                          for q in d.examples)
+        page = page.replace("{{CHIPS}}", chips)
+        self._send(200, page.encode("utf-8"), "text/html; charset=utf-8")
 
     def do_POST(self) -> None:
         if self.path != "/ask":
@@ -74,7 +87,7 @@ class Handler(BaseHTTPRequestHandler):
         print(f"\nQ: {question}" + (f"   ({len(history)} earlier turns)" if history else ""), flush=True)
         try:
             with PIPELINE:
-                result = answer_question(question, TOP_K, history=history)
+                result = answer_question(question, TOP_K, history=history, domain=self.domain)
         except MissingKey as exc:
             print(f"   {exc}", flush=True)
             self._json(500, {"error": str(exc)})
@@ -130,13 +143,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--no-browser", action="store_true")
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
     args = parser.parse_args()
+    Handler.domain = args.domain
 
-    print("loading (about 30 seconds) ...", flush=True)
+    print(f"loading {args.domain} (about 30 seconds) ...", flush=True)
     started = time.perf_counter()
-    _model()
-    _corpus()
-    count = _collection().count()
+    _model(args.domain)
+    _corpus(args.domain)
+    count = _collection(args.domain).count()
 
     try:
         server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)

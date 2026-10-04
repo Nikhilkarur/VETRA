@@ -11,6 +11,7 @@ before searching (see answer.py). Type /new to start a fresh conversation.
 
 Run:  python rag/chat.py
       python rag/chat.py --k 5
+      python rag/chat.py --domain agriculture
 """
 
 from __future__ import annotations
@@ -19,6 +20,7 @@ import argparse
 import sys
 from pathlib import Path
 
+import domains
 from answer import ask
 from retrieve import TOP_K, _collection, _corpus, _model
 
@@ -28,9 +30,8 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parent.parent
 
 BANNER = """\
-AP RTI assistant
-Ask about the Right to Information Act as it applies in Andhra Pradesh.
-Answers come only from the 41 documents published by the AP government.
+{title}
+{blurb}
 
   /new       start a new conversation (forget earlier questions)
   /sources   show retrieved passages for the next question
@@ -42,17 +43,19 @@ Answers come only from the 41 documents published by the AP government.
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--k", type=int, default=TOP_K)
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
     args = parser.parse_args()
+    domain = domains.get(args.domain)
 
     k = args.k
     show_context = False
     history: list[dict] = []
 
-    print(BANNER)
+    print(BANNER.format(title=domain.title, blurb=domain.blurb))
     print("loading ...", end=" ", flush=True)
-    _model()          # warm the embedding model
-    _corpus()         # load chunk texts and build the keyword (BM25) index
-    count = _collection().count()
+    _model(domain.name)      # warm the embedding model
+    _corpus(domain.name)     # load chunk texts and build the keyword (BM25) index
+    count = _collection(domain.name).count()
     print(f"ready ({count} chunks indexed, top-{k})\n")
 
     while True:
@@ -92,7 +95,7 @@ def main() -> int:
             continue
 
         try:
-            answer = ask(question, k, show_context, history=history)
+            answer = ask(question, k, show_context, history=history, domain=domain.name)
             history.append({"q": question, "a": answer})
         except Exception as exc:
             # A network blip or a retired model should not kill the session.

@@ -27,6 +27,10 @@ the three held-out sets in eval/demo_questions.json (34 questions):
 
 Run:  python rag/retrieve.py "govt office not answering my rti what do i do"
       python rag/retrieve.py "what is the fee" --no-hyde
+      python rag/retrieve.py "can tenant farmers get annadata sukhibhava" --domain agriculture
+
+Every function takes a domain ("rti" by default); each domain has its own Chroma
+collection and its own HyDE prompt (rag/domains.py). The search itself is identical.
 """
 
 from __future__ import annotations
@@ -43,9 +47,10 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
+import domains  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 CHROMA_DIR = ROOT / "data" / "chroma"
-COLLECTION = "ap_rti"
 TOP_K = 10  # 8 -> 10 raised held-out coverage 76% -> 82%; 12 added nothing
 RRF_K = 60
 
@@ -53,31 +58,35 @@ RRF_K = 60
 QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 HYDE_MODEL = "openai/gpt-oss-20b"   # small and fast; only writes a search passage
-HYDE_PROMPT = """Write the single sentence or short paragraph (40 to 80 words) that a statute or government RTI order would contain to answer the question below, in formal legal drafting style.
-
-Rules: plain prose only -- no headings, no markdown, no bullet points, no dates, no reference numbers, no titles. Do not mention "Right to Information Act", "Andhra Pradesh" or "RTI" by name. Accuracy of details does not matter; the vocabulary and phrasing must match real legal text. Output only the passage."""
-# Why the "do not mention" rule: every document here is about the RTI Act and
-# Andhra Pradesh, so those words match everything and drown the real concept.
-# Without the rule, rewritten queries retrieved WORSE than the raw question.
+# The HyDE prompt is per domain (rag/domains.py). For RTI it forbids naming
+# "Right to Information Act" / "Andhra Pradesh": those words are in every chunk
+# and drowned the real concept -- rewritten queries retrieved WORSE without it.
 
 
 # ------------------------------------------------------------------ loading
 
-@lru_cache(maxsize=1)
-def _collection():
+@lru_cache(maxsize=None)
+def _collection(domain: str = "rti"):
     import chromadb
 
     if not CHROMA_DIR.exists():
         sys.exit(f"no index at {CHROMA_DIR} -- run ingest/build_index.py first")
-    return chromadb.PersistentClient(path=str(CHROMA_DIR)).get_collection(COLLECTION)
+    name = domains.get(domain).collection
+    try:
+        return chromadb.PersistentClient(path=str(CHROMA_DIR)).get_collection(name)
+    except Exception:
+        sys.exit(f"no '{name}' collection -- run: python ingest/build_index.py --domain {domain}")
 
 
-@lru_cache(maxsize=1)
-def _model():
+def _model(domain: str = "rti"):
     """The model that built the index, read from the index -- never a second constant."""
+    return _load_model(_collection(domain).metadata["model"])
+
+
+@lru_cache(maxsize=None)
+def _load_model(name: str):
     from sentence_transformers import SentenceTransformer
 
-    name = _collection().metadata["model"]
     try:
         # Offline first, so a flaky connection can't stall a live demo.
         return SentenceTransformer(name, local_files_only=True)
@@ -85,10 +94,10 @@ def _model():
         return SentenceTransformer(name)
 
 
-@lru_cache(maxsize=1)
-def _corpus():
+@lru_cache(maxsize=None)
+def _corpus(domain: str = "rti"):
     """All chunk ids, texts and metadata, plus a BM25 index over the texts."""
-    data = _collection().get(include=["documents", "metadatas"])
+    data = _collection(domain).get(include=["documents", "metadatas"])
     return data["ids"], data["documents"], data["metadatas"], _BM25(data["documents"])
 
 
@@ -134,34 +143,58 @@ class _BM25:
 
 # ------------------------------------------------------------------ search
 
-def _rrf(*rankings: list[int]) -> list[int]:
+def _rrf(*rankings: list[int], weights: tuple[float, ...] | None = None) -> list[int]:
     """Reciprocal Rank Fusion: reward documents ranked well by any of the rankings."""
     score: dict[int, float] = {}
-    for ranking in rankings:
+    for ranking, w in zip(rankings, weights or (1.0,) * len(rankings)):
         for rank, doc in enumerate(ranking):
-            score[doc] = score.get(doc, 0.0) + 1.0 / (RRF_K + rank + 1)
+            score[doc] = score.get(doc, 0.0) + w / (RRF_K + rank + 1)
     return sorted(score, key=lambda d: -score[d])
 
 
-def _hybrid(text: str) -> list[int]:
-    """Dense + BM25 ranking of every chunk for one piece of text."""
-    ids, _, _, bm25 = _corpus()
+def _dense(text: str, domain: str = "rti") -> list[int]:
+    """Embedding-similarity ranking of every chunk."""
+    ids = _corpus(domain)[0]
     position = {cid: i for i, cid in enumerate(ids)}
-    vector = _model().encode([QUERY_PREFIX + text], normalize_embeddings=True).tolist()
-    result = _collection().query(query_embeddings=vector, n_results=len(ids), include=[])
-    dense = [position[cid] for cid in result["ids"][0]]
-    return _rrf(dense, bm25.rank(text))
+    vector = _model(domain).encode([QUERY_PREFIX + text], normalize_embeddings=True).tolist()
+    result = _collection(domain).query(query_embeddings=vector, n_results=len(ids), include=[])
+    return [position[cid] for cid in result["ids"][0]]
 
 
-_passages: dict[str, str] = {}
+def _hybrid(text: str, domain: str = "rti") -> list[int]:
+    """Dense + BM25 ranking of every chunk for one piece of text."""
+    return _rrf(_dense(text, domain), _corpus(domain)[3].rank(text))
 
 
-def hypothetical_passage(question: str) -> str | None:
+_passages: dict[tuple[str, str], str] = {}
+
+# Experiments only: set HYDE_CACHE=<file.json> so every configuration being
+# compared searches with the SAME passages. gpt-oss is not deterministic even at
+# temperature 0, and passage drift alone moved the eval by 1-2 questions per run.
+_CACHE_FILE = os.environ.get("HYDE_CACHE")
+
+
+def _disk_cache() -> dict:
+    import json
+
+    if not _CACHE_FILE:
+        return {}
+    try:
+        return json.loads(Path(_CACHE_FILE).read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {}
+
+
+def hypothetical_passage(question: str, domain: str = "rti") -> str | None:
     """Ask a small LLM what a legal text answering this would say. None if unavailable."""
     # Only successes are remembered. Caching a failure would mean one rate-limited
     # call silently disables HyDE for that question for the rest of the session.
-    if question in _passages:
-        return _passages[question]
+    if (domain, question) in _passages:
+        return _passages[(domain, question)]
+    cached = _disk_cache().get(f"{domain}|{question}")
+    if cached:
+        _passages[(domain, question)] = cached
+        return cached
     try:
         from dotenv import load_dotenv
         from groq import Groq
@@ -172,22 +205,29 @@ def hypothetical_passage(question: str) -> str | None:
             temperature=0,
             reasoning_effort="low",
             messages=[
-                {"role": "system", "content": HYDE_PROMPT},
+                {"role": "system", "content": domains.get(domain).hyde_prompt},
                 {"role": "user", "content": question},
             ],
         )
         passage = (reply.choices[0].message.content or "").strip()
         if passage:
-            _passages[question] = passage
+            _passages[(domain, question)] = passage
+            if _CACHE_FILE:
+                import json
+
+                store = _disk_cache()
+                store[f"{domain}|{question}"] = passage
+                Path(_CACHE_FILE).write_text(json.dumps(store, ensure_ascii=False, indent=1),
+                                             encoding="utf-8")
         return passage or None
     except Exception as exc:
         print(f"  (HyDE unavailable, searching with the question only: {exc})", file=sys.stderr)
         return None
 
 
-def retrieve(question: str, k: int = TOP_K, hyde: bool = True) -> list[dict]:
+def retrieve(question: str, k: int = TOP_K, hyde: bool = True, domain: str = "rti") -> list[dict]:
     """The k best chunks for a question, best first."""
-    return retrieve_with_trace(question, k, hyde)[0]
+    return retrieve_with_trace(question, k, hyde, domain)[0]
 
 
 # Kept small on purpose: every added chunk is ~330 tokens, and Groq's free tier
@@ -195,7 +235,7 @@ def retrieve(question: str, k: int = TOP_K, hyde: bool = True) -> list[dict]:
 MAX_AMENDMENT_CHUNKS = 4
 
 
-def _amendment_family(chosen: list[int], ranking: list[int]) -> list[tuple[int, str]]:
+def _amendment_family(chosen: list[int], ranking: list[int], domain: str = "rti") -> list[tuple[int, str]]:
     """
     Chunks of orders that amend -- or are amended by -- an order already retrieved.
 
@@ -205,9 +245,16 @@ def _amendment_family(chosen: list[int], ranking: list[int]) -> list[tuple[int, 
     retrieved we add the rest of its family. In this corpus that is exactly one
     family (the AP RTI fee rules: 454, amended by 530, 545 and 740); the links are
     detected automatically at ingest from each order's "Amendment to ... Read the
-    following" header.
+    following" header. Agriculture's links come from the manifest's "amends" field.
+
+    A document marked not in force is never ADDED this way (it can still be
+    retrieved on its own merits): a question that finds the current Annadata
+    Sukhibhava order must not be padded with the replaced YSR Rythu Bharosa one.
     """
-    _, _, metas, _ = _corpus()
+    _, _, metas, _ = _corpus(domain)
+
+    def name(m: dict) -> str:
+        return m.get("order_label") or m["order"].replace(".", ".No.")
     by_order: dict[str, list[int]] = {}
     for i, m in enumerate(metas):
         if m.get("order"):
@@ -217,11 +264,11 @@ def _amendment_family(chosen: list[int], ranking: list[int]) -> list[tuple[int, 
     for i in chosen:
         order = metas[i].get("order")
         for amended in filter(None, (metas[i].get("amends") or "").split(",")):
-            wanted.setdefault(amended, f"the order it amends ({order.replace('.', '.No.')})")
+            wanted.setdefault(amended, f"is the order amended by {name(metas[i])}")
         if order:
             for j, m in enumerate(metas):
                 if order in (m.get("amends") or "").split(","):
-                    wanted.setdefault(m["order"], f"amends {order.replace('.', '.No.')}")
+                    wanted.setdefault(m["order"], f"amends {name(metas[i])}")
 
     # Of all the family's chunks not already present, keep the ones the search
     # itself ranked highest -- e.g. G.O.545's inspection-fee change, not G.O.530's
@@ -232,23 +279,57 @@ def _amendment_family(chosen: list[int], ranking: list[int]) -> list[tuple[int, 
         (i, why)
         for order, why in wanted.items()
         for i in by_order.get(order, [])
-        if i not in have
+        if i not in have and metas[i].get("in_force") != "no"
     ]
     candidates.sort(key=lambda c: position.get(c[0], len(ranking)))
     return candidates[:MAX_AMENDMENT_CHUNKS]
 
 
-def retrieve_with_trace(question: str, k: int = TOP_K, hyde: bool = True):
-    """Like retrieve(), but also returns the hypothetical passage used (or None)."""
-    _, texts, metas, _ = _corpus()
-    ranking = _hybrid(question)
-    passage = hypothetical_passage(question) if hyde else None
-    if passage:
-        ranking = _rrf(ranking, _hybrid(passage))
+# A replaced document (labelled not in force) keeps at most this many places in
+# the top k. The YSR Rythu Bharosa order (12 chunks) is ABOUT Rythu Bharosa, so it
+# out-ranked both the current Annadata Sukhibhava order and the rename order for
+# every "what is Rythu Bharosa called now / am I eligible" question. One chunk
+# still answers "what was Rythu Bharosa"; more only crowds out current rules.
+# RTI chunks carry no in_force label, so RTI is unaffected.
+MAX_NOT_IN_FORCE = 1
 
-    chosen = ranking[:k]
+
+def _top_k(ranking: list[int], metas: list[dict], k: int) -> list[int]:
+    chosen, replaced = [], 0
+    for i in ranking:
+        if metas[i].get("in_force") == "no":
+            if replaced >= MAX_NOT_IN_FORCE:
+                continue
+            replaced += 1
+        chosen.append(i)
+        if len(chosen) == k:
+            break
+    return chosen
+
+
+def retrieve_with_trace(question: str, k: int = TOP_K, hyde: bool = True, domain: str = "rti"):
+    """Like retrieve(), but also returns the hypothetical passage used (or None)."""
+    _, texts, metas, _ = _corpus(domain)
+    # "RBK" -> "RBK (Rythu Bharosa Kendram, ...)": only the SEARCH text is expanded
+    # (agriculture's glossary; RTI has none). HyDE once wrote "Rural Business
+    # Knowledge Centre" for RBK; with the expansion it knows what is meant.
+    question = domains.expand_abbreviations(question, domains.get(domain))
+    ranking = _hybrid(question, domain)
+    passage = hypothetical_passage(question, domain) if hyde else None
+    if passage:
+        # The HyDE ranking's vote relative to the question's (1.0 = equal, as RTI was tuned).
+        weight = float(os.environ.get("HYDE_WEIGHT") or domains.get(domain).hyde_weight)
+        mode = os.environ.get("HYDE_MODE") or domains.get(domain).hyde_mode
+        if mode == "dense":      # passage searched by meaning only, not keywords
+            ranking = _rrf(ranking, _dense(passage, domain), weights=(1.0, weight))
+        elif mode == "concat":   # one hybrid search with question + passage
+            ranking = _hybrid(f"{question}\n{passage}", domain)
+        else:                    # "rrf": two hybrid searches fused (RTI's tuned setting)
+            ranking = _rrf(ranking, _hybrid(passage, domain), weights=(1.0, weight))
+
+    chosen = _top_k(ranking, metas, k)
     hits = [{"text": texts[i], "rank": r + 1, **metas[i]} for r, i in enumerate(chosen)]
-    for i, why in _amendment_family(chosen, ranking):
+    for i, why in _amendment_family(chosen, ranking, domain):
         hits.append({"text": texts[i], "rank": len(hits) + 1, "added_because": why, **metas[i]})
     return hits, passage
 
@@ -258,9 +339,10 @@ def main() -> int:
     parser.add_argument("question")
     parser.add_argument("--k", type=int, default=TOP_K)
     parser.add_argument("--no-hyde", action="store_true", help="search with the question only")
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
     args = parser.parse_args()
 
-    hits, passage = retrieve_with_trace(args.question, args.k, not args.no_hyde)
+    hits, passage = retrieve_with_trace(args.question, args.k, not args.no_hyde, args.domain)
     print(f"\nQ: {args.question}")
     if passage:
         print(f"\nsearch passage (HyDE, not shown to users):\n  {passage}\n")

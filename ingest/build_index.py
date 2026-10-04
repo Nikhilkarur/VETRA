@@ -14,10 +14,12 @@ The keyword (BM25) half of hybrid search needs no index file: rag/retrieve.py
 builds it in memory from the stored chunk texts at startup (under a second).
 
 Run:  python ingest/build_index.py
+      python ingest/build_index.py --domain agriculture   (own collection: ap_agriculture)
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import sys
@@ -28,12 +30,23 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
-CHUNKS = ROOT / "ingest" / "chunks.json"
+sys.path.insert(0, str(ROOT / "rag"))
+import domains  # noqa: E402
+
 CHROMA_DIR = ROOT / "data" / "chroma"
-COLLECTION = "ap_rti"
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
+    parser.add_argument("--title-prefix", choices=["on", "off", "default"], default="default",
+                        help="embed 'document title + chunk' instead of the chunk alone "
+                             "(default: the domain's setting)")
+    args = parser.parse_args()
+    domain = domains.get(args.domain)
+    CHUNKS, COLLECTION = domain.chunks, domain.collection
+    title_prefix = domain.embed_title if args.title_prefix == "default" else args.title_prefix == "on"
+
     import chromadb
     from sentence_transformers import SentenceTransformer
 
@@ -45,9 +58,17 @@ def main() -> int:
     too_long = sum(1 for i in items if len(model.tokenizer.encode(i["text"])) > model.max_seq_length)
     print(f"chunks over the {model.max_seq_length}-token window: {too_long}")
 
-    # Chunks go in raw. bge is asymmetric: only QUERIES get its instruction prefix.
+    # bge is asymmetric: only QUERIES get its instruction prefix. Chunks go in raw --
+    # or, for domains with embed_title, as "title\ntext" (the stored text and the
+    # BM25 index stay raw; only the vector sees the title). This "contextual
+    # chunk" idea HURT RTI, where every title says "Right to Information Act";
+    # agriculture's titles name the scheme, crop and season, so it is measured
+    # separately there (context.md).
+    if title_prefix:
+        print("embedding with the document title prefixed to each chunk")
     vectors = model.encode(
-        [i["text"] for i in items], batch_size=32, normalize_embeddings=True, show_progress_bar=True
+        [f"{i['title']}\n{i['text']}" if title_prefix else i["text"] for i in items],
+        batch_size=32, normalize_embeddings=True, show_progress_bar=True,
     ).tolist()
 
     CHROMA_DIR.mkdir(parents=True, exist_ok=True)
@@ -57,7 +78,7 @@ def main() -> int:
     except Exception:
         pass
     collection = client.create_collection(
-        COLLECTION, metadata={"hnsw:space": "cosine", "model": model_name}
+        COLLECTION, metadata={"hnsw:space": "cosine", "model": model_name, "title_prefix": title_prefix}
     )
 
     # Chroma metadata must be scalar and non-null.
@@ -73,6 +94,10 @@ def main() -> int:
             "file": i["file"],
             "chunk_index": i["chunk_index"],
             "chunk_count": i["chunk_count"],
+            # agriculture only (RTI chunks get the neutral defaults)
+            "order_label": i.get("order_label") or "",
+            "in_force": i.get("in_force") or "",
+            "date": i.get("date") or "",
         }
         for i in items
     ]
@@ -85,7 +110,7 @@ def main() -> int:
             metadatas=metadatas[start:end],
         )
 
-    print(f"indexed {collection.count()} vectors -> {CHROMA_DIR}")
+    print(f"indexed {collection.count()} vectors -> {CHROMA_DIR} [{COLLECTION}]")
     return 0
 
 

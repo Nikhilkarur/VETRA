@@ -1,0 +1,403 @@
+{
+  "about": "Frozen agriculture question set, same method as demo_questions.json. Written and verified against the extracted text of ingest/incoming/agriculture BEFORE any agriculture retrieval code existed (2026-10-04). A question counts as retrieved when every probe appears in the top-k chunks (whitespace removed, case-insensitive). 'dev' is fairly formal and is used while iterating. 'heldout' is casual farmer phrasing and is run only at the end; it must not drive any decision. 'dev_casual' (added the same day, after dev had been run, before heldout was ever run) is casual phrasing on topics and wordings unlike heldout, so HyDE -- whose value is on casual wording -- can be tuned without touching heldout. 'heldout' was run once on 2026-10-04 with the round-1 pipeline (69%; 50% without HyDE) and its misses were read, so it is no longer clean. 'heldout2' was written after that and BEFORE the round-2 changes (abbreviation glossary, HyDE v3); it is the clean test for them.",
+  "created": "2026-10-04",
+  "dev": [
+    {
+      "q": "How much financial assistance is given per year under the Annadatha Sukhibhava scheme?",
+      "probes": [
+        "Rs. 20,000/- per annum"
+      ]
+    },
+    {
+      "q": "What is the minimum land holding required to be eligible for Annadatha Sukhibhava?",
+      "probes": [
+        "minimum of 10 cents"
+      ]
+    },
+    {
+      "q": "Are income tax payers eligible for Annadatha Sukhibhava?",
+      "probes": [
+        "paid Income Tax during last assessment year"
+      ]
+    },
+    {
+      "q": "What is the new name of the YSR Rythu Bharosa - PM Kisan scheme?",
+      "probes": [
+        "PM Kisan Annadata Sukhibhava"
+      ]
+    },
+    {
+      "q": "What are the Rythu Bharosa Kendras called now?",
+      "probes": [
+        "Rythu Seva Kendram"
+      ]
+    },
+    {
+      "q": "What is the e-Crop app called now?",
+      "probes": [
+        "e-Crop App e-Panta"
+      ]
+    },
+    {
+      "q": "How are crop insurance claims settled under PMFBY in Andhra Pradesh?",
+      "probes": [
+        "individual declarations of crop damage"
+      ]
+    },
+    {
+      "q": "Is enrolment in crop insurance compulsory or voluntary for farmers?",
+      "probes": [
+        "voluntary enrolment by farmers"
+      ]
+    },
+    {
+      "q": "Who heads the District Level Grievance Redressal Committee for crop insurance?",
+      "probes": [
+        "headed by the District Magistrate or Collector"
+      ]
+    },
+    {
+      "q": "What is the maximum crop loan eligible for interest-free benefit under the Sunna Vaddi Panta Runalu scheme?",
+      "probes": [
+        "crop loans upto Rs.1.00 Lakh"
+      ]
+    },
+    {
+      "q": "How is subsidy seed distributed to farmers?",
+      "probes": [
+        "authenticating through D Krishi App"
+      ]
+    },
+    {
+      "q": "What is the sale price and subsidy for K-6 groundnut seed in Kharif 2026?",
+      "probes": [
+        "10200 4080 6120 40%"
+      ]
+    },
+    {
+      "q": "What drip irrigation subsidy is given to SC/ST small farmers?",
+      "probes": [
+        "100% subsidy for Drip Irrigation for Small Farmers"
+      ]
+    },
+    {
+      "q": "For how long is a Crop Cultivator Rights Card valid?",
+      "probes": [
+        "maximum period of 11 months"
+      ]
+    },
+    {
+      "q": "What is the minimum support price for common paddy in KMS 2025-26?",
+      "probes": [
+        "Common: Rs.2,369/- per quintal"
+      ]
+    },
+    {
+      "q": "What extent of crop damage makes a farmer eligible for input subsidy?",
+      "probes": [
+        "crops damaged more than 33%"
+      ]
+    },
+    {
+      "q": "What is the SDRF input subsidy per hectare for crops in assured irrigated areas?",
+      "probes": [
+        "Rs.17,000/- per ha, in assured irrigated areas"
+      ]
+    },
+    {
+      "q": "How is a farmer family defined under PM-KISAN?",
+      "probes": [
+        "husband, wife and minor children"
+      ]
+    },
+    {
+      "q": "What pension does the PM Kisan Maan Dhan Yojana provide?",
+      "probes": [
+        "monthly pension of Rs. 3000"
+      ]
+    },
+    {
+      "q": "What interest subvention is given on short-term crop loans through Kisan Credit Card?",
+      "probes": [
+        "interest subvention of 1.5% per annum",
+        "additional interest subvention of 3%"
+      ]
+    },
+    {
+      "q": "Up to what limit can banks give KCC loans without collateral security under tie-up arrangements?",
+      "probes": [
+        "3.00 lakh without insisting on collateral security"
+      ]
+    },
+    {
+      "q": "Where can farmers register for the farm mechanization subsidy?",
+      "probes": [
+        "www.eseed.ap.gov.in/FM/"
+      ]
+    },
+    {
+      "q": "What services does the Agriculture Department provide at Rythu Bharosa Kendras?",
+      "probes": [
+        "Multi-brand Inputs of Farmer Choice"
+      ]
+    },
+    {
+      "q": "What was the free agriculture power scheme renamed as?",
+      "probes": [
+        "Andhra Pradesh Uchita Vyavasaya Vidyut Pathakam"
+      ]
+    }
+  ],
+  "heldout": [
+    {
+      "q": "how much money will govt give me every year as a farmer in AP",
+      "probes": [
+        "Rs. 20,000/- per annum"
+      ]
+    },
+    {
+      "q": "i dont own land, i take land on lease. can i still get the 20k farmer money?",
+      "probes": [
+        "eligible landless cultivators"
+      ]
+    },
+    {
+      "q": "my crop got destroyed in the cyclone, will govt pay me anything",
+      "probes": [
+        "crop damage 33% and above"
+      ]
+    },
+    {
+      "q": "do i have to pay for crop insurance now or is it still free",
+      "probes": [
+        "voluntary enrol"
+      ]
+    },
+    {
+      "q": "insurance company didnt pay my claim, who do i complain to",
+      "probes": [
+        "District Level Grievance Redressal Committee"
+      ]
+    },
+    {
+      "q": "whats the price govt pays for paddy this season",
+      "probes": [
+        "Rs.2,369/- per quintal"
+      ]
+    },
+    {
+      "q": "can i get a loan without interest for farming",
+      "probes": [
+        "crop loans upto Rs.1.00 Lakh"
+      ]
+    },
+    {
+      "q": "where do i get cheap seeds from the govt",
+      "probes": [
+        "D Krishi App"
+      ]
+    },
+    {
+      "q": "what do they call the RBK centre now",
+      "probes": [
+        "Rythu Seva Kendram"
+      ]
+    },
+    {
+      "q": "i am SC farmer with 2 acres, how much do i pay for a drip system",
+      "probes": [
+        "100% subsidy for Drip Irrigation"
+      ]
+    },
+    {
+      "q": "the seeds i bought didnt grow, can someone check the seed",
+      "probes": [
+        "take samples of any seed"
+      ]
+    },
+    {
+      "q": "shop is selling fertilizer above the price, is that allowed",
+      "probes": [
+        "at a price exceeding the maximum price"
+      ]
+    },
+    {
+      "q": "what is CCRC and how long is it valid",
+      "probes": [
+        "maximum period of 11 months"
+      ]
+    },
+    {
+      "q": "my father died and the land came to me, can i get pm kisan",
+      "probes": [
+        "succession due to death of the landowner"
+      ]
+    },
+    {
+      "q": "is there a pension for small farmers when they get old",
+      "probes": [
+        "monthly pension of Rs. 3000"
+      ]
+    },
+    {
+      "q": "kcc loan interest if i pay back on time",
+      "probes": [
+        "additional interest subvention of 3%"
+      ]
+    }
+  ],
+  "dev_casual": [
+    {
+      "q": "how much land do i need to have to get annadata money",
+      "probes": [
+        "minimum of 10 cents"
+      ]
+    },
+    {
+      "q": "i am a govt employee and i also have some farm land, will i get annadata sukhibhava",
+      "probes": [
+        "serving or retired officers and employees of Central /State Government"
+      ]
+    },
+    {
+      "q": "is e-crop and e-panta the same thing",
+      "probes": [
+        "e-Crop App e-Panta"
+      ]
+    },
+    {
+      "q": "will the insurance people believe me if i tell them my crop failed",
+      "probes": [
+        "individual declarations of crop damage"
+      ]
+    },
+    {
+      "q": "narayani groundnut seed rate this year after subsidy",
+      "probes": [
+        "Narayani C/S & T/L 10500 4200 6300"
+      ]
+    },
+    {
+      "q": "im a tribal farmer, how much discount on groundnut seeds",
+      "probes": [
+        "90% (Tribal farmers in Agency mandals)"
+      ]
+    },
+    {
+      "q": "if i give my land to a tenant with ccrc will i lose my land",
+      "probes": [
+        "Lawful Assurance to the Land Owner"
+      ]
+    },
+    {
+      "q": "can i get my soil tested at the village rbk",
+      "probes": [
+        "Soil and Seed testing"
+      ]
+    },
+    {
+      "q": "grade A paddy rate this year",
+      "probes": [
+        "Grade-A Rs.2,389/- per quintal"
+      ]
+    },
+    {
+      "q": "where can i sell cotton to cci at msp",
+      "probes": [
+        "purchase centers for procurement of cotton under MSP"
+      ]
+    },
+    {
+      "q": "pm kisan 6000 comes in how many parts",
+      "probes": [
+        "three equal installments"
+      ]
+    },
+    {
+      "q": "how much do i have to pay every month for the farmers pension scheme",
+      "probes": [
+        "between Rs.55 to Rs.200 per month"
+      ]
+    }
+  ],
+  "heldout2": [
+    {
+      "q": "after a flood who comes to check how much of my crop got damaged",
+      "probes": [
+        "enumerate the damage"
+      ]
+    },
+    {
+      "q": "my name is missing from the pm kisan list, what can i do",
+      "probes": [
+        "All such farmer families whose names are not included"
+      ]
+    },
+    {
+      "q": "is my cashew crop covered by insurance",
+      "probes": [
+        "For Cashew Nut"
+      ]
+    },
+    {
+      "q": "last date to enrol for crop insurance this kharif",
+      "probes": [
+        "1st April 2026 to 31st July 2026"
+      ]
+    },
+    {
+      "q": "can i rent a tractor from the village rsk",
+      "probes": [
+        "Farm implements shall be made available for Hire"
+      ]
+    },
+    {
+      "q": "mango trees damaged by bad weather, any insurance for that?",
+      "probes": [
+        "INCLUSION OF MANGO CROP"
+      ]
+    },
+    {
+      "q": "do pesticide shops need a licence",
+      "probes": [
+        "licence to sell, stock or exhibit for sale"
+      ]
+    },
+    {
+      "q": "how much subsidy if we buy a drone for spraying",
+      "probes": [
+        "Kisan Drone CHCs Rs.10 lakhs Rs.4.0 lakhs"
+      ]
+    },
+    {
+      "q": "is electricity free for my farm motor",
+      "probes": [
+        "free Agriculture Power"
+      ]
+    },
+    {
+      "q": "i am a tenant, can i get a bank loan for my crops",
+      "probes": [
+        "Loan eligibility to the Cultivator"
+      ]
+    },
+    {
+      "q": "i farm on lease, will the govt buy my paddy at msp",
+      "probes": [
+        "All paddy growing farmers (including tenants)"
+      ]
+    },
+    {
+      "q": "my married son also farms, does he get annadata money separately",
+      "probes": [
+        "Married children are considered as Separate Unit"
+      ]
+    },
+    {
+      "q": "are there any free seed kits for pulses or millets",
+      "probes": [
+        "free of cost (100% subsidy)"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 """
 Does the answering text reach the LLM? Measured through the real rag/retrieve.py.
 
-For every question in eval/demo_questions.json, run retrieval and check whether
+For every question in the domain's question file, run retrieval and check whether
 each probe phrase (a verbatim bit of the text that answers it) appears in the
 top-k chunks. No LLM judges anything -- the only LLM call is HyDE's search
 passage, and --no-hyde removes that too.
@@ -9,9 +9,10 @@ passage, and --no-hyde removes that too.
 Probes are matched with all whitespace removed, so extraction artifacts in the
 PDFs ("rup ees", "Informati on") can't cause false misses.
 
-Run:  python eval/retrieval_eval.py              # all three question sets
+Run:  python eval/retrieval_eval.py              # RTI: all four question sets
       python eval/retrieval_eval.py --no-hyde
       python eval/retrieval_eval.py --set heldout2 --verbose
+      python eval/retrieval_eval.py --domain agriculture --set dev
 """
 
 from __future__ import annotations
@@ -28,9 +29,13 @@ sys.path.insert(0, str(ROOT / "rag"))
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
+import domains  # noqa: E402
 from retrieve import TOP_K, retrieve  # noqa: E402
 
-QUESTIONS = ROOT / "eval" / "demo_questions.json"
+QUESTIONS = {
+    "rti": ROOT / "eval" / "demo_questions.json",
+    "agriculture": ROOT / "eval" / "agri_questions.json",
+}
 
 
 def squash(text: str) -> str:
@@ -39,37 +44,50 @@ def squash(text: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--set", choices=["dev", "heldout", "heldout2", "heldout3"], action="append")
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
+    parser.add_argument("--set", action="append", help="question set(s) to run; default: all")
     parser.add_argument("--k", type=int, default=TOP_K)
     parser.add_argument("--no-hyde", action="store_true")
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--ranks", action="store_true",
+                        help="for misses, show where each probe first appears in the top 60")
     args = parser.parse_args()
 
-    data = json.loads(QUESTIONS.read_text(encoding="utf-8"))
-    sets = args.set or ["dev", "heldout", "heldout2", "heldout3"]
+    data = json.loads(QUESTIONS[args.domain].read_text(encoding="utf-8"))
+    available = [k for k, v in data.items() if isinstance(v, list)]
+    sets = args.set or available
+    unknown = set(sets) - set(available)
+    if unknown:
+        parser.error(f"unknown set(s) {sorted(unknown)}; {args.domain} has {available}")
     mode = "hybrid only" if args.no_hyde else "hybrid + HyDE"
-    print(f"retrieval eval  |  top-{args.k}  |  {mode}\n")
+    print(f"retrieval eval  |  {args.domain}  |  top-{args.k}  |  {mode}\n")
 
     total_hit = total_n = 0
     for name in sets:
         hit = 0
         misses = []
         for item in data[name]:
-            hits = retrieve(item["q"], args.k, hyde=not args.no_hyde)
+            hits = retrieve(item["q"], max(args.k, 60) if args.ranks else args.k,
+                            hyde=not args.no_hyde, domain=args.domain)
             # Only the ranked top-k. Amendment chunks appended afterwards also reach
             # the LLM, but excluding them keeps this comparable with earlier runs.
             ranked = [h for h in hits if not h.get("added_because")]
-            context = squash(" ".join(h["text"] for h in ranked))
+            context = squash(" ".join(h["text"] for h in ranked[: args.k]))
             ok = all(squash(p) in context for p in item["probes"])
             hit += ok
             if args.verbose or not ok:
-                misses.append(("OK  " if ok else "MISS", item["q"]))
+                where = ""
+                if args.ranks and not ok:
+                    first = [next((r + 1 for r, h in enumerate(ranked) if squash(p) in squash(h["text"])), None)
+                             for p in item["probes"]]
+                    where = f"  [probe first at rank {', '.join(str(f) if f else '>60' for f in first)}]"
+                misses.append(("OK  " if ok else "MISS", item["q"], where))
         n = len(data[name])
         total_hit += hit
         total_n += n
         print(f"  {name:<9} {hit:>2}/{n}  {hit / n:>4.0%}")
-        for mark, q in misses:
-            print(f"      {mark} {q[:72]}")
+        for mark, q, where in misses:
+            print(f"      {mark} {q[:72]}{where}")
 
     print(f"\n  {'all':<9} {total_hit:>2}/{total_n}  {total_hit / total_n:>4.0%}")
     return 0
