@@ -12,6 +12,7 @@ Setup:  put GROQ_API_KEY=... in a .env file at the project root
 Run:  python rag/answer.py "how do I file an RTI application in Andhra Pradesh?"
       python rag/answer.py "what is the fee?" --show-context
       python rag/answer.py "what is the fee?" --no-hyde     # no search-passage call
+      python rag/answer.py "can tenant farmers get annadata sukhibhava" --domain agriculture
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ import sys
 import time
 from pathlib import Path
 
+import domains
 from retrieve import TOP_K, retrieve_with_trace
 
 # Windows consoles default to cp1252, which cannot encode characters the model
@@ -42,58 +44,8 @@ ROOT = Path(__file__).resolve().parent.parent
 #   python -c "from groq import Groq; [print(m.id) for m in Groq().models.list().data]"
 DEFAULT_MODEL = "openai/gpt-oss-120b"
 
-SYSTEM_PROMPT = """\
-You are an assistant that answers questions about the Right to Information Act
-2005 as it applies in Andhra Pradesh, for ordinary citizens.
-
-Answer ONLY from the numbered context passages provided. They come from the AP
-government's own published documents: the RTI Act itself (labelled by section),
-AP government orders and fee rules implementing it, and departmental Section
-4(1)(b) manuals.
-
-Rules:
-- If the context does not contain the answer, say so plainly. Do not fill the
-  gap from general knowledge -- a confident wrong answer about a legal right is
-  worse than "the documents I have don't cover this".
-- If the passages answer only part of the question, answer that part and say
-  what they don't show. Never call something "the only" ground, option or right,
-  and never say something is "not permitted", unless a passage says so -- a
-  missing passage is not evidence that a rule doesn't exist.
-- Copy every amount, time limit and number exactly as the passage states it.
-  Do not combine, convert or re-express figures from different clauses.
-- Cite the passages you used by their number, like [2] or [3][5]. When a passage
-  is a section of the Act, name the section too, e.g. "Section 19 [2]". Cite a
-  passage only for what that passage itself says -- check the section label
-  before citing it.
-- When someone asks what to do because a request was refused, ignored, delayed
-  or answered badly, give EVERY remedy the passages contain -- e.g. first appeal,
-  second appeal, complaint to the Information Commission -- each with its time
-  limit and who it goes to. Lead with the appeal route if a passage describes it;
-  do not offer just one remedy when the passages show several.
-- Quote the Act's wording for anything about rights, deadlines or fees.
-- The Act speaks of "Central" and "State" Public Information Officers. For
-  Andhra Pradesh departments the relevant officer is the State one.
-- Write plainly, for someone with no legal training. Keep it short.
-- The question may be a follow-up. Earlier turns, if shown, are only there to
-  help you understand what the question refers to. Take every fact from the
-  numbered passages -- never from an earlier answer.
-- The AP fee rules and orders here date from 2005-2011, so amounts or procedures
-  may have changed since. Say so briefly when an answer gives a fee or a contact.
-
-Three traps in these documents:
-- AMENDMENTS. Some orders amend earlier ones (the source label says so). Where an
-  amendment changes a rule, give the amended version, and mention it was amended.
-- WHO HOLDS AN OFFICE. Government orders name officials as of the order's date.
-  Never say someone "currently" holds a post unless the source is the AP State
-  Portal page marked as the most current source. Otherwise say who was appointed,
-  by which order and when, and that it may have changed.
-- DEPARTMENT CONTACTS. Department manuals list officers, phone numbers and
-  addresses for THAT department only (named in the source label). Give them only
-  if the question is about that department. Never offer one department's officer
-  as the contact for another department or for "any office".
-
-Cite with plain square brackets like [2] -- no other citation markup.
-"""
+# The answer rules (SYSTEM prompt) and the follow-up rewrite (CONDENSE prompt)
+# are per domain and live in rag/domains.py. RTI's were moved there verbatim.
 
 
 def build_context(hits: list[dict]) -> str:
@@ -161,18 +113,6 @@ CONDENSE_MODEL = "openai/gpt-oss-120b"
 CONDENSE_FALLBACK = "openai/gpt-oss-20b"
 MAX_TURNS = 3  # earlier turns kept; each adds ~200 tokens to the answer prompt
 
-CONDENSE_PROMPT = """You rewrite the latest message in a chat about the Right to Information Act in Andhra Pradesh into one standalone question.
-
-The question you write will be searched on its own, WITHOUT the conversation. So replace every vague reference -- "it", "that", "this", "they", "still", "too", "next", "what about", "and if" -- with the specific thing it refers to in the earlier conversation. If the message is about the user's own situation ("what if i am ...", "what if i was ...") it is asking about the TOPIC being discussed (a fee, an appeal, a deadline) -- name that topic in the question. Keep the user's plain wording otherwise. Leave the message unchanged only if it is already fully clear with no earlier context. Do not add "Right to Information Act" or "Andhra Pradesh" unless the user said them. Do not answer it.
-
-Examples (different conversations from the one you will get):
-- Earlier the user asked how to file an RTI application. Latest: "how long will it take" -> How long will it take to get a reply to an RTI application?
-- Earlier the user asked about the deadline for a first appeal. Latest: "what if i was in hospital" -> Can I file the first appeal after the deadline if I was in hospital?
-- Earlier the user asked whether they can get records older than 20 years. Latest: "what about cabinet papers?" -> Can I get cabinet papers?
-- Earlier the user's RTI was refused and they asked what to do. Latest: "and if that fails too" -> What can I do if the first appeal against the refusal also fails?
-- Earlier the user asked about fees. Latest: "who do i send the application to" -> Who do I send the application to? (already clear -- unchanged)
-
-Output only the question, on one line."""
 
 
 _TABLE_RULE = re.compile(r"\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?")
@@ -217,13 +157,13 @@ def format_history(history: list[dict] | None, answer_chars: int = 600) -> str:
     )
 
 
-def standalone_question(question: str, history: list[dict] | None) -> str:
+def standalone_question(question: str, history: list[dict] | None, domain: str = "rti") -> str:
     """The question rewritten to stand alone, using earlier turns. Unchanged if no history."""
     turns = _recent(history)
     if not turns:
         return question
     messages = [
-        {"role": "system", "content": CONDENSE_PROMPT},
+        {"role": "system", "content": domains.get(domain).condense_prompt},
         {"role": "user", "content": f"Earlier conversation:\n{format_history(turns, 300)}\n\n"
                                     f"Latest message: {question}"},
     ]
@@ -252,7 +192,7 @@ class MissingKey(RuntimeError):
 
 
 def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
-                    history: list[dict] | None = None) -> dict:
+                    history: list[dict] | None = None, domain: str = "rti") -> dict:
     """
     Retrieve, then answer. Returns everything a caller might display:
     answer, standalone (the question as searched), hits (the numbered passages),
@@ -272,27 +212,45 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
             "    GROQ_API_KEY=gsk_..."
         )
 
+    from groq import APIStatusError
+
     started = time.perf_counter()
-    standalone = standalone_question(question, history)
-    hits, passage = retrieve_with_trace(standalone, k, hyde)
+    standalone = standalone_question(question, history, domain)
+    hits, passage = retrieve_with_trace(standalone, k, hyde, domain)
     searched = time.perf_counter()
-    context = build_context(hits)
-
     earlier = format_history(history)
-    prompt = f"Context passages:\n\n{context}\n\n"
-    if earlier:
-        prompt += ("Earlier in this conversation (to understand the question only -- "
-                   f"not a source of facts):\n{earlier}\n\n")
-    prompt += f"Question: {question}"
-    if standalone != question:
-        prompt += f"\n(In context, this means: {standalone})"
-
     model = os.environ.get("GROQ_MODEL", DEFAULT_MODEL)
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": prompt},
-    ]
-    response, used = _complete(Groq(api_key=key, max_retries=3), model, messages)
+    client = Groq(api_key=key, max_retries=3)
+
+    # Groq's free tier refuses any single request over 8,000 tokens a minute
+    # (HTTP 413, "Request too large") -- no wait or retry helps. Agriculture's
+    # chunks are long, and 10 passages plus 4 amendment additions plus the rules
+    # once came to 8,025. So on a 413, drop the lowest-ranked passages and ask
+    # again. A normal request is sent exactly as before.
+    while True:
+        context = build_context(hits)
+        prompt = f"Context passages:\n\n{context}\n\n"
+        if earlier:
+            prompt += ("Earlier in this conversation (to understand the question only -- "
+                       f"not a source of facts):\n{earlier}\n\n")
+        prompt += f"Question: {question}"
+        if standalone != question:
+            prompt += f"\n(In context, this means: {standalone})"
+        messages = [
+            # {today}: agriculture's rules tell the model the date, so a 2024 order
+            # is not described as "the current season" in 2026. RTI's prompt has no
+            # placeholder and is sent unchanged.
+            {"role": "system", "content": domains.get(domain).system_prompt.replace(
+                "{today}", time.strftime("%d %B %Y"))},
+            {"role": "user", "content": prompt},
+        ]
+        try:
+            response, used = _complete(client, model, messages)
+            break
+        except APIStatusError as exc:
+            if exc.status_code != 413 or len(hits) <= 6:
+                raise
+            hits = hits[:-3]  # amendment additions sit at the end, then the lowest ranks
     answer = tidy_citations(response.choices[0].message.content or "")
     done = time.perf_counter()
     if used != model:
@@ -311,10 +269,10 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
 
 
 def ask(question: str, k: int = TOP_K, show_context: bool = False, hyde: bool = True,
-        history: list[dict] | None = None) -> str:
+        history: list[dict] | None = None, domain: str = "rti") -> str:
     """Answer a question and print it, with sources, for the terminal."""
     try:
-        result = answer_question(question, k, hyde, history)
+        result = answer_question(question, k, hyde, history, domain)
     except MissingKey as exc:
         print(exc)
         sys.exit(1)
@@ -344,8 +302,9 @@ def main() -> int:
     parser.add_argument("--k", type=int, default=TOP_K)
     parser.add_argument("--show-context", action="store_true")
     parser.add_argument("--no-hyde", action="store_true", help="search with the question only")
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
     args = parser.parse_args()
-    ask(args.question, args.k, args.show_context, not args.no_hyde)
+    ask(args.question, args.k, args.show_context, not args.no_hyde, domain=args.domain)
     return 0
 
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AP RTI Assistant</title>
+<title>{{PAGE_TITLE}}</title>
 <style>
   /* Cream and white, light only -- deliberately ignores the OS dark mode. */
   :root {
@@ -139,22 +139,15 @@
 
 <div class="wrap">
   <header>
-    <h1>AP RTI assistant</h1>
-    <p>Ask about the Right to Information Act as it applies in Andhra Pradesh.
-       Answers come only from 41 documents published by the AP government, with sources.
-       Not legal advice.</p>
+    <h1>{{TITLE}}</h1>
+    <p>{{BLURB}}</p>
   </header>
 
   <main id="thread" aria-live="polite">
     <section id="empty">
       <p class="label">Try asking</p>
       <div class="chips">
-        <button class="chip" type="button">how do i file an rti application</button>
-        <button class="chip" type="button">how much money do i need to pay for an rti in andhra pradesh</button>
-        <button class="chip" type="button">the officer keeps delaying it what should i do</button>
-        <button class="chip" type="button">can the officer refuse to give me information</button>
-        <button class="chip" type="button">is rti free for BPL families</button>
-        <button class="chip" type="button">does rti work for intelligence agencies like IB</button>
+{{CHIPS}}
       </div>
     </section>
   </main>
@@ -164,7 +157,7 @@
   <div class="wrap">
     <div class="row">
       <label class="sr" for="q">Your question</label>
-      <input id="q" type="text" maxlength="500" placeholder="Ask a question about RTI…" autofocus>
+      <input id="q" type="text" maxlength="500" placeholder="{{PLACEHOLDER}}" autofocus>
       <button class="ask" type="submit">Ask</button>
     </div>
     <p class="hint">

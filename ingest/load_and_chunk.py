@@ -23,6 +23,16 @@ chunks look alike. The section title is stored as metadata for citations only.
 
 Run:  python ingest/load_and_chunk.py
       python ingest/load_and_chunk.py --preview
+      python ingest/load_and_chunk.py --domain agriculture
+
+Agriculture (added 2026-10-04) reuses the same token chunking. What differs:
+- Documents come from ingest/incoming/agriculture/manifest.json (collect.py format).
+- Five large documents are indexed only on the pages a farmer's question can be
+  answered from (AGRI_PAGES): G.O.Ms.80 alone is 864 pages, 817 of them sowing
+  calendars and village lists that would swamp every search.
+- Amendment links come from the manifest's curated "amends" field instead of
+  being guessed from the text, and each chunk carries "in_force", so a replaced
+  scheme (YSR Rythu Bharosa) is labelled NOT IN FORCE where the model sees it.
 """
 
 from __future__ import annotations
@@ -39,9 +49,25 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT.parent / "rag"))
+import domains  # noqa: E402  (rag/domains.py: per-domain paths and prompts)
+
+# Set from the chosen domain in main().
 DOCS_DIR = ROOT / "documents"
 MANIFEST = ROOT / "corpus_manifest.json"
 OUT = ROOT / "chunks.json"
+
+# Agriculture: pages to index (1-based, inclusive) for documents whose remaining
+# pages are tables no citizen question is answered from. Checked page by page.
+AGRI_PAGES = {
+    "g-o-ms-no-80-": (1, 47, "pp.48-864: sowing calendars, CCE plans, village notification lists"),
+    "g-o-ms-no-81-": (1, 32, "pp.33-118: weather-index term sheets per district and crop"),
+    "g-o-ms-no-98-": (1, 23, "pp.24-89: weather-index term sheets per district"),
+    "mission-for-integrated-development-of-horticulture": (
+        1, 115, "pp.116-327: polyhouse/cold-room engineering specifications and formats"),
+    "operational-guidelines-of-per-drop-more-crop": (
+        1, 42, "pp.43-78: bill-of-quantity tables and reporting formats"),
+}
 
 # Must match the embedding model in build_index.py; its tokenizer sizes the chunks.
 MODEL_NAME = "BAAI/bge-small-en-v1.5"   # 512-token window
@@ -102,12 +128,108 @@ def amended_orders(title: str, text: str) -> list[str]:
     return sorted(refs - {own})
 
 
-def extract_text(path: Path) -> str:
+def extract_text(path: Path, pages: tuple[int, int] | None = None) -> str:
     if path.suffix == ".txt":
         return path.read_text(encoding="utf-8")
     from pypdf import PdfReader
 
-    return "\n".join(page.extract_text() or "" for page in PdfReader(path).pages)
+    reader = PdfReader(path)
+    first, last = (pages[0] - 1, pages[1]) if pages else (0, len(reader.pages))
+    return "\n".join(page.extract_text() or "" for page in reader.pages[first:last])
+
+
+# ---------------------------------------------------------------- agriculture
+
+_GO = re.compile(r"G\.?\s?O\.?\s*(Ms|Rt)?\.?\s*No\.?\s*:?\s*(\d+)", re.I)
+_YEAR = re.compile(r"\b(19|20)\d{2}\b")
+_WORDS = re.compile(r"[a-z]+")
+
+
+def agri_key(entry: dict) -> str:
+    """A unique order key: 'Ms.80/2024' for G.O.s (numbers repeat across years), else the file stem."""
+    m = _GO.search(entry.get("number") or "")
+    year = (entry.get("date") or "")[:4]
+    if m and year:
+        return f"{(m.group(1) or 'GO').title()}.{m.group(2)}/{year}"
+    return Path(entry["file"]).stem
+
+
+def agri_label(entry: dict) -> str:
+    """How an order is named in 'included because it amends ...' notes."""
+    m = _GO.search(entry.get("number") or "")
+    year = (entry.get("date") or "")[:4]
+    if m:
+        return f"G.O.{(m.group(1) or '').title()}{'.' if m.group(1) else ''}No.{m.group(2)}" + (f" ({year})" if year else "")
+    return entry["title"][:60]
+
+
+def resolve_amends(entry: dict, entries: list[dict]) -> list[str]:
+    """
+    Turn the manifest's free-text 'amends' list into order keys of documents we hold.
+
+    'G.O.Ms.No.80 (2024)' matches by number and year; 'Seeds (Control) Order, 1983'
+    matches the document whose title contains most of its words.
+    """
+    keys = []
+    for ref in entry.get("amends") or []:
+        m, y = _GO.search(ref), _YEAR.search(ref)
+        if m and y:
+            want = f"{(m.group(1) or 'GO').title()}.{m.group(2)}/{y.group(0)}"
+            hit = [e for e in entries if agri_key(e) == want]
+        else:
+            # By title -- only among documents that are NOT G.O.s: a reference to a
+            # G.O. always cites its number, and G.O. titles quote scheme names that
+            # would otherwise match ("PM Kisan ... Operational Guidelines" in G.O.Ms.33).
+            words = {w for w in _WORDS.findall(ref.lower()) if len(w) > 2} - {"the", "and", "para"}
+            hit = [e for e in entries if e is not entry and words
+                   and not _GO.search(e.get("number") or "")
+                   and len(words & set(_WORDS.findall(e["title"].lower()))) / len(words) >= 0.75]
+        keys += [agri_key(e) for e in hit[:1]]
+    return keys
+
+
+def agri_source(entry: dict) -> str:
+    """The label the answering model sees: what, who, when -- and whether it still applies."""
+    who = "central government" if entry["department"] == "central" else f"{entry['department']} department"
+    label = f"{entry['title']} [{who}" + (f", {entry['date']}" if entry.get("date") else "") + "]"
+    if (entry.get("in_force") or "").lower().startswith("no"):
+        label = f"NOT IN FORCE ({entry['in_force']}) -- {label}"
+    return label
+
+
+def agriculture_units(count) -> list[dict]:
+    entries = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    items: list[dict] = []
+    for entry in entries:
+        path = DOCS_DIR / entry["file"]
+        pages = next((v[:2] for k, v in AGRI_PAGES.items() if entry["file"].startswith(k)), None)
+        text = clean(extract_text(path, pages))
+        if len(text) < 100:
+            print(f"  skipped (no text -- scan, needs OCR): {entry['file']}")
+            continue
+        source = agri_source(entry)
+        pieces = chunk_tokens(text, count, CHUNK_TOKENS, OVERLAP_TOKENS)
+        for i, piece in enumerate(pieces):
+            items.append({
+                "id": f"{path.stem}::0::{i}",
+                "text": piece,
+                "source": source,
+                "title": entry["title"],
+                "department": entry["department"],
+                "section": None,
+                "order": agri_key(entry),
+                "order_label": agri_label(entry),
+                "amends": ",".join(resolve_amends(entry, entries)),
+                "in_force": (entry.get("in_force") or "unknown").split()[0].strip(",;-").lower(),
+                "date": entry.get("date") or "",
+                "source_url": entry["source_url"],
+                "file": entry["file"],
+                "chunk_index": i,
+                "chunk_count": len(pieces),
+            })
+        note = f"  (pp.{pages[0]}-{pages[1]} only)" if pages else ""
+        print(f"  {len(pieces):>4} chunks  {entry['title'][:62]}{note}")
+    return items
 
 
 def clean(text: str) -> str:
@@ -181,12 +303,20 @@ def chunk_tokens(text: str, count, size: int, overlap: int) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--preview", action="store_true", help="print samples, write nothing")
+    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
     args = parser.parse_args()
+
+    global DOCS_DIR, MANIFEST, OUT
+    domain = domains.get(args.domain)
+    DOCS_DIR, MANIFEST, OUT = domain.docs_dir, domain.manifest, domain.chunks
 
     from transformers import AutoTokenizer
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     count = lambda s: len(tokenizer.encode(s, add_special_tokens=False))
+
+    if args.domain == "agriculture":
+        return write(agriculture_units(count), tokenizer, args.preview)
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     items: list[dict] = []
@@ -242,12 +372,18 @@ def main() -> int:
                 )
         print(f"  {len(items) - before:>3} chunks  {entry['title'][:62]}")
 
+    return write(items, tokenizer, args.preview)
+
+
+def write(items: list[dict], tokenizer, preview: bool) -> int:
+    count = lambda s: len(tokenizer.encode(s, add_special_tokens=False))
     tokens = [count(i["text"]) for i in items]
     print(f"\n{len(items)} chunks | tokens per chunk: max {max(tokens)}, "
           f"median {sorted(tokens)[len(tokens)//2]} | window {tokenizer.model_max_length}")
 
-    if args.preview:
-        for item in [i for i in items if i["section"] in (6, 19)][:2]:
+    if preview:
+        sample = [i for i in items if i["section"] in (6, 19)][:2] or items[:2]
+        for item in sample:
             print(f"\n--- {item['source']}\n{item['text'][:400]} ...")
         return 0
 

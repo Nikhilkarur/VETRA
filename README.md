@@ -377,6 +377,16 @@ The RTI bot is the first domain. The plan is to extend it to other departments
 
 The detailed design is still to be decided; see [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md).
 
+**Status (2026-10-04): step 2 is working for two domains.** Agriculture now runs
+through the same pipeline as RTI, with its own index and prompts (`rag/domains.py`;
+pick it with `--domain agriculture`). Its 44 documents (state G.O.s, scheme
+guidelines, central Acts and guidelines) were collected for this purpose; see
+`ingest/incoming/agriculture/REPORT.md`. Retrieval on agriculture's frozen question
+sets: 92-96% on formal questions, 69% on fresh casual ones (RTI: 82%). HyDE is worth
++15 to +19 points on the casual questions. Finance comes next, as one domain with
+subcategories; the router (step 1) comes last. Details and every measurement are in
+`context.md`, "Agriculture domain".
+
 ### Improving the RTI domain
 
 1. **Project virtual environment:** faster startup, cleaner dependencies.
@@ -447,9 +457,28 @@ python rag/chat.py
 
 In the chat, `/sources` shows the retrieved passages and the HyDE search passage.
 
+**The agriculture assistant** works the same way. Build its index once (its documents
+are in `ingest/incoming/agriculture/`):
+```bash
+python ingest/load_and_chunk.py --domain agriculture
+```
+```bash
+python ingest/build_index.py --domain agriculture
+```
+Then add `--domain agriculture` to any command, for example:
+```bash
+python rag/web.py --domain agriculture
+```
+```bash
+python rag/chat.py --domain agriculture
+```
+
 Measure retrieval:
 ```bash
 python eval/retrieval_eval.py
+```
+```bash
+python eval/retrieval_eval.py --domain agriculture
 ```
 Add `--no-hyde` to see the difference HyDE makes. `eval/run_ragas.py` runs the LLM-judged
 RAGAS evaluation; it needs extra packages (`ragas`, `langchain-groq`,
@@ -467,19 +496,23 @@ ap-rti-assistant/
 │   ├── AP RTI Assistant Knowledge Base.html   self-contained explainer page
 │   └── DATA_COLLECTION_BRIEF.md   what data is missing, as a task brief for an agent
 ├── ingest/
-│   ├── documents/            the 41 source documents
+│   ├── documents/            the 41 RTI source documents
 │   ├── corpus_manifest.json  title, department, source URL, checksum per document
 │   ├── inventory_rti_acts.json   audit of all 546 documents on the site
-│   ├── load_and_chunk.py     documents → section-aware chunks → chunks.json
-│   └── build_index.py        chunks → embeddings → Chroma
+│   ├── load_and_chunk.py     documents → chunks (--domain rti | agriculture)
+│   ├── build_index.py        chunks → embeddings → Chroma (one collection per domain)
+│   ├── collect/              tools that collected the new domains' documents
+│   └── incoming/             staged documents per domain (agriculture is indexed from here)
 ├── rag/
+│   ├── domains.py            per-domain settings: documents, index, prompts
 │   ├── retrieve.py           HyDE + hybrid search + amendment links
 │   ├── answer.py             passages + question → cited answer
 │   ├── chat.py               terminal chat
 │   ├── web.py                local web page server (standard library only)
 │   └── web.html              the web page
 ├── eval/
-│   ├── demo_questions.json   frozen question sets with probes
+│   ├── demo_questions.json   frozen RTI question sets with probes
+│   ├── agri_questions.json   frozen agriculture question sets with probes
 │   ├── retrieval_eval.py     retrieval test (no LLM judge)
 │   ├── run_ragas.py, testset.json   LLM-judged evaluation
 │   └── compare_embeddings.py older embedding comparison
