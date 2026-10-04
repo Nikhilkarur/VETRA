@@ -440,6 +440,20 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-04** — **Data collection for the multi-domain assistant** (branch
+  `data-collection`, local only), following `docs/DATA_COLLECTION_BRIEF.md`. New tools in
+  `ingest/collect/`: `catalog_apgov.py` (whole ap.gov.in API, 715 file links),
+  `goir.py` (search of the AP G.O. register, every G.O. since 2008; the best single source),
+  `collect.py` (candidates.json → files + manifest + inventory, computed checksums/pages/
+  text layer/language). Staged in `ingest/incoming/`: **RTI 26 kept** (RTIMIS online
+  filing live since G.O.Ms.25/2026; DPDP s.44(3) amending s.8(1)(j) in force 13-11-2025;
+  RTI Amendment 2019 + Rules 2019; AP fee rules only changed by G.O.Ms.79/2020 head of
+  account; current Commission G.O.Ms.7/2026 and sic.ap.gov.in now reachable),
+  **agriculture 27 kept** (Annadatha Sukhibhava G.O.Ms.33/2025, PMFBY/RWBCIS 2024-27,
+  seed/MSP/micro-irrigation/tenant orders, 9 central guidelines), **finance: scope
+  proposal only** (awaiting review), **71 FAQ questions**. Found: every ap.gov.in file
+  link, including all 41 current corpus sources, now returns 401/404; apagrisnet.gov.in
+  has an expired certificate (not bypassed). Reports per domain in each `REPORT.md`.
 - **2026-10-04** — **Put the project under git** and pushed to GitHub
   (`Nikhilkarur/AP-ASSIS`). Ignored: `.env`, `data/chroma/` (rebuild with the two ingest
   scripts), and the README exports (`README.html/.pdf/.png/.jpeg`, which go stale;

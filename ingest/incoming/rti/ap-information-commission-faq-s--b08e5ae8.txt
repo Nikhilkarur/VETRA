@@ -1,0 +1,105 @@
+Source: https://sic.ap.gov.in/sic_fe/FAQ's_en.php
+Accessed: 2026-10-04
+
+Frequently Asked Questions
+1. When does it come into force?
+It comes into force on the 12th October, 2005 (120th day of its enactment on 15th June, 2005). Some provisions have come into force with immediate effect viz. obligations of public authorities [S.4(1)] RTI ACT, 2005., designation of Public Information Officers and Assistant Public Information Officers[S.5(1) and 5(2)] RTI ACT, 2005., constitution of Central Information Commission (S.12 and 13) RTI ACT, 2005., constitution of State Information Commission (S.15 and 16) RTI ACT, 2005., non-applicability of the Act to Intelligence and Security Organizations (S.24) RTI ACT, 2005., and power to make rules to carry out the provisions of the Act (S.27 and 28) RTI ACT, 2005.
+2. Who is covered?
+The Act extends to the whole of India except the State of Jammu and Kashmir. [S.(12)] RTI ACT, 2005.
+3. What does information mean?
+Information means any material in any form including records, documents, memos, e-mails, opinions, advices, press releases, circulars, orders, logbooks, contracts, reports, papers, samples, models, data material held in any electronic form and information relating to any private body which can be accessed by a public authority under any other law for the time being in force but does not include "file notings" [S.2(f)] RTI ACT, 2005.
+4. What does Right to Information mean?
+It includes the right to
+1. Inspect works, documents, records.
+2. Take notes, extracts or certified copies of documents or records.
+3. Take certified samples of material.
+4. Obtain information in form of printouts, diskettes, floppies, tapes, video cassettes or in any other electronic mode or through printouts.[S.2(j)] RTI ACT, 2005.
+5. Is partial disclosure allowed?
+Only that part of the record which does not contain any information which is exempt from disclosure and which can reasonably be severed from any part that contains exempt information, may be provided. [S.10] RTI ACT, 2005.
+6. What does a "public authority" mean?
+It means any authority or body or institution of self-government established or constituted: [S.2(h)] RTI ACT, 2005., * by or under the Constitution; * by any other law made by Parliament; * by any other law made by State Legislature; * by notification issued or order made by the appropriate Government.and includes any- * body owned, controlled or substantially financed * non-Government organization substantially financed directly or indirectly by the appropriate Government.
+7. Who is excluded?
+Central Intelligence and Security agencies specified in the Second Schedule like IB, R&AW, Directorate of Revenue Intelligence, Central Economic Intelligence Bureau, Directorate of Enforcement, Narcotics Control Bureau, Aviation Research Centre, Special Frontier Force, BSF, CRPF, ITBP, CISF, NSG, Assam Rifles, Special Service Bureau, Special Branch (CID), Andaman and Nicobar, The Crime Branch-CID-CB, Dadra and Nagar Haveli and Special Branch, Lakshadweep Police. Agencies specified by the State Governments through a Notification will also be excluded. The exclusion, however, is not absolute and these organizations have an obligation to provide information pertaining to allegations of corruption and human rights violations. Further, information relating to allegations of human rights valuations could be given but only with the approval of the Central or State Information Commission, as the case may be. [S.24] RTI ACT, 2005.
+8. Who are Public Information Officers (PIOs)?
+PIOs are officers designated by the public authorities in all administrative units or offices under it to provide information to the citizens requesting for information under the Act. Any officer, whose assistance has been sought by the PIO for the proper discharge of his or her duties, shall render all assistance and for the purpose of contraventions of the provisions of this Act, such other officer shall be treated as a PIO.
+9. What is the Application Procedure for requesting information?
+1. Apply in writing or through electronic means in English or Hindi or in the official language of the area, to the PIO, specifying the particulars of the information sought for.
+2. Reason for seeking information are not required to be given;
+3. Pay fees as may be prescribed (if not belonging to the below poverty line category).
+10. What is the time limit to get the information?
+1. 30 days from the date of application
+2. 48 hours for information concerning the life and liberty of a person
+3. 5 days shall be added to the above response time, in case the application for information is given to Assistant Public Information Officer.
+4. If the interests of a third party are involved then time limit will be 40 days (maximum period + time given to the party to make representation).
+5. Failure to provide information within the specified period is a deemed refusal.
+11. What is the fee?
+1. Application fees to be prescribed which must be reasonable.
+2. If further fees are required, then the same must be intimated in writing with calculation details of how the figure was arrived at;
+3. Applicant can seek review of the decision on fees charged by the PIO by applying to the appropriate Appellate Authority;
+4. No fees will be charged from people living below the poverty line
+5. Applicant must be provided information free of cost if the PIO fails to comply with the prescribed time limit.
+12. What could be the ground for rejection?
+1. If it is covered by exemption from disclosure. (S.8) RTI ACT, 2005.
+2. If it infringes copyright of any person other than the State. (S.9) RTI ACT, 2005.
+13. What is not open to disclosure?
+The following is exempt from disclosure [(S.8)] RTI ACT, 2005.
+1. information, disclosure of which would prejudicially affect the sovereignty and integrity of India, the security, strategic, scientific or economic interests of the State, relation with foreign State or lead to incitement of an offence
+2. information which has been expressly forbidden to be published by any court of law or tribunal or the disclosure of which may constitute contempt of court;
+3. information, the disclosure of which would cause a breach of privilege of Parliament or the State Legislature;
+4. information including commercial confidence, trade secrets or intellectual property, the disclosure of which would harm the competitive position of a third party, unless the competent authority is satisfied that larger public interest warrants the disclosure of such information;
+5. information available to a person in his fiduciary relationship, unless the competent authority is satisfied that the larger public interest warrants the disclosure of such information;
+6. information received in confidence from foreign Government;
+7. information, the disclosure of which would endanger the life or physical safety of any person or identify the source of information or assistance given in confidence for law enforcement or security purposes;
+8. information which would impede the process of investigation or apprehension or prosecution of offenders;
+9. cabinet papers including records of deliberations of the Council of Ministers, Secretaries and other officers;
+10. information which relates to personal information the disclosure of which has no relationship to any public activity or interest, or which would cause unwarranted invasion of the privacy of the individual;
+11. Notwithstanding any of the exemptions listed above, a public authority may allow access to information, if public interest in disclosure outweighs the harm to the protected interests.
+14. What are the duties of a PIO?
+1.PIO shall deal with requests from persons seeking information and where the request cannot be made in writing, to render reasonable assistance to the person to reduce the same in writing.
+2. If the information requested for is held by or its subject matter is closely connected with the function of another public authority, the PIO shall transfer, within 5 days, the request to that other public authority and inform the applicant immediately.
+3. PIO may seek the assistance of any other officer for the proper discharge of his/her duties.
+4. PIO, on receipt of a request, shall as expeditiously as possible, and in any case within 30 days of the receipt of the request, either provide the information on payment of such fee as may be prescribed or reject the request for any of the reasons specified in S.8 RTI ACT, 2005. or S.9 RTI ACT, 2005.
+5. Where the information requested for concerns the life or liberty of a person, the same shall be provided within forty-eight hours of the receipt of the request.
+6. If the PIO fails to give decision on the request within the period specified, he shall be deemed to have refused the request.
+7. Where a request has been rejected, the PIO shall communicate to the requester
+(i) the reasons for such rejection,
+(ii) the period within which an appeal against such rejection may be preferred,
+(iii) the particulars of the Appellate Authority.
+8. PIO shall provide information in the form in which it is sought unless it would disproportionately divert the resources of the Public Authority or would be detrimental to the safety or preservation of the record in question.
+9. If allowing partial access, the PIO shall give a notice to the applicant, informing:
+10. That only part of the record requested, after severance of the record containing information which is exempt from disclosure, is being provided;
+11. The reasons for the decision, including any findings on any material question of fact, referring to the material on which those findings were based;
+12. The name and designation of the person giving the decision;
+13. The details of the fees calculated by him or her and the amount of fee which the applicant is required to deposit;
+14. His or her rights with respect to review of the decision regarding non-disclosure of part of the information, the amount of fee charged or the form of access provided.
+15. If information sought has been supplied by third party or is treated as confidential by that third party, the PIO shall give a written notice to the third party within 5 days from the receipt of the request and take its representation into consideration.
+16. Third party must be given a chance to make a representation before the PIO within 10 days from the date of receipt of such notice.
+15. Who are Third Parties?
+A Third Party means a person other than the citizen making a request for information and includes a public authority. Third parties have a right to be heard in respect of applications and appeals dealing with information submitted by them to the Government in confidence.
+16. Who are the Appellate Authorities?
+1. First Appeal: First appeal to the officer senior in rank to the PIO in the concerned Public Authority within 30 days from the expiry of the prescribed time limit or from the receipt of the decision (delay may be condoned by the Appellate Authority if sufficient cause is shown).
+2. Second Appeal: Second appeal to the Central Information Commission or the State Information Commission as the case may be, within 90 days of the date on which the decision was given or should have been made by the First Appellate Authority. (delay may be condoned by the Commission if sufficient cause is shown).
+3. Third Party appeal against PIOs decision must be filed within 30 days before first Appellate Authority; and, within 90 days of the decision on the first appeal, before the appropriate Information Commission which is the second appellate authority.
+4. Burden of proving that denial of Information was justified lies with the PIO.
+5. First Appeal shall be disposed of within 30 days from the date of its receipt. Period extendable by 15 days if necessary. (S.19) of RTI ACT, 2005.
+17. What are the obligations of public authority?
+It shall publish within one hundred and twenty days of the enactment
+1. The particulars of its organization, functions and duties
+2. The powers and duties of its officers and employees
+3. The procedure followed in its decision making process, including channels of supervision and accountability
+4. The norms set by it for the discharge of its functions
+5. The rules, regulations, instructions, manuals and records used by its employees for discharging its functions
+6. A statement of the categories of the documents held by it or under its control
+7. The particulars of any arrangement that exists for consultation with, or representation by the members of the public, in relation to the formulation of policy or implementation thereof
+8. A statement of the boards, councils, committees and other bodies consisting of two or more persons constituted by it. Additionally, information as to whether the meetings of these are open to the public, or the minutes of such meetings are accessible to the public
+9. A directory of its officers and employees
+10. The monthly remuneration received by each of its officers and employees, including the system of compensation as provided in its regulations
+11. The budget allocated to each of its agency, indicating the particulars of all plans, proposed expenditures and reports on disbursements made
+12. The manner of execution of subsidy programmes, including the amounts allocated and the details and beneficiaries of such programmes
+13. Particulars of recipients of concessions, permits or authorizations granted by it
+14. Details of the information available to, or held by it, reduced in an electronic form
+15. The particulars of facilities available to citizens for obtaining information, including the working hours of a library or reading room, if maintained for public use
+16. The names, designations and other particulars of the Public Information Officers.
+18. Who has the Rule making power?
+Central Government, State Governments and the Competent Authority as defined in S.2(e) RTI ACT, 2005., are vested with powers to make rules to carry out the provisions of the Right to Information Act, 2005. (S.27 & S.28)
+>
