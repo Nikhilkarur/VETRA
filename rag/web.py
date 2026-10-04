@@ -6,8 +6,8 @@ No new dependencies: Python's built-in http.server serves one HTML page
 as the terminal chat. Everything stays on this machine except the two Groq
 calls the pipeline already makes.
 
-Run:  python rag/web.py                 opens http://127.0.0.1:8000
-      python rag/web.py --domain agriculture   the agriculture assistant
+Run:  python rag/web.py                 opens http://127.0.0.1:8000 (RTI + agriculture)
+      python rag/web.py --domain agriculture   the agriculture assistant only
       python rag/web.py --port 8080     if 8000 is busy
       python rag/web.py --no-browser    don't open a browser tab
 
@@ -15,6 +15,11 @@ Connections are handled in parallel (Chrome opens idle "preconnect" sockets
 that would freeze a single-threaded server), but questions run one at a time
 behind a lock, so two quick clicks queue up instead of hitting Groq's
 free-tier limit together.
+
+By default (--domain auto) one page serves every domain: each question is routed
+(rag/router.py) to the RTI or the agriculture documents, the answer is labelled
+with the documents it came from, and a question about neither is declined with
+buttons to ask either assistant anyway (a wrong refusal costs one click).
 """
 
 from __future__ import annotations
@@ -42,20 +47,25 @@ PIPELINE = threading.Lock()  # one question through the pipeline at a time
 
 
 class Handler(BaseHTTPRequestHandler):
-    domain = "rti"  # set from --domain in main()
+    domain = domains.AUTO  # set from --domain in main()
 
     def do_GET(self) -> None:
         if self.path not in ("/", "/index.html"):
             self.send_error(404)
             return
         # Read on every request, so edits to web.html show up on refresh.
-        d = domains.get(self.domain)
+        if self.domain == domains.AUTO:
+            title, blurb = domains.AUTO_TITLE, domains.AUTO_BLURB
+            placeholder, examples = domains.AUTO_PLACEHOLDER, domains.auto_examples()
+        else:
+            d = domains.get(self.domain)
+            title, blurb, placeholder, examples = d.title, d.blurb, d.placeholder, d.examples
         page = PAGE.read_text(encoding="utf-8")
-        for key, value in {"PAGE_TITLE": d.title, "TITLE": d.title,
-                           "BLURB": f"{d.blurb} Not legal advice.", "PLACEHOLDER": d.placeholder}.items():
+        for key, value in {"PAGE_TITLE": title, "TITLE": title,
+                           "BLURB": f"{blurb} Not legal advice.", "PLACEHOLDER": placeholder}.items():
             page = page.replace("{{" + key + "}}", html.escape(value))
         chips = "\n".join(f'        <button class="chip" type="button">{html.escape(q)}</button>'
-                          for q in d.examples)
+                          for q in examples)
         page = page.replace("{{CHIPS}}", chips)
         self._send(200, page.encode("utf-8"), "text/html; charset=utf-8")
 
@@ -70,12 +80,16 @@ class Handler(BaseHTTPRequestHandler):
             # The page keeps the conversation and sends it back each time, so
             # the server holds no state. Accept only well-formed, bounded turns.
             history = [
-                {"q": str(t["q"])[:1000], "a": str(t["a"])[:6000]}
+                {"q": str(t["q"])[:1000], "a": str(t["a"])[:6000],
+                 **({"domain": t["domain"]} if t.get("domain") in domains.DOMAINS else {})}
                 for t in (payload.get("history") or [])[-6:]
                 if isinstance(t, dict) and t.get("q") and t.get("a")
             ]
+            # "Ask the X assistant anyway" after a refusal: the page names the domain.
+            chosen = payload.get("domain")
+            domain = chosen if self.domain == domains.AUTO and chosen in domains.DOMAINS else self.domain
         except (ValueError, json.JSONDecodeError, TypeError, AttributeError):
-            question, history = "", []
+            question, history, domain = "", [], self.domain
 
         if not question:
             self._json(400, {"error": "Type a question first."})
@@ -87,7 +101,7 @@ class Handler(BaseHTTPRequestHandler):
         print(f"\nQ: {question}" + (f"   ({len(history)} earlier turns)" if history else ""), flush=True)
         try:
             with PIPELINE:
-                result = answer_question(question, TOP_K, history=history, domain=self.domain)
+                result = answer_question(question, TOP_K, history=history, domain=domain, buttons=True)
         except MissingKey as exc:
             print(f"   {exc}", flush=True)
             self._json(500, {"error": str(exc)})
@@ -98,11 +112,22 @@ class Handler(BaseHTTPRequestHandler):
                                       "Wait about 30 seconds and ask again."})
             return
 
+        searched = result["domain"]
+        if result["route"]:
+            print(f"   routed to: {searched} ({result['route']})", flush=True)
+        if searched not in domains.DOMAINS:   # declined: no search, no answer model
+            self._json(200, {"answer": result["answer"], "domain": searched, "sources": [],
+                             "choices": [{"name": d.name, "label": d.label}
+                                         for d in domains.DOMAINS.values()]})
+            return
         if result["standalone"] != question:
             print(f"   understood as: {result['standalone']}", flush=True)
         print(f"   search {result['search_s']:.1f}s, answer {result['answer_s']:.1f}s, "
               f"{result['model']}", flush=True)
         self._json(200, {
+            "domain": searched,
+            "domain_label": domains.get(searched).label,
+            "routed": bool(result["route"]),
             "answer": result["answer"],
             "standalone": result["standalone"],
             "passage": result["passage"],
@@ -143,15 +168,18 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--no-browser", action="store_true")
-    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
+    parser.add_argument("--domain", default=domains.AUTO, choices=[domains.AUTO, *domains.DOMAINS],
+                        help="auto (default): one page for every domain, each question routed")
     args = parser.parse_args()
     Handler.domain = args.domain
+    names = list(domains.DOMAINS) if args.domain == domains.AUTO else [args.domain]
 
-    print(f"loading {args.domain} (about 30 seconds) ...", flush=True)
+    print(f"loading {', '.join(names)} (about 30 seconds) ...", flush=True)
     started = time.perf_counter()
-    _model(args.domain)
-    _corpus(args.domain)
-    count = _collection(args.domain).count()
+    for name in names:
+        _model(name)
+        _corpus(name)
+    count = sum(_collection(name).count() for name in names)
 
     try:
         server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)

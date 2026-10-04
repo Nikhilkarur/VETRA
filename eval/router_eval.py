@@ -13,15 +13,23 @@ A question is right when the router's domain is its label, or one of its
 costly kind (a valid question gets no answer), where a domain-for-domain mistake
 still searches some documents.
 
-Run:  python eval/router_eval.py                  # LLM router
+Decisions are cached in eval/cache/ per model, so a run cut short by Groq's daily
+limit resumes. --batch routes 20 questions per call (one prompt, ~1/15 of the
+tokens); live questions are always routed one at a time, so batch scores are
+checked against single-call scores on the same questions.
+
+Run:  python eval/router_eval.py                  # LLM router, the live model order
+      python eval/router_eval.py --model openai/gpt-oss-20b --batch   # 20 per call
       python eval/router_eval.py --router embedding
       python eval/router_eval.py --only router    # just router_questions.json
+      python eval/router_eval.py --only final     # the frozen final routing set (run last)
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from collections import Counter
@@ -29,6 +37,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "rag"))
+os.environ.setdefault("LLM_CACHE_DIR", str(ROOT / "eval" / "cache"))
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -36,8 +45,11 @@ if hasattr(sys.stdout, "reconfigure"):
 import router  # noqa: E402
 
 
-def cases(only: str | None) -> dict[str, list[dict]]:
+def cases(only: str | None, final: bool = False) -> dict[str, list[dict]]:
     groups: dict[str, list[dict]] = {}
+    if only == "final":   # the routing set frozen before the LLM router ever ran
+        data = json.loads((ROOT / "eval" / "router_questions.json").read_text(encoding="utf-8"))
+        return {"final": data["final"]}
     if only in (None, "router"):
         data = json.loads((ROOT / "eval" / "router_questions.json").read_text(encoding="utf-8"))
         for name in ("plain", "traps", "other", "followups"):
@@ -51,16 +63,48 @@ def cases(only: str | None) -> dict[str, list[dict]]:
         for domain, file in (("rti", "demo_questions.json"), ("agriculture", "agri_questions.json")):
             data = json.loads((ROOT / "eval" / file).read_text(encoding="utf-8"))
             groups[f"eval_{domain[:4]}"] = [{"q": item["q"], "domain": domain}
-                                           for v in data.values() if isinstance(v, list) for item in v]
+                                           for k, v in data.items() if isinstance(v, list)
+                                           and (final or k != "final") for item in v]
     return groups
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--router", choices=["llm", "embedding"], default="llm")
-    parser.add_argument("--only", choices=["router", "faq", "eval"])
+    parser.add_argument("--only", choices=["router", "faq", "eval", "final"],
+                        help="final = router_questions.json's 'final' set, run once at the end")
     parser.add_argument("--verbose", action="store_true", help="show every question, not just misses")
+    parser.add_argument("--model", help="pin one router model (default: the live order, router.ROUTER_MODELS)")
+    parser.add_argument("--batch", action="store_true", help="20 questions per call (needs --model)")
     args = parser.parse_args()
+    if args.model:
+        os.environ["ROUTER_MODEL"] = args.model
+    if args.batch and not args.model:
+        parser.error("--batch needs --model")
+    groups = cases(args.only)
+    batch: dict[str, str] = {}
+    if args.batch:
+        import query_expansion as QX
+        stem = f"route-batch@{args.model.split('/')[-1]}"
+        file = Path(os.environ["LLM_CACHE_DIR"]) / f"{stem}.json"
+        done = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
+        key = lambda c: "router|" + router._message(c["q"], c.get("history"))  # noqa: E731
+        todo = [c for items in groups.values() for c in items if key(c) not in done]
+        for start in range(0, len(todo), 20):
+            chunk = todo[start:start + 20]
+            for attempt in range(3):
+                try:
+                    labels = router.route_batch(chunk, args.model)
+                    break
+                except Exception as exc:
+                    print(f"      (batch retry after error: {str(exc)[:120]})", file=sys.stderr)
+                    time.sleep(30)
+            else:
+                labels = [None] * len(chunk)
+            for c, label in zip(chunk, labels):
+                if label:   # never store a failure
+                    QX.cached_as(stem, "router", router._message(c["q"], c.get("history")), lambda: label)
+        batch = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
 
     def decide(case: dict) -> str:
         if args.router == "embedding":
@@ -69,6 +113,8 @@ def main() -> int:
             if history:
                 return history[-1]["domain"]
             return router.route_embedding(case["q"])
+        if args.batch:
+            return batch.get("router|" + router._message(case["q"], case.get("history"))) or "ERROR"
         for attempt in range(3):
             try:
                 return router.route_llm(case["q"], case.get("history"))
@@ -77,11 +123,12 @@ def main() -> int:
                 time.sleep(20)
         return "ERROR"
 
-    print(f"router eval  |  {args.router}\n")
+    print(f"router eval  |  {args.router}" + (f"  |  {args.model}" if args.model else "")
+          + ("  |  batched" if args.batch else "") + "\n")
     total = right = to_other = 0
     confusion: Counter = Counter()
     started = time.perf_counter()
-    for name, items in cases(args.only).items():
+    for name, items in groups.items():
         ok_n = 0
         lines = []
         for case in items:

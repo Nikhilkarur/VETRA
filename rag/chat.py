@@ -1,5 +1,5 @@
 """
-Interactive chat over the AP RTI corpus.
+Interactive chat over the AP government documents: RTI and agriculture.
 
 Loads the embedding model and the Chroma collection once, then loops -- so
 questions after the first are fast (the ~5s startup is the model loading, not
@@ -8,6 +8,10 @@ the search).
 It remembers the last few questions and answers, so follow-ups like "what if i
 still dont get it" work: the follow-up is rewritten into a standalone question
 before searching (see answer.py). Type /new to start a fresh conversation.
+
+By default every question is routed (rag/router.py) to the RTI or the agriculture
+documents -- or declined if it is about neither -- and the answer says which it
+searched. --domain rti / --domain agriculture keeps the whole chat in one domain.
 
 Run:  python rag/chat.py
       python rag/chat.py --k 5
@@ -43,20 +47,27 @@ BANNER = """\
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--k", type=int, default=TOP_K)
-    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
+    parser.add_argument("--domain", default=domains.AUTO, choices=[domains.AUTO, *domains.DOMAINS],
+                        help="auto (default): route each question to RTI or agriculture")
     args = parser.parse_args()
-    domain = domains.get(args.domain)
+    auto = args.domain == domains.AUTO
+    names = list(domains.DOMAINS) if auto else [args.domain]
 
     k = args.k
     show_context = False
     history: list[dict] = []
 
-    print(BANNER.format(title=domain.title, blurb=domain.blurb))
+    if auto:
+        print(BANNER.format(title=domains.AUTO_TITLE, blurb=domains.AUTO_BLURB))
+    else:
+        print(BANNER.format(title=domains.get(args.domain).title, blurb=domains.get(args.domain).blurb))
     print("loading ...", end=" ", flush=True)
-    _model(domain.name)      # warm the embedding model
-    _corpus(domain.name)     # load chunk texts and build the keyword (BM25) index
-    count = _collection(domain.name).count()
-    print(f"ready ({count} chunks indexed, top-{k})\n")
+    counts = []
+    for name in names:
+        _model(name)      # warm the embedding model
+        _corpus(name)     # load chunk texts and build the keyword (BM25) index
+        counts.append(f"{domains.get(name).label} {_collection(name).count()}")
+    print(f"ready ({', '.join(counts)} chunks indexed, top-{k})\n")
 
     while True:
         try:
@@ -95,8 +106,9 @@ def main() -> int:
             continue
 
         try:
-            answer = ask(question, k, show_context, history=history, domain=domain.name)
-            history.append({"q": question, "a": answer})
+            result = ask(question, k, show_context, history=history, domain=args.domain)
+            if result["domain"] in domains.DOMAINS:   # a declined question is not remembered
+                history.append({"q": question, "a": result["answer"], "domain": result["domain"]})
         except Exception as exc:
             # A network blip or a retired model should not kill the session.
             print(f"  error: {exc}\n")

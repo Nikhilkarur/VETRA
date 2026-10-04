@@ -55,20 +55,77 @@ def _cache_file(kind: str) -> Path | None:
     return Path(folder) / f"{kind}@{_model(kind).split('/')[-1]}.json" if folder else None
 
 
+_memory: dict[str, object] = {}  # this process's results, so the live app never asks twice
+
+
 def _cached(kind: str, domain: str, key: str, make):
-    file = _cache_file(kind)
+    return _cached_in(_cache_file(kind), kind, domain, key, make)
+
+
+def cached_as(stem: str, domain: str, key: str, make):
+    """_cached with the cache file named by the caller (eval/cache/<stem>.json)."""
+    folder = os.environ.get("LLM_CACHE_DIR")
+    return _cached_in(Path(folder) / f"{stem}.json" if folder else None, stem, domain, key, make)
+
+
+def _cached_in(file: Path | None, kind: str, domain: str, key: str, make):
+    k = f"{domain}|{key}"
+    if f"{kind}|{k}" in _memory:
+        return _memory[f"{kind}|{k}"]
     store = {}
     if file and file.exists():
         store = json.loads(file.read_text(encoding="utf-8"))
-    k = f"{domain}|{key}"
     if k in store:
         return store[k]
     value = make()
+    if value is not None:   # failures are not remembered: the next question retries
+        _memory[f"{kind}|{k}"] = value
     if value is not None and file:
         store = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
         store[k] = value
         file.write_text(json.dumps(store, ensure_ascii=False, indent=1), encoding="utf-8")
     return value
+
+
+FALLBACK = "openai/gpt-oss-20b"  # live use only, when MODEL has hit its daily limit
+
+# Circuit breaker for Groq's DAILY limits: a model that reported one is skipped for a
+# while, so later questions go straight to the fallback instead of each waiting on
+# retries first (a live question once spent 26 s in search doing exactly that).
+_resting: dict[str, float] = {}
+REST_SECONDS = 600
+
+
+def available(model: str) -> bool:
+    import time
+
+    return _resting.get(model, 0.0) <= time.time()
+
+
+def note_limit(model: str, exc: Exception) -> None:
+    """Remember a daily-limit refusal (a per-minute one passes on its own)."""
+    import time
+
+    text = str(exc)
+    if "per day" in text or "(TPD)" in text or "(RPD)" in text:
+        _resting[model] = time.time() + REST_SECONDS
+
+
+def _ask(system: str, user: str, kind: str) -> str:
+    """The technique's model; in live use, the fallback model if that one is rate-limited."""
+    from groq import RateLimitError
+
+    models = [_model(kind)]
+    if not os.environ.get("LLM_CACHE_DIR"):   # experiments never switch models silently
+        models = [m for m in (*models, FALLBACK) if available(m)] or models
+    for n, model in enumerate(models):
+        try:
+            return _chat(system, user, model)
+        except RateLimitError as exc:
+            note_limit(model, exc)
+            if n == len(models) - 1:
+                raise
+    return ""
 
 
 def _chat(system: str, user: str, model: str) -> str:
@@ -77,7 +134,9 @@ def _chat(system: str, user: str, model: str) -> str:
 
     load_dotenv(ROOT / ".env")
     extra = {"reasoning_effort": "low"} if model.startswith("openai/gpt-oss") else {"reasoning_effort": "none"}
-    reply = Groq(max_retries=6).chat.completions.create(
+    # Experiments wait out per-minute limits; a live question must not sit on a
+    # limit -- it moves to the fallback model instead.
+    reply = Groq(max_retries=6 if os.environ.get("LLM_CACHE_DIR") else 0).chat.completions.create(
         model=model, temperature=0,
         messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
         **extra,
@@ -122,7 +181,7 @@ Do not answer the question.{_avoid(d)} Output only the JSON."""
 
     def make():
         for _ in range(2):
-            parsed = _json(_chat(system, question, _model("rewrites")))
+            parsed = _json(_ask(system, question, "rewrites"))
             if parsed and isinstance(parsed.get("queries"), list):
                 return {"topic": str(parsed.get("topic") or ""),
                         "queries": [str(x) for x in parsed["queries"]][:3],
@@ -150,7 +209,7 @@ Return JSON: {{"passages": ["...", "...", "..."]}}. Output only the JSON."""
 
     def make():
         for _ in range(2):
-            parsed = _json(_chat(system, question, _model("multihyde")))
+            parsed = _json(_ask(system, question, "multihyde"))
             if parsed and isinstance(parsed.get("passages"), list) and parsed["passages"]:
                 return [str(x) for x in parsed["passages"]][:3]
         return None
@@ -227,7 +286,7 @@ def select_documents(question: str, domain: str = "rti", most: int = 3) -> list[
 
     def make():
         for _ in range(2):
-            parsed = _json(_chat(system, question, _model("docselect")))
+            parsed = _json(_ask(system, question, "docselect"))
             if parsed and isinstance(parsed.get("docs"), list):
                 return parse_codes(parsed["docs"], docs)[:most]
         return None

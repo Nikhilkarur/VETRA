@@ -276,28 +276,99 @@ the casual-to-legal gap hurts it less). A bigger embedding model adds 4 in agric
 HyDE passage already speaks the Act's language, a better encoder of that language has
 nothing to add.
 
-## 4. Status (2026-10-04, end of day)
+### 3.9 bge-reranker-base with the rewrites, and its cost
 
-**Chosen per domain (on the 67 / 79 non-final questions):**
-
-| domain | live today | chosen | @10 | clean set |
+| configuration (agriculture) | @10 | @5 | MRR | clean |
 |---|---|---|---|---|
-| RTI | hybrid(question) + hybrid(HyDE) | + qwen rewrite: topic + key terms | 59 → **64 / 67** (88% → 96%) | 12 → 13 / 13 |
-| agriculture | same | + topic + key terms + MiniLM cross-encoder over the top 30, fused | 62 → **67 / 79** (78% → 85%) | 8 → 10 / 14 |
+| live + topic + key terms + MiniLM, fused (**chosen**) | 67 | 59 | 0.54 | 10 |
+| live + topic + key terms + bge-reranker-base, fused | 68 | 64 | 0.59 | 10 |
+| live + topic + key terms + bge-reranker-base, replace | 67 | 63 | 0.63 | 9 |
+| live + bge-reranker-base scored on question and HyDE | 67 | 57 | 0.60 | 12 |
 
-**Not done yet:**
-- The chosen settings are **not switched on** in `rag/domains.py`. `rag/retrieve.py`
-  supports them (`expansion`, `doc_boost`, `rerank`, all off by default), so the live
-  app behaves exactly as before.
-- Agriculture: bge-reranker-base alone scored 68/79 (above). Its combination with the
-  rewrites was still running; it may replace MiniLM, at a CPU-time cost still to be
-  measured on an idle machine.
-- The `final` sets (15 RTI, 14 agriculture, mixed styles) have their HyDE passages and
-  rewrites cached but have not been scored — they are run once, for the baseline and the
-  chosen configuration, after the choice is final.
-- Not tested because of the daily token cap: multi-style HyDE for all questions (34 RTI
-  passages cached), a corrective agent loop (the model checks the retrieved passages and
-  searches again; ~260k tokens for one pass), LLM listwise reranking, index-time
-  hypothetical questions (HyPE).
-- Answer-level check of the chosen configurations (retrieval coverage is not answer
-  quality).
+Time to score the 30 candidates of one question on this machine's CPU, idle:
+**MiniLM 1.3–1.8 s, bge-reranker-base 11–15 s.** One more question in 79 and better
+top-5 ordering are not worth an extra 10+ seconds per question in a chat, so
+agriculture runs MiniLM. On a machine with a GPU, bge-reranker-base is the better choice.
+
+## 4. Switched on, and checked on questions never used for tuning (2026-10-05)
+
+`rag/domains.py` now runs, per domain:
+- **RTI:** live search + one LLM rewrite (qwen3.8-27b) whose *topic* and *key terms*
+  are searched too. No reranker.
+- **Agriculture:** the same rewrite + MiniLM cross-encoder over the fused top 30, its
+  order fused with the search order.
+
+The live code reproduces the bench exactly (`eval/retrieval_eval.py` with the cached
+LLM outputs: RTI 64/67, agriculture 67/79, same misses).
+
+**Final sets** — written before any of these experiments, run only now (live → chosen):
+
+| domain | final set | all questions |
+|---|---|---|
+| RTI | **12 → 15 / 15** | 71 → 79 / 82 (87% → 96%) |
+| agriculture | 14 → 13 / 14 | 76 → 80 / 93 (82% → 86%) |
+
+RTI's final set confirms the gain: the Telugu-English "naa rti ki 30 rojulu ainaa reply
+raaledu, ippudu em cheyali" went from beyond rank 60 to rank 3, "private hospital
+through rti" from 52 to 2. Agriculture's final set does **not** confirm it: the live
+search already found 14/14, and the chosen setup lost one ("crop insurance last date
+for rabi this year": rank 9 → 11). Agriculture's gain rests on the 79 tuning-period
+questions and the clean heldout3 (8 → 10 of 14); treat it as real but smaller and
+less certain than RTI's.
+
+## 5. The router: one interface for both domains
+
+Each question first goes to `rag/router.py`: one LLM call that reads a one-line
+description of each domain (`router_hint` in `rag/domains.py`) and the earlier
+questions of the conversation, and answers `rti`, `agriculture` or `other`. A question
+routed to `other` gets a short refusal and buttons to ask either assistant anyway (no
+search, no answer-model call).
+
+| test (all written before the router ran) | n | embedding similarity | gpt-oss-20b, batched | gpt-oss-20b, single calls (as live) |
+|---|---|---|---|---|
+| plain / traps / out-of-scope / follow-ups | 57 | 35 | **57** | — |
+| real FAQ questions (AP Information Commission, PM-KISAN, PMFBY, PGRS) | 71 | 54 | 67 | — |
+| every retrieval question | 146 | 139 | **146** | — |
+| **final routing set (frozen before the first LLM run)** | 32 | — | 32 | **31** |
+
+The embedding router (fallback when no LLM answers) never says "other" and leans to
+agriculture, the bigger collection. The LLM's misses: two out-of-context FAQ lines ("When
+does it come into force?", "Who is covered?" → other), two PGRS grievance-portal
+questions (→ RTI), and "what is suo motu disclosure" (an RTI term → other).
+qwen3.8-27b, single calls, scored 55/57 on the first set before one prompt change
+("answer other only when clearly outside every topic"); it is the router's fallback.
+
+Routing costs one call per question (~650 tokens on gpt-oss-20b). Batched evaluation
+(20 questions per call) agreed with single calls on the final set (32 vs 31).
+
+**Free-tier behaviour.** Groq allows 200,000 tokens per model per day, and these
+experiments used up qwen's and much of gpt-oss-20b's. Every LLM step now falls back
+instead of failing: router gpt-oss-20b → qwen → embedding similarity; rewrite qwen →
+gpt-oss-20b → none; HyDE → none; answer gpt-oss-120b → gpt-oss-20b. A model that
+reports its *daily* limit is skipped for 10 minutes, so questions don't each wait on
+retries (one live question spent 26 s in search before this).
+
+## 6. What worked best, and why
+
+1. **For RTI, put the law's vocabulary into the search.** HyDE (a hypothetical legal
+   passage) and the rewrite's topic name ("third party information", "first appeal")
+   carry RTI. The LLM knows the RTI Act, so what it writes uses the Act's words.
+2. **For agriculture, read the question and the chunk together.** A cross-encoder
+   reranker was the only thing that moved agriculture's clean set: farmers name concrete
+   things (cashew, drone, cow, polyhouse) that sit inside long table chunks an embedding
+   blurs. The LLM doesn't know AP's 2024–26 orders, so query rewriting helps less.
+3. **The same technique can help one domain and hurt the other.** Rerankers: agriculture
+   up to +6 (bge-reranker-base alone, 62 → 68), RTI −2 to −13. HyDE weight x2: RTI +3,
+   agriculture −2. Each domain needs its own
+   measured settings, which `rag/domains.py` now holds.
+4. **Things that did not pay:** fusion constants, BM25 stemming, title-only keyword
+   search, per-document caps and de-duplication (hurt), multi-query without HyDE, a
+   bigger embedding model for RTI, document selection by an agent (it picks the right
+   agriculture *document* 69/79 times, but the right document is often a 465-chunk
+   guideline).
+
+**Not done:** a corrective agent loop, LLM listwise reranking and index-time
+hypothetical questions (HyPE) were not run — one pass of any of them over the test sets
+needs more than a day of the free tier's tokens. Multi-style HyDE has 34 RTI passages
+cached and is untested. Answer quality was checked by hand on a few questions, not
+measured.

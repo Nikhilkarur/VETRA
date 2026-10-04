@@ -54,8 +54,12 @@ def generate_answers(questions: list[dict], k: int) -> list[dict]:
     from dotenv import load_dotenv
     from groq import Groq
 
-    from answer import DEFAULT_MODEL, SYSTEM_PROMPT, build_context
+    import domains
+    from answer import DEFAULT_MODEL, build_context
     from retrieve import retrieve
+
+    # The answer rules moved to rag/domains.py (2026-10-04); this test set is RTI's.
+    SYSTEM_PROMPT = domains.get("rti").system_prompt
 
     load_dotenv(ROOT / ".env")
     client = Groq(api_key=os.environ["GROQ_API_KEY"])

@@ -377,22 +377,33 @@ The RTI bot is the first domain. The plan is to extend it to other departments
 
 The detailed design is still to be decided; see [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md).
 
-**Status (2026-10-04): step 2 is working for two domains.** Agriculture now runs
-through the same pipeline as RTI, with its own index and prompts (`rag/domains.py`;
-pick it with `--domain agriculture`). Its 44 documents (state G.O.s, scheme
-guidelines, central Acts and guidelines) were collected for this purpose; see
-`ingest/incoming/agriculture/REPORT.md`. Retrieval on agriculture's frozen question
-sets: 92-96% on formal questions, 69% on fresh casual ones (RTI: 82%). HyDE is worth
-+15 to +19 points on the casual questions. Finance comes next, as one domain with
-subcategories; the router (step 1) comes last. Details and every measurement are in
-`context.md`, "Agriculture domain".
+**Status (2026-10-05): steps 1 and 2 work for two domains, RTI and agriculture.**
+
+- **One interface, routed.** `python rag/web.py` (and `rag/chat.py`) now take any
+  question. A small LLM call (`rag/router.py`) sends it to the RTI documents, the
+  agriculture documents, or declines it as outside both, with "ask anyway" buttons.
+  Follow-ups that change topic are routed again. Measured on 306 labelled questions,
+  including 71 real FAQ questions: **99%** (batched); on a fresh set frozen before the
+  router ran: **31/32 with single calls, as live**.
+- **Each domain tuned separately** (`docs/RETRIEVAL_EXPERIMENTS.md`). RTI adds an LLM
+  rewrite of the question (the legal topic it is about, plus key terms): **59 → 64 / 67**
+  questions with the answering text retrieved, and **12 → 15 / 15** on a final set never
+  used for tuning. Agriculture adds the same rewrite plus a small cross-encoder
+  reranker: **62 → 67 / 79**; its final set was already 14/14 and is 13/14 after.
+- Agriculture's 44 documents (state G.O.s, scheme guidelines, central Acts and
+  guidelines) were collected for this; see `ingest/incoming/agriculture/REPORT.md`.
+
+Finance comes next, as one domain with subcategories. Details and every measurement
+are in `context.md` and `docs/RETRIEVAL_EXPERIMENTS.md`.
 
 ### Improving the RTI domain
 
 1. **Project virtual environment:** faster startup, cleaner dependencies.
-2. **Write a fresh test set** before any further change.
-3. **Measure the noise** (how many retrieved chunks are irrelevant), then test a
-   **reranker**, a second, more careful pass that keeps only the best chunks.
+2. ~~Write a fresh test set~~ (done: `heldout4` and `final`), ~~test a reranker~~ (done:
+   it *hurts* RTI and helps agriculture; see `docs/RETRIEVAL_EXPERIMENTS.md`).
+3. **A corrective agent loop** (the model checks the retrieved passages and searches
+   again if they don't answer) — not yet tested: one pass over the test sets needs
+   more than a day of Groq's free-tier tokens.
 4. **The cost-efficiency experiment.** Replace per-question HyDE with work done once at
    ingest time: generate the questions each chunk answers and store them with it
    (the idea behind Doc2Query). If it matches HyDE, the extra per-question LLM call
@@ -440,49 +451,65 @@ python ingest/load_and_chunk.py
 python ingest/build_index.py
 ```
 
-Start the web page (wait ~30 s to load; it opens http://127.0.0.1:8000 in your browser):
-```bash
-python rag/web.py
-```
-
-Type a question or click a suggested one. Citations like [2] are clickable and open
-that source's text; "How it searched" shows the HyDE passage. Ask about one question
-every 30 s. Stop it with Ctrl+C. It uses only Python's standard library, so no extra
-installs are needed. If port 8000 is busy, run `python rag/web.py --port 8080`.
-
-Or use the terminal chat instead:
-```bash
-python rag/chat.py
-```
-
-In the chat, `/sources` shows the retrieved passages and the HyDE search passage.
-
-**The agriculture assistant** works the same way. Build its index once (its documents
-are in `ingest/incoming/agriculture/`):
+**The agriculture index** is built the same way (its documents are in
+`ingest/incoming/agriculture/`):
 ```bash
 python ingest/load_and_chunk.py --domain agriculture
 ```
 ```bash
 python ingest/build_index.py --domain agriculture
 ```
-Then add `--domain agriculture` to any command, for example:
+
+Start the web page (wait ~30 s to load; it opens http://127.0.0.1:8000 in your browser):
+```bash
+python rag/web.py
+```
+
+It answers both RTI and agriculture questions: each question is routed to the right
+documents, and the answer says which ones ("From the RTI documents"). A question about
+neither is declined, with buttons to ask either assistant anyway. Citations like [2]
+are clickable and open that source's text; "How it searched" shows the HyDE passage.
+Ask about one question every 30 s. Stop it with Ctrl+C. If port 8000 is busy, run
+`python rag/web.py --port 8080`.
+
+One domain only (no routing):
+```bash
+python rag/web.py --domain rti
+```
 ```bash
 python rag/web.py --domain agriculture
 ```
+
+Or use the terminal chat (same `--domain` options):
 ```bash
-python rag/chat.py --domain agriculture
+python rag/chat.py
 ```
 
-Measure retrieval:
+In the chat, `/sources` shows the retrieved passages and the HyDE search passage.
+
+**Free-tier limits.** Groq allows 200,000 tokens per model per day. One question uses
+the router and HyDE (gpt-oss-20b), the query rewrite (qwen3.8-27b) and the answer
+(gpt-oss-120b). When a model hits its daily limit the app moves on: the router to qwen
+and then to embedding similarity, the rewrite to gpt-oss-20b, the answer to gpt-oss-20b,
+and HyDE is skipped. It keeps answering, with somewhat lower retrieval quality.
+
+Measure retrieval, routing, and compare search techniques:
 ```bash
 python eval/retrieval_eval.py
 ```
 ```bash
 python eval/retrieval_eval.py --domain agriculture
 ```
-Add `--no-hyde` to see the difference HyDE makes. `eval/run_ragas.py` runs the LLM-judged
-RAGAS evaluation; it needs extra packages (`ragas`, `langchain-groq`,
-`langchain-community<0.4`).
+```bash
+python eval/router_eval.py
+```
+```bash
+python eval/experiments.py --domain agriculture --exp baseline chosen
+```
+Add `--no-hyde` to `retrieval_eval.py` to see the difference HyDE makes. The LLM outputs
+used in the experiments are cached in `eval/cache/`, so their numbers reproduce without
+API calls. `eval/run_ragas.py` runs the LLM-judged RAGAS evaluation; it needs extra
+packages (`ragas`, `langchain-groq`, `langchain-community<0.4`).
 
 ### Project layout
 
@@ -494,7 +521,8 @@ ap-rti-assistant/
 ├── requirements.txt
 ├── docs/
 │   ├── AP RTI Assistant Knowledge Base.html   self-contained explainer page
-│   └── DATA_COLLECTION_BRIEF.md   what data is missing, as a task brief for an agent
+│   ├── DATA_COLLECTION_BRIEF.md   what data is missing, as a task brief for an agent
+│   └── RETRIEVAL_EXPERIMENTS.md   every search technique tried per domain, and why it worked or not
 ├── ingest/
 │   ├── documents/            the 41 RTI source documents
 │   ├── corpus_manifest.json  title, department, source URL, checksum per document
@@ -504,16 +532,22 @@ ap-rti-assistant/
 │   ├── collect/              tools that collected the new domains' documents
 │   └── incoming/             staged documents per domain (agriculture is indexed from here)
 ├── rag/
-│   ├── domains.py            per-domain settings: documents, index, prompts
-│   ├── retrieve.py           HyDE + hybrid search + amendment links
-│   ├── answer.py             passages + question → cited answer
+│   ├── domains.py            per-domain settings: documents, index, prompts, search options
+│   ├── router.py             question → rti / agriculture / other (the "pre-LLM" step)
+│   ├── retrieve.py           HyDE + hybrid search + rewrites + rerank + amendment links
+│   ├── query_expansion.py    LLM rewrites of the question (topic, key terms, ...)
+│   ├── answer.py             passages + question → cited answer (routes first by default)
 │   ├── chat.py               terminal chat
 │   ├── web.py                local web page server (standard library only)
 │   └── web.html              the web page
 ├── eval/
 │   ├── demo_questions.json   frozen RTI question sets with probes
 │   ├── agri_questions.json   frozen agriculture question sets with probes
+│   ├── router_questions.json frozen routing test (traps, out-of-scope, follow-ups)
 │   ├── retrieval_eval.py     retrieval test (no LLM judge)
+│   ├── router_eval.py        routing test
+│   ├── experiments.py        bench for combining search techniques
+│   ├── cache/                every LLM output the experiments used
 │   ├── run_ragas.py, testset.json   LLM-judged evaluation
 │   └── compare_embeddings.py older embedding comparison
 └── data/chroma/              vector database (generated)
