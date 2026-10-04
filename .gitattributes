@@ -1,0 +1,2 @@
+# Saved source documents are checksummed (sha256 in manifest.json); keep their bytes exact.
+ingest/incoming/**/*.txt -text

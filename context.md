@@ -440,6 +440,37 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-04** — **Finance deferred; planned as one domain with subcategories.** A question
+  routed to finance will be routed again to a subcategory (pensions, stamp duty &
+  registration, vehicle tax, budget, professional tax, welfare payment status), each with its
+  own documents. Collection waits until the owner has evaluated RTI (27) and agriculture
+  (46). Recorded in `docs/DATA_COLLECTION_BRIEF.md` ("Status") and `ingest/incoming/finance/REPORT.md`.
+- **2026-10-04** — **Agriculture: department site found, renames confirmed.** On the
+  owner's approval, TLS verification was waived for apagrisnet.gov.in only (`UNVERIFIED_TLS`
+  in `common.py`). Its certificate belongs to aptribes.gov.in (expired 2022), and behind it
+  Apache returns 403 "unable to read htaccess file" on every path: the site is retired.
+  The department now publishes on **agriculture.ap.gov.in**; new `catalog_agri.py` reads
+  its document API (825 files). Added 19 agriculture documents (now **46**): **G.O.Ms.79
+  (02-09-2024), the official rename table** (e-Crop -> e-Panta, YSR Rythu Bharosa ->
+  Annadata Sukhibhava, Sunna Vaddi -> Vaddi Leni Runalu, Free Crop Insurance -> PMFBY,
+  RBK -> Rythu Seva Kendram, ...), RBK founding G.O.Ms.37/2020, SDRF input-subsidy norms
+  (Revenue DM G.O.Ms.1/2023, G.O.No.2/2025), Agriculture 4(1)(b) 2025-26, Kharif 2026 seed
+  subsidy, farm mechanisation guide, Seeds/Fertiliser/Insecticides Acts and Orders. RTI
+  gained the Agriculture PIO/FAA list (Dec 2025): **27**.
+- **2026-10-04** — **Data collection for the multi-domain assistant** (branch
+  `data-collection`, local only), following `docs/DATA_COLLECTION_BRIEF.md`. New tools in
+  `ingest/collect/`: `catalog_apgov.py` (whole ap.gov.in API, 715 file links),
+  `goir.py` (search of the AP G.O. register, every G.O. since 2008; the best single source),
+  `collect.py` (candidates.json → files + manifest + inventory, computed checksums/pages/
+  text layer/language). Staged in `ingest/incoming/`: **RTI 26 kept** (RTIMIS online
+  filing live since G.O.Ms.25/2026; DPDP s.44(3) amending s.8(1)(j) in force 13-11-2025;
+  RTI Amendment 2019 + Rules 2019; AP fee rules only changed by G.O.Ms.79/2020 head of
+  account; current Commission G.O.Ms.7/2026 and sic.ap.gov.in now reachable),
+  **agriculture 27 kept** (Annadatha Sukhibhava G.O.Ms.33/2025, PMFBY/RWBCIS 2024-27,
+  seed/MSP/micro-irrigation/tenant orders, 9 central guidelines), **finance: scope
+  proposal only** (awaiting review), **71 FAQ questions**. Found: every ap.gov.in file
+  link, including all 41 current corpus sources, now returns 401/404; apagrisnet.gov.in
+  has an expired certificate (not bypassed). Reports per domain in each `REPORT.md`.
 - **2026-10-04** — **Put the project under git** and pushed to GitHub
   (`Nikhilkarur/AP-ASSIS`). Ignored: `.env`, `data/chroma/` (rebuild with the two ingest
   scripts), and the README exports (`README.html/.pdf/.png/.jpeg`, which go stale;

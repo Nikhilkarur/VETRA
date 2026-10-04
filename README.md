@@ -464,7 +464,8 @@ ap-rti-assistant/
 ├── PROJECT_BRIEF.md          ← one-page summary and next goal
 ├── requirements.txt
 ├── docs/
-│   └── AP RTI Assistant Knowledge Base.html   self-contained explainer page
+│   ├── AP RTI Assistant Knowledge Base.html   self-contained explainer page
+│   └── DATA_COLLECTION_BRIEF.md   what data is missing, as a task brief for an agent
 ├── ingest/
 │   ├── documents/            the 41 source documents
 │   ├── corpus_manifest.json  title, department, source URL, checksum per document

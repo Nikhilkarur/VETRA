@@ -1,0 +1,32 @@
+[
+  {
+    "title": "PGRS - Public Grievance Redressal System - Frequently Asked Questions",
+    "department": "Real Time Governance Society (RTGS)",
+    "group": "FAQ's",
+    "source_url": "https://pgrs.ap.gov.in/Home/Faqs?Length=4",
+    "source_page": "https://pgrs.ap.gov.in/",
+    "doc_type": "faq",
+    "number": null,
+    "date": null,
+    "decision": "keep",
+    "reason": "Cross-domain routing knowledge: what goes to PGRS versus RTI. Current name of the AP grievance portal is PGRS (relaunched; stats from 15-06-2024)",
+    "checked": "2026-10-04",
+    "file": "pgrs-public-grievance-redressal-system-frequently-asked-questions--11af901b.txt",
+    "pages": 1,
+    "text_layer": true,
+    "language": "en"
+  },
+  {
+    "title": "PGRS grievance categories and sub-categories",
+    "department": "Real Time Governance Society (RTGS)",
+    "group": "Register Grievance",
+    "source_url": "https://pgrs.ap.gov.in/",
+    "source_page": "https://pgrs.ap.gov.in/",
+    "doc_type": "other",
+    "number": null,
+    "date": null,
+    "decision": "blocked",
+    "reason": "Category tree is shown only inside grievance registration, which requires login (Aadhaar/OTP). Not attempted (brief rule 3)",
+    "checked": "2026-10-04"
+  }
+]

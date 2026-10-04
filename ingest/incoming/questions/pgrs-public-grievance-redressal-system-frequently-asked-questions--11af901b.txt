@@ -1,0 +1,64 @@
+Source: https://pgrs.ap.gov.in/Home/Faqs?Length=4
+Accessed: 2026-10-04
+
+Frequently Asked Questions
+What is "Public Grievance Redressal System (PGRS)”?
+PGRS is a universal grievance redressal helpline that allows citizens to directly call and raise their problems with the Chief Minister’s office. It is a boosted version of PGRS that aims to proactively reach out to citizens, gather their grievances in a focused manner and address them in a mission mode.
+Is PGRS only a call center, or does it cover other platforms like Pgrs?
+Erstwhile PGRS is now relaunched as “PGRS” with a further boost to the mechanism and it covers all the platforms
+Re-vamping PGRS platforms
+1
+PGRS Call-centre → PGRS call-center
+2
+PGRS Website → PGRS website
+3
+PGRS Monday → PGRS at Collectorate(Monday)
+4
+PGRS GSWS Desk → PGRS GSWS Desk
+5
+PGRS App → PGRS App
+What is a grievance and what type of grievances one can register?
+A grievance is a formal complaint on any issue regarding denying of delivery of services by the government. Through this universal grievance redressal helpline citizens can
+Register individual or household-level grievances
+Follow up on the status of a registered grievance
+Enquire about government services and schemes
+Who can register a grievance in PGRS platforms and How to register a grievance?
+Citizens who belong to Andhra Pradesh can raise a grievance with a valid Aadhar Number. For Emergency Issues, citizens can call 1100 directly with their Mobile Number. To register a grievance
+Citizens can visit the nearest Grama/Ward Sachivalayam every day
+Visit a District Collector Office on Grievance-Day on every Monday (PGRS at Collectorate (Monday) or
+Visit the PGRS portal (https://www.pgrs.ap.gov.in/)
+Download PGRS mobile app on iOS or Android phones.
+How do I know that the grievance is registered and how can I check the status of the grievance?
+On successful registration of a grievance, the citizen will receive an SMS text message with a unique grievance ID called Grievance No. You can check the status of a grievance using the tracking link shared with you by SMS message at the time of grievance registration by
+By visiting the nearest Grama/Ward Sachivalayam or
+Through PGRS mobile app or
+Visit https://www.pgrs.ap.gov.in/. Click on “Check grievance status”, enter the “Grievance No” number, and click on “Get Details”
+Who is the grievance redressal officer?
+Ans: A grievance redressal officer is assigned by the department to redress the grievances. The redressal officer will assign a particular enquiry officer to enquiry the grievance, the officer needs to give enquiry report, and based on the enquiry report, the Grievance redressal officer needs to give detailed endorsement to the petitioner.
+How do I know that grievance is redressed?
+When a grievance is redressed by the grievance redressal officer in PGRS portal, citizen will receive an update in the form of SMS.
+What if, I am not happy with the redressed grievance and want to appeal to the higher authorities? How many times can I re-open a grievance?
+After the redressal of the grievance, You can re-open the grievance twice, when you are not satisfied with the previous redressal of the grievance. When a grievance is re-opened at the first time, it will be assigned to a District Level Officer. If you are not happy with the grievance redressed at District Level, then you can re-open it a second time and then it will be escalated to the HoD level. You can Re-Open grievance
+By visiting Grama/Ward Sachivalayam or
+Using the PGRS portal (https://www.pgrs.ap.gov.in/)
+Using PGRS mobile app
+What is the time limit for redress of grievance?
+For every Grievance category, SLA Period (Service Level Agreement) may vary. Based on the department's subjects and Sub-subject, SLAs are allotted. It may minimum of 24 hours to a Maximum of 90 days. Emergency Issues will be taken immediately for redressal.
+What are the types of grievances which are not taken up for redress by the Department?
+Any matter concerning judgment given by any court.
+Personal and family disputes
+RTI matters
+Community Grievances
+Is there Feedback taken from Citizen on Grievance Redressal?
+Yes, within 24 Hours of Grievance Redressal feedback is taken from citizen, whether Satisfied or Dissatisfied on Grievance Redressal. All the dissatisfied Grievances are pushed to Audit Officer
+Who is Audit Officer?
+For Every district Audit Officer is assigned by District Collector, Audit officer will validate all the dissatisfied Grievances, and if there is any necessity to Reopen, Audit officer can escalate Grievance to next Level.
+How do I register grievances related to corruption / bribe, sand, excise?
+ACB helpline to register a grievance on corruption/bribe, or
+SEB helpline to register a grievance on sand and excise (anonymous calls)
+Can I use PGRS for raising any new application / service request?
+No, PGRS is meant only for raising grievances. No new applications or service requests are accepted on PGRS. Through this universal grievance redressal helpline citizens can
+Register individual or household-level grievances
+Follow up on the status of a registered grievance
+Enquire about government services and schemes
+

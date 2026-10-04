@@ -1,0 +1,23 @@
+[
+  {
+    "title": "PGRS - Public Grievance Redressal System - Frequently Asked Questions",
+    "department": "Real Time Governance Society (RTGS)", "group": "FAQ's",
+    "source_url": "https://pgrs.ap.gov.in/Home/Faqs?Length=4",
+    "source_page": "https://pgrs.ap.gov.in/",
+    "domain": "general", "doc_type": "faq", "language": "en",
+    "page_is_document": true, "text_start": "Frequently Asked Questions", "text_end": "Address\nChief Minister",
+    "in_force": "yes",
+    "why": "Where and how to lodge a grievance (Sachivalayam, Monday at Collectorate, portal, app, 1100), re-opening twice, SLA 24h-90 days; RTI matters are NOT taken by PGRS",
+    "decision": "keep",
+    "reason": "Cross-domain routing knowledge: what goes to PGRS versus RTI. Current name of the AP grievance portal is PGRS (relaunched; stats from 15-06-2024)"
+  },
+  {
+    "title": "PGRS grievance categories and sub-categories",
+    "department": "Real Time Governance Society (RTGS)", "group": "Register Grievance",
+    "source_url": "https://pgrs.ap.gov.in/",
+    "source_page": "https://pgrs.ap.gov.in/",
+    "domain": "general", "doc_type": "other",
+    "decision": "blocked",
+    "reason": "Category tree is shown only inside grievance registration, which requires login (Aadhaar/OTP). Not attempted (brief rule 3)"
+  }
+]
