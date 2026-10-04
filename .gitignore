@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+data/chroma/
+
+# Exports of README.md; they go stale. README.md is the source.
+README.html
+README.pdf
+README.png
+README.jpeg
+
+# Local editor / tool settings
+.claude/

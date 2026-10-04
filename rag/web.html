@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AP RTI Assistant</title>
+<style>
+  /* Cream and white, light only -- deliberately ignores the OS dark mode. */
+  :root {
+    --ground: #faf6ee;
+    --surface: #ffffff;
+    --ink: #22201c;
+    --ink-2: #57534b;
+    --ink-3: #8c867b;
+    --rule: #e9e2d4;
+    --accent: #1f4e5a;
+    --accent-soft: #e6efef;
+    --warn: #9e3524;
+    --warn-soft: #f8e6e1;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+  header { padding: 36px 0 20px; }
+  h1 { margin: 0; font-size: 24px; font-weight: 650; letter-spacing: -0.01em; }
+  header p { margin: 6px 0 0; color: var(--ink-2); max-width: 60ch; }
+
+  #thread { display: grid; gap: 28px; padding-bottom: 140px; }
+
+  .label {
+    margin: 0 0 10px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font: inherit; font-size: 14px; color: var(--accent);
+    background: var(--accent-soft); border: 0; border-radius: 999px;
+    padding: 6px 14px; cursor: pointer; text-align: left;
+  }
+  .chip:hover { filter: brightness(0.97); }
+
+  .q { margin: 0 0 10px; font-weight: 600; font-size: 17px; }
+  .q::before { content: "You asked"; display: block; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .understood { margin: -6px 0 10px; font-size: 14px; color: var(--ink-3); }
+  .understood b { font-weight: 600; color: var(--ink-2); }
+
+  .a {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 18px 22px;
+  }
+  .a p { margin: 0 0 12px; }
+  .a > :last-child { margin-bottom: 0; }
+  .a h3 { font-size: 16px; margin: 16px 0 6px; }
+  .a ul, .a ol { margin: 0 0 12px; padding-left: 22px; }
+  .a li { margin: 3px 0; }
+  .a li.sub { margin-left: 18px; }
+  .a hr { border: 0; border-top: 1px solid var(--rule); margin: 16px 0; }
+  .a code { font-family: var(--mono); font-size: 0.9em; }
+  .a .tw { overflow-x: auto; margin: 0 0 12px; }
+  .a table { border-collapse: collapse; font-size: 14px; }
+  .a th, .a td { border: 1px solid var(--rule); padding: 6px 10px; text-align: left; vertical-align: top; }
+
+  .cite {
+    font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); border-radius: 4px; padding: 0 5px;
+    text-decoration: none; white-space: nowrap;
+  }
+  .cite:hover { text-decoration: underline; }
+
+  .waiting { color: var(--ink-2); font-style: italic; }
+  .err { color: var(--warn); background: var(--warn-soft); border-color: transparent; }
+
+  .meta { margin: 8px 2px 0; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+
+  details.box { margin-top: 10px; }
+  details.box > summary {
+    cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink-2);
+    padding: 4px 2px; list-style-position: inside;
+  }
+  .srcs { display: grid; gap: 6px; margin-top: 8px; }
+  .srcs details {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .srcs summary { cursor: pointer; font-size: 14px; }
+  .srcs .n { font-family: var(--mono); font-weight: 600; color: var(--accent); margin-right: 6px; }
+  .tag {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+    border: 1px solid var(--rule); border-radius: 4px; padding: 0 5px; margin-left: 6px;
+  }
+  .srcs .text, .how .text {
+    margin: 8px 0 2px; font-size: 13.5px; line-height: 1.55; color: var(--ink-2);
+    white-space: pre-wrap;
+  }
+  .how p { margin: 8px 2px; font-size: 14px; color: var(--ink-2); }
+  .flash { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  form {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, var(--ground) 75%, transparent);
+    padding: 24px 0 18px;
+  }
+  .row { display: flex; gap: 8px; }
+  input[type=text] {
+    flex: 1; min-width: 0; font: inherit; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 12px 14px;
+  }
+  input[type=text]:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  button.ask {
+    font: inherit; font-weight: 600; color: var(--surface); background: var(--accent);
+    border: 0; border-radius: 10px; padding: 0 20px; cursor: pointer;
+  }
+  button.ask:disabled { opacity: 0.5; cursor: default; }
+  button:focus-visible, summary:focus-visible, .chip:focus-visible, .cite:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .hint { margin: 8px 2px 0; font-size: 12.5px; color: var(--ink-3); display: flex; gap: 12px; }
+  .hint span { flex: 1; }
+  button.link {
+    font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent);
+    background: none; border: 0; padding: 0; cursor: pointer;
+  }
+  button.link:hover { text-decoration: underline; }
+  button.link:disabled { color: var(--ink-3); cursor: default; text-decoration: none; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>AP RTI assistant</h1>
+    <p>Ask about the Right to Information Act as it applies in Andhra Pradesh.
+       Answers come only from 41 documents published by the AP government, with sources.
+       Not legal advice.</p>
+  </header>
+
+  <main id="thread" aria-live="polite">
+    <section id="empty">
+      <p class="label">Try asking</p>
+      <div class="chips">
+        <button class="chip" type="button">how do i file an rti application</button>
+        <button class="chip" type="button">how much money do i need to pay for an rti in andhra pradesh</button>
+        <button class="chip" type="button">the officer keeps delaying it what should i do</button>
+        <button class="chip" type="button">can the officer refuse to give me information</button>
+        <button class="chip" type="button">is rti free for BPL families</button>
+        <button class="chip" type="button">does rti work for intelligence agencies like IB</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<form id="ask" autocomplete="off">
+  <div class="wrap">
+    <div class="row">
+      <label class="sr" for="q">Your question</label>
+      <input id="q" type="text" maxlength="500" placeholder="Ask a question about RTI…" autofocus>
+      <button class="ask" type="submit">Ask</button>
+    </div>
+    <p class="hint">
+      <span id="memory">Takes 3–6 seconds. Free tier: leave about 30 seconds between questions.</span>
+      <button class="link" id="new" type="button" disabled>New chat</button>
+    </p>
+  </div>
+</form>
+
+<script>
+const form = document.getElementById("ask");
+const input = document.getElementById("q");
+const button = form.querySelector("button.ask");
+const thread = document.getElementById("thread");
+const memory = document.getElementById("memory");
+const newChat = document.getElementById("new");
+const emptyState = document.getElementById("empty").outerHTML;
+const idleHint = memory.textContent;
+let turns = 0;
+let busy = false;
+let history = [];   // [{q, a}], oldest first -- sent with every question
+
+function bindChips() {
+  document.querySelectorAll(".chip").forEach(chip =>
+    chip.addEventListener("click", () => { input.value = chip.textContent; form.requestSubmit(); }));
+}
+bindChips();
+
+function updateMemory() {
+  const n = history.length;
+  memory.textContent = n
+    ? `Remembers this conversation (${n} question${n > 1 ? "s" : ""}), so follow-ups work. Leave about 30 s between questions.`
+    : idleHint;
+  newChat.disabled = !thread.querySelector(".turn");
+}
+
+newChat.addEventListener("click", () => {
+  if (busy) return;
+  history = [];
+  thread.innerHTML = emptyState;
+  bindChips();
+  updateMemory();
+  input.focus();
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const question = input.value.trim();
+  if (!question || busy) return;
+  busy = true; button.disabled = true;
+  document.getElementById("empty")?.remove();
+
+  const turn = ++turns;
+  const article = el("article", "turn");
+  article.append(el("p", "q", question));
+  const answer = el("div", "a waiting", "Searching the documents…");
+  article.append(answer);
+  thread.append(article);
+  article.scrollIntoView({ behavior: "smooth", block: "start" });
+  input.value = "";
+
+  const t0 = performance.now();
+  const timer = setInterval(() => {
+    const s = Math.round((performance.now() - t0) / 1000);
+    answer.textContent = s < 2 ? "Searching the documents…" : `Searching the documents and writing an answer… ${s}s`;
+  }, 500);
+
+  try {
+    const res = await fetch("/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, history: history.slice(-3) }),
+    });
+    const data = await res.json();
+    clearInterval(timer);
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    render(article, answer, data, turn, question);
+    history.push({ q: question, a: data.answer });
+  } catch (err) {
+    clearInterval(timer);
+    answer.className = "a err";
+    answer.textContent = err.message.includes("fetch")
+      ? "Can't reach the server. Is `python rag/web.py` still running?"
+      : err.message;
+  } finally {
+    busy = false; button.disabled = false; input.focus();
+    updateMemory();
+  }
+});
+
+function render(article, answer, data, turn, question) {
+  if (data.standalone && data.standalone.trim().toLowerCase() !== question.trim().toLowerCase()) {
+    const line = el("p", "understood", "Understood as: ");
+    line.append(el("b", "", data.standalone));
+    answer.before(line);
+  }
+  answer.className = "a";
+  answer.innerHTML = md(data.answer, turn);
+
+  article.append(el("p", "meta",
+    `found in ${data.search_s} s · answered in ${data.answer_s} s · ${data.model}`));
+
+  const sources = el("details", "box");
+  sources.append(el("summary", "", `Sources (${data.sources.length})`));
+  const list = el("div", "srcs");
+  for (const s of data.sources) {
+    const item = el("details");
+    item.id = `t${turn}-s${s.n}`;
+    const summary = el("summary");
+    summary.append(el("span", "n", `[${s.n}]`), document.createTextNode(s.source));
+    if (s.added) summary.append(el("span", "tag", "added: amendment"));
+    item.append(summary, el("div", "text", s.text));
+    list.append(item);
+  }
+  sources.append(list);
+  article.append(sources);
+
+  if (data.passage) {
+    const how = el("details", "box how");
+    how.append(el("summary", "", "How it searched"));
+    how.append(el("p", "",
+      "Besides your question, it searched with this passage, written by a small model in the style of " +
+      "a legal text (HyDE). It is used only to find documents, may be wrong, and is never shown to the " +
+      "model that writes the answer."));
+    how.append(el("div", "text", data.passage));
+    article.append(how);
+  }
+
+  answer.querySelectorAll(".cite").forEach(link => link.addEventListener("click", (event) => {
+    event.preventDefault();
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    if (!target) return;
+    sources.open = true; target.open = true;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("flash");
+    setTimeout(() => target.classList.remove("flash"), 1400);
+  }));
+}
+
+function el(tag, className = "", text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+// ---- tiny markdown renderer: enough for the model's answers, nothing more ----
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function inline(s, turn) {
+  return s
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\*)/g, "$1<em>$2</em>")
+    .replace(/\[(\d{1,2})(?:\s*\(([^)\]]*)\))?\]/g, (m, n, sub) =>
+      `<a class="cite" href="#t${turn}-s${n}">${n}${sub ? " (" + sub + ")" : ""}</a>`);
+}
+
+function md(source, turn) {
+  const lines = esc(source.replace(/\r/g, "")).split("\n");
+  let html = "", para = [], list = null;
+  const flush = () => {
+    if (para.length) html += "<p>" + para.map(l => inline(l.trim(), turn)).join("<br>") + "</p>";
+    para = [];
+  };
+  const close = () => { if (list) { html += `</${list}>`; list = null; } };
+  const isRow = l => /^\s*\|.*\|\s*$/.test(l);
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    let m;
+    if (!line.trim()) { flush(); close(); continue; }
+    if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) { flush(); close(); html += "<hr>"; continue; }
+    if ((m = line.match(/^\s*#{1,6}\s+(.*)$/))) { flush(); close(); html += `<h3>${inline(m[1], turn)}</h3>`; continue; }
+    if (isRow(line)) {
+      flush(); close();
+      const rows = [];
+      while (i < lines.length && isRow(lines[i])) rows.push(lines[i++]);
+      i--;
+      html += table(rows, turn);
+      continue;
+    }
+    if ((m = line.match(/^(\s*)[*\-•‑]\s+(.*)$/))) {
+      flush();
+      if (list !== "ul") { close(); html += "<ul>"; list = "ul"; }
+      html += `<li${m[1].length >= 2 ? ' class="sub"' : ""}>${inline(m[2], turn)}</li>`;
+      continue;
+    }
+    if ((m = line.match(/^\s*(\d+)[.)]\s+(.*)$/))) {
+      flush();
+      if (list !== "ol") { close(); html += `<ol start="${m[1]}">`; list = "ol"; }
+      html += `<li>${inline(m[2], turn)}</li>`;
+      continue;
+    }
+    if (list && /^\s{2,}\S/.test(line)) {   // indented continuation of a list item
+      html = html.replace(/<\/li>$/, "<br>" + inline(line.trim(), turn) + "</li>");
+      continue;
+    }
+    close();
+    para.push(line);
+  }
+  flush(); close();
+  return html;
+}
+
+function table(rows, turn) {
+  const cells = r => r.trim().replace(/^\||\|$/g, "").split("|").map(c => c.trim());
+  const body = rows.filter(r => !/^\s*\|?\s*:?-{3,}/.test(r));
+  let h = '<div class="tw"><table>';
+  body.forEach((r, idx) => {
+    const tag = idx === 0 ? "th" : "td";
+    h += "<tr>" + cells(r).map(c => `<${tag}>${inline(c, turn)}</${tag}>`).join("") + "</tr>";
+  });
+  return h + "</table></div>";
+}
+</script>
+</body>
+</html>

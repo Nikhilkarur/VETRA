@@ -1,0 +1,71 @@
+{
+  "k": 8,
+  "judge": "openai/gpt-oss-120b",
+  "questions": 2,
+  "means": {
+    "context_precision": 0.38392857140580355,
+    "context_recall": 0.6666666666666666,
+    "faithfulness": 0.95,
+    "answer_relevancy": NaN
+  },
+  "rows": [
+    {
+      "question": "How do I apply for information under the RTI Act?",
+      "answer": "To get information you have two options:\n\n1. **Check the department’s website first** – If the record is already in electronic form it is posted on the RTI portal (e.g., www.ap.gov.in/#/rti‑acts/…) and you can download it **free of cost**. [1]\n\n2. **If it is not on the website, submit a written RTI application** to the department’s Public Information Officer (PIO) or Assistant PIO (APIO).  \n   * The application must state clearly what information you want.  \n   * It must be **accompanied by the prescribed fee** (the exact amount may have changed after 2011, so check the current fee schedule). [1][7]\n\nThe department’s PIO details (name, phone) are also listed in the manual, so you can address the application to the officer named there. [7]",
+      "reference": "Make a request in writing, or through electronic means, in English, Hindi or the official language of the area, to the State Public Information Officer, specifying the particulars of the information you want. If you cannot make the request in writing, the Public Information Officer must give you reasonable assistance to put it in writing. You must pay the prescribed fee with the application.",
+      "titles": [
+        "Water Resources Dept - RTI Section-4(1)(b) of 2025",
+        "Instruction on RTI (page text)",
+        "Instruction on RTI (page text)",
+        "G.O. MS. No. 299 Dated : 27.06.2006 Governing for Results – RTI Act, 2005 (Act 22 of 2005) of GOI – Implementation – Creation of a Special Cell in General Administration (GPM&AR) Department to monitor the implementation of RTI Act, 2005 – Orders – Issued.",
+        "G.O. MS. No. 299 Dated : 27.06.2006 Governing for Results – RTI Act, 2005 (Act 22 of 2005) of GOI – Implementation – Creation of a Special Cell in General Administration (GPM&AR) Department to monitor the implementation of RTI Act, 2005 – Orders – Issued.",
+        "Letter.No. 3422 Dt. 01 .12.2011. RTI Act, 2005 – Powers of State Information Commission in summoning the 1st Appellate Authorities by A.P.Information Commission while deciding the appeal filed under section 19 of RTI Act – Regarding.",
+        "Water Resources Dept - RTI Section-4(1)(b) of 2025",
+        "G.O.Ms.No:639 Dt:- 02.12.2011 RTI Act, 2005 –Implementation of Section 8(3) – Time limit for information beyond 20 years – Furnishing of information relating to the occurrence, event or matter which took place 20 years back – Instructions – Issued."
+      ],
+      "scores": [
+        0.626,
+        0.616,
+        0.604,
+        0.6,
+        0.598,
+        0.592,
+        0.577,
+        0.576
+      ],
+      "context_precision": 0.14285714284285714,
+      "context_recall": 0.6666666666666666,
+      "faithfulness": 0.9,
+      "answer_relevancy": null
+    },
+    {
+      "question": "How long does the department have to reply to my RTI request?",
+      "answer": "The RTI Act requires the public authority to give a decision **within a fixed number of days after receiving the request**.  The passage you have says:\n\n- “… **days of the receipt of the request**, either provide the information on payment of such fee as may be prescribed or reject the request….” [8]  \n- It also adds a special rule: “**where the information sought concerns the life or liberty of a person, the same shall be provided within forty‑eight hours** of the receipt of the request.” [8]\n\nThe exact number of days for the normal (non‑life‑or‑liberty) request is not stated in the excerpts you provided, so I cannot give a precise figure from these documents. [8]",
+      "reference": "The Public Information Officer must respond as expeditiously as possible and in any case within thirty days of receiving the request, either providing the information on payment of the prescribed fee or rejecting it for a reason set out in sections 8 or 9. If the request was made through an Assistant Public Information Officer, five extra days are added. Where the information concerns the life or liberty of a person, it must be provided within forty-eight hours.",
+      "titles": [
+        "RTI ACT",
+        "RTI hand book of ITEC&  Dept(English)",
+        "Water Resources Dept - RTI Section-4(1)(b) of 2025",
+        "Go.RT No: 3969 Dt:06-09-2011 General Administration (GPM&AR) Department – Right to Information Act, 2005 – Appointment of Inspecting Officer in General Administration (GPM&AR) wing to monitor the implementation of Section 4(1)(a), 4(1)(b) & 5(1)(2) by all Public Authorities in the State – Orders – Issued..",
+        "G.O.Ms.No:639 Dt:- 02.12.2011 RTI Act, 2005 –Implementation of Section 8(3) – Time limit for information beyond 20 years – Furnishing of information relating to the occurrence, event or matter which took place 20 years back – Instructions – Issued.",
+        "G.O. MS. No. 299 Dated : 27.06.2006 Governing for Results – RTI Act, 2005 (Act 22 of 2005) of GOI – Implementation – Creation of a Special Cell in General Administration (GPM&AR) Department to monitor the implementation of RTI Act, 2005 – Orders – Issued.",
+        "G.O.Rt.No.6488 Dt.20–11-2006 Right to information Act, 2005 (Central Act 22 of 2005) – Preparation of Annual Report by the AP. Information Commission under Section 25 of the RTI Act, 2005 – Furnishing of Information by the public authorities – Revised formats – Prescribed – Orders Issued.(ENGLISH)",
+        "RTI ACT"
+      ],
+      "scores": [
+        0.565,
+        0.559,
+        0.522,
+        0.521,
+        0.512,
+        0.508,
+        0.507,
+        0.504
+      ],
+      "context_precision": 0.62499999996875,
+      "context_recall": 0.6666666666666666,
+      "faithfulness": 1.0,
+      "answer_relevancy": null
+    }
+  ]
+}

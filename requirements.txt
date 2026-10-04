@@ -1,0 +1,16 @@
+# ap-rti-assistant — AP RTI chatbot
+# Versions checked against PyPI on 2026-09-04.
+
+# ingest: fetch + parse
+requests==2.32.5
+pypdf==6.4.2
+
+# embeddings — runs locally; Groq has no embeddings endpoint
+sentence-transformers==6.0.1
+
+# vector store
+chromadb==1.5.9
+
+# answering
+groq==1.7.0
+python-dotenv==1.2.3

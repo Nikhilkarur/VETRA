@@ -1,0 +1,56 @@
+{
+  "about": "Hand-written evaluation set for the AP RTI corpus. Ground truths are taken from the RTI Act 2005 and the AP government orders actually present in ingest/documents/ -- nothing here is invented. Questions are phrased the way a citizen would ask, which is deliberately harder than the corpus's own legalese.",
+  "created": "2026-09-04",
+  "questions": [
+    {
+      "question": "How do I apply for information under the RTI Act?",
+      "ground_truth": "Make a request in writing, or through electronic means, in English, Hindi or the official language of the area, to the State Public Information Officer, specifying the particulars of the information you want. If you cannot make the request in writing, the Public Information Officer must give you reasonable assistance to put it in writing. You must pay the prescribed fee with the application.",
+      "source": "RTI Act 2005, section 6(1)"
+    },
+    {
+      "question": "How long does the department have to reply to my RTI request?",
+      "ground_truth": "The Public Information Officer must respond as expeditiously as possible and in any case within thirty days of receiving the request, either providing the information on payment of the prescribed fee or rejecting it for a reason set out in sections 8 or 9. If the request was made through an Assistant Public Information Officer, five extra days are added. Where the information concerns the life or liberty of a person, it must be provided within forty-eight hours.",
+      "source": "RTI Act 2005, section 7(1) and 5(2)"
+    },
+    {
+      "question": "Can a department refuse to give me information, and on what grounds?",
+      "ground_truth": "Yes. Section 8(1) lists exemptions where there is no obligation to disclose, including information that would prejudicially affect the sovereignty, integrity or security of India, information forbidden by a court, information that would breach parliamentary privilege, commercial confidence or trade secrets, information held in a fiduciary relationship, information received in confidence from a foreign government, information that would endanger someone's life or safety, information that would impede investigation, cabinet papers, and personal information with no public interest. Section 9 additionally allows rejection where disclosure would infringe copyright held by a person other than the State.",
+      "source": "RTI Act 2005, sections 8 and 9"
+    },
+    {
+      "question": "What can I do if my RTI request is rejected or ignored?",
+      "ground_truth": "You can file a first appeal within thirty days to an officer senior to the Public Information Officer in that public authority. If you do not receive a decision within the time limits in section 7, that also counts as a rejection you can appeal. A second appeal lies to the State Information Commission within ninety days of the first appellate decision. When rejecting a request the officer must tell you the reasons, the appeal period and the details of the appellate authority.",
+      "source": "RTI Act 2005, section 19 and 7(8)"
+    },
+    {
+      "question": "Who is the State Chief Information Commissioner of Andhra Pradesh?",
+      "ground_truth": "Sri P. Ramesh Kumar, IAS (Retd.) is the State Chief Information Commissioner. The State Information Commissioners appointed under section 15(3) include Sri M. Ravi Kumar IFS (Retd.), Sri B. V. Ramana Kumar IPS (Retd.), Sri Katta Janardhana Rao, Sri Ilapuram Raj and Sri R. Srinivasa Rao.",
+      "source": "Instruction on RTI page text"
+    },
+    {
+      "question": "When was the Andhra Pradesh Information Commission set up?",
+      "ground_truth": "The AP Information Commission was constituted by G.O.Ms.No.504 and G.O.Ms.No.505 dated 12 November 2005 under the RTI Act. Its office premises were notified by G.O.Ms.No.63 dated 23 February 2006, and the first commissioners were appointed in March 2006, including Sri C.D. Arha IAS (Retd.) by G.O.Ms.No.154 dated 28 March 2006.",
+      "source": "GAD orders 504, 505, 63, 154"
+    },
+    {
+      "question": "Can I ask for government records that are more than twenty years old?",
+      "ground_truth": "Yes. Under section 8(3), information relating to any occurrence, event or matter which took place twenty years before the date of the request must be provided, subject only to the exemptions in clauses (a), (c) and (i) of section 8(1). Andhra Pradesh issued implementing instructions for this in G.O.Ms.No.639 dated 2 December 2011.",
+      "source": "RTI Act section 8(3); GAD G.O.Ms.No.639"
+    },
+    {
+      "question": "What information must a government department publish on its own without anyone asking?",
+      "ground_truth": "Under section 4(1)(b) every public authority must publish seventeen categories of information within 120 days, including the particulars of its organisation, functions and duties; the powers and duties of its officers; the procedure followed in decision making; the norms it sets; the rules, regulations, instructions, manuals and records it holds; a directory of its officers and employees; their monthly remuneration; its budget; the manner of executing subsidy programmes; the particulars of facilities available to citizens for obtaining information; and the names and designations of its Public Information Officers.",
+      "source": "RTI Act 2005, section 4(1)(b)"
+    },
+    {
+      "question": "Does the RTI Act override other laws that keep government information secret?",
+      "ground_truth": "Yes. Section 22 gives the RTI Act effect notwithstanding anything inconsistent in the Official Secrets Act 1923 or any other law in force. The AP General Administration Department issued Circular Memo No. 85305 in July 2005 instructing departments on the implications of section 22.",
+      "source": "RTI Act section 22; GAD Circular Memo 85305"
+    },
+    {
+      "question": "What penalty can be imposed on an officer who refuses to accept my RTI application?",
+      "ground_truth": "Under section 20(1), where the Information Commission finds that a Public Information Officer has without reasonable cause refused to receive an application, has not furnished information within the time specified, has malafidely denied a request, knowingly given incorrect or misleading information, destroyed information, or obstructed the furnishing of information, it may impose a penalty of two hundred and fifty rupees per day until the application is received or information furnished, up to a maximum of twenty-five thousand rupees. The Commission may also recommend disciplinary action.",
+      "source": "RTI Act 2005, section 20"
+    }
+  ]
+}

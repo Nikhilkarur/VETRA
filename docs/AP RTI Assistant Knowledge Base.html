@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AP RTI Assistant — Knowledge Base</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f1f3f6;
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --sunk: #e9edf1;
+  --ink: #10151b;
+  --ink-2: #414a55;
+  --muted: #6b7480;
+  --hair: #dce1e7;
+  --hair-2: #c5ccd5;
+  --ingest: #b06a1f;
+  --search: #1f6f8b;
+  --answer: #2f6e4f;
+  --llm: #7c5cd6;
+  --good: #0ca30c;
+  --warn: #fab219;
+  --bad: #d03b3b;
+  --shadow: 0 1px 2px rgba(16,21,27,.05), 0 6px 20px rgba(16,21,27,.05);
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0b0e12; --surface: #141920; --surface-2: #181e26; --sunk: #1e252e;
+    --ink: #edf1f5; --ink-2: #b7c0ca; --muted: #8a94a0; --hair: #262e38; --hair-2: #36404c;
+    --ingest: #d08b3a; --search: #4fa3c0; --answer: #5aa97f; --llm: #a389e6; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0e12; --surface: #141920; --surface-2: #181e26; --sunk: #1e252e;
+  --ink: #edf1f5; --ink-2: #b7c0ca; --muted: #8a94a0; --hair: #262e38; --hair-2: #36404c;
+  --ingest: #d08b3a; --search: #4fa3c0; --answer: #5aa97f; --llm: #a389e6; --shadow: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+a { color: inherit; text-decoration-color: var(--hair-2); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+code, .mono { font-family: var(--f-mono); font-size: .92em; }
+code { background: var(--sunk); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+p { margin: 0; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+.muted { color: var(--muted); }
+.label { font: 600 11px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- masthead ---------- */
+header.hero { padding: 56px 0 30px; border-bottom: 1px solid var(--hair); background: var(--surface); }
+.hero h1 { font-size: clamp(34px, 6vw, 54px); font-weight: 700; letter-spacing: -.02em; line-height: 1.02; }
+.hero .sub { margin-top: 12px; font-size: 18px; color: var(--ink-2); max-width: 66ch; }
+.hero .meta { margin-top: 18px; font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--hair);
+         border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; margin-top: 26px; }
+.stat { background: var(--surface); padding: 14px 16px; }
+.stat b { display: block; font-family: var(--f-mono); font-size: 25px; font-weight: 500; letter-spacing: -.01em; }
+.stat span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+
+/* ---------- contents ---------- */
+nav.toc { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--surface) 92%, transparent);
+          backdrop-filter: blur(8px); border-bottom: 1px solid var(--hair); }
+nav.toc ul { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: thin; }
+nav.toc a { display: block; padding: 11px 12px; font-size: 13px; white-space: nowrap; text-decoration: none; color: var(--ink-2); }
+nav.toc a:hover { color: var(--ink); background: var(--surface-2); }
+
+/* ---------- sections ---------- */
+section { padding: 46px 0; border-bottom: 1px solid var(--hair); }
+.sec-head { max-width: 76ch; margin-bottom: 24px; }
+.sec-head h2 { font-size: clamp(23px, 3.2vw, 30px); font-weight: 600; letter-spacing: -.01em; }
+.sec-head p { margin-top: 9px; color: var(--ink-2); }
+h3 { font-size: 17px; font-weight: 600; margin: 26px 0 10px; }
+.card { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+ul.plain { margin: 10px 0 0; padding-left: 20px; color: var(--ink-2); }
+ul.plain li { margin: 5px 0; }
+
+/* ---------- tables ---------- */
+.tw { overflow-x: auto; border: 1px solid var(--hair); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 520px; }
+th { text-align: left; font: 600 11px/1.2 var(--f-body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted);
+     padding: 11px 14px; border-bottom: 1px solid var(--hair); background: var(--surface-2); white-space: nowrap; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--hair); vertical-align: top; color: var(--ink-2); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+td strong { color: var(--ink); }
+.win { color: var(--good); font-weight: 600; }
+.lose { color: var(--bad); font-weight: 600; }
+
+/* ---------- quote / example ---------- */
+.q-block { border-left: 3px solid var(--search); padding: 2px 0 2px 16px; margin: 14px 0; }
+.q-block .qq { font-weight: 600; }
+.q-block .aa { margin-top: 8px; color: var(--ink-2); }
+.cite { font-family: var(--f-mono); font-size: 11.5px; color: var(--search); background: color-mix(in srgb, var(--search) 12%, transparent);
+        padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+
+/* ---------- pipeline ---------- */
+.flow { display: grid; gap: 10px; margin-top: 6px; }
+.flow-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+button.stage { text-align: left; font: inherit; cursor: pointer; background: var(--surface); color: var(--ink);
+               border: 1px solid var(--hair); border-left: 3px solid var(--c, var(--hair-2)); border-radius: 8px; padding: 11px 13px; }
+button.stage:hover { background: var(--surface-2); }
+button.stage[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, var(--surface)); }
+button.stage b { display: block; font-size: 13.5px; }
+button.stage span { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); }
+.arrow { text-align: center; color: var(--hair-2); font-size: 15px; line-height: 1; }
+#stagePanel { margin-top: 12px; }
+#stagePanel .label { margin-bottom: 6px; }
+#stagePanel h3 { margin: 0 0 6px; }
+#stagePanel .where { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+/* ---------- traces ---------- */
+.trace { margin-top: 14px; }
+.trace .bar { display: grid; grid-template-columns: 210px 1fr; gap: 12px; align-items: center; margin: 5px 0; font-size: 13px; }
+.trace .bar .n { font-family: var(--f-mono); }
+.rank { display: inline-block; height: 18px; border-radius: 4px; background: var(--search); opacity: .85; }
+.rank.bad { background: var(--bad); }
+.rank.good { background: var(--good); }
+
+.pill { display: inline-block; font: 600 11px/1.5 var(--f-body); letter-spacing: .04em; text-transform: uppercase;
+        padding: 1px 8px; border-radius: 999px; border: 1px solid var(--hair-2); color: var(--muted); }
+.pill.good { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
+.pill.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+
+dl.gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin: 0; }
+dl.gloss div { background: var(--surface); border: 1px solid var(--hair); border-radius: 9px; padding: 13px 15px; }
+dl.gloss dt { font-weight: 600; font-size: 14px; }
+dl.gloss dd { margin: 5px 0 0; font-size: 13.5px; color: var(--ink-2); }
+
+pre.cmd { background: var(--sunk); border: 1px solid var(--hair); border-radius: 8px; padding: 11px 14px; margin: 8px 0 0;
+          font-family: var(--f-mono); font-size: 13px; overflow-x: auto; }
+
+footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
+
+@media print {
+  nav.toc { display: none; }
+  body { background: #fff; font-size: 11pt; }
+  section { break-inside: auto; page-break-inside: auto; border-bottom: 1px solid #ddd; }
+  .card, .tw, dl.gloss div { box-shadow: none; }
+  button.stage { border-left-width: 3px; }
+  #stagePanel { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="label">Knowledge base</p>
+    <h1>AP RTI Assistant</h1>
+    <p class="sub">An assistant that answers ordinary citizens' questions about the Right to Information
+       Act as it applies in Andhra Pradesh, using only documents the AP government itself publishes,
+       and citing every source.</p>
+    <p class="meta">Written 29 September 2026 · all figures measured, sources in <code>context.md</code></p>
+    <div class="stats">
+      <div class="stat"><b>41</b><span>documents indexed, chosen from 546 on the portal</span></div>
+      <div class="stat"><b>535</b><span>chunks, none cut off mid-thought</span></div>
+      <div class="stat"><b>82%</b><span>of casual questions get their answer text retrieved (was ~50%)</span></div>
+      <div class="stat"><b>~4 s</b><span>per answer: 1.5 s searching, 2.5 s writing</span></div>
+      <div class="stat"><b>₹0</b><span>infrastructure: search runs locally, answers on a free tier</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <ul class="wrap">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#problem">The problem</a></li>
+    <li><a href="#corpus">The documents</a></li>
+    <li><a href="#flow">What happens to one question</a></li>
+    <li><a href="#examples">Three questions</a></li>
+    <li><a href="#decisions">Decisions</a></li>
+    <li><a href="#numbers">How it is measured</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#run">Run it</a></li>
+    <li><a href="#open">Open items</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+<!-- ============================== OVERVIEW ============================== -->
+<section id="overview">
+  <div class="sec-head">
+    <h2>What it does, on one real question</h2>
+    <p>A citizen types the way people actually type. The assistant finds the passages that answer it
+       in the AP government's own documents, and answers only from those, naming the section it used.</p>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <p class="qq">how much money do i need to pay for an rti in andhra pradesh</p>
+      <div class="aa">
+        <p>Village-level public authority — <strong>no fee</strong>. Mandal-level — <strong>₹5</strong> per
+           application. All other public authorities — <strong>₹10</strong> per application. Copies are
+           ₹2 per page; a CD is ₹100. Inspecting records is free for the first hour, then ₹5 per hour.
+           White-card (below-poverty-line) holders pay no application fee.</p>
+        <p style="margin-top:8px">
+          <span class="cite">G.O.Ms.No. 454 (2005)</span>
+          <span class="cite">G.O.Ms.No. 545 (2005)</span>
+          <span class="cite">G.O.Ms.No. 740 (2007)</span>
+        </p>
+      </div>
+    </div>
+    <p class="muted" style="font-size:13px">Checked against the orders themselves: every amount is correct,
+       including the inspection fee as <em>amended</em> in 2005 rather than the original rate. This is
+       Andhra Pradesh-specific detail that the state portal's own chatbot did not give.</p>
+  </div>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <p class="label">Two promises</p>
+      <ul class="plain">
+        <li><strong>Only the documents.</strong> Answers are written from retrieved passages, never from
+            the model's own knowledge, and each claim carries a citation.</li>
+        <li><strong>"I don't know" is allowed.</strong> Where the passages don't cover something, the
+            answer says so. For a question about legal rights, a confident wrong answer is worse than none.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="label">What it is not</p>
+      <ul class="plain">
+        <li>Not legal advice, and not a filing service.</li>
+        <li>Not current on officials or amended fees: the state orders in the corpus stop at 2011.</li>
+        <li>Not reliable on one question in five, phrased casually. The open items are listed at the end.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PROBLEM ============================== -->
+<section id="problem">
+  <div class="sec-head">
+    <h2>Why the information exists but citizens can't use it</h2>
+    <p>Everything a citizen needs is published on <code>ap.gov.in</code>. Two things stand in the way:
+       how the site is organised, and the words the law uses.</p>
+  </div>
+
+  <h3>The portal is a filing cabinet, not a guide</h3>
+  <p style="max-width:76ch;color:var(--ink-2)">The "RTI &amp; Acts" menu holds <strong>546 documents</strong>.
+     Most are there because Section 4(1)(b)(v) of the Act obliges every authority to publish
+     "the rules, regulations, instructions, manuals and records held by it" — so the menu fills with
+     civil-service promotion rules and secretariat manuals.</p>
+  <ul class="plain" style="max-width:76ch">
+    <li>The <strong>RTI Act itself is not in the "Acts" section</strong>. It sits four levels deep under
+        <em>Department&nbsp;–&nbsp;Org RTI → GAD → GOs / Governors Reports under s.4(1)(A)</em>, in a file titled just <code>RTI ACT</code>.</li>
+    <li>The one page written for citizens, "Instruction on RTI", lists <em>How to apply · Fee payable ·
+        Time limit · Appeal Provision</em> — and none of them link to anything.</li>
+    <li>A bug in the department section shows the previous department's contents when you open a second one,
+        hiding <strong>282 of its 285 files</strong>.</li>
+  </ul>
+
+  <h3>The words don't match</h3>
+  <p style="max-width:76ch;color:var(--ink-2)">This is the part that breaks ordinary search. Citizens and
+     statutes use different vocabulary for the same idea, and half the words a citizen reaches for never
+     appear in the Act at all.</p>
+  <div class="tw" style="margin-top:12px">
+    <table>
+      <thead><tr><th>A citizen asks</th><th>The Act says</th><th class="num">In the Act?</th></tr></thead>
+      <tbody>
+        <tr><td>How do I <strong>apply</strong>?</td><td>shall <strong>make a request in writing</strong></td><td class="num">different word</td></tr>
+        <tr><td>They didn't <strong>reply</strong></td><td>shall be <strong>deemed to have refused</strong> the request</td><td class="num">"reply" never appears</td></tr>
+        <tr><td>Complain to the <strong>boss</strong></td><td>appeal to the officer <strong>senior in rank</strong></td><td class="num">"boss" never appears</td></tr>
+        <tr><td>What's the <strong>deadline</strong>?</td><td><strong>within thirty days</strong> of the receipt of the request</td><td class="num">"deadline" never appears</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Why that defeats a plain search, precisely</h3>
+  <p style="max-width:76ch;color:var(--ink-2)">A search by meaning has no notion of which words matter.
+     "How do I apply for information under the RTI Act?" shares 60% of its words with the passage that
+     answers it — but every shared word is one the whole corpus uses.</p>
+  <div class="tw" style="margin-top:12px">
+    <table>
+      <thead><tr><th>Word in the question</th><th class="num">Chunks containing it</th><th>Worth as a clue</th></tr></thead>
+      <tbody>
+        <tr><td>information</td><td class="num">350 / 535 &nbsp;(46%)</td><td>almost none</td></tr>
+        <tr><td>under</td><td class="num">288 &nbsp;(38%)</td><td>none</td></tr>
+        <tr><td>act</td><td class="num">195 &nbsp;(25%)</td><td>weak</td></tr>
+        <tr><td>rti</td><td class="num">46 &nbsp;(6%)</td><td>some</td></tr>
+        <tr><td><strong>apply</strong></td><td class="num">6 &nbsp;(1%)</td><td><strong>the only real clue — and the answer doesn't contain it</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted" style="margin-top:10px;max-width:76ch;font-size:13.5px">
+    The rule that explains nearly every result: <strong>retrieval works when the question's rare word also
+    appears in the answer.</strong> "penalty" (2 chunks) and "refuse" (1 chunk) do, and those questions
+    ranked 2nd and 3rd. "apply" does not, and its answer sat at <strong>rank 106 of 766</strong>.</p>
+
+  <div class="card" style="margin-top:16px">
+    <p class="label">This is a known problem, not a local one</p>
+    <p style="margin-top:6px;color:var(--ink-2)">A 2026 study of search over government benefit rules
+       (<em>The Vocabulary Gap Is an Equity Gap</em>, arXiv 2609.01645) measured the same effect: keyword
+       search found the right passage in its top 5 for <strong>100%</strong> of formally worded questions
+       but only <strong>44%</strong> of plain-language ones. Plain questions shared <strong>11%</strong> of
+       their content words with the answer, against 63% for formal ones. The people who most need help are
+       served worst.</p>
+  </div>
+</section>
+
+<!-- ============================== CORPUS ============================== -->
+<section id="corpus">
+  <div class="sec-head">
+    <h2>The 41 documents</h2>
+    <p>Every one of the 546 documents in the portal's RTI &amp; Acts menu was examined and classified.
+       Most are irrelevant to a citizen; a large share of what remains is statistical filing.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Narrowing down</th><th class="num">Documents</th><th>What was dropped</th></tr></thead>
+      <tbody>
+        <tr><td>Published in the menu</td><td class="num">546</td><td>—</td></tr>
+        <tr><td>Actually about RTI</td><td class="num">194</td><td>service rules, business rules, HR circulars</td></tr>
+        <tr><td>Substantive</td><td class="num">69</td><td>124 quarterly filing returns (counts, not content)</td></tr>
+        <tr><td><strong>Indexed</strong></td><td class="num"><strong>41</strong></td><td>duplicates, scans with no text, Telugu editions, a 48-page logo manual</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Three layers, three kinds of question</h3>
+  <div class="grid2">
+    <div class="card" style="border-left:3px solid var(--ingest)">
+      <p class="label">The law — 1 document, 23 pages</p>
+      <p style="margin-top:6px;color:var(--ink-2)">The RTI Act 2005. Answers "what is my right":
+         how to apply (s.6), fees and the 30-day limit (s.7), what can be refused (s.8),
+         appeals (s.19), penalties (s.20).</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--search)">
+      <p class="label">AP's implementation — 26 orders, 2005–2011</p>
+      <p style="margin-top:6px;color:var(--ink-2)">Government orders: the state fee rules and their
+         amendments, the Information Commission's constitution and appointments, compliance instructions.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--answer)">
+      <p class="label">Departments — 13 manuals + the portal page</p>
+      <p style="margin-top:6px;color:var(--ink-2)">Each department's own s.4(1)(b) manual: what it holds
+         and who its Public Information Officer is. The portal page is the only source naming the
+         current Commissioners.</p>
+    </div>
+  </div>
+
+  <h3>How they are cut up</h3>
+  <ul class="plain" style="max-width:76ch">
+    <li>The <strong>Act is split at its 31 section boundaries</strong> before chunking, so a chunk never
+        straddles two sections. All 31 section titles were verified against the Act's own text.</li>
+    <li>Chunks are <strong>350 tokens with 60 overlap, aligned to sentence ends</strong> — sized for the
+        embedding model's 512-token window, so nothing is silently cut off. In the first version, 27% of
+        chunks were being truncated.</li>
+    <li>Every chunk carries a <strong>citation label</strong>: "RTI Act 2005, Section 19: Appeal", or a
+        department name, or "most current source" for the portal page.</li>
+    <li><strong>Amendment links</strong> between orders are detected automatically at this stage, from each
+        order's "Amendment to … Read the following" header.</li>
+  </ul>
+</section>
+
+<!-- ============================== FLOW ============================== -->
+<section id="flow">
+  <div class="sec-head">
+    <h2>What happens to one question</h2>
+    <p>Two searches run, not one: the question as typed, and a made-up legal passage written from it.
+       Their rankings are merged. Click any box for what it does, where the code lives, and its numbers.</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="q" style="--c:var(--ink-2)"><b>The question, as typed</b><span>"how much money do i need to pay for an rti"</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row">
+      <button class="stage" data-s="condense" style="--c:var(--llm)"><b>1 · Rewrite (follow-ups only)</b><span>turns "what if i still dont get it" into a full question</span></button>
+      <button class="stage" data-s="hyde" style="--c:var(--llm)"><b>2 · HyDE passage</b><span>a small model writes what the law would say</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row">
+      <button class="stage" data-s="dense" style="--c:var(--search)"><b>3a · Search by meaning</b><span>bge-small embeddings, cosine, in Chroma</span></button>
+      <button class="stage" data-s="bm25" style="--c:var(--search)"><b>3b · Search by keyword</b><span>BM25, catches rare exact words</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="rrf" style="--c:var(--search)"><b>4 · Merge the rankings</b><span>Reciprocal Rank Fusion → top 10</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="amend" style="--c:var(--ingest)"><b>5 · Add amending orders</b><span>a rule without its amendment is wrong, not just incomplete</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="answer" style="--c:var(--answer)"><b>6 · Write the answer</b><span>numbered passages + strict rules → cited answer</span></button>
+    </div>
+  </div>
+
+  <div class="card" id="stagePanel"></div>
+</section>
+
+<!-- ============================== EXAMPLES ============================== -->
+<section id="examples">
+  <div class="sec-head">
+    <h2>Three questions, followed end to end</h2>
+    <p>Where the answering passage ranked at each stage, out of 535 chunks. Lower is better; anything
+       past 10 never reaches the answering model. Two successes and one failure.</p>
+  </div>
+
+  <h3>1 · "does rti work for intelligence agencies like IB" <span class="pill good">answered correctly</span></h3>
+  <p style="color:var(--ink-2);max-width:76ch">The answer is Section 24: the Act does <em>not</em> apply to the
+     intelligence organisations in the Second Schedule. The citizen says "IB" and "work for"; the Act says
+     "intelligence and security organisations" and "shall apply to".</p>
+  <div class="trace">
+    <div class="bar"><span class="n">meaning search, question</span><span><i class="rank bad" style="width:180px"></i> 39</span></div>
+    <div class="bar"><span class="n">keyword search, question</span><span><i class="rank" style="width:40px"></i> 6</span></div>
+    <div class="bar"><span class="n">both merged, question</span><span><i class="rank bad" style="width:80px"></i> 14 — misses the top 10</span></div>
+    <div class="bar"><span class="n">meaning search, HyDE passage</span><span><i class="rank good" style="width:16px"></i> 2</span></div>
+    <div class="bar"><span class="n">keyword search, HyDE passage</span><span><i class="rank good" style="width:16px"></i> 2</span></div>
+    <div class="bar"><span class="n"><strong>everything merged</strong></span><span><i class="rank good" style="width:10px"></i> <strong>1</strong></span></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <p class="label">The HyDE passage that found it — which is itself wrong</p>
+    <p style="margin-top:6px;color:var(--ink-2);font-style:italic">"The provisions of the information law apply to
+       all public authorities, including intelligence agencies, and any request … shall be processed in accordance
+       with the statutory procedures, subject to the exemptions enumerated in the Act."</p>
+    <p style="margin-top:8px;font-size:13.5px">It claims the Act <em>does</em> apply to intelligence agencies.
+       That does not matter: it is only ever used to search. The answer, written from the real Section 24, says
+       <strong>"No"</strong> — and cites it. The passage is never shown to the answering model or to the user.</p>
+  </div>
+
+  <h3>2 · "i sent my rti to the wrong office, will they forward it" <span class="pill good">answered correctly</span></h3>
+  <p style="color:var(--ink-2);max-width:76ch">Section 6 requires the office to transfer the application within
+     five days. "Wrong office / forward" versus "held by another public authority / transfer".</p>
+  <div class="trace">
+    <div class="bar"><span class="n">question alone (plain RAG)</span><span><i class="rank bad" style="width:260px"></i> 60</span></div>
+    <div class="bar"><span class="n">HyDE passage alone</span><span><i class="rank good" style="width:16px"></i> 2</span></div>
+    <div class="bar"><span class="n"><strong>both merged (what runs)</strong></span><span><i class="rank" style="width:52px"></i> <strong>8</strong> — inside the top 10</span></div>
+  </div>
+  <p class="muted" style="margin-top:8px;font-size:13.5px;max-width:76ch">Merging is deliberately kept even though
+     the passage alone scored better here. When a HyDE passage drifts off-topic, the original question is the
+     safety net; across the test sets, merging ranked answers higher overall.</p>
+
+  <h3>3 · "what if my family benglongs to bpl", asked after a fee question <span class="pill bad">incomplete</span></h3>
+  <p style="color:var(--ink-2);max-width:76ch">A follow-up. The rewrite step turned it into
+     <em>"What if my family belongs to BPL?"</em> — correct English, but it dropped <strong>fees</strong>, the
+     thing the conversation was about.</p>
+  <div class="trace">
+    <div class="bar"><span class="n">AP white-card rule (G.O. 740)</span><span><i class="rank bad" style="width:300px"></i> 43 — never retrieved</span></div>
+    <div class="bar"><span class="n">if the topic is carried through</span><span><i class="rank good" style="width:10px"></i> 1</span></div>
+  </div>
+  <p style="margin-top:10px;color:var(--ink-2);max-width:76ch">The answer was still <em>correct</em> — it quoted the
+     Act's own rule that no fee is charged to people below the poverty line — but it missed the AP-specific detail
+     that a <strong>white card</strong> is what proves BPL status. Switching the rewrite to the larger model fixed
+     this in an isolated test and <em>not</em> in the real conversation. It remains open; see
+     <a href="#open">open items</a>.</p>
+</section>
+
+<!-- ============================== DECISIONS ============================== -->
+<section id="decisions">
+  <div class="sec-head">
+    <h2>Decisions, and the numbers behind them</h2>
+    <p>Question sets were written and frozen <em>before</em> any change, so nothing could be tuned toward them.
+       Each row below is a measurement, not an opinion. The figure is the share of questions whose answering
+       text reached the model.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Change</th><th class="num">Formal (20)</th><th class="num">Casual</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Original pipeline — 1000-character chunks, MiniLM, top 8</td><td class="num">65%</td><td class="num">50%, 50%</td><td>baseline</td></tr>
+        <tr><td>Chunks sized by <strong>tokens</strong>, sentence-aligned</td><td class="num">70%</td><td class="num">—</td><td class="win">kept</td></tr>
+        <tr><td>+ RTI Act <strong>split by section</strong></td><td class="num">70%</td><td class="num">—</td><td class="win">kept</td></tr>
+        <tr><td>+ document title added to each chunk before embedding</td><td class="num">70%</td><td class="num">—</td><td class="lose">rejected — ranking got worse</td></tr>
+        <tr><td>+ <strong>hybrid search</strong> (meaning + BM25)</td><td class="num">80%</td><td class="num">—</td><td class="win">kept</td></tr>
+        <tr><td><strong>bge-small</strong>, 350-token chunks, hybrid, no title</td><td class="num">95%</td><td class="num">42%, 58%</td><td class="win">kept</td></tr>
+        <tr><td>+ LLM rewrites the question into legal wording (first try)</td><td class="num">85%</td><td class="num">25%</td><td class="lose">rejected — much worse</td></tr>
+        <tr><td>+ same rewrite, with the corpus-wide words banned</td><td class="num">90%</td><td class="num">58%</td><td>superseded</td></tr>
+        <tr><td>+ <strong>HyDE</strong>, merged with the original question</td><td class="num">95%</td><td class="num">75%, 92%, 60%</td><td class="win">kept — the decisive change</td></tr>
+        <tr><td>+ section titles on Act chunks (3 variants)</td><td class="num">95%</td><td class="num">no gain</td><td class="lose">rejected</td></tr>
+        <tr><td><strong>+ retrieve 10 passages instead of 8</strong></td><td class="num"><strong>95%</strong></td><td class="num"><strong>75%, 92%, 80%</strong></td><td class="win">kept — final</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The single most important line in that table</h3>
+  <p style="max-width:76ch;color:var(--ink-2)">Better chunks, a better embedding model and keyword search took
+     <strong>formal</strong> questions from 65% to 95% — and left <strong>casual</strong> questions at about 50%.
+     Only HyDE moved those. Tuning ordinary RAG did not solve this corpus; bridging the vocabulary gap did.</p>
+
+  <h3>Things that sounded right and were not</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Idea</th><th>What the measurement showed</th></tr></thead>
+      <tbody>
+        <tr><td>Swap the embedding model (MiniLM → bge-small)</td><td>60% vs 67% on 15 checks — a one-check difference. Both failed the same questions. bge was kept for its 512-token window, not its accuracy.</td></tr>
+        <tr><td>Add the document title to each chunk before embedding</td><td>Hurt in every form tried. Every order's title contains "Right to Information Act", so titles made chunks look alike. (Anthropic's <em>Contextual Retrieval</em> reports the opposite on other data.)</td></tr>
+        <tr><td>Have the LLM rewrite questions into legal wording</td><td>Casual accuracy fell 42% → 25%. The model padded every rewrite with "under the Right to Information Act, 2005 … Andhra Pradesh" — words in nearly every chunk, which drown the real concept.</td></tr>
+        <tr><td>For follow-ups, also search with the previous question</td><td>Lifted one follow-up slightly, but wrecked topic switches: the IB question fell from rank 1 to 18, "can the officer refuse" from 15 to 46. Rejected.</td></tr>
+        <tr><td>Add OCR for scanned documents</td><td>Not needed. Every scanned file in the chosen set has a text twin of the same order, so v1 ships with no OCR at all.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fixes that came from reading answers, not scores</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Failure seen in rehearsal</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Named a 2010 appointee as the <strong>current</strong> Commissioner</td><td>Only the portal page is labelled current; answers from dated orders must say who was appointed, by which order, and that it may have changed</td></tr>
+        <tr><td>Gave one department's appeal officer and phone number for <em>any</em> office</td><td>Manuals are labelled by department; contacts are given only for that department</td></tr>
+        <tr><td>Quoted an inspection fee a later order had changed</td><td>Amending orders are pulled in automatically whenever the rule they amend is retrieved</td></tr>
+        <tr><td>Said the penalty was "₹25,000 <strong>per day</strong>" (it is ₹250/day, capped at ₹25,000)</td><td>Rule: copy every figure exactly as the passage states it; never merge numbers from different clauses</td></tr>
+        <tr><td>Crashed when the free-tier rate limit was hit</td><td>Retry, then fall back to the smaller model with a visible note</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== NUMBERS ============================== -->
+<section id="numbers">
+  <div class="sec-head">
+    <h2>How it is measured</h2>
+    <p>One question, asked mechanically and without an LLM judge: <strong>does the text that answers the
+       question appear in the passages the model was given?</strong></p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <p class="label">The method</p>
+      <ul class="plain">
+        <li>Each test question carries a <strong>probe</strong> — a short phrase copied verbatim from the
+            passage that answers it, e.g. <code>senior in rank</code>.</li>
+        <li>A question passes if its probe appears in the retrieved passages. No judging, no cost,
+            runs in seconds.</li>
+        <li>Probes are matched with spaces removed, so the corpus's extraction damage
+            (<code>rup ees</code>, <code>Informati on</code>) doesn't cause false misses.</li>
+        <li>Every set was written and frozen <em>before</em> the changes it was used to test.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="label">The sets — 54 questions</p>
+      <div class="tw" style="border:0">
+        <table style="min-width:0">
+          <tbody>
+            <tr><td><code>dev</code> · 20</td><td>fairly formal</td><td>used while iterating</td></tr>
+            <tr><td><code>heldout</code> · 12</td><td>casual</td><td>after the architecture changes</td></tr>
+            <tr><td><code>heldout2</code> · 12</td><td>casual</td><td>before query rewriting existed</td></tr>
+            <tr><td><code>heldout3</code> · 10</td><td>casual</td><td>before the last two decisions</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3>Where it stands</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th></th><th class="num">Formal (20)</th><th class="num">Casual (34)</th><th class="num">All (54)</th></tr></thead>
+      <tbody>
+        <tr><td>Original pipeline</td><td class="num">65%</td><td class="num">~50%</td><td class="num">—</td></tr>
+        <tr><td><strong>Current</strong></td><td class="num"><strong>95%</strong></td><td class="num"><strong>82%</strong></td><td class="num"><strong>87%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <p class="label">The measurement that pointed at retrieval in the first place</p>
+    <p style="margin-top:6px;color:var(--ink-2)">RAGAS, an LLM-judged evaluation, scored the first version
+       <strong>0.95 on faithfulness</strong> — the model stuck to what it was given — but only
+       <strong>0.38 on context precision</strong>, and 0.14 on "how do I apply". The model was trustworthy;
+       it was being handed noise. That is why every subsequent change targeted retrieval, not the prompt.</p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <p class="label">Answers, checked by hand against the Act</p>
+    <p style="margin-top:6px;color:var(--ink-2)">Of five questions checked line by line: <strong>four correct</strong>
+       (how to file, the fee schedule, what can be refused, the penalty) and <strong>one partly correct</strong>
+       (a "no reply for 45 days" question that mixed up the first and second appeal). Saved in
+       <code>eval/demo_backup_answers.md</code>.</p>
+  </div>
+</section>
+
+<!-- ============================== GLOSSARY ============================== -->
+<section id="glossary">
+  <div class="sec-head">
+    <h2>Glossary</h2>
+    <p>Terms used above, in plain words — both the machine-learning ones and the RTI ones.</p>
+  </div>
+  <dl class="gloss">
+    <div><dt>RAG</dt><dd>Retrieval-Augmented Generation: find relevant passages first, then have a language model answer using only those. It keeps answers tied to real documents.</dd></div>
+    <div><dt>Chunk</dt><dd>A passage-sized piece of a document. Documents are too long to search whole, so they are cut into 535 chunks of about 350 tokens.</dd></div>
+    <div><dt>Embedding</dt><dd>A list of numbers representing a piece of text's meaning. Texts with similar meanings get similar numbers, so closeness can be measured.</dd></div>
+    <div><dt>BM25</dt><dd>Classic keyword search. It rewards rare words and ignores common ones — which is why it catches "penalty" or "court fee stamp" where meaning-search blurs them.</dd></div>
+    <div><dt>Hybrid search</dt><dd>Running meaning search and keyword search together and combining the results, because each catches what the other misses.</dd></div>
+    <div><dt>RRF</dt><dd>Reciprocal Rank Fusion: a standard way to merge two ranked lists. A passage ranked highly by either list rises overall.</dd></div>
+    <div><dt>HyDE</dt><dd>Hypothetical Document Embeddings: a small model writes the passage a law <em>would</em> contain to answer the question, and that is searched too. It may be factually wrong; it is used only to find documents.</dd></div>
+    <div><dt>Condense / rewrite</dt><dd>Turning a follow-up ("what if i still dont get it") into a standalone question before searching, using the last few turns.</dd></div>
+    <div><dt>Chroma</dt><dd>The local database holding the chunks and their embeddings. Nothing leaves the machine except the two calls that write the HyDE passage and the answer.</dd></div>
+    <div><dt>PIO</dt><dd>Public Information Officer — the official in each department who receives and answers RTI applications.</dd></div>
+    <div><dt>First / second appeal</dt><dd>If a request is refused or ignored: first appeal to an officer senior to the PIO within 30 days; then a second appeal to the State Information Commission within 90 days.</dd></div>
+    <div><dt>Deemed refusal</dt><dd>No reply within the time limit counts as a refusal, so the appeal clock starts without waiting.</dd></div>
+    <div><dt>Section 4(1)(b)</dt><dd>The clause obliging every public authority to publish information about itself — the manuals that make up a third of this corpus.</dd></div>
+    <div><dt>G.O.</dt><dd>Government Order — how the state issues instructions and rules, e.g. G.O.Ms.No. 454 setting the RTI fees.</dd></div>
+    <div><dt>White card</dt><dd>The AP ration card treated as proof of below-poverty-line status, which exempts the holder from the RTI application fee.</dd></div>
+  </dl>
+</section>
+
+<!-- ============================== RUN ============================== -->
+<section id="run">
+  <div class="sec-head">
+    <h2>Run it</h2>
+    <p>The documents and the index are already built and committed. Two commands from a fresh PowerShell.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <p class="label">The web page</p>
+      <pre class="cmd">cd C:\Users\nkk77\Desktop\ap-rti-assistant
+python rag\web.py</pre>
+      <p style="margin-top:10px;color:var(--ink-2);font-size:13.5px">Takes about 30 seconds to load, then opens
+         <code>http://127.0.0.1:8000</code>. Citations are clickable and open the passage they came from;
+         "How it searched" shows the HyDE passage. <strong>Ctrl+C</strong> stops it.</p>
+    </div>
+    <div class="card">
+      <p class="label">The terminal chat</p>
+      <pre class="cmd">python rag\chat.py</pre>
+      <p style="margin-top:10px;color:var(--ink-2);font-size:13.5px"><code>/sources</code> shows the passages used,
+         <code>/new</code> starts a fresh conversation, <code>/quit</code> exits.</p>
+    </div>
+    <div class="card">
+      <p class="label">Rebuild the index (only if documents change)</p>
+      <pre class="cmd">python ingest\load_and_chunk.py
+python ingest\build_index.py</pre>
+    </div>
+    <div class="card">
+      <p class="label">Re-run the measurements</p>
+      <pre class="cmd">python eval\retrieval_eval.py
+python eval\retrieval_eval.py --no-hyde</pre>
+      <p style="margin-top:10px;color:var(--ink-2);font-size:13.5px">The second command shows what HyDE is worth.
+         <code>eval\run_ragas.py</code> runs the LLM-judged evaluation and needs extra packages.</p>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:14px;font-size:13.5px">Needs <code>GROQ_API_KEY</code> in a <code>.env</code>
+     file at the project root. Leave about 30 seconds between questions: the free tier allows roughly 8,000
+     tokens a minute and one answer uses 3,000–4,000.</p>
+</section>
+
+<!-- ============================== OPEN ============================== -->
+<section id="open">
+  <div class="sec-head">
+    <h2>Open items</h2>
+    <p>Stated plainly. Anyone demonstrating this should know them before someone else finds them.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Item</th><th>Where it stands</th></tr></thead>
+      <tbody>
+        <tr><td><strong>One casual question in five still misses its answer</strong></td><td>Some misses are far off: for "can they refuse my RTI", the exemptions section isn't in the top 40.</td></tr>
+        <tr><td><strong>Follow-ups can lose the topic</strong></td><td>"what if my family belongs to bpl" after a fee question dropped "fee"; the AP white-card rule then ranked 43rd. The larger model fixed it in an isolated test but not in a real conversation. Untested idea: have the model emit the topic on its own line and append it to the search in code. Workaround: name the subject in the follow-up.</td></tr>
+        <tr><td><strong>Retrieval noise is unmeasured</strong></td><td>The tests check whether the right passage arrives, not how much irrelevant text arrives with it. In one question only 1–3 of 8 passages were relevant. A reranker is the obvious next step, untried.</td></tr>
+        <tr><td><strong>Appeal stages get mixed up</strong></td><td>Answers sometimes credit the Information Commission with rules belonging to the first appeal. The Act's own layout invites it: the first appeal's time limit is followed immediately by clauses about the Commission.</td></tr>
+        <tr><td><strong>Cannot name current officials</strong></td><td>State orders stop at 2011; only the portal page names the sitting Commissioners. Answers say so rather than guess.</td></tr>
+        <tr><td><strong>No untouched test set remains</strong></td><td>All four sets have now informed a decision. Any further tuning needs a new set written first.</td></tr>
+        <tr><td><strong>Throughput and startup</strong></td><td>About one answer per 30 seconds on the free tier; ~30 seconds to start, caused by a crowded global Python install rather than the pipeline. A project-only virtual environment would fix the latter.</td></tr>
+        <tr><td><strong>English only</strong></td><td>Two Telugu manuals are excluded; the embedding model is English-only.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Where it goes next</h3>
+  <p style="max-width:76ch;color:var(--ink-2)">Most production systems close quality gaps by spending more
+     <em>per question</em> — bigger models, rerankers, multi-agent pipelines. For a public service the cheaper
+     route is to do the work <strong>once, at ingest</strong>. Two of the biggest wins here already cost nothing
+     per question: splitting the Act by section, and linking amendments. The next experiment is to move HyDE's
+     per-question call into indexing — generating, for each chunk, the questions it answers (the idea behind
+     Doc2Query) — and to see whether quality holds without a per-question LLM call.</p>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>AP RTI Assistant (<code>ap-rti-assistant</code>) — RTI assistant for Andhra Pradesh citizens. Knowledge base written 29 September 2026.</p>
+  <p style="margin-top:6px">Full working log with every decision and measurement: <code>context.md</code> ·
+     Narrative write-up: <code>README.md</code> · Frozen test questions: <code>eval/demo_questions.json</code></p>
+</footer>
+
+<script>
+const STAGES = {
+  q: {
+    title: "The question, as typed",
+    body: "Nothing is cleaned up or corrected. Spelling mistakes and SMS shorthand are exactly what citizens type, and the whole system is built to cope with them rather than demand better input.",
+    where: "rag/web.py, rag/chat.py",
+    stats: [["length cap", "500 characters"], ["typos", "left as typed"]]
+  },
+  condense: {
+    title: "1 · Rewrite the follow-up",
+    body: "Only runs when there is a conversation. The last 3 turns and the new message go to a small model, which writes one standalone question — because a search engine cannot do anything with \"what if i still dont get it\". That rewritten question is what gets searched. The answering model separately sees the recent turns, but only to understand what is meant; facts must still come from the passages, and citation numbers are stripped from earlier answers so old numbers cannot leak into new citations.",
+    where: "rag/answer.py — standalone_question(), CONDENSE_PROMPT",
+    stats: [["model", "gpt-oss-120b, falls back to 20b"], ["cost", "~600 tokens, ~1 s"], ["turns kept", "3"], ["known weakness", "can drop the topic"]]
+  },
+  hyde: {
+    title: "2 · Write a hypothetical passage (HyDE)",
+    body: "A small model is asked to write the sentence a statute would contain to answer the question, in legal drafting style. The passage is often wrong on the facts — it once invented a ₹150 fee — and that is fine, because it is never shown to anyone. Its job is to supply the law's vocabulary so the search has something to match. The prompt forbids the words \"Right to Information\", \"RTI\" and \"Andhra Pradesh\": they appear in nearly every chunk, and including them made retrieval worse.",
+    where: "rag/retrieve.py — hypothetical_passage(), HYDE_PROMPT",
+    stats: [["model", "gpt-oss-20b"], ["time", "~1 s"], ["worth", "casual questions ~50% → 82%"], ["on failure", "search continues without it"]]
+  },
+  dense: {
+    title: "3a · Search by meaning",
+    body: "The text is turned into 384 numbers by a local embedding model and compared against all 535 chunks by cosine similarity. This catches paraphrases — a question about \"time limits\" finding a passage about \"thirty days\" — but it has no sense of which words are rare, which is exactly why it fails on citizen phrasing alone.",
+    where: "rag/retrieve.py — _hybrid(); index built by ingest/build_index.py",
+    stats: [["model", "BAAI/bge-small-en-v1.5"], ["dimensions", "384"], ["window", "512 tokens"], ["store", "Chroma, local"]]
+  },
+  bm25: {
+    title: "3b · Search by keyword",
+    body: "Classic BM25, about thirty lines of Python, built in memory at startup from the stored chunks. It weights rare words heavily and common ones barely at all, so a question containing \"penalty\" (in 2 chunks) or \"court fee stamp\" lands immediately — the cases where meaning-search blurs the distinction.",
+    where: "rag/retrieve.py — class _BM25",
+    stats: [["build time", "under a second"], ["index file", "none needed"], ["dependency", "none"]]
+  },
+  rrf: {
+    title: "4 · Merge the rankings",
+    body: "Up to four ranked lists exist — meaning and keyword, for the question and for the HyDE passage. Reciprocal Rank Fusion scores each chunk by where it appears in each list, so a chunk ranked highly by any one of them rises. Keeping the original question in the merge is a safety net: when a HyDE passage drifts off-topic, the question's own results still carry the answer.",
+    where: "rag/retrieve.py — _rrf()",
+    stats: [["k constant", "60"], ["passages kept", "10"], ["8 → 10 was worth", "casual 76% → 82%"]]
+  },
+  amend: {
+    title: "5 · Add amending orders",
+    body: "A rule without its amendment is not merely incomplete, it is wrong. G.O.Ms.No. 454 set the inspection fee at ₹5 per fifteen minutes; G.O.Ms.No. 545 changed it to ₹5 per hour. Similarity search has no reason to fetch both. So when one order in a family is retrieved, the others are added, ranked by how well the search itself scored them. The links are detected at ingest from each order's own \"Amendment to … Read the following\" header.",
+    where: "rag/retrieve.py — _amendment_family(); links built in ingest/load_and_chunk.py",
+    stats: [["families in this corpus", "1 (the AP fee rules)"], ["cap", "4 extra passages"], ["labelled in the answer", "yes"]]
+  },
+  answer: {
+    title: "6 · Write the answer",
+    body: "The passages go to the answering model numbered and labelled with their source (\"RTI Act 2005, Section 19: Appeal\"), under rules that have been tightened each time a rehearsal exposed a failure: answer only from these passages; say what they do not cover; copy figures exactly; never call someone the current office-holder on the strength of a dated order; give a department's contacts only for that department; give every remedy the passages contain, not just one.",
+    where: "rag/answer.py — SYSTEM_PROMPT, answer_question()",
+    stats: [["model", "gpt-oss-120b"], ["fallback", "gpt-oss-20b when rate-limited"], ["time", "2–7 s"], ["temperature", "0.1"]]
+  }
+};
+
+const panel = document.getElementById("stagePanel");
+const buttons = [...document.querySelectorAll("button.stage")];
+
+function show(key) {
+  const s = STAGES[key];
+  buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.s === key)));
+  panel.innerHTML = "";
+  const label = document.createElement("p");
+  label.className = "label"; label.textContent = "Stage";
+  const h = document.createElement("h3"); h.textContent = s.title;
+  const p = document.createElement("p"); p.style.color = "var(--ink-2)"; p.textContent = s.body;
+  panel.append(label, h, p);
+  if (s.stats) {
+    const wrap = document.createElement("div");
+    wrap.className = "stats"; wrap.style.marginTop = "14px";
+    for (const [k, v] of s.stats) {
+      const d = document.createElement("div"); d.className = "stat";
+      const b = document.createElement("b"); b.style.fontSize = "15px"; b.textContent = v;
+      const sp = document.createElement("span"); sp.textContent = k;
+      d.append(b, sp); wrap.append(d);
+    }
+    panel.append(wrap);
+  }
+  const w = document.createElement("p");
+  w.className = "where"; w.textContent = s.where;
+  panel.append(w);
+}
+
+buttons.forEach(b => b.addEventListener("click", () => show(b.dataset.s)));
+show("hyde");
+</script>
+</body>
+</html>

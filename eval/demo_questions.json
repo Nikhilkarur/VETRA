@@ -1,0 +1,336 @@
+{
+  "about": "Frozen demo question set. Written and verified against the corpus BEFORE any retrieval change, so improvements cannot be tuned toward it. A question counts as retrieved when every one of its probes appears in the top-k chunks. Probes are matched with all whitespace removed, so the corpus's extraction artifacts ('rup ees', 'Informati on') do not cause false misses. Use 'dev' while iterating. Check 'heldout' only at the end -- it is casual phrasing, deliberately unlike anything in the corpus. 'heldout2' was written after 'heldout' had been looked at once, and before query rewriting was built -- it is the clean final test for the query-rewrite step. 'heldout3' was written after all earlier sets had been used, and before testing section titles in Act embeddings and the answer-prompt changes of 2026-09-13; it is the clean test for those.",
+  "created": "2026-09-13",
+  "dev": [
+    {
+      "q": "How do I file an RTI application?",
+      "probes": [
+        "make a request in writing"
+      ]
+    },
+    {
+      "q": "Do I need to give a reason for asking for information?",
+      "probes": [
+        "required to give any reason"
+      ]
+    },
+    {
+      "q": "How much is the RTI application fee in Andhra Pradesh?",
+      "probes": [
+        "per application"
+      ]
+    },
+    {
+      "q": "How long does the department have to reply to my RTI request?",
+      "probes": [
+        "thirty days of the receipt"
+      ]
+    },
+    {
+      "q": "How fast must they reply if the information concerns someone's life or liberty?",
+      "probes": [
+        "forty-eight hours"
+      ]
+    },
+    {
+      "q": "What happens if they do not reply within the time limit?",
+      "probes": [
+        "deemed to have refused"
+      ]
+    },
+    {
+      "q": "Do I still have to pay if they miss the deadline?",
+      "probes": [
+        "free of charge"
+      ]
+    },
+    {
+      "q": "How do I appeal if I am not satisfied with the reply?",
+      "probes": [
+        "senior in rank"
+      ]
+    },
+    {
+      "q": "Where do I file a second appeal?",
+      "probes": [
+        "within ninety days"
+      ]
+    },
+    {
+      "q": "What information can the government refuse to give?",
+      "probes": [
+        "no obligation to give any citizen"
+      ]
+    },
+    {
+      "q": "What penalty can be imposed on an officer who delays information?",
+      "probes": [
+        "two hundred and fifty"
+      ]
+    },
+    {
+      "q": "Are people below the poverty line exempt from the RTI fee?",
+      "probes": [
+        "white card"
+      ]
+    },
+    {
+      "q": "How much do photocopies cost under RTI?",
+      "probes": [
+        "per each page"
+      ]
+    },
+    {
+      "q": "Can I pay the RTI fee with court fee stamps?",
+      "probes": [
+        "court fee stamp"
+      ]
+    },
+    {
+      "q": "Who is the State Chief Information Commissioner of Andhra Pradesh?",
+      "probes": [
+        "ramesh kumar"
+      ]
+    },
+    {
+      "q": "Can I get records that are more than twenty years old?",
+      "probes": [
+        "twenty years before"
+      ]
+    },
+    {
+      "q": "Does the RTI Act override the Official Secrets Act?",
+      "probes": [
+        "official secrets act"
+      ]
+    },
+    {
+      "q": "What if I send my application to the wrong department?",
+      "probes": [
+        "held by another public authority"
+      ]
+    },
+    {
+      "q": "Is there a fee to inspect government records?",
+      "probes": [
+        "inspection of records"
+      ]
+    },
+    {
+      "q": "What must a department publish on its own without being asked?",
+      "probes": [
+        "one hundred and twenty days"
+      ]
+    }
+  ],
+  "heldout": [
+    {
+      "q": "i want some info from a govt office, whats the procedure to ask for it?",
+      "probes": [
+        "make a request in writing"
+      ]
+    },
+    {
+      "q": "how much money do i need to pay for an rti in AP",
+      "probes": [
+        "per application"
+      ]
+    },
+    {
+      "q": "govt office is not answering my rti for 2 months what do i do",
+      "probes": [
+        "senior in rank"
+      ]
+    },
+    {
+      "q": "is rti free for BPL families",
+      "probes": [
+        "white card"
+      ]
+    },
+    {
+      "q": "can the officer just say no to my rti?",
+      "probes": [
+        "no obligation to give any citizen"
+      ]
+    },
+    {
+      "q": "the officer keeps delaying my rti, will he get punished?",
+      "probes": [
+        "two hundred and fifty"
+      ]
+    },
+    {
+      "q": "do i have to explain why i want the information",
+      "probes": [
+        "required to give any reason"
+      ]
+    },
+    {
+      "q": "whats the deadline for them to give me the info",
+      "probes": [
+        "thirty days of the receipt"
+      ]
+    },
+    {
+      "q": "my first appeal also failed, what next",
+      "probes": [
+        "within ninety days"
+      ]
+    },
+    {
+      "q": "cost of getting the information on a CD",
+      "probes": [
+        "rupees one hundred for cd"
+      ]
+    },
+    {
+      "q": "who heads the AP information commission",
+      "probes": [
+        "ramesh kumar"
+      ]
+    },
+    {
+      "q": "its a life and death matter, how quickly will i get the info",
+      "probes": [
+        "forty-eight hours"
+      ]
+    }
+  ],
+  "heldout2": [
+    {
+      "q": "can i ask the govt for information by email or does it have to be on paper",
+      "probes": [
+        "electronic means"
+      ]
+    },
+    {
+      "q": "what id or personal info do i have to give when i file an rti",
+      "probes": [
+        "personal details"
+      ]
+    },
+    {
+      "q": "i sent my rti to the wrong office, will they forward it",
+      "probes": [
+        "held by another public authority"
+      ]
+    },
+    {
+      "q": "how many days do i get to file the first appeal",
+      "probes": [
+        "thirty days from the expiry"
+      ]
+    },
+    {
+      "q": "officer didnt give the info on time, do i get it free now",
+      "probes": [
+        "free of charge"
+      ]
+    },
+    {
+      "q": "can i get copies of govt files on a pen drive or disc and whats the charge",
+      "probes": [
+        "floppy"
+      ]
+    },
+    {
+      "q": "how much per page for xerox copies under rti",
+      "probes": [
+        "per each page"
+      ]
+    },
+    {
+      "q": "is rti free if i ask a village panchayat office",
+      "probes": [
+        "village level"
+      ]
+    },
+    {
+      "q": "what kind of info is secret and cant be shared with public",
+      "probes": [
+        "no obligation to give any citizen"
+      ]
+    },
+    {
+      "q": "can i complain straight to the information commission instead of appealing",
+      "probes": [
+        "receive and inquire into a complaint"
+      ]
+    },
+    {
+      "q": "does rti work for intelligence agencies like IB",
+      "probes": [
+        "intelligence and security"
+      ]
+    },
+    {
+      "q": "how long will the appeal officer take to decide my appeal",
+      "probes": [
+        "forty-five days"
+      ]
+    }
+  ],
+  "heldout3": [
+    {
+      "q": "if they refuse my rti do they have to tell me why",
+      "probes": [
+        "reasons for such rejection"
+      ]
+    },
+    {
+      "q": "can the govt refuse to share info saying it affects national security",
+      "probes": [
+        "security, strategic, scientific"
+      ]
+    },
+    {
+      "q": "can i get information about cabinet decisions",
+      "probes": [
+        "cabinet papers"
+      ]
+    },
+    {
+      "q": "can i ask for someone elses personal details using rti",
+      "probes": [
+        "personal information"
+      ]
+    },
+    {
+      "q": "what happens to an officer who knowingly gives me wrong info",
+      "probes": [
+        "incorrect, incomplete or misleading"
+      ]
+    },
+    {
+      "q": "how many extra days do they get if i hand my application to an assistant PIO",
+      "probes": [
+        "five days shall be added"
+      ]
+    },
+    {
+      "q": "do i need to pay for rti at a mandal office",
+      "probes": [
+        "rs. 5/- per application"
+      ]
+    },
+    {
+      "q": "can i go and look at the files myself instead of getting copies",
+      "probes": [
+        "inspection of work"
+      ]
+    },
+    {
+      "q": "what powers does the information commission have when it looks into my complaint",
+      "probes": [
+        "summoning and enforcing"
+      ]
+    },
+    {
+      "q": "does rti apply to private companies",
+      "probes": [
+        "private body"
+      ]
+    }
+  ]
+}
