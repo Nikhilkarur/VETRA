@@ -440,6 +440,11 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-04** — **Finance deferred; planned as one domain with subcategories.** A question
+  routed to finance will be routed again to a subcategory (pensions, stamp duty &
+  registration, vehicle tax, budget, professional tax, welfare payment status), each with its
+  own documents. Collection waits until the owner has evaluated RTI (27) and agriculture
+  (46). Recorded in `docs/DATA_COLLECTION_BRIEF.md` ("Status") and `ingest/incoming/finance/REPORT.md`.
 - **2026-10-04** — **Agriculture: department site found, renames confirmed.** On the
   owner's approval, TLS verification was waived for apagrisnet.gov.in only (`UNVERIFIED_TLS`
   in `common.py`). Its certificate belongs to aptribes.gov.in (expired 2022), and behind it

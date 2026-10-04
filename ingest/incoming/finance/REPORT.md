@@ -1,5 +1,13 @@
 # Finance — scope proposal (for review, nothing downloaded)
 
+> **Deferred (owner decision, 2026-10-04).** Nothing is collected until RTI and agriculture
+> are evaluated. When work resumes, finance becomes **one domain with subcategories**: a
+> finance question is routed again to a subcategory (pensions, stamp duty & registration,
+> vehicle tax, budget, professional tax, welfare payment status), each with its own
+> documents. The topic table below already follows that split. The three review questions
+> at the end are settled by that design: pensions and stamp duty become subcategories, and
+> budget depth is decided per subcategory.
+
 The brief asks for a one-page scope before bulk downloading, then a stop for review. Every
 URL below was checked on 2026-10-04 and resolves (HTTP 200, PDF) unless marked otherwise.
 The full list with reasons is in `candidates.json` (`decision: proposed`) and `inventory.json`.

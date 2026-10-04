@@ -7,7 +7,7 @@ Built against `docs/DATA_COLLECTION_BRIEF.md`. Nothing here is indexed yet. File
 |---|---|---|
 | `rti/` | 27 kept, gaps filled | `rti/REPORT.md` |
 | `agriculture/` | 46 kept, first corpus | `agriculture/REPORT.md` |
-| `finance/` | **scope proposal only, waiting for review** | `finance/REPORT.md` |
+| `finance/` | **deferred**: scope proposal only; will be split into subcategories later | `finance/REPORT.md` |
 | `questions/` | 71 FAQ questions + PGRS FAQ page | `questions/REPORT.md` |
 | `_catalog/` | raw search results: ap.gov.in API catalogue (715 file links), agriculture.ap.gov.in catalogue (825), GOIR searches | — |
 
@@ -49,7 +49,7 @@ python ingest/incoming/questions/build_questions.py # rebuild questions.json fro
 
 1. ~~apagrisnet.gov.in~~: resolved. Certificate accepted as approved; the site is retired
    (403 on every path) and the department now publishes on agriculture.ap.gov.in (collected).
-2. **Finance scope**: three questions in finance/REPORT.md.
+2. **Finance**: deferred by the owner; planned as one domain with subcategories (see the brief's "Status").
 3. **OCR**: 9 kept scans (7 RTI, 2 agriculture) are marked `needs_ocr`.
 4. **G.O.Ms.80 (864pp)**: index only its order and operational pages.
 5. **ap.gov.in file store** returns 401/404 for every file, including the 41 current corpus

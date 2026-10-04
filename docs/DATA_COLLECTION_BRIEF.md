@@ -3,6 +3,25 @@
 A task brief for a research agent (or a person) collecting the documents the AP
 Government Assistant is missing. Read it whole before starting.
 
+## Status (2026-10-04)
+
+| Task | State | Where |
+|---|---|---|
+| 1. RTI gaps | **Done**: 27 documents staged | `ingest/incoming/rti/REPORT.md` |
+| 2. Agriculture | **Done**: 46 documents staged | `ingest/incoming/agriculture/REPORT.md` |
+| 3. Finance | **Deferred** (owner decision): scope proposal only, nothing downloaded | `ingest/incoming/finance/REPORT.md` |
+| 4. Citizen questions | **Done** for RTI and agriculture: 71 questions | `ingest/incoming/questions/` |
+
+RTI and agriculture are waiting for the owner's evaluation before anything moves to
+`ingest/documents/`. The collection tools are in `ingest/collect/`; how to re-run them is
+in `ingest/incoming/README.md`.
+
+**Finance plan:** finance will be **one domain with subcategories**. A question routed to
+finance is routed again to a subcategory, each with its own documents: social security
+pensions, stamp duty & registration, vehicle tax, state budget, professional tax, welfare
+payment status. The topics and candidate sources already found are in the finance
+scope proposal. Collection resumes after RTI and agriculture are evaluated.
+
 ## Why this exists
 
 The project is growing from one domain (RTI) into several (RTI, agriculture, finance).
@@ -111,6 +130,10 @@ what documents are needed, what it pays, where to complain.
   official central guidelines; mark them `department: central`.
 
 ### 3. Finance: propose a scope first, then collect
+
+> **Deferred (2026-10-04).** The scope proposal is written; downloading waits until RTI and
+> agriculture are evaluated. Finance will be split into subcategories (see "Status" above),
+> so organise its documents by subcategory when collection resumes.
 
 "Finance" is broad. **Before bulk downloading, write a one-page scope proposal in
 `ingest/incoming/finance/REPORT.md`** listing the citizen-facing topics found and a
