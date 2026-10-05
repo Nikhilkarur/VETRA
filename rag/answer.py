@@ -190,6 +190,13 @@ def standalone_question(question: str, history: list[dict] | None, domain: str =
     return f"{turns[-1]['q']} {question}"
 
 
+def is_telugu(text: str) -> bool:
+    """True if the question is written in Telugu script (see query_expansion.to_english)."""
+    from query_expansion import TELUGU_SCRIPT
+
+    return bool(TELUGU_SCRIPT.search(text))
+
+
 class MissingKey(RuntimeError):
     """No GROQ_API_KEY in the environment or .env."""
 
@@ -246,6 +253,13 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
                     "route": route, "search_s": time.perf_counter() - started, "answer_s": 0.0}
         domain = picked.domain
     standalone = standalone_question(question, history, domain)
+    # Telugu script -> English for the search steps only (hyde=False means no
+    # search-time LLM call, so no translation either). The answer model below still
+    # gets the original question and answers in its language.
+    if hyde:
+        import query_expansion
+
+        standalone = query_expansion.to_english(standalone, domain)
     hits, passage = retrieve_with_trace(standalone, k, hyde, domain)
     searched = time.perf_counter()
     earlier = format_history(history)
@@ -266,6 +280,12 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
         prompt += f"Question: {question}"
         if standalone != question:
             prompt += f"\n(In context, this means: {standalone})"
+        # The English line above is for clarity; without this the model followed it
+        # and answered a Telugu question in English (checked 2026-10-05).
+        if is_telugu(question):
+            prompt += ("\n\nWrite the answer in Telugu script, the language of the question. Keep "
+                       "section numbers, order numbers, amounts, dates and scheme names exactly "
+                       "as the passages give them.")
         messages = [
             # {today}: agriculture's rules tell the model the date, so a 2024 order
             # is not described as "the current season" in 2026. RTI's prompt has no

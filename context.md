@@ -570,6 +570,15 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-05** — **Telugu questions translated for searching.** A question in Telugu script is translated to English (qwen3.8-27b) for every search step; the answer model gets the original plus an instruction to answer in Telugu script. 8 Telugu questions: 7/8 -> 8/8 in the top 10 (docs/RETRIEVAL_EXPERIMENTS.md, section 7). Web page fix: answer boxes stay inside the column.
+- **2026-10-05** — **Docker.** `Dockerfile` + `compose.yaml` (+ allowlist `.dockerignore`):
+  CPU-only PyTorch, both models and both Chroma indexes built into the image (2.77 GB;
+  first build ~12 min, then `docker compose up --build` serves in ~40 s on
+  http://localhost:8765 — 8000 was taken on the dev machine). Runs as a non-root user;
+  the Groq key comes from `.env` at run time and is never in the image. Verified inside
+  the container with the cached LLM outputs: RTI 79/82 and agriculture 80/93 (identical
+  to the host), router final set 31/32; one live question answered. `web.py` gained
+  `--host` (the container listens on 0.0.0.0).
 - **2026-10-05** — **One interface for both domains, and each domain's best search
   switched on.** `rag/router.py` routes every question (default `--domain auto` in
   web.py, chat.py, answer.py); declined questions get "ask anyway" buttons. RTI adds the

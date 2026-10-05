@@ -3,13 +3,14 @@ A minimal web page for asking questions, served locally.
 
 No new dependencies: Python's built-in http.server serves one HTML page
 (rag/web.html) and one JSON endpoint (POST /ask) that calls the same pipeline
-as the terminal chat. Everything stays on this machine except the two Groq
-calls the pipeline already makes.
+as the terminal chat. Everything stays on this machine except the Groq calls
+the pipeline makes (router, search passage, rewrite, answer).
 
 Run:  python rag/web.py                 opens http://127.0.0.1:8000 (RTI + agriculture)
       python rag/web.py --domain agriculture   the agriculture assistant only
       python rag/web.py --port 8080     if 8000 is busy
       python rag/web.py --no-browser    don't open a browser tab
+      python rag/web.py --host 0.0.0.0  listen on every interface (the Docker image does this)
 
 Connections are handled in parallel (Chrome opens idle "preconnect" sockets
 that would freeze a single-threaded server), but questions run one at a time
@@ -167,6 +168,9 @@ class Handler(BaseHTTPRequestHandler):
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8000)
+    # Only this machine by default. Inside a container the published port arrives on
+    # the container's own network interface, so the Dockerfile passes 0.0.0.0.
+    parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--no-browser", action="store_true")
     parser.add_argument("--domain", default=domains.AUTO, choices=[domains.AUTO, *domains.DOMAINS],
                         help="auto (default): one page for every domain, each question routed")
@@ -182,12 +186,12 @@ def main() -> int:
     count = sum(_collection(name).count() for name in names)
 
     try:
-        server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
+        server = ThreadingHTTPServer((args.host, args.port), Handler)
     except OSError:
         print(f"Port {args.port} is already in use. Try:  python rag/web.py --port 8080")
         return 1
 
-    url = f"http://127.0.0.1:{args.port}"
+    url = f"http://{'127.0.0.1' if args.host in ('0.0.0.0', '::') else args.host}:{args.port}"
     print(f"ready in {time.perf_counter() - started:.0f}s ({count} chunks indexed)")
     print(f"open {url}   (Ctrl+C to stop)", flush=True)
     if not args.no_browser:

@@ -295,3 +295,37 @@ def select_documents(question: str, domain: str = "rti", most: int = 3) -> list[
     except Exception as exc:
         print(f"  (document selection unavailable: {exc})", file=sys.stderr)
         return None
+
+
+# ------------------------------------------------------------------ Telugu questions
+
+TELUGU_SCRIPT = re.compile(r"[ఀ-౿]")
+
+
+def to_english(question: str, domain: str = "rti") -> str:
+    """
+    A question written in Telugu script, translated to English for SEARCHING only.
+
+    Every document is English, and the search side reads only English: keyword search
+    keeps a-z/0-9 (Telugu letters vanish), bge-small-en and the MiniLM reranker are
+    English models. Before this step a Telugu question was found only through HyDE and
+    the rewrite, which happen to write English. The answer model still receives the
+    original question, so it still replies in Telugu. Other questions (English, or
+    Telugu typed in English letters) are returned unchanged, with no LLM call.
+    """
+    if not TELUGU_SCRIPT.search(question):
+        return question
+    system = ("Translate the user's question into plain English. Keep its meaning exactly. "
+              "Write scheme, office, place and crop names in their usual English spelling "
+              "(for example అన్నదాత సుఖీభవ -> Annadata Sukhibhava, కౌలు రైతు -> tenant farmer, "
+              "ఆర్టీఐ -> RTI). Keep every number. Do not answer the question. "
+              "Output only the English question, on one line.")
+
+    def make():
+        text = " ".join(_ask(system, question, "translate").split())
+        return text or None
+    try:
+        return _cached("translate", domain, question, make) or question
+    except Exception as exc:
+        print(f"  (translation unavailable, searching with the original question: {exc})", file=sys.stderr)
+        return question

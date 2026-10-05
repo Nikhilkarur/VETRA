@@ -1,0 +1,12 @@
+# Allowlist: only what the image needs is sent to Docker. This also guarantees
+# .env (the Groq key) never enters an image layer.
+*
+!requirements.txt
+!rag/
+!ingest/build_index.py
+!ingest/chunks.json
+!ingest/chunks_agriculture.json
+!eval/
+eval/cache/*.npy
+**/__pycache__
+**/*.pyc
