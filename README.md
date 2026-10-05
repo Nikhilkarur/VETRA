@@ -492,7 +492,8 @@ Start the web page (wait ~30 s to load; it opens http://127.0.0.1:8000 in your b
 python rag/web.py
 ```
 
-It answers both RTI and agriculture questions: each question is routed to the right
+It answers both RTI and agriculture questions, in English or Telugu (a Telugu question is
+translated to English for searching the English documents, and answered in Telugu): each question is routed to the right
 documents, and the answer says which ones ("From the RTI documents"). A question about
 neither is declined, with buttons to ask either assistant anyway. Citations like [2]
 are clickable and open that source's text; "How it searched" shows the HyDE passage.

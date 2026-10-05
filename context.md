@@ -570,6 +570,7 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-05** — **Telugu questions translated for searching.** A question in Telugu script is translated to English (qwen3.8-27b) for every search step; the answer model gets the original plus an instruction to answer in Telugu script. 8 Telugu questions: 7/8 -> 8/8 in the top 10 (docs/RETRIEVAL_EXPERIMENTS.md, section 7). Web page fix: answer boxes stay inside the column.
 - **2026-10-05** — **Docker.** `Dockerfile` + `compose.yaml` (+ allowlist `.dockerignore`):
   CPU-only PyTorch, both models and both Chroma indexes built into the image (2.77 GB;
   first build ~12 min, then `docker compose up --build` serves in ~40 s on

@@ -372,3 +372,34 @@ hypothetical questions (HyPE) were not run — one pass of any of them over the 
 needs more than a day of the free tier's tokens. Multi-style HyDE has 34 RTI passages
 cached and is untested. Answer quality was checked by hand on a few questions, not
 measured.
+
+## 7. Telugu questions: translate for the search, answer in Telugu (2026-10-05)
+
+Every document is English, and the search side reads only English (keyword search keeps
+a-z/0-9, so Telugu letters vanish; bge-small-en and the MiniLM reranker are English
+models). Until now a Telugu-script question was found only because HyDE and the rewrite
+happen to write English.
+
+Now `query_expansion.to_english()` translates a question that contains Telugu script
+(qwen3.8-27b, backup gpt-oss-20b; scheme names spelled the usual English way) and every
+search step uses the English version. The answer model gets the original question plus
+an instruction to answer in Telugu script — without that instruction it followed the
+English translation and answered in English. Telugu typed in English letters is left
+as it is (no reliable way to detect it without another call).
+
+8 Telugu-script questions with known answers, rank of the answering text:
+
+| question (meaning) | without translation | with translation |
+|---|---|---|
+| RTI application fee | 1 | 1 |
+| no reply in 30 days, what to do | 1 | 1 |
+| fine on an officer who delays | 1 | 1 |
+| days to file the second appeal | 2 | 1 |
+| Annadata Sukhibhava amount per year | 2 | 2 |
+| do tenant farmers get Annadata Sukhibhava | 9 | 2 |
+| drip subsidy for an SC small farmer | 11 | 2 |
+| farmer's Kharif crop-insurance premium | 1 | 2 |
+| **in the top 10** | **7 / 8** | **8 / 8** |
+
+Cost: one extra small call (~150 tokens) for Telugu-script questions only. Small sample;
+Telugu answer quality is checked by reading, not measured.
