@@ -11,9 +11,8 @@ Domains today: "rti" (the original assistant, settings unchanged) and
 domain's router_hint tells the question router (rag/router.py) what it covers,
 so adding a domain here is all the router needs.
 
-Every script takes --domain; the default is "rti" so existing commands behave
-exactly as before. (The router is a prototype, not yet wired into the web page
-or chat.)
+Every script takes --domain. web.py, chat.py and answer.py default to "auto":
+each question is routed by rag/router.py. --domain rti / agriculture skips routing.
 """
 
 from __future__ import annotations
@@ -28,6 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 class Domain:
     name: str
     title: str                 # shown in the chat banner and the web page
+    label: str                 # short name shown with each answer in the main interface
     blurb: str                 # one line under the title
     docs_dir: Path
     manifest: Path
@@ -252,6 +252,7 @@ DOMAINS = {
     "rti": Domain(
         name="rti",
         title="AP RTI assistant",
+        label="RTI",
         blurb="Ask about the Right to Information Act as it applies in Andhra Pradesh. "
               "Answers come only from the 41 documents published by the AP government.",
         docs_dir=ROOT / "ingest" / "documents",
@@ -260,11 +261,18 @@ DOMAINS = {
         collection="ap_rti",
         common_terms=("Right to Information Act", "Andhra Pradesh", "RTI"),
         hyde_prompt=RTI_HYDE,
+        # Measured 2026-10-04 (docs/RETRIEVAL_EXPERIMENTS.md), 67 questions: live
+        # 59 -> 64 with the rewrite's topic + key terms searched too. Rerankers HURT
+        # RTI (MiniLM 46-56, bge-reranker-base 53-57): casual questions and the
+        # Act's legal wording share too few words for a cross-encoder.
+        expansion=("topic", "kw"),
         system_prompt=RTI_SYSTEM,
         condense_prompt=RTI_CONDENSE,
         placeholder="Ask a question about RTI…",
         router_hint="The Right to Information Act 2005 and using it in Andhra Pradesh: "
-                    "asking any government office for information or records, RTI fees, "
+                    "asking any public body (government offices, municipalities, "
+                    "universities, public sector companies) for information, records "
+                    "or copies of documents, RTI fees, "
                     "time limits, refusals and exemptions, first and second appeals, "
                     "complaints and penalties, the State Information Commission and its "
                     "commissioners, and Public Information Officers.",
@@ -278,6 +286,7 @@ DOMAINS = {
     "agriculture": Domain(
         name="agriculture",
         title="AP agriculture assistant",
+        label="Agriculture",
         blurb="Ask about farm schemes, subsidies, crop insurance and rules in Andhra Pradesh. "
               "Answers come only from 44 official AP and central government documents.",
         # Staged, not yet promoted to ingest/documents (see ingest/incoming/README.md).
@@ -296,7 +305,8 @@ DOMAINS = {
                     "sprinkler irrigation, farm machinery and horticulture, minimum support "
                     "prices and paddy or cotton procurement, relief for crops and livestock "
                     "lost to floods, cyclones or drought, the laws on seeds, fertilisers and "
-                    "pesticides, Rythu Seva Kendrams, farmer pensions, free farm power, and "
+                    "pesticides (quality, prices, dealers' licences, inspectors), Rythu Seva "
+                    "Kendrams, farmer pensions, free farm power, and "
                     "the Agriculture and Horticulture departments' own offices and officers.",
         examples=("i take land on lease, can i get annadata sukhibhava money",
                   "what is rythu bharosa called now",
@@ -310,8 +320,33 @@ DOMAINS = {
         # "dense"/"concat" modes changed nothing or hurt.
         embed_title=True,
         abbreviations=AGRI_ABBREVIATIONS,
+        # Measured 2026-10-04 (docs/RETRIEVAL_EXPERIMENTS.md), 79 questions: live
+        # 62 -> 67 with topic + key terms + a cross-encoder over the fused top 30,
+        # its order fused with the search order (clean set 8 -> 10 of 14).
+        # bge-reranker-base scored 68 but takes 11-15 s per question on this CPU;
+        # MiniLM takes 1.3-1.8 s.
+        expansion=("topic", "kw"),
+        rerank={"model": "cross-encoder/ms-marco-MiniLM-L-6-v2", "n": 30,
+                "doc": "title+text", "mode": "fuse"},
     ),
 }
+
+
+# The main interface (--domain auto, the default for rag/web.py and rag/chat.py):
+# every question is routed to one of the domains above by rag/router.py, or
+# declined as outside them.
+AUTO = "auto"
+AUTO_TITLE = "AP government assistant"
+AUTO_BLURB = ("Ask about the Right to Information Act, or about farm schemes, subsidies, crop "
+              "insurance and rules in Andhra Pradesh. Each question goes to the matching set "
+              "of official documents.")
+AUTO_PLACEHOLDER = "Ask about RTI or a farm scheme…"
+
+
+def auto_examples(per_domain: int = 3) -> tuple:
+    """A few example questions from every domain, interleaved."""
+    columns = [d.examples[:per_domain] for d in DOMAINS.values()]
+    return tuple(q for row in zip(*columns) for q in row)
 
 
 def expand_abbreviations(question: str, domain: Domain) -> str:

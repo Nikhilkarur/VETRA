@@ -13,6 +13,9 @@ Run:  python rag/answer.py "how do I file an RTI application in Andhra Pradesh?"
       python rag/answer.py "what is the fee?" --show-context
       python rag/answer.py "what is the fee?" --no-hyde     # no search-passage call
       python rag/answer.py "can tenant farmers get annadata sukhibhava" --domain agriculture
+
+By default (--domain auto) the question is first sent to rag/router.py, which picks
+the domain whose documents should answer it, or declines it as outside them.
 """
 
 from __future__ import annotations
@@ -191,15 +194,31 @@ class MissingKey(RuntimeError):
     """No GROQ_API_KEY in the environment or .env."""
 
 
+def out_of_scope(buttons: bool = False) -> str:
+    """The reply to a question no domain covers (the router said "other")."""
+    topics = " and ".join(f"{d.label} ({d.blurb.split('.')[0].removeprefix('Ask about ')})"
+                          for d in domains.DOMAINS.values())
+    tail = ("If it is about one of them, choose it below and I'll search those documents."
+            if buttons else
+            "If it is about one of them, rephrase the question, or start with --domain "
+            + " / --domain ".join(domains.DOMAINS) + ".")
+    return (f"I can only answer from official Andhra Pradesh government documents on {topics}. "
+            f"Your question looks like it is about something else, so I won't guess. {tail}")
+
+
 def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
-                    history: list[dict] | None = None, domain: str = "rti") -> dict:
+                    history: list[dict] | None = None, domain: str = "rti",
+                    buttons: bool = False) -> dict:
     """
     Retrieve, then answer. Returns everything a caller might display:
     answer, standalone (the question as searched), hits (the numbered passages),
-    passage (the HyDE search text or None), context, model actually used, and
-    timings in seconds.
+    passage (the HyDE search text or None), context, model actually used,
+    domain (the one searched, or "other"), route ("llm" / "embedding" when the
+    domain was chosen by the router, else None) and timings in seconds.
 
-    history: earlier turns, oldest first, as [{"q": question, "a": answer}, ...].
+    history: earlier turns, oldest first, as [{"q": question, "a": answer}, ...];
+    a turn may also carry "domain", which helps the router with follow-ups.
+    domain="auto": the router (rag/router.py) picks the domain for this question.
     """
     from dotenv import load_dotenv
     from groq import Groq
@@ -215,6 +234,17 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
     from groq import APIStatusError
 
     started = time.perf_counter()
+    route = None
+    if domain == domains.AUTO:
+        import router
+
+        picked = router.route(question, history)
+        route = picked.method
+        if picked.domain == router.OTHER:
+            return {"answer": out_of_scope(buttons), "standalone": question, "hits": [],
+                    "passage": None, "context": "", "model": None, "domain": router.OTHER,
+                    "route": route, "search_s": time.perf_counter() - started, "answer_s": 0.0}
+        domain = picked.domain
     standalone = standalone_question(question, history, domain)
     hits, passage = retrieve_with_trace(standalone, k, hyde, domain)
     searched = time.perf_counter()
@@ -263,19 +293,28 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
         "passage": passage,
         "context": context,
         "model": used,
+        "domain": domain,
+        "route": route,
         "search_s": searched - started,
         "answer_s": done - searched,
     }
 
 
 def ask(question: str, k: int = TOP_K, show_context: bool = False, hyde: bool = True,
-        history: list[dict] | None = None, domain: str = "rti") -> str:
-    """Answer a question and print it, with sources, for the terminal."""
+        history: list[dict] | None = None, domain: str = "rti") -> dict:
+    """Answer a question and print it, with sources, for the terminal. Returns the result."""
     try:
         result = answer_question(question, k, hyde, history, domain)
     except MissingKey as exc:
         print(exc)
         sys.exit(1)
+
+    if domain == domains.AUTO:
+        if result["domain"] in domains.DOMAINS:
+            print(f"\n(searched the {domains.get(result['domain']).label} documents)")
+        else:
+            print(f"\n{result['answer']}\n")
+            return result
 
     if result["standalone"] != question:
         print(f"\n(understood as: {result['standalone']})")
@@ -293,7 +332,7 @@ def ask(question: str, k: int = TOP_K, show_context: bool = False, hyde: bool = 
         extra = "  (added: amendment)" if hit.get("added_because") else ""
         print(f"  [{n}] {hit['source'][:74]}{extra}")
     print(f"\n(search {result['search_s']:.1f}s, answer {result['answer_s']:.1f}s)")
-    return result["answer"]
+    return result
 
 
 def main() -> int:
@@ -302,7 +341,8 @@ def main() -> int:
     parser.add_argument("--k", type=int, default=TOP_K)
     parser.add_argument("--show-context", action="store_true")
     parser.add_argument("--no-hyde", action="store_true", help="search with the question only")
-    parser.add_argument("--domain", default="rti", choices=list(domains.DOMAINS))
+    parser.add_argument("--domain", default=domains.AUTO, choices=[domains.AUTO, *domains.DOMAINS],
+                        help="auto (default): the router picks RTI or agriculture for the question")
     args = parser.parse_args()
     ask(args.question, args.k, args.show_context, not args.no_hyde, domain=args.domain)
     return 0

@@ -195,12 +195,16 @@ def hypothetical_passage(question: str, domain: str = "rti") -> str | None:
     if cached:
         _passages[(domain, question)] = cached
         return cached
+    import query_expansion as QX
+
+    if not QX.available(HYDE_MODEL):   # hit its daily limit recently: don't wait on it again
+        return None
     try:
         from dotenv import load_dotenv
         from groq import Groq
 
         load_dotenv(ROOT / ".env")
-        reply = Groq().chat.completions.create(
+        reply = Groq(max_retries=4 if _CACHE_FILE else 1).chat.completions.create(
             model=HYDE_MODEL,
             temperature=0,
             reasoning_effort="low",
@@ -221,6 +225,8 @@ def hypothetical_passage(question: str, domain: str = "rti") -> str | None:
                                              encoding="utf-8")
         return passage or None
     except Exception as exc:
+        if type(exc).__name__ == "RateLimitError":
+            QX.note_limit(HYDE_MODEL, exc)
         print(f"  (HyDE unavailable, searching with the question only: {exc})", file=sys.stderr)
         return None
 

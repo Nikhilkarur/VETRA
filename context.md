@@ -56,12 +56,19 @@ Measuring retrieval: `python eval/retrieval_eval.py` (add `--no-hyde` to compare
 6. **Embed** with bge-small into Chroma. The model name is stored in the collection.
 
 **Per question:**
+0. **Route (since 2026-10-05, the default for web.py / chat.py / answer.py):**
+   gpt-oss-20b names the domain — rti, agriculture, or other (declined, with "ask
+   anyway" buttons on the web page). See "Retrieval experiments and the router" below.
 1. **HyDE:** gpt-oss-20b writes a 40–80-word passage in legal drafting style, forbidden
    from naming "RTI Act" / "Andhra Pradesh" (they're in every chunk and drown the signal).
    Used only to search; never shown to users or to the answering model.
 2. **Hybrid search, twice:** for the question and for the HyDE passage, rank every chunk by
    dense similarity and by BM25, fuse with RRF.
-3. **Fuse** the two hybrid rankings with RRF; take the **top 10**.
+2b. **Rewrite (since 2026-10-05):** qwen3.8-27b names the question's topic and key
+   terms; the topic (hybrid) and key terms (BM25) are two more votes in the same RRF.
+   Agriculture then re-scores the fused top 30 with a MiniLM cross-encoder (fused with
+   the search order). Both are per-domain settings in `rag/domains.py`.
+3. **Fuse** the rankings with RRF; take the **top 10**.
 4. **Add amendments:** if a retrieved order has amending (or amended) orders, append up
    to 4 of their chunks, most relevant first.
 5. **Answer:** gpt-oss-120b, numbered labelled passages, a prompt with explicit rules for
@@ -506,6 +513,37 @@ three lowest-ranked passages and retries on a 413. Normal requests are unchanged
 - Several orders are season-bound (Kharif 2026, KMS 2025-26); they need refreshing
   each season.
 
+## Retrieval experiments and the router (2026-10-04/05)
+
+Full write-up, every table and the reasons: `docs/RETRIEVAL_EXPERIMENTS.md`. Bench:
+`eval/experiments.py`; every LLM output it used is cached in `eval/cache/`.
+
+- **Each domain tuned separately, on all non-final question sets** (67 RTI, 79 agri),
+  with new frozen sets written first: RTI `heldout4` (13) + `final` (15), agriculture
+  `heldout3` (14) + `final` (14).
+- **RTI: + LLM rewrite (topic + key terms).** 59 → 64/67; final set 12 → 15/15. The
+  topic names the legal concept the casual question only describes ("third party
+  information", "first appeal"). Rerankers *hurt* RTI (MiniLM 46–56, bge-reranker-base
+  53–57): casual question vs legal wording is the same gap HyDE bridges.
+- **Agriculture: + the same rewrite + MiniLM cross-encoder on the top 30, fused.**
+  62 → 67/79, clean set 8 → 10/14; final set 14 → 13/14 (already saturated — the gain
+  is real but smaller and less certain than RTI's). bge-reranker-base: 68/79 but
+  11–15 s per question on this CPU vs 1.3–1.8 s for MiniLM.
+- **No gain or worse:** RRF constants, BM25 stemming / title field, per-document caps
+  and de-duplication (hurt), bigger embeddings for RTI, multi-query without HyDE, an
+  agent picking documents first (right agriculture document 69/79, but documents are huge).
+- **Router** (`rag/router.py`, `eval/router_eval.py`, `eval/router_questions.json`):
+  one LLM call → rti / agriculture / other. gpt-oss-20b: 270/274 batched on all earlier
+  sets incl. 71 real FAQ questions; **31/32 single-call on a set frozen before the
+  router ever ran**. Embedding-similarity fallback: 83%, never says "other".
+- **Free tier shaped everything:** 200,000 tokens per model per DAY. Experiments used
+  qwen's and much of gpt-oss-20b's. Every LLM step now falls back (router 20b → qwen →
+  embedding; rewrite qwen → 20b → none; HyDE → none; answer 120b → 20b), and a model
+  that reports its daily limit is skipped for 10 minutes so questions don't wait on
+  retries.
+- Not run (token cap): corrective agent loop, LLM listwise reranking, HyPE,
+  multi-style HyDE (34 RTI passages cached).
+
 ## Next steps
 
 **Next major goal (decided 2026-10-04): multi-domain agentic assistant for the AP
@@ -532,6 +570,15 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-05** — **One interface for both domains, and each domain's best search
+  switched on.** `rag/router.py` routes every question (default `--domain auto` in
+  web.py, chat.py, answer.py); declined questions get "ask anyway" buttons. RTI adds the
+  topic + key-terms rewrite (final set 12 → 15/15); agriculture adds it plus a MiniLM
+  reranker (67/79). Fallbacks for every LLM step on Groq's daily limits.
+  `eval/run_ragas.py` fixed (its system prompt moved to `rag/domains.py` on 10-04).
+- **2026-10-04** — **Retrieval experiments.** `eval/experiments.py` bench,
+  `rag/query_expansion.py`, `docs/RETRIEVAL_EXPERIMENTS.md`; ~40 configurations per
+  domain on frozen sets, every LLM output cached.
 - **2026-10-04** — **Agriculture runs through the same pipeline as RTI.** New
   `rag/domains.py` (per-domain documents, index, prompts); `--domain` on
   load_and_chunk, build_index, retrieve, answer, chat, web and retrieval_eval. RTI

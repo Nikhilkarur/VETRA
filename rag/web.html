@@ -52,6 +52,11 @@
     letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
   .understood { margin: -6px 0 10px; font-size: 14px; color: var(--ink-3); }
   .understood b { font-weight: 600; color: var(--ink-2); }
+  .searched {
+    margin: -4px 0 10px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+  }
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 
   .a {
     background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
@@ -178,7 +183,7 @@ const emptyState = document.getElementById("empty").outerHTML;
 const idleHint = memory.textContent;
 let turns = 0;
 let busy = false;
-let history = [];   // [{q, a}], oldest first -- sent with every question
+let history = [];   // [{q, a, domain}], oldest first -- sent with every question
 
 function bindChips() {
   document.querySelectorAll(".chip").forEach(chip =>
@@ -203,9 +208,14 @@ newChat.addEventListener("click", () => {
   input.focus();
 });
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
-  const question = input.value.trim();
+  ask(input.value.trim());
+});
+
+// domain: set only by an "Ask the ... assistant" button after a declined question;
+// otherwise the server's router picks the documents.
+async function ask(question, domain) {
   if (!question || busy) return;
   busy = true; button.disabled = true;
   document.getElementById("empty")?.remove();
@@ -229,13 +239,14 @@ form.addEventListener("submit", async (event) => {
     const res = await fetch("/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, history: history.slice(-3) }),
+      body: JSON.stringify({ question, history: history.slice(-3), domain }),
     });
     const data = await res.json();
     clearInterval(timer);
     if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
     render(article, answer, data, turn, question);
-    history.push({ q: question, a: data.answer });
+    // A declined question (no documents searched) is not part of the conversation.
+    if (data.sources.length) history.push({ q: question, a: data.answer, domain: data.domain });
   } catch (err) {
     clearInterval(timer);
     answer.className = "a err";
@@ -246,9 +257,23 @@ form.addEventListener("submit", async (event) => {
     busy = false; button.disabled = false; input.focus();
     updateMemory();
   }
-});
+}
 
 function render(article, answer, data, turn, question) {
+  if (data.choices) {   // outside every domain: say so, and offer each one anyway
+    answer.className = "a";
+    answer.innerHTML = md(data.answer, turn);
+    const row = el("div", "choices");
+    for (const c of data.choices) {
+      const choice = el("button", "chip", `Ask the ${c.label} assistant`);
+      choice.type = "button";
+      choice.addEventListener("click", () => ask(question, c.name));
+      row.append(choice);
+    }
+    article.append(row);
+    return;
+  }
+  if (data.domain_label) answer.before(el("p", "searched", `From the ${data.domain_label} documents`));
   if (data.standalone && data.standalone.trim().toLowerCase() !== question.trim().toLowerCase()) {
     const line = el("p", "understood", "Understood as: ");
     line.append(el("b", "", data.standalone));
