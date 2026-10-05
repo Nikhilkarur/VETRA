@@ -12,8 +12,9 @@ Government Assistant is missing. Read it whole before starting.
 | 3. Finance | **Deferred** (owner decision): scope proposal only, nothing downloaded | `ingest/incoming/finance/REPORT.md` |
 | 4. Citizen questions | **Done** for RTI and agriculture: 71 questions | `ingest/incoming/questions/` |
 
-RTI and agriculture are waiting for the owner's evaluation before anything moves to
-`ingest/documents/`. The collection tools are in `ingest/collect/`; how to re-run them is
+Agriculture is now **indexed and live** in the assistant, straight from
+`ingest/incoming/agriculture/` (2026-10-05). The RTI gap documents are still staged, not
+indexed. The collection tools are in `ingest/collect/`; how to re-run them is
 in `ingest/incoming/README.md`.
 
 **Finance plan:** finance will be **one domain with subcategories**. A question routed to
