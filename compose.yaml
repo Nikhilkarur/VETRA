@@ -1,0 +1,11 @@
+# docker compose up --build      -> http://localhost:8765   (Ctrl+C stops it)
+# Needs a .env file next to this one with GROQ_API_KEY=gsk_...
+# Port 8765 on purpose: 8000 is often taken by other local projects. To use another,
+# put APP_PORT=9000 (say) in .env.
+services:
+  assistant:
+    build: .
+    image: ap-assistant
+    env_file: .env
+    ports:
+      - "${APP_PORT:-8765}:8000"

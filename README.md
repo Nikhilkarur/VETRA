@@ -433,28 +433,55 @@ chunking and amendment links, cost nothing per question.
 
 ## 8. Running it
 
-```bash
-pip install -r requirements.txt
-```
-
-Create a `.env` file in the project root with your key from
+Either way, first create a `.env` file in the project root with your key from
 [console.groq.com](https://console.groq.com):
 ```
 GROQ_API_KEY=gsk_...
 ```
 
-The documents are already in `ingest/documents/`. Build the index once:
+### With Docker (nothing else to install)
+
+Needs Docker Desktop (or Docker Engine). From the project folder:
 ```bash
-python ingest/load_and_chunk.py
+docker compose up --build
+```
+Then open http://localhost:8765 (port 8765, because 8000 is often taken by other local
+projects; set `APP_PORT=...` in `.env` to change it). The first build takes about 12
+minutes: it downloads
+CPU-only PyTorch and the two models, and builds both search indexes inside the image
+(2.8 GB). After that, `docker compose up --build` has the page up in about 40 seconds.
+Stop it with Ctrl+C, or with the Stop button in Docker Desktop's Containers list (Start
+there runs it again, no terminal needed). The key is passed in at run time from
+`.env` and is never stored in the image.
+
+Without Compose:
+```bash
+docker build -t ap-assistant .
 ```
 ```bash
-python ingest/build_index.py
+docker run --rm --env-file .env -p 8765:8000 ap-assistant
 ```
 
-**The agriculture index** is built the same way (its documents are in
-`ingest/incoming/agriculture/`):
+The terminal chat, and the evaluations (these reuse the saved LLM outputs, so they need
+no key and make no API calls):
 ```bash
-python ingest/load_and_chunk.py --domain agriculture
+docker run --rm -it --env-file .env ap-assistant python rag/chat.py
+```
+```bash
+docker run --rm ap-assistant python eval/router_eval.py --only final --model openai/gpt-oss-20b
+```
+
+### Without Docker
+
+```bash
+pip install -r requirements.txt
+```
+
+Build both search indexes once (a few minutes; the embedding model downloads on the
+first run). The chunk files are committed, so `ingest/load_and_chunk.py` is only needed
+after changing the documents in `ingest/documents/` or `ingest/incoming/agriculture/`.
+```bash
+python ingest/build_index.py
 ```
 ```bash
 python ingest/build_index.py --domain agriculture
@@ -519,6 +546,7 @@ ap-rti-assistant/
 ├── context.md                ← detailed working log, every decision and number
 ├── PROJECT_BRIEF.md          ← one-page summary and next goal
 ├── requirements.txt
+├── Dockerfile, compose.yaml  ← the whole app in one container (models + indexes built in)
 ├── docs/
 │   ├── AP RTI Assistant Knowledge Base.html   self-contained explainer page
 │   ├── DATA_COLLECTION_BRIEF.md   what data is missing, as a task brief for an agent
