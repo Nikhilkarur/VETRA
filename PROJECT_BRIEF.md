@@ -1,49 +1,48 @@
-# AP RTI Assistant — Project Brief
+# AP Government Assistant — Project Brief
 
 One-page summary of where the project stands and where it is going. The full story is
 in [`README.md`](README.md); every decision and number is logged in
-[`context.md`](context.md).
+[`context.md`](context.md); every retrieval experiment is in
+[`docs/RETRIEVAL_EXPERIMENTS.md`](docs/RETRIEVAL_EXPERIMENTS.md).
 
 ## What it is
 
-A chatbot for ordinary citizens about **the RTI Act, 2005 as it applies in Andhra
-Pradesh**. It answers only from documents the AP government publishes and cites the
-passage (and Act section) behind each statement.
+A chatbot for ordinary citizens about two areas of the Andhra Pradesh government: **the
+RTI Act, 2005 as it applies in AP**, and **farm schemes, subsidies, crop insurance and
+agriculture rules**. It answers only from official documents and cites the passage behind
+each statement. Questions can be in English or Telugu.
 
-## Where it stands (Oct 2026)
+## Where it stands (5 Oct 2026)
 
-- **Corpus:** 41 documents from `ap.gov.in` → RTI & Acts (the Act, 26 GAD orders
-  2005–2011, 13 department 4(1)(b) manuals, the portal's RTI page), chosen from 546.
-- **Pipeline:** section-aware token chunking (535 chunks) → `bge-small-en-v1.5` in
-  Chroma → per question: HyDE search passage + hybrid dense/BM25 search fused with RRF,
-  top 10, plus amendment-linked orders → Groq `gpt-oss-120b` writes a cited answer.
-- **Conversation:** follow-ups are rewritten into standalone questions before searching.
-- **Interfaces:** local web page (`rag/web.py`) and terminal chat (`rag/chat.py`).
-- **Measured:** the answering text reaches the model for 95% of formal and 82% of casual
-  questions (first version: ~50% casual).
-- **Weak spots:** ~1 in 5 casual questions still misses; noisy context; appeal answers
-  can mix the two appeal stages; follow-up rewrite can drop the topic; no untouched test
-  set left; Groq free-tier throughput.
+- **Documents:** RTI — 41 (the Act, AP orders 2005–2011, department manuals, the
+  portal's RTI page); agriculture — 44 (AP orders, scheme guidelines, central Acts).
+- **Pipeline:** a router LLM picks the domain (or declines the question) → Telugu-script
+  questions are translated for searching → search by meaning and keywords with the
+  question, a HyDE passage and an LLM rewrite (topic + key terms), merged → agriculture
+  only: a reranker → top 10 passages + amending orders → `gpt-oss-120b` writes a cited
+  answer in the question's language.
+- **Interfaces:** one web page for both domains (`rag/web.py`), a terminal chat
+  (`rag/chat.py`), and Docker (`docker compose up --build` → http://localhost:8765).
+- **Measured:** answering text retrieved for 79/82 RTI and 80/93 agriculture test
+  questions; RTI final set 15/15; router 31/32 on fresh questions; Telugu-script
+  questions 8/8.
+- **Weak spots:** answers are checked by reading, not measured; agriculture's gain is
+  less certain than RTI's; mixed RTI + agriculture questions go to one domain; Groq's
+  free tier (~40–45 full answers a day); Telugu typed in English letters isn't
+  translated.
 
 ## Stack
 
-Python 3.13 · `pypdf` · `sentence-transformers` (local embeddings) · Chroma (local) ·
-Groq API (`openai/gpt-oss-120b`, `openai/gpt-oss-20b`). No Llama chat model is available
-on our Groq account.
+Python 3.13 · `pypdf` · `sentence-transformers` (local `bge-small-en-v1.5` embeddings and
+`ms-marco-MiniLM-L-6-v2` reranker) · Chroma (local) · Groq API (`openai/gpt-oss-120b`,
+`openai/gpt-oss-20b`, `qwen/qwen3.8-27b`) · Docker.
 
-## Next major goal: multi-domain agentic assistant for the AP government
+## Next
 
-Grow the RTI bot into an assistant that covers several departments:
-
-1. **Router** — classify each question into one or more domains (RTI, finance,
-   agriculture, ... or a mix).
-2. **Domain retrieval** — run the pipeline built here (HyDE + hybrid search + amendment
-   links) over each domain's own index.
-3. **Drafting agent** — a domain agent writes the cited answer; mixed questions get
-   their parts merged.
-4. **Cheap continuation** — follow-ups on the same topic reuse the routing and retrieved
-   documents instead of re-running every step.
-
-Open questions to settle before building: which domains and documents come next, how
-to evaluate routing and mixed-domain answers, and how much per-question LLM cost the
-design can afford.
+1. **Finance** as a third domain, with subcategories (pensions, stamp duty, vehicle tax,
+   state budget, ...), each routed again to its own documents.
+2. **Mixed questions** that need two domains in one answer.
+3. **A corrective agent loop** (check the passages, search again if they don't answer)
+   and **answer-level evaluation**.
+4. **Cheaper per question:** move work to index time (stored hypothetical questions per
+   chunk) instead of extra LLM calls per question.

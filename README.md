@@ -1,21 +1,24 @@
-# AP RTI Assistant
+# AP Government Assistant — RTI and Agriculture
 
-A chatbot that answers ordinary people's questions about the **Right to Information
-(RTI) Act, 2005, as it applies in Andhra Pradesh**, using only documents the AP
-government itself publishes, and citing where each answer comes from.
+A chatbot that answers ordinary people's questions about two areas of the Andhra Pradesh
+government — the **Right to Information (RTI) Act, 2005** as it applies in AP, and **farm
+schemes, subsidies, crop insurance and agriculture rules** — using only official
+documents, and citing where each answer comes from. Questions can be in English or Telugu.
 
-This file explains the problem, what has been built, what was measured, what worked,
-what didn't, and what is still weak. The detailed working log, with every decision and
-number, is in [`context.md`](context.md).
+It started as an RTI-only bot: sections 1–3 tell that story, section 4 onwards describes
+the current two-domain system. The detailed working log, with every decision and number,
+is in [`context.md`](context.md); every retrieval experiment is in
+[`docs/RETRIEVAL_EXPERIMENTS.md`](docs/RETRIEVAL_EXPERIMENTS.md).
 
-> **Status (4 Oct 2026):** working demo with a web page, a terminal chat and
-> follow-up questions. On casual, citizen-style questions, the text that answers the
-> question now reaches the model **82%** of the time, up from about **50%** for the
-> first version. Not yet reliable enough to run unsupervised.
+> **Status (5 Oct 2026):** one web page answers both RTI and agriculture questions. A
+> small LLM step first decides which documents a question belongs to (**31 of 32**
+> correct on fresh questions); questions about neither are politely declined. The text
+> that answers the question reaches the answer model for **96%** of RTI test questions
+> (79/82) and **86%** of agriculture ones (80/93). Telugu questions are translated for the
+> search and answered in Telugu. Runs locally, or with one Docker command
+> ([§8](#8-running-it)). Not yet reliable enough to run unsupervised.
 >
-> **Next major goal:** grow this single-domain RTI bot into a multi-domain assistant
-> for the AP government (RTI, finance, agriculture, ...) that routes each question to
-> the right domain(s) before searching. See [§7](#7-whats-next).
+> **Next:** finance as a third domain, with subcategories. See [§7](#7-whats-next).
 
 ---
 
@@ -105,6 +108,11 @@ current Information Commissioners.
 **Known data gaps:** government orders stop at 2011; 2 Telugu manuals excluded (the
 embedding model is English-only); 2 scanned manuals with no text version dropped; 1
 file's link returns a 404 error.
+
+**Agriculture (added Oct 2026):** 44 official documents — AP government orders (crop
+insurance, Annadata Sukhibhava, subsidies, MSP procurement, disaster relief), scheme
+guidelines, and central Acts on seeds, fertilisers and pesticides. How they were chosen:
+`ingest/incoming/agriculture/REPORT.md`.
 
 ---
 
@@ -231,76 +239,130 @@ After these fixes, the same questions were answered correctly. Where evidence wa
 missing, answers said so, for example *"the Act contains other grounds in Section 8,
 but those are not reproduced in the passages you have."*
 
+### Phase 5: a second domain — agriculture (4 Oct)
+
+44 official documents (AP government orders, scheme guidelines, central Acts) were
+collected (`ingest/incoming/agriculture/REPORT.md`) and run through the same pipeline
+with their own index and prompts (`rag/domains.py`). What agriculture needed that RTI
+didn't: the document title embedded with each chunk (titles name the scheme and crop;
++13 points), at most one passage from a replaced scheme (YSR Rythu Bharosa was crowding
+out its replacement), a glossary of local abbreviations (RBK, CCRC, KCC…), and answer
+rules that know today's date and the 2024 scheme renames.
+
+### Phase 6: testing ~40 search techniques per domain (4–5 Oct)
+
+Fresh test sets were written first, including a final set used only once. Every LLM
+output was cached so techniques were compared on identical text. The main finding: **the
+two domains need opposite fixes.** RTI improves when an LLM names the legal topic of the
+question (the model knows the RTI Act's wording); rerankers hurt it. Agriculture improves
+most with a reranker that reads the question and each passage together (farmers name
+concrete things — cashew, drone, cow — buried in long tables). Full results:
+[`docs/RETRIEVAL_EXPERIMENTS.md`](docs/RETRIEVAL_EXPERIMENTS.md).
+
+### Phase 7: one interface, Telugu, Docker (5 Oct)
+
+A router sends each question to the right domain; Telugu-script questions are
+translated to English for searching and answered in Telugu; the whole app runs in one
+Docker container.
+
 ---
 
 ## 4. How it works now
 
 ```mermaid
 flowchart TD
-    Q[Citizen's question] --> H[HyDE: small LLM writes a<br/>legal-style passage]
-    Q --> S1[Hybrid search on the question<br/>meaning + BM25 keywords]
-    H --> S2[Hybrid search on the passage<br/>meaning + BM25 keywords]
-    S1 --> F[Merge rankings, take top 10]
-    S2 --> F
-    F --> A[Add any orders that amend<br/>the retrieved rules]
-    A --> L[Answering LLM with numbered,<br/>labelled passages and strict rules]
-    L --> R[Answer with citations<br/>e.g. Section 19 of the Act]
+    Q[Question, English or Telugu] --> R{Router LLM:<br/>RTI, agriculture or neither?}
+    R -- neither --> X[Polite reply with<br/>ask-anyway buttons]
+    R -- RTI or agriculture --> T[Telugu script: translate<br/>to English for searching]
+    T --> H[HyDE: a fake answer in<br/>the documents' style]
+    T --> W[Rewrite: topic + key terms]
+    T --> S[Search by meaning and keywords<br/>with question, HyDE, rewrite]
+    H --> S
+    W --> S
+    S --> RR[Agriculture only: reranker<br/>re-checks the top 30]
+    RR --> K[Top 10 passages +<br/>amending orders]
+    K --> A[Answer LLM: cited answer<br/>in the question's language]
 ```
 
-**Built once (ingest):**
-- Text extracted from the 41 documents; the RTI Act split into its 31 sections
-  (section titles checked against the Act's own text)
-- Sentence-aligned chunks of 350 tokens with 60 overlap, sized for the embedding
-  model's window: **535 chunks**, none truncated
-- Each chunk labelled for citation: *"RTI Act 2005, Section 19: Appeal"*; department
-  manuals with their department; the portal page as the most current source
-- Amendment links found automatically between government orders
-- Embedded with **`BAAI/bge-small-en-v1.5`** into Chroma
+**Built once, per domain (ingest):**
+- Text extracted from the documents — **41 for RTI, 44 for agriculture**; the RTI Act
+  split into its 31 sections; huge agriculture PDFs cut to their useful pages
+- Sentence-aligned chunks of 350 tokens with 60 overlap: **535 RTI and 1,895 agriculture
+  chunks**, none truncated
+- Every chunk labelled for citation (*"RTI Act 2005, Section 19: Appeal"*,
+  *"G.O.Ms.No.33 (2025)"*); amendment links between orders; replaced schemes marked
+  "not in force"
+- Embedded with **`BAAI/bge-small-en-v1.5`** (agriculture: title + chunk) into Chroma,
+  one collection per domain; keyword (BM25) index built in memory at startup
 
-**Per question:**
-- HyDE passage from Groq **`gpt-oss-20b`** (~1 s)
-- Hybrid search for both question and passage, merged with Reciprocal Rank Fusion
-  (a standard way to combine rankings); top 10, plus up to 4 amendment chunks (~1.5 s total)
-- Answer from Groq **`gpt-oss-120b`**, falling back to `gpt-oss-20b` if rate-limited
-  (~2–7 s)
+**Per question** — which model does what:
+
+| step | model | runs on | gets |
+|---|---|---|---|
+| 1. Router: which documents? | `gpt-oss-20b` (then `qwen3.8-27b`, then embedding similarity) | Groq | original question + earlier questions |
+| 2. Follow-up rewrite (only with earlier turns) | `gpt-oss-120b` | Groq | original question + earlier turns |
+| 3. Telugu script → English, for searching | `qwen3.8-27b` (then `gpt-oss-20b`) | Groq | original question |
+| 4. HyDE search passage | `gpt-oss-20b` | Groq | English question |
+| 5. Topic + key terms | `qwen3.8-27b` (then `gpt-oss-20b`) | Groq | English question |
+| 6. Search by meaning + keywords, merged (RRF) | `bge-small-en-v1.5` + BM25 | this computer | question, HyDE, rewrite |
+| 7. Reranker (agriculture only) | `ms-marco-MiniLM-L-6-v2` | this computer (~1.5 s) | English question + top 30 |
+| 8. Answer with citations | `gpt-oss-120b` (then `gpt-oss-20b`) | Groq | original question + 10–14 passages |
+
+Typical time: 3–4 s to search, 3–4 s to answer. If a Groq model hits its daily limit
+the step falls back as shown, and HyDE is skipped; the app keeps answering, with
+somewhat weaker search.
 
 ### Is this still "vanilla" RAG?
 
-**No.** Most changes are the plain pipeline done better; three go beyond it.
+**No.** The core is standard (embed the documents, retrieve passages, let an LLM answer
+from them); the additions are on both sides of it.
 
 | still plain RAG (just better) | beyond plain RAG |
 |---|---|
-| token-based chunking | **hybrid search** (a second, keyword search) |
-| splitting the Act by section | **HyDE** (one extra LLM call per question) |
-| better embedding model | **amendment links** (pulls in related documents) |
-| top-10 instead of top-8 | |
-| source labels, stricter prompt | |
+| token-based chunking, the Act split by section | **router** in front (one LLM call) |
+| better embedding model, title in the embedding (agriculture) | **hybrid search** (meaning + keywords) |
+| top-10 passages | **HyDE** and an **LLM rewrite** of the question |
+| source labels, strict answer rules | **reranker** (agriculture only) |
+| | **amendment links**, replaced-scheme limit |
+| | **translation** of Telugu questions for the search |
 
-Still **not** used: rerankers, agents, multi-step reasoning.
+Still **not** used: agents that check their own results and search again (not tested
+yet — one test pass needs more than a day of the free tier's tokens).
 
-**Conversation memory** (added 19 Sep): follow-ups like "what if i still dont get it"
-are rewritten into a standalone question by `gpt-oss-120b` (falling back to `gpt-oss-20b` if
-rate-limited) using the last 3 turns, and
-that is what gets searched. The answer model also sees a short summary of those turns,
-only to understand the question; facts must still come from the passages. It costs one
-extra small LLM call, and only on follow-ups. Tested alternatives: adding the previous
-question to the search text helped one follow-up slightly but hurt topic switches, so
-the rewrite alone is used. **The rewrite is not reliable at carrying the topic** — see
-the limitation below.
-
-The table in Phase 3 shows why: **the plain improvements alone did not fix casual
-questions; HyDE did.**
+**Conversation memory:** follow-ups like "what if i still dont get it" are rewritten into
+a standalone question using the last 3 turns, and that is what gets searched; the router
+also sees the earlier questions, so a conversation can switch between RTI and
+agriculture. The answer model sees a short summary of earlier turns only to understand
+the question; facts must come from the passages.
 
 ---
 
 ## 5. Results
 
-### Retrieval: does the answering text reach the model?
+### Now (5 Oct)
+
+Retrieval = does the text that answers the question reach the answer model (top 10)?
+
+| test | before the 4–5 Oct changes | now |
+|---|---|---|
+| RTI, all question sets (82) | 71 | **79** |
+| RTI, final set never used for tuning (15) | 12 | **15** |
+| Agriculture, all question sets (93) | 76 | **80** |
+| Agriculture, final set (14) | 14 | 13 |
+| Router, fresh questions (32) | — | **31** |
+| Router, 274 labelled questions incl. 71 real FAQs | 83% (similarity only) | **99%** |
+| Telugu-script questions (8) | 7 | **8** |
+
+RTI's gain is confirmed on its final set. Agriculture's final set was already 14/14 and
+lost one question, so its gain (measured on the other 79 questions) is smaller and less
+certain.
+
+### RTI before the second domain (Sept)
 
 | | formal questions (20) | casual questions (34) | all (54) |
 |---|---|---|---|
 | Original pipeline | 65% | ~50%* | — |
-| **Current** | **95%** | **82%** | **87%** |
+| HyDE + hybrid search | **95%** | **82%** | **87%** |
 
 \*Measured on the first two casual sets (24 questions); the third set didn't exist yet.
 
@@ -322,94 +384,52 @@ rate-limiting.
 
 Stated plainly, because a demo audience should hear them.
 
-- **About 1 in 5 casual questions still misses its answer**, and some misses are far
-  off: for "can they refuse my RTI?", the exemptions section isn't in the top 40.
-- **Lots of irrelevant text still comes back.** The test measures whether the right
-  chunk arrives, not how much noise comes with it. In one demo question only 1–3 of the
-  8 chunks retrieved were relevant. Not yet measured systematically.
-- **Answers can still misattribute when evidence is missing.** Example: a correct
-  conclusion about private companies, citing the wrong section (4(1)(b) instead of 2(h)).
-- **Appeal answers can mix up the two appeal stages.** In a 19 Sep test ("not replied
-  for 45 days"), the answer correctly led with the first appeal within 30 days, but
-  attributed the first appeal's late-filing rule and 30/45-day decision limit to the
-  Information Commission, and omitted the second appeal's 90-day limit. It also
-  offered one department's appeal officer as an example and an old Hyderabad address.
-  The same answer was complete when asked as "the officer keeps delaying my rti".
-- **It can't reliably name current officials.** Government orders stop at 2011; the
-  current Commissioner appears only on the portal page, which isn't always retrieved.
-  The answer now says so rather than guessing.
-- **Free-tier throughput:** roughly one answer per 30 seconds before Groq throttles.
-- **~30-second startup**, caused by the Python environment (hundreds of globally
-  installed packages slow down loading the embedding library), not the pipeline. A
-  project-specific virtual environment would fix it.
-- **Each question costs one extra small LLM call** (HyDE), in tension with the goal of
-  zero per-question overhead.
-- **No untouched test set remains.** Every question set has now informed some decision,
-  so any further tuning needs a new one written first.
-- English only.
-- **The follow-up rewrite does not reliably carry the topic.** Asked "what if my family
-  belongs to bpl" straight after a fee question, the rewrite came back as "What if my
-  family belongs to BPL?" with no mention of fees, and AP's white-card exemption ranked
-  43rd, so the answer gave only the Act's general BPL proviso and missed the AP rule.
-  Switching the rewrite to the larger model fixed it in an isolated test (rank 1) but
-  **not in the real conversation**, where it dropped the topic again. Cleaning markdown
-  tables out of the earlier answer did not fix it either. Whether the topic survives
-  depends on how the previous answer happens to be worded. Workaround: name the subject
-  in the follow-up ("do BPL families have to pay the RTI fee?").
+- **Some questions still miss their answer:** 3 of 82 RTI test questions and 13 of 93
+  agriculture ones. Two of the RTI misses ask who the *current* Commissioner is:
+  government orders stop at 2011, and only the portal page names the current one.
+- **Answers are checked by reading, not measured.** The tests measure whether the right
+  passage arrives, not whether the answer is right. Known answer failures: appeal
+  answers can mix up the two appeal stages; an answer can cite the wrong section when
+  the right one wasn't retrieved.
+- **The follow-up rewrite can drop the topic.** "what if my family belongs to bpl" after
+  a fee question was once rewritten without "fee". Workaround: name the subject.
+- **Free tier:** Groq allows 200,000 tokens per model per day — about 40–45 full answers
+  on `gpt-oss-120b`, after which the smaller model answers. One question every ~30 s.
+- **Four LLM calls per question** (router, HyDE, rewrite, answer), plus one for
+  follow-ups and one for Telugu-script questions.
+- **Telugu:** Telugu typed in English letters ("naa rti ki…") is not translated; it
+  works through HyDE and the rewrite only. Telugu answer quality has not been measured.
+  The two Telugu RTI manuals are not indexed.
+- **Agriculture:** two scanned documents are not indexed, and one 2025 relief order has
+  garbled text (needs OCR). Several orders cover one season and need refreshing.
+- **Startup ~20–30 s** (loading the models), and the reranker adds ~1.5 s per
+  agriculture question on CPU.
 
 ---
 
 ## 7. What's next
 
-### Next major goal: a multi-domain AP government assistant
+**Goal: a multi-domain assistant for the AP government.** Done so far:
 
-The RTI bot is the first domain. The plan is to extend it to other departments
-(finance, agriculture, ...) without losing what was learned here:
+1. ~~**Route first**~~ — `rag/router.py` sends each question to RTI, agriculture, or
+   declines it (31/32 on fresh questions).
+2. ~~**Search per domain**~~ — each domain has its own index, prompts and search
+   settings (`rag/domains.py`).
+3. **Mixed questions** that need two domains at once are not handled yet; the router
+   picks one.
 
-1. **Route first.** Classify each question into one or more domains (RTI, finance,
-   agriculture, or a mix) before searching, so each search runs over the right corpus.
-2. **Search per domain** with the pipeline built here (HyDE + hybrid search +
-   amendment links), each domain with its own index.
-3. **Draft with a domain agent** that writes the cited answer, and merges results when
-   a question spans domains.
-4. **Continue the conversation cheaply.** Follow-ups that stay on the same topic reuse
-   the routing and retrieved documents instead of re-running every step.
+**Next:** **finance**, as one domain with subcategories (pensions, stamp duty, vehicle
+tax, state budget, ...); a finance question is routed again to its subcategory. Scope:
+`ingest/incoming/finance/REPORT.md`.
 
-The detailed design is still to be decided; see [`PROJECT_BRIEF.md`](PROJECT_BRIEF.md).
-
-**Status (2026-10-05): steps 1 and 2 work for two domains, RTI and agriculture.**
-
-- **One interface, routed.** `python rag/web.py` (and `rag/chat.py`) now take any
-  question. A small LLM call (`rag/router.py`) sends it to the RTI documents, the
-  agriculture documents, or declines it as outside both, with "ask anyway" buttons.
-  Follow-ups that change topic are routed again. Measured on 306 labelled questions,
-  including 71 real FAQ questions: **99%** (batched); on a fresh set frozen before the
-  router ran: **31/32 with single calls, as live**.
-- **Each domain tuned separately** (`docs/RETRIEVAL_EXPERIMENTS.md`). RTI adds an LLM
-  rewrite of the question (the legal topic it is about, plus key terms): **59 → 64 / 67**
-  questions with the answering text retrieved, and **12 → 15 / 15** on a final set never
-  used for tuning. Agriculture adds the same rewrite plus a small cross-encoder
-  reranker: **62 → 67 / 79**; its final set was already 14/14 and is 13/14 after.
-- Agriculture's 44 documents (state G.O.s, scheme guidelines, central Acts and
-  guidelines) were collected for this; see `ingest/incoming/agriculture/REPORT.md`.
-
-Finance comes next, as one domain with subcategories. Details and every measurement
-are in `context.md` and `docs/RETRIEVAL_EXPERIMENTS.md`.
-
-### Improving the RTI domain
-
-1. **Project virtual environment:** faster startup, cleaner dependencies.
-2. ~~Write a fresh test set~~ (done: `heldout4` and `final`), ~~test a reranker~~ (done:
-   it *hurts* RTI and helps agriculture; see `docs/RETRIEVAL_EXPERIMENTS.md`).
-3. **A corrective agent loop** (the model checks the retrieved passages and searches
-   again if they don't answer) — not yet tested: one pass over the test sets needs
-   more than a day of Groq's free-tier tokens.
-4. **The cost-efficiency experiment.** Replace per-question HyDE with work done once at
-   ingest time: generate the questions each chunk answers and store them with it
-   (the idea behind Doc2Query). If it matches HyDE, the extra per-question LLM call
-   disappears.
-5. **Evaluate answers, not just retrieval.** The worst demo failures were in the
-   answers themselves.
+Other open work:
+- **A corrective agent loop:** the model checks the retrieved passages and searches
+  again when they don't answer the question. Not tested yet (token budget).
+- **Answer-level evaluation**, not just retrieval.
+- **Index-time work instead of per-question calls** (HyPE / Doc2Query: store the
+  questions each chunk answers), to cut the per-question LLM cost.
+- OCR for the scanned agriculture documents; a project virtual environment for faster
+  startup.
 
 ### The research direction
 
@@ -440,6 +460,11 @@ GROQ_API_KEY=gsk_...
 ```
 
 ### With Docker (nothing else to install)
+
+**After a restart, in short:** open Docker Desktop and wait for "Engine running"; open a
+terminal in the project folder; run `docker compose up --build`; when it prints
+`ready in …s`, open http://localhost:8765; stop with Ctrl+C. Next time you can also press
+Start on `ap-rti-assistant` in Docker Desktop's Containers list instead.
 
 Needs Docker Desktop (or Docker Engine). From the project folder:
 ```bash

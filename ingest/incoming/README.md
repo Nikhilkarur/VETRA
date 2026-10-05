@@ -1,12 +1,13 @@
 # ingest/incoming — staging area for new documents
 
-Built against `docs/DATA_COLLECTION_BRIEF.md`. Nothing here is indexed yet. Files move to
-`ingest/documents/` only after review.
+Built against `docs/DATA_COLLECTION_BRIEF.md`. Files move to `ingest/documents/` only after
+review. **Exception:** the assistant's agriculture domain is indexed directly from
+`agriculture/` (since 2026-10-04); the other folders are not indexed.
 
 | Folder | State (2026-10-04) | Read first |
 |---|---|---|
 | `rti/` | 27 kept, gaps filled | `rti/REPORT.md` |
-| `agriculture/` | 46 kept, first corpus | `agriculture/REPORT.md` |
+| `agriculture/` | 46 kept; **indexed and live** (44 with text, 2 scans wait for OCR) | `agriculture/REPORT.md` |
 | `finance/` | **deferred**: scope proposal only; will be split into subcategories later | `finance/REPORT.md` |
 | `questions/` | 71 FAQ questions + PGRS FAQ page | `questions/REPORT.md` |
 | `_catalog/` | raw search results: ap.gov.in API catalogue (715 file links), agriculture.ap.gov.in catalogue (825), GOIR searches | — |
