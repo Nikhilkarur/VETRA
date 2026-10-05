@@ -33,7 +33,11 @@
   h1 { margin: 0; font-size: 24px; font-weight: 650; letter-spacing: -0.01em; }
   header p { margin: 6px 0 0; color: var(--ink-2); max-width: 60ch; }
 
-  #thread { display: grid; gap: 28px; padding-bottom: 140px; }
+  /* minmax(0, 1fr): a grid column otherwise grows to its widest unbreakable content
+     (a model-written table, a long URL), which stretched EVERY answer box past the
+     page. Now tables scroll inside .tw and long words wrap. */
+  #thread { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; padding-bottom: 140px; }
+  .turn { min-width: 0; overflow-wrap: break-word; }
 
   .label {
     margin: 0 0 10px; font-size: 12px; font-weight: 600;
