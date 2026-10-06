@@ -192,6 +192,10 @@ def main() -> int:
     for name in names:
         _model(name)
         _corpus(name)
+    if args.domain == domains.AUTO:
+        import router
+
+        router.english_words()   # the router's language check, built now rather than mid-answer
     count = sum(_collection(name).count() for name in names)
 
     try:

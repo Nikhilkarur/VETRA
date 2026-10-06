@@ -398,7 +398,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
        government: the <strong>Right to Information Act</strong>, and <strong>farm schemes, subsidies, crop insurance
        and agriculture rules</strong>. It uses only documents the government publishes, cites every source, and
        answers in English or Telugu.</p>
-    <p class="meta">First written 29 Sep 2026 · updated 6 Oct 2026 after 7 merged pull requests · every figure is
+    <p class="meta">First written 29 Sep 2026 · updated 6 Oct 2026 after 8 merged pull requests and the router follow-up fix · every figure is
        measured; sources: <code>context.md</code>, <code>docs/RETRIEVAL_EXPERIMENTS.md</code>, <code>README.md</code></p>
     <div class="stats">
       <div class="stat"><b>2</b><span>topics on one page, RTI and agriculture (was RTI only)</span></div>
@@ -493,7 +493,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
     <div class="card">
       <p class="label">Where things stand (6 Oct)</p>
       <ul class="plain">
-        <li>All 7 pull requests are merged; GitHub <code>main</code> is at <code>8e8b1df</code>.</li>
+        <li>All 8 pull requests are merged; the router follow-up fix goes in the next one.</li>
         <li>The web page answers both topics and has a <strong>Reply in</strong> menu.</li>
         <li>Runs with one Docker command, or with Python directly.</li>
         <li>Next planned topic: <strong>finance</strong>, with subcategories.</li>
@@ -520,6 +520,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
     <div class="ba-row" role="row"><div class="k">Agriculture: answer text found</div><div class="was">did not exist</div><div class="to">→</div><div class="now"><strong>86%</strong> (80/93; 82% before the 4–5 Oct search changes)</div></div>
     <div class="ba-row" role="row"><div class="k">Telugu questions</div><div class="was">English only; Telugu found its answer only by luck</div><div class="to">→</div><div class="now">Telugu script <em>and</em> Telugu in English letters recognised (29/29), <strong>translated for the search</strong></div></div>
     <div class="ba-row" role="row"><div class="k">Reply language</div><div class="was">Whatever the model chose</div><div class="to">→</div><div class="now">Always stated to the model. Default: the question's language. <strong>Reply in</strong> menu: English · తెలుగు · Telugu in English letters</div></div>
+    <div class="ba-row" role="row"><div class="k">Follow-up questions</div><div class="was">Rewritten for the search</div><div class="to">→</div><div class="now">Also: one the router would decline is rewritten with the conversation and <strong>routed again</strong> (follow-up tests 12/18 → 18/18)</div></div>
     <div class="ba-row" role="row"><div class="k">LLM calls per question</div><div class="was">2 (HyDE, answer)</div><div class="to">→</div><div class="now">4 (router, HyDE, rewrite, answer); <strong>5 for Telugu</strong> (translation); +1 for a follow-up</div></div>
     <div class="ba-row" role="row"><div class="k">When Groq's daily limit hits</div><div class="was">Retry, then the smaller answer model</div><div class="to">→</div><div class="now">Every LLM step has a fallback; a model at its daily limit is skipped for 10 minutes</div></div>
     <div class="ba-row" role="row"><div class="k">Running it</div><div class="was"><code>python rag\web.py</code>, port 8000</div><div class="to">→</div><div class="now"><strong>One Docker command</strong> (port 8765), or Python as before</div></div>
@@ -529,9 +530,9 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 
   <h3>Repository check, 6 October</h3>
   <div class="status">
-    <span class="chip"><i class="dot"></i>GitHub <code>main</code> = <code>8e8b1df</code>, all 7 pull requests merged</span>
+    <span class="chip"><i class="dot"></i>GitHub <code>main</code>: all 8 pull requests merged (the language fix, then this page)</span>
     <span class="chip"><i class="dot"></i>Local <code>main</code> pulled and identical to GitHub</span>
-    <span class="chip"><i class="dot"></i>No unmerged branches; nothing uncommitted in the code</span>
+    <span class="chip warn"><i class="dot"></i>Router follow-up fix (evening of 6 Oct): goes in the next pull request</span>
     <span class="chip warn"><i class="dot"></i>Docker image predates the 6 Oct language fix: run <code>docker compose up --build</code> once</span>
   </div>
 </section>
@@ -540,8 +541,8 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 <section id="timeline">
   <div class="sec-head">
     <h2>Every update, in order</h2>
-    <p>Ten changes in three days on GitHub (<code>Nikhilkarur/AP-ASSIS</code>); all but the first went in
-       through a pull request. Each card says what changed, why, and what it measured.</p>
+    <p>Eleven changes in three days on GitHub (<code>Nikhilkarur/AP-ASSIS</code>); all but the first went in,
+       or will go in, through a pull request. Each card says what changed, why, and what it measured.</p>
   </div>
 
   <div class="tl">
@@ -866,6 +867,48 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
       </div>
     </div>
 
+    <div class="tl-item" style="--c:var(--rti)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>Follow-ups no longer declined; English no longer taken for Telugu</h3><span class="tag">router fix</span><span class="pr">next PR</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>The bug (found in live testing)</h4>
+            <p class="why">After "how much money do i need to pay for an rti in andhra pradesh", the follow-up "what if i have a white
+               ration card" was declined twice. The router sees only the earlier <em>questions</em>, lists "ration cards" under
+               <em>other</em>, and its whole reasoning was "User asks about white ration card. That's other."</p>
+            <h4 style="margin-top:12px">What changed</h4>
+            <ul>
+              <li><strong>A second look for follow-ups:</strong> when the router says "other" for a message with earlier turns, the
+                  follow-up rewrite (which reads the earlier <em>answer</em>) turns it into a full question, "What is the RTI
+                  application fee if I have a white ration card in Andhra Pradesh?", and that is routed again. A real change of
+                  subject ("how do i apply for a new ration card") stays "other".</li>
+              <li><strong>Language check:</strong> a message labelled Telugu that has no Telugu letters and only known English
+                  words is treated as English (the router sometimes mislabelled plain English, and the answer came back in Telugu).</li>
+              <li>Tried first and dropped: three prompt wordings, more reasoning, and a separate "does it continue?" call. None
+                  fixed the white-card case.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measured (single calls, as live)</h4>
+            <div class="meters" style="--c:var(--rti)">
+              <div class="meter"><div class="ml"><span>Follow-ups naming a ration card, pension, certificate... (18)</span><span class="d">+6</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:66.7%"></i></span><b>12/18</b></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>18/18</b></div></div>
+              <div class="meter"><div class="ml"><span>Fresh follow-ups, written before the fix ran (8)</span><span class="d">+2</span></div>
+                <div class="bar2 was"><span>router</span><span class="tr"><i style="--w:75%"></i></span><b>6/8</b></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>8/8</b></div></div>
+              <div class="meter"><div class="ml"><span>Final routing set (32)</span><span class="d">same</span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:96.9%"></i></span><b>31/32</b></div></div>
+            </div>
+            <p class="muted small" style="margin-top:8px">Extra cost only for a follow-up the router sends to "other": one more call
+               if it is rescued (its rewrite is reused), two if it is still declined. Language set 29/29 unchanged; search scores
+               unchanged (RTI 79/82, agriculture 80/93).</p>
+          </div>
+        </div>
+        <p class="files">rag/router.py (v3) · rag/answer.py · rag/web.py · eval/router_eval.py · eval/router_questions.json (followups2, followups3) · eval/retrieval_eval.py</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -931,7 +974,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
     <div class="arrow">↓</div>
     <div class="flow-row">
       <button class="stage" data-s="router" style="--c:var(--rti)"><b>1 · Router: documents + language</b><span class="d">"rti telugu", "agriculture english", "other ..."</span><span class="chips"><span class="model">gpt-oss-20b</span><span class="reads orig">your words</span></span></button>
-      <button class="stage branch" data-s="decline" style="--c:var(--bad)"><b>"other" → polite decline</b><span class="d">no search; ask-anyway buttons; in your language</span><span class="chips"><span class="only">neither topic</span></span></button>
+      <button class="stage branch" data-s="decline" style="--c:var(--bad)"><b>"other" → second look, or decline</b><span class="d">a follow-up is rewritten and routed again; else ask-anyway buttons</span><span class="chips"><span class="only">neither topic</span></span></button>
     </div>
     <div class="arrow">↓</div>
     <div class="flow-row">
@@ -969,6 +1012,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
       <thead><tr><th>Step</th><th>Model (fallback)</th><th>Runs on</th><th>Reads</th></tr></thead>
       <tbody>
         <tr><td>1. Router: documents and language</td><td><code>gpt-oss-20b</code> (<code>qwen3.8-27b</code>, then embedding similarity + letter check)</td><td>Groq</td><td>your words + earlier questions</td></tr>
+        <tr><td>1b. Second look at a follow-up sent to "other" <span class="only">rare</span></td><td><code>gpt-oss-120b</code> rewrite, then the router</td><td>Groq</td><td>your words + earlier turns (with answers)</td></tr>
         <tr><td>2. Follow-up rewrite <span class="only">follow-ups</span></td><td><code>gpt-oss-120b</code> (<code>gpt-oss-20b</code>)</td><td>Groq</td><td>your words + last 3 turns</td></tr>
         <tr><td>3. Translate to English <span class="only">Telugu</span></td><td><code>qwen3.8-27b</code> (<code>gpt-oss-20b</code>)</td><td>Groq</td><td>your words</td></tr>
         <tr><td>4a. HyDE search passage</td><td><code>gpt-oss-20b</code> (skipped)</td><td>Groq</td><td>English</td></tr>
@@ -1025,6 +1069,19 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
         </div>
         <p class="muted small" style="margin-top:10px">A model that reports its daily limit is skipped for 10 minutes. Groq's free
            tier allows 200,000 tokens per model per day.</p>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <p class="label">A follow-up the router would decline gets a second look</p>
+        <div class="chain v" style="margin-top:10px">
+          <div class="box" style="--c:var(--rti)"><b>Router says "other"</b>and there are earlier turns</div>
+          <div class="ar">↓ rewrite with the conversation, including the earlier answer</div>
+          <div class="box" style="--c:var(--llm)"><b>gpt-oss-120b</b>"What is the RTI application fee if I have a white ration card?"</div>
+          <div class="ar">↓ route the rewritten question</div>
+          <div class="box" style="--c:var(--answer)"><b>RTI or agriculture: answer it</b>still "other": decline as before</div>
+        </div>
+        <p class="muted small" style="margin-top:10px">Follow-ups that mention a ration card, pension or certificate: 12/18 → 18/18,
+           and 6/8 → 8/8 on a fresh set. Real changes of subject still get declined.</p>
       </div>
 
       <div class="mock" style="margin-top:14px">
@@ -1113,10 +1170,13 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
         <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span><span class="cb extra" style="--c:var(--tel)">translate</span><span class="cb" style="--c:var(--llm)">HyDE</span><span class="cb" style="--c:var(--llm)">topic + key terms</span><span class="cb" style="--c:var(--answer)">answer</span></span><b>5</b></div>
       <div class="call-row"><span class="who">Follow-up in a conversation</span>
         <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span><span class="cb extra" style="--c:var(--llm)">follow-up rewrite</span><span class="cb" style="--c:var(--llm)">HyDE</span><span class="cb" style="--c:var(--llm)">topic + key terms</span><span class="cb" style="--c:var(--answer)">answer</span></span><b>+1</b></div>
+      <div class="call-row"><span class="who">Follow-up the router would decline</span>
+        <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span><span class="cb extra" style="--c:var(--llm)">rewrite</span><span class="cb extra" style="--c:var(--rti)">router again</span></span><b>+1/2</b></div>
       <div class="call-row"><span class="who">Outside both topics</span>
         <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span></span><b>1</b></div>
     </div>
-    <p class="muted small" style="margin-top:12px">Language detection adds no call: it is part of the router's answer. The
+    <p class="muted small" style="margin-top:12px">Language detection adds no call: it is part of the router's answer, checked against a list of known English
+       words so plain English is never answered in Telugu by mistake. The
        translation is a short call, about 150 tokens.</p>
   </div>
   </div>
@@ -1764,7 +1824,8 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
         <tr><td><strong>Newer RTI documents are collected but not indexed</strong></td><td>27 staged documents, including the current Commission order (G.O.Ms.7/2026), online filing (RTIMIS) and the data-protection law's amendment to s.8(1)(j), in force since November 2025. Indexing them should address the "current Commissioner" misses; not yet done or measured.</td></tr>
         <tr><td><strong>Agriculture's gain is less certain</strong></td><td>Its final set lost one question (14 → 13). The gain rests on the 79 tuning-period questions and a clean set (8 → 10 of 14).</td></tr>
         <tr><td><strong>Answers are checked by reading, not measured</strong></td><td>The tests check that the right passage arrives, not that the answer is right. Known: appeal answers can mix up the two appeal stages; an answer can cite the wrong section when the right one wasn't retrieved.</td></tr>
-        <tr><td><strong>Follow-ups can lose the topic</strong></td><td>"what if my family belongs to bpl" after a fee question dropped "fee". Workaround: name the subject in the follow-up.</td></tr>
+        <tr><td><strong>Follow-ups can lose the topic</strong></td><td>"what if my family belongs to bpl" after a fee question dropped "fee". Workaround: name the subject in the follow-up. Follow-ups the router would decline now get a second look (6 Oct); if that rewrite is rate-limited, the question is still declined, with the ask-anyway buttons.</td></tr>
+        <tr><td><strong>Batched router test unfinished</strong></td><td>The 300-question batch run stopped at gpt-oss-20b's daily limit (180 routed). Batches also lean toward their neighbours, so the questions whose batch label changed were re-checked one at a time, as live.</td></tr>
         <tr><td><strong>Telugu in English letters translates less faithfully</strong></td><td>"rendo appeal" (second appeal) became "land appeal". Search still found every answer in the test; Telugu answer quality is unmeasured. The two Telugu RTI manuals are not indexed.</td></tr>
         <tr><td><strong>One topic per question</strong></td><td>A question that needs RTI and agriculture together gets one; the router picks.</td></tr>
         <tr><td><strong>Free-tier throughput</strong></td><td>4–5 LLM calls per question; about one question per 30 seconds, and about 40–45 full answers a day on gpt-oss-120b before the smaller model takes over.</td></tr>
@@ -1800,7 +1861,7 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
 
 <footer class="wrap">
   <p>AP RTI Assistant (<code>ap-rti-assistant</code>, GitHub <code>Nikhilkarur/AP-ASSIS</code>): RTI and agriculture assistant for
-     Andhra Pradesh citizens. Knowledge base first written 29 September 2026, updated 6 October 2026 (main at <code>8e8b1df</code>).</p>
+     Andhra Pradesh citizens. Knowledge base first written 29 September 2026, updated 6 October 2026.</p>
   <p style="margin-top:6px">Full working log: <code>context.md</code> · Every search experiment: <code>docs/RETRIEVAL_EXPERIMENTS.md</code> ·
      Write-up and run steps: <code>README.md</code> · Test questions: <code>eval/*_questions.json</code></p>
 </footer>
@@ -1820,10 +1881,10 @@ const STAGES = {
     stats: [["model", "gpt-oss-20b → qwen3.8-27b → embeddings"], ["cost", "~650 tokens"], ["fresh questions", "31/32"], ["languages", "29/29"]]
   },
   decline: {
-    title: "\"other\" → a polite decline",
-    body: "A question outside both topics gets no search and no answer-model call. The reply says what the assistant covers and that it won't guess, in the reply language (English, Telugu script or Telugu in English letters), with one button per topic to search those documents anyway, in case the router was wrong.",
-    where: "rag/answer.py — out_of_scope(); buttons in rag/web.html",
-    stats: [["LLM calls", "1 (the router)"], ["buttons", "Ask the RTI / Agriculture assistant"]]
+    title: "\"other\" → a second look, or a polite decline",
+    body: "If the message is a follow-up (there are earlier turns), it first gets a second look: the follow-up rewrite, which reads the earlier answer, turns it into a full question (\"What is the RTI application fee if I have a white ration card?\") and the router decides again. Only if that is still \"other\" is it declined. A declined question gets no search and no answer-model call: the reply says what the assistant covers and that it won't guess, in the reply language, with one button per topic to search those documents anyway.",
+    where: "rag/router.py — rescue_followup(); rag/answer.py — out_of_scope(); buttons in rag/web.html",
+    stats: [["LLM calls", "1; a follow-up 2–3"], ["follow-up tests", "12/18 → 18/18, fresh 8/8"], ["buttons", "Ask the RTI / Agriculture assistant"]]
   },
   condense: {
     title: "2 · Rewrite the follow-up",

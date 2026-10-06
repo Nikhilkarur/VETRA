@@ -15,11 +15,16 @@ questions + every retrieval-eval question; docs/RETRIEVAL_EXPERIMENTS.md, sectio
 
 1. LLM (default). gpt-oss-20b (then qwen3.8-27b if it is rate-limited) reads a
    one-line description of each domain (router_hint in rag/domains.py) and the
-   conversation so far, and answers with one word. It handles what keywords and
-   embeddings can't: "can i file an rti about my crop insurance claim" is RTI,
-   though most of its words are farming; "what is the time limit" after a
-   mango-insurance question is agriculture. 270/274 batched on the earlier sets;
-   31/32 single-call on a set frozen before it first ran.
+   earlier questions, and answers with two words: the domain and the language of
+   the question ("rti telugu"). It handles what keywords and embeddings can't: "can
+   i file an rti about my crop insurance claim" is RTI, though most of its words are
+   farming; "what is the time limit" after a mango-insurance question is agriculture.
+   Two checks follow the call:
+   - a follow-up sent to "other" is rewritten with the conversation (including the
+     earlier answer) and routed again (rescue_followup): "what if i have a white
+     ration card" after an RTI fee question was being declined;
+   - a "telugu" label on a message made only of known English words is corrected
+     to english (english_words_only).
 2. Embedding (fallback, no network). Compares the question with each domain's own
    chunks; the domain with the closest passages wins. 228/274 (83%): it never says
    "other", leans towards agriculture (the bigger collection) and can't see earlier
@@ -34,7 +39,9 @@ Run:  python rag/router.py "my pm kisan money stopped who do i complain to"
 from __future__ import annotations
 
 import argparse
+import functools
 import os
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -53,16 +60,20 @@ ROUTER_MODELS = ("openai/gpt-oss-20b", "qwen/qwen3.8-27b")
 MAX_HISTORY = 3                       # earlier questions shown to the router
 # v2 (2026-10-06): the same call also names the language of the question, so Telugu
 # typed in English letters ("rti fee entha") is recognised without an extra call.
-# Cached decisions are kept per version: v1 replies were one word.
-ROUTER_VERSION = "v2"
+# v3 (2026-10-06): prompt says a follow-up stays on the earlier topic even when it names
+# something listed under "other", and the answer format no longer shows only "... telugu"
+# (plain English was sometimes labelled telugu). route() also gets rescue_followup and
+# the English-words check. Cached decisions are kept per version: v1 replies were one word.
+ROUTER_VERSION = "v3"
 LANGUAGES = ("english", "telugu")
 
 
 @dataclass(frozen=True)
 class Route:
     domain: str   # a key of domains.DOMAINS, or "other"
-    method: str   # "llm" | "embedding"
+    method: str   # "llm" | "llm+rewrite" | "embedding"
     language: str = "english"   # "telugu" covers Telugu script and Telugu in English letters
+    standalone: str | None = None   # the follow-up rewritten to stand alone, if routing needed it
 
 
 def _labels() -> list[str]:
@@ -73,25 +84,26 @@ def router_prompt(batch: bool = False) -> str:
     topics = "\n".join(f"- {d.name}: {d.router_hint}" for d in domains.DOMAINS.values())
     names = ", ".join(domains.DOMAINS)
     first = next(iter(domains.DOMAINS))
+    last = list(domains.DOMAINS)[-1]
     answer = (f'You will get several numbered messages, each from a different conversation. Route each '
               f'one independently. Return JSON mapping every number to two words, the topic ({names} or '
               f'{OTHER}) and the language (english or telugu), e.g. {{"1": "{OTHER} english", '
               f'"2": "{first} telugu"}}. Output only the JSON.'
               if batch else
               f'Answer with exactly two words: the topic ({names} or {OTHER}) and the language '
-              f'(english or telugu), e.g. "{first} telugu".')
+              f'(english or telugu), for example "{first} english" or "{last} telugu".')
     return f"""You route questions for an Andhra Pradesh government help assistant. Each topic below has its own document collection. Decide which collection should answer the user's LATEST message.
 
 Topics:
 {topics}
-- {OTHER}: anything else -- other government services (ration cards, pensions, certificates, land registration, taxes, budgets, salaries, health schemes, electricity bills), general knowledge, chit-chat.
+- {OTHER}: questions that are themselves about something else -- other government services (ration cards, pensions, certificates, land registration, taxes, budgets, salaries, health schemes, electricity bills), general knowledge, chit-chat.
 
 Rules:
 - Decide by what the user wants to know or do, not by single words. Words like "appeal", "complain", "information", "right", "penalty" or "time limit" appear in every topic.
 - If the user wants to use the Right to Information Act -- to get records or information from any office, even about a farm scheme -- it is rti.
-- A short follow-up that depends on an earlier question ("can tenants get it", "what is the time limit", "and for cotton?") belongs to the earlier question's topic, unless it clearly changes the subject.
+- A follow-up that depends on an earlier question ("can tenants get it", "what is the time limit", "and for cotton?") belongs to the earlier question's topic. This holds even when it mentions something listed under {OTHER} -- a ration card, a pension, a certificate, a land record -- because it asks how the earlier answer applies to the user's own situation. Choose {OTHER} for a follow-up only when it clearly starts a new subject that no longer depends on the earlier question.
 - Answer {OTHER} only when the question is clearly outside every topic above. If one of the topics could reasonably answer it, choose that topic: a wrongly refused question gets no answer at all.
-- Language: telugu if the latest message is in Telugu, written in Telugu script OR in English letters ("rti fee entha", "naa dabbulu raaledu", "panta bheema ela"). A Telugu sentence with English words in it (RTI, PM Kisan, MSP, subsidy) is still telugu. Otherwise english.
+- Language: the language the latest message itself is written in -- not its topic, and not the language of earlier messages. telugu if it is in Telugu, written in Telugu script OR as Telugu words in English letters ("rti fee entha", "naa dabbulu raaledu", "panta bheema ela"); a Telugu sentence with English words in it (RTI, PM Kisan, MSP, subsidy) is still telugu. A message made of English words is english, however short or informal.
 
 {answer}"""
 
@@ -127,6 +139,48 @@ def script_language(text: str) -> str:
     from query_expansion import TELUGU_SCRIPT
 
     return "telugu" if TELUGU_SCRIPT.search(text or "") else "english"
+
+
+@functools.lru_cache(maxsize=1)
+def english_words() -> frozenset[str]:
+    """
+    Words known to be English: every word in the indexed documents, plus the whole
+    words of the embedding model's vocabulary (~22,500 common English words).
+    Telugu typed in English letters always has words in neither ("entha", "undi",
+    "cheyali"); checked on every romanized question in the test sets, 2026-10-06.
+    """
+    import json
+
+    words: set[str] = set()
+    for d in domains.DOMAINS.values():
+        for item in json.loads(d.chunks.read_text(encoding="utf-8"))["items"]:
+            words.update(re.findall(r"[a-z]+", f"{item['text']} {item.get('title') or ''}".lower()))
+    try:
+        from retrieve import _model   # already loaded for searching
+
+        # isalpha() drops the "##ing"-style word pieces and keeps whole words.
+        words.update(w for w in _model(next(iter(domains.DOMAINS))).tokenizer.get_vocab() if w.isalpha())
+    except Exception as exc:  # document words alone still cover most questions
+        print(f"  (embedding vocabulary unavailable for the language check: {exc})", file=sys.stderr)
+    return frozenset(words)
+
+
+def english_words_only(text: str) -> bool:
+    """No Telugu letters, and every word is a known English word."""
+    from query_expansion import TELUGU_SCRIPT
+
+    words = re.findall(r"[a-z]+", (text or "").lower())
+    return bool(words) and not TELUGU_SCRIPT.search(text) and all(w in english_words() for w in words)
+
+
+def _checked_language(question: str, language: str) -> str:
+    """
+    The router LLM sometimes calls plain English "telugu" (2 of ~40 English questions
+    in single calls on 2026-10-06, e.g. "i didnt get it, can i file an rti to find out
+    why"), and the answer then comes back in Telugu. A message made only of known
+    English words is English. Only telugu -> english is corrected, never the reverse.
+    """
+    return "english" if language == "telugu" and english_words_only(question) else language
 
 
 def _message(question: str, history: list[dict] | None) -> str:
@@ -182,7 +236,7 @@ def route_llm_full(question: str, history: list[dict] | None = None) -> tuple[st
             # cut short by the daily limit resumes instead of starting over.
             label, language = QX.cached_as(f"route-{ROUTER_VERSION}@{model.split('/')[-1]}", "router",
                                            _message(question, history), make).split()
-            return label, language
+            return label, _checked_language(question, language)
         except RateLimitError as exc:
             QX.note_limit(model, exc)
             error = exc   # this model's daily or per-minute limit: try the next one
@@ -227,13 +281,53 @@ def route_embedding(question: str) -> str:
     return max(scores, key=scores.get)
 
 
-def route(question: str, history: list[dict] | None = None) -> Route:
-    """The domain for the latest message, given earlier turns [{"q", "domain"?}, ...]."""
+def rescue_followup(question: str, history: list[dict] | None, rewrite) -> tuple[str, str] | None:
+    """
+    A follow-up the router sent to "other": rewrite it to stand alone using the
+    conversation, and route the rewritten question. (domain, rewritten) if that names a
+    domain, else None.
+
+    The router reads only the earlier QUESTIONS, and gpt-oss-20b decides "what if i
+    have a white ration card" after an RTI fee question is about ration cards --
+    "That's other." -- whatever the prompt says (three prompt variants and medium
+    reasoning all failed, 2026-10-06). The follow-up rewrite also reads the earlier
+    ANSWER and writes "Can I get exemption from the RTI application fee if I have a
+    white ration card?", which the router places at once. A real change of subject
+    ("how do i apply for a new ration card") is rewritten unchanged and stays "other".
+    """
+    # The conversation's topic: the last turn that was answered from a domain (the
+    # terminal chat also records declined turns, as "other").
+    last = next((t["domain"] for t in reversed(history or []) if t.get("domain") in domains.DOMAINS), None)
+    if last is None:
+        return None
+    try:
+        standalone = rewrite(question, history, last)
+        if not standalone or " ".join(standalone.split()).lower() == " ".join(question.split()).lower():
+            return None
+        label, _ = route_llm_full(standalone, None)
+    except Exception as exc:
+        print(f"  (couldn't re-route the follow-up: {exc})", file=sys.stderr)
+        return None
+    return (label, standalone) if label != OTHER else None
+
+
+def route(question: str, history: list[dict] | None = None, rewrite=None) -> Route:
+    """
+    The domain for the latest message, given earlier turns [{"q", "a"?, "domain"?}, ...].
+    rewrite(question, history, domain) -> standalone question: if given, a follow-up
+    the router sends to "other" gets a second look (rescue_followup). It costs two
+    more calls, and only in that case; a rescued question reuses its rewrite.
+    """
     try:
         label, language = route_llm_full(question, history)
-        return Route(label, "llm", language)
     except Exception as exc:
         print(f"  (router LLM unavailable, routing by similarity: {exc})", file=sys.stderr)
+    else:
+        if label == OTHER and history and rewrite:
+            rescued = rescue_followup(question, history, rewrite)
+            if rescued:
+                return Route(rescued[0], "llm+rewrite", language, rescued[1])
+        return Route(label, "llm", language)
     # Without an LLM, Telugu is recognised by its letters only.
     language = script_language(question)
     # The embedding router can't read the conversation. For a follow-up, staying in
