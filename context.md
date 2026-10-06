@@ -570,6 +570,7 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-06** — **Reply language fixed.** The router also names the language (Telugu in either alphabet); Telugu questions in English letters are now translated for searching too; the answer model is always told the reply language (default: the question's; the page's Reply in menu and chat `/lang` override); the can't-help reply in English/Telugu/romanized Telugu. eval/language_eval.py: language 29/29, Telugu-script search 7/9 -> 9/9, reply language 6/6; routing unchanged (270/274, 31/32).
 - **2026-10-05** — **Telugu questions translated for searching.** A question in Telugu script is translated to English (qwen3.8-27b) for every search step; the answer model gets the original plus an instruction to answer in Telugu script. 8 Telugu questions: 7/8 -> 8/8 in the top 10 (docs/RETRIEVAL_EXPERIMENTS.md, section 7). Web page fix: answer boxes stay inside the column.
 - **2026-10-05** — **Docker.** `Dockerfile` + `compose.yaml` (+ allowlist `.dockerignore`):
   CPU-only PyTorch, both models and both Chroma indexes built into the image (2.77 GB;

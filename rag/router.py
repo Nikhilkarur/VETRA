@@ -51,12 +51,18 @@ OTHER = "other"
 # qwen's, HyDE and the router share gpt-oss-20b's). ROUTER_MODEL=<id> pins one model.
 ROUTER_MODELS = ("openai/gpt-oss-20b", "qwen/qwen3.8-27b")
 MAX_HISTORY = 3                       # earlier questions shown to the router
+# v2 (2026-10-06): the same call also names the language of the question, so Telugu
+# typed in English letters ("rti fee entha") is recognised without an extra call.
+# Cached decisions are kept per version: v1 replies were one word.
+ROUTER_VERSION = "v2"
+LANGUAGES = ("english", "telugu")
 
 
 @dataclass(frozen=True)
 class Route:
     domain: str   # a key of domains.DOMAINS, or "other"
     method: str   # "llm" | "embedding"
+    language: str = "english"   # "telugu" covers Telugu script and Telugu in English letters
 
 
 def _labels() -> list[str]:
@@ -66,10 +72,14 @@ def _labels() -> list[str]:
 def router_prompt(batch: bool = False) -> str:
     topics = "\n".join(f"- {d.name}: {d.router_hint}" for d in domains.DOMAINS.values())
     names = ", ".join(domains.DOMAINS)
+    first = next(iter(domains.DOMAINS))
     answer = (f'You will get several numbered messages, each from a different conversation. Route each '
-              f'one independently. Return JSON mapping every number to one word ({names} or {OTHER}), '
-              f'e.g. {{"1": "{OTHER}", "2": "{next(iter(domains.DOMAINS))}"}}. Output only the JSON.'
-              if batch else f"Answer with exactly one word: {names} or {OTHER}.")
+              f'one independently. Return JSON mapping every number to two words, the topic ({names} or '
+              f'{OTHER}) and the language (english or telugu), e.g. {{"1": "{OTHER} english", '
+              f'"2": "{first} telugu"}}. Output only the JSON.'
+              if batch else
+              f'Answer with exactly two words: the topic ({names} or {OTHER}) and the language '
+              f'(english or telugu), e.g. "{first} telugu".')
     return f"""You route questions for an Andhra Pradesh government help assistant. Each topic below has its own document collection. Decide which collection should answer the user's LATEST message.
 
 Topics:
@@ -81,6 +91,7 @@ Rules:
 - If the user wants to use the Right to Information Act -- to get records or information from any office, even about a farm scheme -- it is rti.
 - A short follow-up that depends on an earlier question ("can tenants get it", "what is the time limit", "and for cotton?") belongs to the earlier question's topic, unless it clearly changes the subject.
 - Answer {OTHER} only when the question is clearly outside every topic above. If one of the topics could reasonably answer it, choose that topic: a wrongly refused question gets no answer at all.
+- Language: telugu if the latest message is in Telugu, written in Telugu script OR in English letters ("rti fee entha", "naa dabbulu raaledu", "panta bheema ela"). A Telugu sentence with English words in it (RTI, PM Kisan, MSP, subsidy) is still telugu. Otherwise english.
 
 {answer}"""
 
@@ -102,6 +113,20 @@ def _parse(text: str) -> str | None:
         if word in _labels():
             return word
     return None
+
+
+def _parse_language(text: str) -> str | None:
+    import re
+
+    words = re.findall(r"[a-z]+", (text or "").lower())
+    return next((w for w in words if w in LANGUAGES), None)
+
+
+def script_language(text: str) -> str:
+    """Without an LLM: telugu only if Telugu letters are present (misses Telugu in English letters)."""
+    from query_expansion import TELUGU_SCRIPT
+
+    return "telugu" if TELUGU_SCRIPT.search(text or "") else "english"
 
 
 def _message(question: str, history: list[dict] | None) -> str:
@@ -133,7 +158,12 @@ def _models() -> tuple[str, ...]:
 
 
 def route_llm(question: str, history: list[dict] | None = None) -> str:
-    """One word from the first router model that isn't rate-limited. Raises if none answers."""
+    """The topic only (see route_llm_full)."""
+    return route_llm_full(question, history)[0]
+
+
+def route_llm_full(question: str, history: list[dict] | None = None) -> tuple[str, str]:
+    """(topic, language) from the first router model that isn't rate-limited. Raises if none answers."""
     from groq import RateLimitError
 
     import query_expansion as QX
@@ -142,22 +172,24 @@ def route_llm(question: str, history: list[dict] | None = None) -> str:
     models = [m for m in _models() if QX.available(m)] or list(_models())
     for model in models:
         def make():
-            label = _parse(_complete(model, router_prompt(), _message(question, history), 10))
+            text = _complete(model, router_prompt(), _message(question, history), 10)
+            label = _parse(text)
             if label is None:
                 raise ValueError(f"{model} replied without a label")
-            return label
+            return f"{label} {_parse_language(text) or script_language(question)}"
         try:
             # Cached per model when LLM_CACHE_DIR is set (the evaluations), so a run
             # cut short by the daily limit resumes instead of starting over.
-            return QX.cached_as(f"route@{model.split('/')[-1]}", "router",
-                                _message(question, history), make)
+            label, language = QX.cached_as(f"route-{ROUTER_VERSION}@{model.split('/')[-1]}", "router",
+                                           _message(question, history), make).split()
+            return label, language
         except RateLimitError as exc:
             QX.note_limit(model, exc)
             error = exc   # this model's daily or per-minute limit: try the next one
     raise error or RuntimeError("no router model configured")
 
 
-def route_batch(items: list[dict], model: str) -> list[str | None]:
+def route_batch(items: list[dict], model: str) -> list[tuple[str | None, str | None]]:
     """
     Evaluation only: route several {"q", "history"?} items in ONE call (the prompt is
     sent once). ~1/15 of the tokens of single calls; checked against single calls in
@@ -173,7 +205,8 @@ def route_batch(items: list[dict], model: str) -> list[str | None]:
         answers = json.loads(match.group(0)) if match else {}
     except json.JSONDecodeError:
         answers = {}
-    return [_parse(str(answers.get(str(n), ""))) for n in range(1, len(items) + 1)]
+    return [(_parse(str(answers.get(str(n), ""))), _parse_language(str(answers.get(str(n), ""))))
+            for n in range(1, len(items) + 1)]
 
 
 def domain_scores(question: str, n: int = 5) -> dict[str, float]:
@@ -197,15 +230,18 @@ def route_embedding(question: str) -> str:
 def route(question: str, history: list[dict] | None = None) -> Route:
     """The domain for the latest message, given earlier turns [{"q", "domain"?}, ...]."""
     try:
-        return Route(route_llm(question, history), "llm")
+        label, language = route_llm_full(question, history)
+        return Route(label, "llm", language)
     except Exception as exc:
         print(f"  (router LLM unavailable, routing by similarity: {exc})", file=sys.stderr)
+    # Without an LLM, Telugu is recognised by its letters only.
+    language = script_language(question)
     # The embedding router can't read the conversation. For a follow-up, staying in
     # the previous turn's domain is the safer guess than routing "and for cotton?" alone.
     last = next((t.get("domain") for t in reversed(history or []) if t.get("domain")), None)
     if last in domains.DOMAINS:
-        return Route(last, "embedding")
-    return Route(route_embedding(question), "embedding")
+        return Route(last, "embedding", language)
+    return Route(route_embedding(question), "embedding", language)
 
 
 def main() -> int:

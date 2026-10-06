@@ -85,7 +85,7 @@ def main() -> int:
     batch: dict[str, str] = {}
     if args.batch:
         import query_expansion as QX
-        stem = f"route-batch@{args.model.split('/')[-1]}"
+        stem = f"route-batch-{router.ROUTER_VERSION}@{args.model.split('/')[-1]}"
         file = Path(os.environ["LLM_CACHE_DIR"]) / f"{stem}.json"
         done = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
         key = lambda c: "router|" + router._message(c["q"], c.get("history"))  # noqa: E731
@@ -100,10 +100,11 @@ def main() -> int:
                     print(f"      (batch retry after error: {str(exc)[:120]})", file=sys.stderr)
                     time.sleep(30)
             else:
-                labels = [None] * len(chunk)
-            for c, label in zip(chunk, labels):
+                labels = [(None, None)] * len(chunk)
+            for c, (label, language) in zip(chunk, labels):
                 if label:   # never store a failure
-                    QX.cached_as(stem, "router", router._message(c["q"], c.get("history")), lambda: label)
+                    value = f"{label} {language or router.script_language(c['q'])}"
+                    QX.cached_as(stem, "router", router._message(c["q"], c.get("history")), lambda: value)
         batch = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
 
     def decide(case: dict) -> str:
@@ -114,7 +115,7 @@ def main() -> int:
                 return history[-1]["domain"]
             return router.route_embedding(case["q"])
         if args.batch:
-            return batch.get("router|" + router._message(case["q"], case.get("history"))) or "ERROR"
+            return (batch.get("router|" + router._message(case["q"], case.get("history"))) or "ERROR").split()[0]
         for attempt in range(3):
             try:
                 return router.route_llm(case["q"], case.get("history"))

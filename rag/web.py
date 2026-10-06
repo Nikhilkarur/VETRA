@@ -36,7 +36,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import domains
-from answer import MissingKey, answer_question
+from answer import REPLY_LANGUAGES, MissingKey, answer_question
 from retrieve import TOP_K, _collection, _corpus, _model
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -89,8 +89,12 @@ class Handler(BaseHTTPRequestHandler):
             # "Ask the X assistant anyway" after a refusal: the page names the domain.
             chosen = payload.get("domain")
             domain = chosen if self.domain == domains.AUTO and chosen in domains.DOMAINS else self.domain
+            # The page's "Reply in" menu, and -- on an "ask anyway" retry -- the
+            # language the router already found for this question.
+            reply = payload.get("reply") if payload.get("reply") in REPLY_LANGUAGES else "auto"
+            language = payload.get("language") if payload.get("language") in ("english", "telugu") else None
         except (ValueError, json.JSONDecodeError, TypeError, AttributeError):
-            question, history, domain = "", [], self.domain
+            question, history, domain, reply, language = "", [], self.domain, "auto", None
 
         if not question:
             self._json(400, {"error": "Type a question first."})
@@ -102,7 +106,8 @@ class Handler(BaseHTTPRequestHandler):
         print(f"\nQ: {question}" + (f"   ({len(history)} earlier turns)" if history else ""), flush=True)
         try:
             with PIPELINE:
-                result = answer_question(question, TOP_K, history=history, domain=domain, buttons=True)
+                result = answer_question(question, TOP_K, history=history, domain=domain, buttons=True,
+                                         reply=reply, language=language)
         except MissingKey as exc:
             print(f"   {exc}", flush=True)
             self._json(500, {"error": str(exc)})
@@ -115,9 +120,11 @@ class Handler(BaseHTTPRequestHandler):
 
         searched = result["domain"]
         if result["route"]:
-            print(f"   routed to: {searched} ({result['route']})", flush=True)
+            print(f"   routed to: {searched} ({result['route']}), language {result['language']}, "
+                  f"reply in {result['reply_language']}", flush=True)
         if searched not in domains.DOMAINS:   # declined: no search, no answer model
             self._json(200, {"answer": result["answer"], "domain": searched, "sources": [],
+                             "language": result["language"], "reply_language": result["reply_language"],
                              "choices": [{"name": d.name, "label": d.label}
                                          for d in domains.DOMAINS.values()]})
             return
@@ -129,6 +136,8 @@ class Handler(BaseHTTPRequestHandler):
             "domain": searched,
             "domain_label": domains.get(searched).label,
             "routed": bool(result["route"]),
+            "language": result["language"],
+            "reply_language": result["reply_language"],
             "answer": result["answer"],
             "standalone": result["standalone"],
             "passage": result["passage"],

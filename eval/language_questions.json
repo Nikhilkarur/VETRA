@@ -1,0 +1,39 @@
+{
+  "about": "Frozen language test, written on 2026-10-06 before the language-aware router (router v2) and the translation of Telugu typed in English letters were run. Each question has its domain, its language ('telugu' covers Telugu script AND Telugu in English letters), and -- where the answering text is known -- probes, matched as in retrieval_eval.py. Groups: english, telugu_script, telugu_roman. The Telugu-script and romanized questions with probes ask the same things, so the two alphabets can be compared. Scored by eval/language_eval.py.",
+  "created": "2026-10-06",
+  "english": [
+    {"q": "how do i file an rti application", "domain": "rti", "language": "english", "probes": ["make a request in writing"]},
+    {"q": "is rti free for BPL families", "domain": "rti", "language": "english", "probes": ["white card"]},
+    {"q": "who decides my second appeal", "domain": "rti", "language": "english"},
+    {"q": "is my cashew crop covered by insurance", "domain": "agriculture", "language": "english", "probes": ["For Cashew Nut"]},
+    {"q": "where do i get cheap seeds from the govt", "domain": "agriculture", "language": "english", "probes": ["D Krishi App"]},
+    {"q": "how much subsidy if we buy a drone for spraying", "domain": "agriculture", "language": "english", "probes": ["Kisan Drone CHCs Rs.10 lakhs Rs.4.0 lakh"]},
+    {"q": "annadata sukhibhava eligibility for tenant farmers", "domain": "agriculture", "language": "english", "probes": ["eligible landless cultivators"]},
+    {"q": "how do i apply for a passport", "domain": "other", "language": "english"}
+  ],
+  "telugu_script": [
+    {"q": "ఆర్టీఐ దరఖాస్తుకు ఫీజు ఎంత?", "domain": "rti", "language": "telugu", "probes": ["per application"]},
+    {"q": "30 రోజుల్లో సమాధానం రాకపోతే ఏం చేయాలి?", "domain": "rti", "language": "telugu", "probes": ["senior in rank"]},
+    {"q": "ఆలస్యం చేసిన అధికారికి ఎంత జరిమానా విధిస్తారు?", "domain": "rti", "language": "telugu", "probes": ["two hundred and fifty"]},
+    {"q": "రెండో అప్పీల్ ఎంత రోజుల్లో దాఖలు చేయాలి?", "domain": "rti", "language": "telugu", "probes": ["within ninety days"]},
+    {"q": "అన్నదాత సుఖీభవ కింద సంవత్సరానికి ఎంత డబ్బు ఇస్తారు?", "domain": "agriculture", "language": "telugu", "probes": ["Rs. 20,000/- per annum"]},
+    {"q": "కౌలు రైతులకు అన్నదాత సుఖీభవ వస్తుందా?", "domain": "agriculture", "language": "telugu", "probes": ["eligible landless cultivators"]},
+    {"q": "ఎస్సీ చిన్న రైతుకు డ్రిప్ ఇరిగేషన్ పై ఎంత సబ్సిడీ ఇస్తారు?", "domain": "agriculture", "language": "telugu", "probes": ["100% subsidy for Drip Irrigation"]},
+    {"q": "ఖరీఫ్ పంట బీమాకు రైతు ఎంత ప్రీమియం కట్టాలి?", "domain": "agriculture", "language": "telugu", "probes": ["2% for Kharif"]},
+    {"q": "PM kisan డబ్బులు సంవత్సరానికి ఎన్ని సార్లు వస్తాయి?", "domain": "agriculture", "language": "telugu", "probes": ["three equal installments"]},
+    {"q": "రేషన్ కార్డు కోసం ఎలా దరఖాస్తు చేయాలి?", "domain": "other", "language": "telugu"}
+  ],
+  "telugu_roman": [
+    {"q": "rti fee entha", "domain": "rti", "language": "telugu", "probes": ["per application"]},
+    {"q": "rti application ki fee entha?", "domain": "rti", "language": "telugu", "probes": ["per application"]},
+    {"q": "30 rojullo samadhanam rakapothe em cheyali?", "domain": "rti", "language": "telugu", "probes": ["senior in rank"]},
+    {"q": "alasyam chesina adhikariki entha jarimana vestharu?", "domain": "rti", "language": "telugu", "probes": ["two hundred and fifty"]},
+    {"q": "rendo appeal enni rojullo file cheyali?", "domain": "rti", "language": "telugu", "probes": ["within ninety days"]},
+    {"q": "annadata sukhibhava kinda samvatsaraniki entha dabbu istaru?", "domain": "agriculture", "language": "telugu", "probes": ["Rs. 20,000/- per annum"]},
+    {"q": "koulu raithulaku annadata sukhibhava vastunda?", "domain": "agriculture", "language": "telugu", "probes": ["eligible landless cultivators"]},
+    {"q": "SC chinna raithuku drip irrigation ki entha subsidy istaru?", "domain": "agriculture", "language": "telugu", "probes": ["100% subsidy for Drip Irrigation"]},
+    {"q": "kharif panta bheemaku raithu entha premium kattali?", "domain": "agriculture", "language": "telugu", "probes": ["2% for Kharif"]},
+    {"q": "annadata sukhibhava dabbulu enni installments lo vastayi", "domain": "agriculture", "language": "telugu", "probes": ["No of Installments and Installment wise split up"]},
+    {"q": "ration card ela apply cheyali?", "domain": "other", "language": "telugu"}
+  ]
+}

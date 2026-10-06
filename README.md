@@ -299,14 +299,23 @@ flowchart TD
 
 | step | model | runs on | gets |
 |---|---|---|---|
-| 1. Router: which documents? | `gpt-oss-20b` (then `qwen3.8-27b`, then embedding similarity) | Groq | original question + earlier questions |
+| 1. Router: which documents, and which language? | `gpt-oss-20b` (then `qwen3.8-27b`, then embedding similarity) | Groq | original question + earlier questions |
 | 2. Follow-up rewrite (only with earlier turns) | `gpt-oss-120b` | Groq | original question + earlier turns |
-| 3. Telugu script → English, for searching | `qwen3.8-27b` (then `gpt-oss-20b`) | Groq | original question |
+| 3. Telugu (script or English letters) → English, for searching | `qwen3.8-27b` (then `gpt-oss-20b`) | Groq | original question |
 | 4. HyDE search passage | `gpt-oss-20b` | Groq | English question |
 | 5. Topic + key terms | `qwen3.8-27b` (then `gpt-oss-20b`) | Groq | English question |
 | 6. Search by meaning + keywords, merged (RRF) | `bge-small-en-v1.5` + BM25 | this computer | question, HyDE, rewrite |
 | 7. Reranker (agriculture only) | `ms-marco-MiniLM-L-6-v2` | this computer (~1.5 s) | English question + top 30 |
-| 8. Answer with citations | `gpt-oss-120b` (then `gpt-oss-20b`) | Groq | original question + 10–14 passages |
+| 8. Answer with citations, in the reply language | `gpt-oss-120b` (then `gpt-oss-20b`) | Groq | original question + 10–14 passages |
+
+**Language.** The router names the question's language along with its topic (no extra
+call), so Telugu is recognised whether it is typed in Telugu letters or English letters
+("rti fee entha"). A Telugu question is translated to English for the search, and the
+answer model is always told which language to write in. By default that is the
+question's language (Telugu in either alphabet → Telugu script); the page's **Reply in**
+menu changes it: English, తెలుగు, or Telugu in English letters. The "can't help"
+reply follows the same setting. Per question that is 4 LLM calls for English, 5 for
+Telugu (the translation).
 
 Typical time: 3–4 s to search, 3–4 s to answer. If a Groq model hits its daily limit
 the step falls back as shown, and HyDE is skipped; the app keeps answering, with
@@ -352,6 +361,8 @@ Retrieval = does the text that answers the question reach the answer model (top 
 | Router, fresh questions (32) | — | **31** |
 | Router, 274 labelled questions incl. 71 real FAQs | 83% (similarity only) | **99%** |
 | Telugu-script questions (8) | 7 | **8** |
+| Router: language recognised (29: English, Telugu script, Telugu in English letters) | — | **29** |
+| Telugu reply when asked in Telugu (6 checked, incl. "rti fee entha") | sometimes | **6** |
 
 RTI's gain is confirmed on its final set. Agriculture's final set was already 14/14 and
 lost one question, so its gain (measured on the other 79 questions) is smaller and less
@@ -397,9 +408,10 @@ Stated plainly, because a demo audience should hear them.
   on `gpt-oss-120b`, after which the smaller model answers. One question every ~30 s.
 - **Four LLM calls per question** (router, HyDE, rewrite, answer), plus one for
   follow-ups and one for Telugu-script questions.
-- **Telugu:** Telugu typed in English letters ("naa rti ki…") is not translated; it
-  works through HyDE and the rewrite only. Telugu answer quality has not been measured.
-  The two Telugu RTI manuals are not indexed.
+- **Telugu:** translating Telugu typed in English letters is less accurate than Telugu
+  script ("rendo appeal", second appeal, became "land appeal"; the search still found
+  the answer). Telugu answer quality has been checked by reading, not measured. The two
+  Telugu RTI manuals are not indexed.
 - **Agriculture:** two scanned documents are not indexed, and one 2025 relief order has
   garbled text (needs OCR). Several orders cover one season and need refreshing.
 - **Startup ~20–30 s** (loading the models), and the reranker adds ~1.5 s per

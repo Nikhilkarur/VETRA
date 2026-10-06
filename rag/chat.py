@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 import domains
-from answer import ask
+from answer import REPLY_LANGUAGES, ask
 from retrieve import TOP_K, _collection, _corpus, _model
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -40,6 +40,7 @@ BANNER = """\
   /new       start a new conversation (forget earlier questions)
   /sources   show retrieved passages for the next question
   /k N       change how many passages are retrieved
+  /lang X    answer language: auto (follows the question), english, telugu, telugu_roman
   /quit      exit
 """
 
@@ -55,6 +56,7 @@ def main() -> int:
 
     k = args.k
     show_context = False
+    reply = "auto"
     history: list[dict] = []
 
     if auto:
@@ -88,6 +90,15 @@ def main() -> int:
             print("  new conversation\n")
             continue
 
+        if question.startswith("/lang"):
+            choice = question[5:].strip()
+            if choice in REPLY_LANGUAGES:
+                reply = choice
+                print(f"  answers in: {reply}\n")
+            else:
+                print(f"  usage: /lang {' | '.join(REPLY_LANGUAGES)}   (now: {reply})\n")
+            continue
+
         if question == "/sources":
             show_context = not show_context
             print(f"  showing retrieved passages: {show_context}\n")
@@ -102,11 +113,11 @@ def main() -> int:
             continue
 
         if question.startswith("/"):
-            print("  unknown command. try /new, /sources, /k N, /quit\n")
+            print("  unknown command. try /new, /sources, /k N, /lang X, /quit\n")
             continue
 
         try:
-            result = ask(question, k, show_context, history=history, domain=args.domain)
+            result = ask(question, k, show_context, history=history, domain=args.domain, reply=reply)
             if result["domain"] in domains.DOMAINS:   # a declined question is not remembered
                 history.append({"q": question, "a": result["answer"], "domain": result["domain"]})
         except Exception as exc:
