@@ -6,7 +6,7 @@
 <title>AP RTI Assistant — Knowledge Base</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&display=swap">
 <style>
 :root {
   color-scheme: light;
@@ -23,27 +23,32 @@
   --search: #1f6f8b;
   --answer: #2f6e4f;
   --llm: #7c5cd6;
+  --rti: #2d5fb8;
+  --agri: #3b7f2c;
+  --tel: #b4457a;
   --good: #0ca30c;
-  --warn: #fab219;
+  --warn: #c98a00;
   --bad: #d03b3b;
   --shadow: 0 1px 2px rgba(16,21,27,.05), 0 6px 20px rgba(16,21,27,.05);
   --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
-  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --f-body: "IBM Plex Sans", "Noto Sans Telugu", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "Noto Sans Telugu", monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --bg: #0b0e12; --surface: #141920; --surface-2: #181e26; --sunk: #1e252e;
     --ink: #edf1f5; --ink-2: #b7c0ca; --muted: #8a94a0; --hair: #262e38; --hair-2: #36404c;
-    --ingest: #d08b3a; --search: #4fa3c0; --answer: #5aa97f; --llm: #a389e6; --shadow: none;
+    --ingest: #d08b3a; --search: #4fa3c0; --answer: #5aa97f; --llm: #a389e6;
+    --rti: #79a2ec; --agri: #7cc46a; --tel: #e083ad; --good: #3cc23c; --warn: #e5a91f; --bad: #ec6060; --shadow: none;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #0b0e12; --surface: #141920; --surface-2: #181e26; --sunk: #1e252e;
   --ink: #edf1f5; --ink-2: #b7c0ca; --muted: #8a94a0; --hair: #262e38; --hair-2: #36404c;
-  --ingest: #d08b3a; --search: #4fa3c0; --answer: #5aa97f; --llm: #a389e6; --shadow: none;
+  --ingest: #d08b3a; --search: #4fa3c0; --answer: #5aa97f; --llm: #a389e6;
+  --rti: #79a2ec; --agri: #7cc46a; --tel: #e083ad; --good: #3cc23c; --warn: #e5a91f; --bad: #ec6060; --shadow: none;
 }
 
 * { box-sizing: border-box; }
@@ -56,21 +61,28 @@ a:hover { text-decoration-color: currentColor; }
 code, .mono { font-family: var(--f-mono); font-size: .92em; }
 code { background: var(--sunk); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
 p { margin: 0; }
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h1, h2, h3, h4 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
 .wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
 .muted { color: var(--muted); }
 .label { font: 600 11px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.prose { max-width: 76ch; color: var(--ink-2); }
+.small { font-size: 13.5px; }
 
 /* ---------- masthead ---------- */
 header.hero { padding: 56px 0 30px; border-bottom: 1px solid var(--hair); background: var(--surface); }
 .hero h1 { font-size: clamp(34px, 6vw, 54px); font-weight: 700; letter-spacing: -.02em; line-height: 1.02; }
-.hero .sub { margin-top: 12px; font-size: 18px; color: var(--ink-2); max-width: 66ch; }
+.hero .sub { margin-top: 12px; font-size: 18px; color: var(--ink-2); max-width: 70ch; }
 .hero .meta { margin-top: 18px; font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); }
+.new-badge { display: inline-block; vertical-align: middle; margin-left: 10px; font: 600 12px/1.6 var(--f-body); letter-spacing: .04em;
+             padding: 2px 10px; border-radius: 999px; color: var(--agri); background: color-mix(in srgb, var(--agri) 13%, transparent); }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--hair);
          border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; margin-top: 26px; }
+.hero .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 720px) { .hero .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .stat { background: var(--surface); padding: 14px 16px; }
 .stat b { display: block; font-family: var(--f-mono); font-size: 25px; font-weight: 500; letter-spacing: -.01em; }
 .stat span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.stat em { font-style: normal; color: var(--good); }
 
 /* ---------- contents ---------- */
 nav.toc { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--surface) 92%, transparent);
@@ -78,6 +90,8 @@ nav.toc { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, 
 nav.toc ul { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: thin; }
 nav.toc a { display: block; padding: 11px 12px; font-size: 13px; white-space: nowrap; text-decoration: none; color: var(--ink-2); }
 nav.toc a:hover { color: var(--ink); background: var(--surface-2); }
+nav.toc a.new::after { content: "new"; margin-left: 5px; font: 600 9.5px/1 var(--f-body); letter-spacing: .05em; text-transform: uppercase;
+                       color: var(--agri); vertical-align: 1px; }
 
 /* ---------- sections ---------- */
 section { padding: 46px 0; border-bottom: 1px solid var(--hair); }
@@ -85,10 +99,16 @@ section { padding: 46px 0; border-bottom: 1px solid var(--hair); }
 .sec-head h2 { font-size: clamp(23px, 3.2vw, 30px); font-weight: 600; letter-spacing: -.01em; }
 .sec-head p { margin-top: 9px; color: var(--ink-2); }
 h3 { font-size: 17px; font-weight: 600; margin: 26px 0 10px; }
-.card { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); min-width: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 ul.plain { margin: 10px 0 0; padding-left: 20px; color: var(--ink-2); }
 ul.plain li { margin: 5px 0; }
+.part { padding: 40px 0 6px; border-bottom: 0; }
+.part .label { color: var(--ingest); }
+.part h2 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; margin-top: 6px; }
+.part p { margin-top: 8px; color: var(--ink-2); max-width: 76ch; }
 
 /* ---------- tables ---------- */
 .tw { overflow-x: auto; border: 1px solid var(--hair); border-radius: 10px; background: var(--surface); }
@@ -99,8 +119,12 @@ td { padding: 10px 14px; border-bottom: 1px solid var(--hair); vertical-align: t
 tr:last-child td { border-bottom: 0; }
 td.num, th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
 td strong { color: var(--ink); }
+td.c, th.c { text-align: center; }
 .win { color: var(--good); font-weight: 600; }
 .lose { color: var(--bad); font-weight: 600; }
+.yes { color: var(--good); font-weight: 600; white-space: nowrap; }
+.no { color: var(--bad); font-weight: 600; white-space: nowrap; }
+.na { color: var(--muted); }
 
 /* ---------- quote / example ---------- */
 .q-block { border-left: 3px solid var(--search); padding: 2px 0 2px 16px; margin: 14px 0; }
@@ -109,41 +133,248 @@ td strong { color: var(--ink); }
 .cite { font-family: var(--f-mono); font-size: 11.5px; color: var(--search); background: color-mix(in srgb, var(--search) 12%, transparent);
         padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
 
-/* ---------- pipeline ---------- */
-.flow { display: grid; gap: 10px; margin-top: 6px; }
-.flow-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+/* ---------- before / now ---------- */
+.ba { border: 1px solid var(--hair); border-radius: 10px; overflow: hidden; background: var(--hair); display: grid; gap: 1px; }
+.ba-row { display: grid; grid-template-columns: minmax(130px, .8fr) minmax(0, 1.2fr) 30px minmax(0, 1.5fr); background: var(--surface); }
+.ba-row > div { padding: 11px 14px; font-size: 13.5px; }
+.ba-row .k { font-weight: 600; color: var(--ink); }
+.ba-row .was { color: var(--muted); }
+.ba-row .to { color: var(--good); text-align: center; padding-inline: 0; font-weight: 600; }
+.ba-row .now { color: var(--ink); background: color-mix(in srgb, var(--good) 6%, var(--surface)); }
+.ba-row.head > div { font: 600 11px/1.2 var(--f-body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+.ba-row.head .now { background: color-mix(in srgb, var(--good) 9%, var(--surface-2)); }
+@media (max-width: 680px) {
+  .ba-row { grid-template-columns: 1fr; }
+  .ba-row .to, .ba-row.head { display: none; }
+  .ba-row .k { padding-bottom: 2px; }
+  .ba-row .was { padding-block: 2px; }
+  .ba-row .was::before { content: "Before: "; font-weight: 600; }
+  .ba-row .now::before { content: "Now: "; font-weight: 600; color: var(--good); }
+}
+
+/* ---------- repo status ---------- */
+.status { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; padding: 5px 11px; border-radius: 999px;
+        border: 1px solid var(--hair); background: var(--surface); color: var(--ink-2); }
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); flex: none; }
+.chip.warn .dot { background: var(--warn); }
+
+/* ---------- timeline ---------- */
+.tl { position: relative; padding-left: 30px; }
+.tl::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: var(--hair-2); }
+.tl-item { position: relative; margin: 0 0 16px; }
+.tl-item::before { content: ""; position: absolute; left: -27px; top: 19px; width: 10px; height: 10px; border-radius: 50%;
+                   background: var(--surface); border: 3px solid var(--c, var(--ink-2)); }
+.tl-day { position: relative; margin: 6px 0 12px -30px; padding-left: 30px; font: 600 12px/1 var(--f-mono); color: var(--ink); }
+.tl-day::before { content: ""; position: absolute; left: 3px; top: -2px; width: 16px; height: 16px; border-radius: 4px; background: var(--ink); }
+.tl-card { background: var(--surface); border: 1px solid var(--hair); border-left: 3px solid var(--c); border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow); }
+.tl-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.tl-top h3 { margin: 0; font-size: 18px; flex: 1 1 260px; }
+.tag { font: 600 10.5px/1.7 var(--f-body); letter-spacing: .06em; text-transform: uppercase; padding: 0 7px; border-radius: 4px;
+       color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); white-space: nowrap; }
+.pr { font: 500 11.5px/1.7 var(--f-mono); color: var(--muted); border: 1px solid var(--hair); padding: 0 7px; border-radius: 4px; white-space: nowrap; }
+.tl-body { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; margin-top: 12px; }
+@media (max-width: 800px) { .tl-body { grid-template-columns: 1fr; } }
+.tl-body h4 { font: 600 11px/1.2 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.tl-body h4 + ul { margin-top: 0; }
+.tl-body ul { margin: 0 0 12px; padding-left: 18px; color: var(--ink-2); font-size: 14px; }
+.tl-body li { margin: 4px 0; }
+.tl-body .why { font-size: 14px; color: var(--ink-2); }
+.files { margin-top: 12px; font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); overflow-wrap: anywhere; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 8px; }
+.tile { background: var(--surface-2); border: 1px solid var(--hair); border-radius: 8px; padding: 9px 11px; }
+.tile b { display: block; font: 500 19px/1.2 var(--f-mono); }
+.tile span { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); line-height: 1.35; }
+
+/* ---------- before/after bars ---------- */
+.meters { display: grid; gap: 14px; }
+.meter .ml { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--ink-2); margin-bottom: 4px; }
+.meter .ml .d { font-family: var(--f-mono); font-size: 12px; color: var(--good); white-space: nowrap; }
+.meter .ml .d.down { color: var(--bad); }
+.bar2 { display: grid; grid-template-columns: 64px minmax(0, 1fr) 64px; gap: 8px; align-items: center; font-size: 11.5px; color: var(--muted); margin: 2px 0; }
+.bar2 .tr { height: 12px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.bar2 .tr i { display: block; height: 100%; width: var(--w); background: var(--hair-2); border-radius: 3px; }
+.bar2.now .tr i { background: var(--c, var(--good)); }
+.bar2 b { font: 500 12px/1 var(--f-mono); color: var(--ink); white-space: nowrap; }
+.bar2.was b { color: var(--muted); font-weight: 400; }
+
+/* ---------- signals: grouped bars ---------- */
+.sig { display: grid; gap: 12px; }
+.sig-row { display: grid; grid-template-columns: minmax(150px, 1fr) minmax(0, 2fr); gap: 12px; align-items: center; }
+.sig-row .nm { font-size: 13px; color: var(--ink-2); }
+.sig-row .bars { display: grid; gap: 3px; }
+.hb { display: grid; grid-template-columns: minmax(0, 1fr) 62px; gap: 8px; align-items: center; }
+.hb .tr { height: 11px; background: var(--sunk); border-radius: 3px; overflow: hidden; }
+.hb .tr i { display: block; height: 100%; width: var(--w); background: var(--c); border-radius: 3px; }
+.hb b { font: 500 11.5px/1 var(--f-mono); color: var(--ink-2); white-space: nowrap; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--ink-2); margin-bottom: 12px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--c); margin-right: 6px; vertical-align: -1px; }
+@media (max-width: 600px) { .sig-row { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ---------- butterfly (effect per domain) ---------- */
+.bf { border: 1px solid var(--hair); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.bf-row { display: grid; grid-template-columns: minmax(170px, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); align-items: center; border-bottom: 1px solid var(--hair); }
+.bf-row:last-child { border-bottom: 0; }
+.bf-row .nm { padding: 8px 14px; font-size: 13px; color: var(--ink-2); }
+.bf-row.head { background: var(--surface-2); }
+.bf-row.head > div { padding: 10px 14px; font: 600 11px/1.3 var(--f-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); text-align: center; }
+.bf-row.head > div:first-child { text-align: left; }
+.bf-row.chosen { background: color-mix(in srgb, var(--good) 6%, var(--surface)); }
+.bf-cell { position: relative; height: 34px; margin: 0 14px; }
+.bf-cell::before { content: ""; position: absolute; left: 50%; top: 5px; bottom: 5px; width: 1px; background: var(--hair-2); }
+.bf-cell i { position: absolute; top: 11px; height: 12px; border-radius: 3px; width: calc(var(--d) * 3.125%); }
+.bf-cell i.up { left: 50%; background: var(--good); }
+.bf-cell i.dn { right: 50%; background: var(--bad); }
+.bf-cell b { position: absolute; top: 9px; font: 500 11.5px/16px var(--f-mono); color: var(--ink); white-space: nowrap; }
+.bf-cell b.up { left: calc(50% + var(--d) * 3.125% + 5px); }
+.bf-cell b.dn { right: calc(50% + var(--d) * 3.125% + 5px); }
+.bf-cell b.zero { left: calc(50% + 5px); color: var(--muted); }
+@media (max-width: 640px) {
+  .bf-row { grid-template-columns: 1fr 1fr; }
+  .bf-row .nm { grid-column: 1 / -1; padding-bottom: 0; }
+  .bf-row.head > div:first-child { display: none; }
+}
+
+/* ---------- dumbbell (rank before -> after) ---------- */
+.db { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 12px 16px; }
+.db-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 14px; align-items: center; padding: 5px 0; border-bottom: 1px dashed var(--hair); }
+.db-row:last-child { border-bottom: 0; }
+.db-row .q { font-size: 13px; color: var(--ink-2); }
+.db-row .q small { display: block; font-family: var(--f-mono); font-size: 11px; color: var(--muted); }
+.db-track { position: relative; height: 24px; margin: 0 8px; }
+.db-track::before { content: ""; position: absolute; left: -8px; top: 1px; bottom: 1px; width: calc(21.44% + 8px); border-radius: 4px;
+                    background: color-mix(in srgb, var(--good) 13%, transparent); }
+.db-track .ln { position: absolute; top: 11px; height: 2px; left: var(--a); width: calc(var(--b) - var(--a)); background: var(--hair-2); }
+.db-track .pt { position: absolute; top: 6px; width: 12px; height: 12px; border-radius: 50%; left: var(--p); transform: translateX(-50%); }
+.db-track .pt.was { background: var(--surface); border: 2px solid var(--muted); }
+.db-track .pt.now { background: var(--good); }
+.db-track .pt.now.lost { background: var(--bad); }
+.db-axis { position: relative; height: 18px; margin: 4px 8px 0; font: 11px/18px var(--f-mono); color: var(--muted); }
+.db-axis span { position: absolute; transform: translateX(-50%); }
+.db-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 14px; }
+.db-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.db-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+@media (max-width: 600px) { .db-row, .db-head { grid-template-columns: 1fr; gap: 2px; } .db-head > div:first-child { display: none; } }
+
+/* ---------- step-by-step trace ---------- */
+.steps { display: grid; gap: 8px; }
+.step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; background: var(--surface); border: 1px solid var(--hair);
+        border-radius: 10px; padding: 12px 14px; }
+.step .no { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 600 13px/1 var(--f-mono);
+            color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+.step h4 { font: 600 14.5px/1.4 var(--f-body); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.step .out { margin-top: 7px; font-family: var(--f-mono); font-size: 12.5px; background: var(--sunk); border-radius: 6px; padding: 8px 10px; color: var(--ink); overflow-wrap: anywhere; }
+.step .note { margin-top: 6px; font-size: 13px; color: var(--ink-2); }
+.model { font: 500 11px/1.7 var(--f-mono); color: var(--muted); border: 1px solid var(--hair-2); padding: 0 6px; border-radius: 4px; white-space: nowrap; }
+.reads { font: 600 10.5px/1.7 var(--f-body); letter-spacing: .04em; text-transform: uppercase; padding: 0 7px; border-radius: 4px; white-space: nowrap; }
+.reads.orig { color: var(--tel); background: color-mix(in srgb, var(--tel) 13%, transparent); }
+.reads.eng { color: var(--search); background: color-mix(in srgb, var(--search) 13%, transparent); }
+.reads.local { color: var(--muted); background: var(--sunk); }
+.kw { display: inline-block; margin: 2px 3px 0 0; padding: 0 6px; border-radius: 4px; background: var(--surface); border: 1px solid var(--hair-2); font-size: 11.5px; }
+
+/* ---------- pipeline (clickable) ---------- */
+.flow { display: grid; gap: 8px; margin-top: 6px; }
+.flow-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
 button.stage { text-align: left; font: inherit; cursor: pointer; background: var(--surface); color: var(--ink);
-               border: 1px solid var(--hair); border-left: 3px solid var(--c, var(--hair-2)); border-radius: 8px; padding: 11px 13px; }
+               border: 1px solid var(--hair); border-left: 3px solid var(--c, var(--hair-2)); border-radius: 8px; padding: 10px 13px; }
 button.stage:hover { background: var(--surface-2); }
 button.stage[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, var(--surface)); }
 button.stage b { display: block; font-size: 13.5px; }
-button.stage span { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); }
+button.stage span.d { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); }
+button.stage .chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+button.stage.branch { border-style: dashed; border-left-style: solid; }
+.only { font: 600 10px/1.7 var(--f-body); letter-spacing: .05em; text-transform: uppercase; padding: 0 6px; border-radius: 4px;
+        color: var(--ingest); background: color-mix(in srgb, var(--ingest) 13%, transparent); white-space: nowrap; }
 .arrow { text-align: center; color: var(--hair-2); font-size: 15px; line-height: 1; }
 #stagePanel { margin-top: 12px; }
 #stagePanel .label { margin-bottom: 6px; }
 #stagePanel h3 { margin: 0 0 6px; }
 #stagePanel .where { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-top: 10px; }
+.flow-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 12px; font-size: 12.5px; color: var(--ink-2); align-items: center; }
 
-/* ---------- traces ---------- */
-.trace { margin-top: 14px; }
-.trace .bar { display: grid; grid-template-columns: 210px 1fr; gap: 12px; align-items: center; margin: 5px 0; font-size: 13px; }
-.trace .bar .n { font-family: var(--f-mono); }
-.rank { display: inline-block; height: 18px; border-radius: 4px; background: var(--search); opacity: .85; }
-.rank.bad { background: var(--bad); }
-.rank.good { background: var(--good); }
+/* ---------- chains / diagrams ---------- */
+.chain { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; }
+.chain .box { flex: 1 1 150px; background: var(--surface); border: 1px solid var(--hair); border-top: 3px solid var(--c, var(--hair-2)); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--ink-2); }
+.chain .box b { display: block; color: var(--ink); font-size: 13.5px; }
+.chain .ar { align-self: center; color: var(--muted); font-size: 12px; text-align: center; flex: 0 0 auto; padding: 0 2px; }
+.chain.v { flex-direction: column; }
+.chain.v .box { flex: none; }
+.chain.v .ar { text-align: left; padding: 0 0 0 12px; }
+@media (max-width: 640px) { .chain { flex-direction: column; } .chain .box { flex: none; } .chain .ar { text-align: left; padding-left: 12px; } }
+
+/* ---------- LLM calls per question ---------- */
+.calls { display: grid; gap: 9px; }
+.call-row { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr) 40px; gap: 12px; align-items: center; }
+.call-row .who { font-size: 13px; color: var(--ink-2); }
+.call-row .boxes { display: flex; flex-wrap: wrap; gap: 4px; }
+.cb { font-size: 12px; padding: 3px 9px; border-radius: 5px; color: var(--ink);
+      background: color-mix(in srgb, var(--c) 13%, var(--surface)); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.cb.extra { border-style: dashed; }
+.call-row b { font: 500 18px/1 var(--f-mono); text-align: right; }
+@media (max-width: 600px) { .call-row { grid-template-columns: 1fr 34px; } .call-row .who { grid-column: 1 / -1; } }
+
+/* ---------- UI mocks ---------- */
+.mock { border: 1px solid var(--hair-2); border-radius: 12px; background: var(--surface-2); padding: 14px; font-size: 13.5px; min-width: 0; }
+.mock .cap { font: 600 10.5px/1 var(--f-body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.fake-row { display: flex; gap: 8px; }
+.fake-input { flex: 1; min-width: 0; border: 1px solid var(--hair-2); border-radius: 8px; padding: 8px 10px; background: var(--surface); color: var(--ink); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.fake-btn { border-radius: 8px; padding: 8px 14px; background: var(--ink); color: var(--surface); font-weight: 600; }
+.fake-hint { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: flex-start; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.fake-select { position: relative; display: inline-block; }
+.fake-select .sel { border: 1px solid var(--hair-2); border-radius: 6px; padding: 1px 8px; background: var(--surface); color: var(--ink); }
+.menu { margin-top: 4px; border: 1px solid var(--hair-2); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); padding: 4px 0; min-width: 210px; }
+.menu div { padding: 4px 10px; color: var(--ink); font-size: 12.5px; }
+.menu div.on { background: color-mix(in srgb, var(--search) 14%, transparent); }
+.bubble { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 10px 12px; color: var(--ink-2); font-size: 13px; }
+.bubble.q { background: var(--ink); color: var(--surface); border: 0; margin-left: auto; width: fit-content; max-width: 90%; }
+.btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.btns span { border: 1px solid var(--hair-2); border-radius: 999px; padding: 3px 10px; font-size: 12px; color: var(--ink); background: var(--surface); }
+
+.lay { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lay .pg { position: relative; height: 128px; border: 1px solid var(--hair-2); border-radius: 8px; background: var(--surface); overflow: hidden; }
+.lay .col { position: absolute; left: 18%; right: 18%; top: 0; bottom: 0; border-inline: 1px dashed var(--hair-2); }
+.lay .ab { position: absolute; left: 18%; top: 14px; height: 58px; border-radius: 6px; background: var(--sunk); padding: 6px; }
+.lay .ab i { display: block; height: 6px; margin: 4px 0; border-radius: 3px; background: var(--hair-2); }
+.lay .bad .ab { width: 78%; outline: 2px dashed var(--bad); outline-offset: 1px; }
+.lay .good .ab { width: 64%; outline: 2px solid var(--good); outline-offset: 1px; }
+.lay .pg .t { position: absolute; left: 8px; bottom: 6px; font-size: 11px; color: var(--muted); }
+
+/* ---------- docker diagram ---------- */
+.dk { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 2.2fr) auto minmax(0, 1fr); gap: 10px; align-items: center; }
+.dk .side { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 12px; font-size: 13px; color: var(--ink-2); }
+.dk .side b { display: block; color: var(--ink); }
+.dk .img { border: 2px solid var(--search); border-radius: 12px; padding: 12px; background: color-mix(in srgb, var(--search) 5%, var(--surface)); }
+.dk .img .cap { font: 600 11px/1.2 var(--f-body); letter-spacing: .07em; text-transform: uppercase; color: var(--search); margin-bottom: 8px; }
+.dk .layers { display: grid; gap: 5px; }
+.dk .layers div { background: var(--surface); border: 1px solid var(--hair); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; color: var(--ink-2); }
+.dk .layers div b { color: var(--ink); }
+.dk .ar { text-align: center; font-size: 18px; color: var(--muted); }
+@media (max-width: 760px) { .dk { grid-template-columns: 1fr; } .dk .ar { transform: rotate(90deg); } }
 
 .pill { display: inline-block; font: 600 11px/1.5 var(--f-body); letter-spacing: .04em; text-transform: uppercase;
         padding: 1px 8px; border-radius: 999px; border: 1px solid var(--hair-2); color: var(--muted); }
 .pill.good { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
 .pill.bad { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
 
+/* ---------- traces (September) ---------- */
+.trace { margin-top: 14px; }
+.trace .bar { display: grid; grid-template-columns: 210px 1fr; gap: 12px; align-items: center; margin: 5px 0; font-size: 13px; }
+.trace .bar .n { font-family: var(--f-mono); }
+.rank { display: inline-block; height: 18px; border-radius: 4px; background: var(--search); opacity: .85; max-width: 70%; vertical-align: middle; }
+.rank.bad { background: var(--bad); }
+.rank.good { background: var(--good); }
+@media (max-width: 600px) { .trace .bar { grid-template-columns: 1fr; gap: 2px; } }
+
 dl.gloss { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin: 0; }
 dl.gloss div { background: var(--surface); border: 1px solid var(--hair); border-radius: 9px; padding: 13px 15px; }
 dl.gloss dt { font-weight: 600; font-size: 14px; }
+dl.gloss dt .tag { margin-left: 6px; vertical-align: 1px; }
 dl.gloss dd { margin: 5px 0 0; font-size: 13.5px; color: var(--ink-2); }
 
 pre.cmd { background: var(--sunk); border: 1px solid var(--hair); border-radius: 8px; padding: 11px 14px; margin: 8px 0 0;
           font-family: var(--f-mono); font-size: 13px; overflow-x: auto; }
+ol.steps-n { margin: 10px 0 0; padding-left: 20px; color: var(--ink-2); font-size: 14px; }
+ol.steps-n li { margin: 5px 0; }
 
 footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 
@@ -151,8 +382,8 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   nav.toc { display: none; }
   body { background: #fff; font-size: 11pt; }
   section { break-inside: auto; page-break-inside: auto; border-bottom: 1px solid #ddd; }
-  .card, .tw, dl.gloss div { box-shadow: none; }
-  button.stage { border-left-width: 3px; }
+  .card, .tw, dl.gloss div, .tl-card { box-shadow: none; }
+  .tl-item, .step, .card { break-inside: avoid; }
   #stagePanel { display: block !important; }
 }
 </style>
@@ -161,18 +392,23 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 
 <header class="hero">
   <div class="wrap">
-    <p class="label">Knowledge base</p>
-    <h1>AP RTI Assistant</h1>
-    <p class="sub">An assistant that answers ordinary citizens' questions about the Right to Information
-       Act as it applies in Andhra Pradesh, using only documents the AP government itself publishes,
-       and citing every source.</p>
-    <p class="meta">Written 29 September 2026 · all figures measured, sources in <code>context.md</code></p>
+    <p class="label">Knowledge base · updated 6 October 2026</p>
+    <h1>AP RTI Assistant <span class="new-badge">now RTI + agriculture, English + Telugu</span></h1>
+    <p class="sub">An assistant that answers ordinary people's questions about two areas of the Andhra Pradesh
+       government: the <strong>Right to Information Act</strong>, and <strong>farm schemes, subsidies, crop insurance
+       and agriculture rules</strong>. It uses only documents the government publishes, cites every source, and
+       answers in English or Telugu.</p>
+    <p class="meta">First written 29 Sep 2026 · updated 6 Oct 2026 after 7 merged pull requests · every figure is
+       measured; sources: <code>context.md</code>, <code>docs/RETRIEVAL_EXPERIMENTS.md</code>, <code>README.md</code></p>
     <div class="stats">
-      <div class="stat"><b>41</b><span>documents indexed, chosen from 546 on the portal</span></div>
-      <div class="stat"><b>535</b><span>chunks, none cut off mid-thought</span></div>
-      <div class="stat"><b>82%</b><span>of casual questions get their answer text retrieved (was ~50%)</span></div>
-      <div class="stat"><b>~4 s</b><span>per answer: 1.5 s searching, 2.5 s writing</span></div>
-      <div class="stat"><b>₹0</b><span>infrastructure: search runs locally, answers on a free tier</span></div>
+      <div class="stat"><b>2</b><span>topics on one page, RTI and agriculture (was RTI only)</span></div>
+      <div class="stat"><b>85</b><span>documents indexed: 41 RTI + 44 agriculture</span></div>
+      <div class="stat"><b>2,430</b><span>chunks: 535 RTI + 1,895 agriculture</span></div>
+      <div class="stat"><b>96%</b><span>RTI test questions find their answer text (79/82, <em>was 87%</em>)</span></div>
+      <div class="stat"><b>86%</b><span>agriculture test questions (80/93, <em>was 82%</em>)</span></div>
+      <div class="stat"><b>31/32</b><span>fresh questions sent to the right documents</span></div>
+      <div class="stat"><b>29/29</b><span>languages recognised: English, Telugu script, Telugu in English letters</span></div>
+      <div class="stat"><b>₹0</b><span>infrastructure: search runs locally, LLMs on Groq's free tier</span></div>
     </div>
   </div>
 </header>
@@ -180,12 +416,15 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 <nav class="toc" aria-label="Sections">
   <ul class="wrap">
     <li><a href="#overview">Overview</a></li>
-    <li><a href="#problem">The problem</a></li>
-    <li><a href="#corpus">The documents</a></li>
-    <li><a href="#flow">What happens to one question</a></li>
-    <li><a href="#examples">Three questions</a></li>
-    <li><a href="#decisions">Decisions</a></li>
-    <li><a href="#numbers">How it is measured</a></li>
+    <li><a class="new" href="#changes">What changed</a></li>
+    <li><a class="new" href="#timeline">Timeline</a></li>
+    <li><a class="new" href="#flow">One question, now</a></li>
+    <li><a class="new" href="#router">Router</a></li>
+    <li><a class="new" href="#language">Telugu</a></li>
+    <li><a class="new" href="#domains">Two domains</a></li>
+    <li><a href="#scores">Scores</a></li>
+    <li><a class="new" href="#docker">Docker</a></li>
+    <li><a href="#foundation">RTI foundation (Sept)</a></li>
     <li><a href="#glossary">Glossary</a></li>
     <li><a href="#run">Run it</a></li>
     <li><a href="#open">Open items</a></li>
@@ -198,16 +437,16 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 <section id="overview">
   <div class="sec-head">
     <h2>What it does, on one real question</h2>
-    <p>A citizen types the way people actually type. The assistant finds the passages that answer it
-       in the AP government's own documents, and answers only from those, naming the section it used.</p>
+    <p>A citizen types the way people actually type. The assistant decides which documents the question is
+       about, finds the passages that answer it, and answers only from those, naming the source it used.</p>
   </div>
 
   <div class="card">
     <div class="q-block">
       <p class="qq">how much money do i need to pay for an rti in andhra pradesh</p>
       <div class="aa">
-        <p>Village-level public authority — <strong>no fee</strong>. Mandal-level — <strong>₹5</strong> per
-           application. All other public authorities — <strong>₹10</strong> per application. Copies are
+        <p>Village-level public authority: <strong>no fee</strong>. Mandal-level: <strong>₹5</strong> per
+           application. All other public authorities: <strong>₹10</strong> per application. Copies are
            ₹2 per page; a CD is ₹100. Inspecting records is free for the first hour, then ₹5 per hour.
            White-card (below-poverty-line) holders pay no application fee.</p>
         <p style="margin-top:8px">
@@ -217,31 +456,951 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
         </p>
       </div>
     </div>
-    <p class="muted" style="font-size:13px">Checked against the orders themselves: every amount is correct,
+    <p class="muted small">Checked against the orders themselves: every amount is correct,
        including the inspection fee as <em>amended</em> in 2005 rather than the original rate. This is
        Andhra Pradesh-specific detail that the state portal's own chatbot did not give.</p>
+    <div class="q-block" style="border-color:var(--tel)">
+      <p class="qq">rti fee entha <span class="muted" style="font-weight:400">(Telugu typed in English letters: "how much is the RTI fee")</span></p>
+      <p class="aa">Since 6 October the same question in Telugu, in either alphabet, is recognised as Telugu,
+         translated to English for the search, and answered in <strong>Telugu script</strong>. Amounts, order
+         numbers and section numbers stay exactly as the documents give them. Followed step by step in
+         <a href="#trace">One question, now</a>.</p>
+    </div>
   </div>
 
-  <div class="grid2" style="margin-top:14px">
+  <div class="grid3" style="margin-top:14px">
     <div class="card">
-      <p class="label">Two promises</p>
+      <p class="label">Three promises</p>
       <ul class="plain">
         <li><strong>Only the documents.</strong> Answers are written from retrieved passages, never from
             the model's own knowledge, and each claim carries a citation.</li>
         <li><strong>"I don't know" is allowed.</strong> Where the passages don't cover something, the
-            answer says so. For a question about legal rights, a confident wrong answer is worse than none.</li>
+            answer says so. A question outside both topics is declined, not guessed.</li>
+        <li><strong>Your language.</strong> Ask in English, Telugu script or Telugu in English letters; the
+            answer comes back in the same language unless you choose another.</li>
       </ul>
     </div>
     <div class="card">
       <p class="label">What it is not</p>
       <ul class="plain">
-        <li>Not legal advice, and not a filing service.</li>
-        <li>Not current on officials or amended fees: the state orders in the corpus stop at 2011.</li>
-        <li>Not reliable on one question in five, phrased casually. The open items are listed at the end.</li>
+        <li>Not legal or farming advice, and not a filing service.</li>
+        <li>Not current on everything: the indexed RTI orders stop at 2011 (newer ones are collected but not
+            yet indexed), and several agriculture orders cover a single season.</li>
+        <li>Not ready to run unsupervised: 3 of 82 RTI and 13 of 93 agriculture test questions still miss
+            their answer, and answer quality is checked by reading, not measured.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="label">Where things stand (6 Oct)</p>
+      <ul class="plain">
+        <li>All 7 pull requests are merged; GitHub <code>main</code> is at <code>8e8b1df</code>.</li>
+        <li>The web page answers both topics and has a <strong>Reply in</strong> menu.</li>
+        <li>Runs with one Docker command, or with Python directly.</li>
+        <li>Next planned topic: <strong>finance</strong>, with subcategories.</li>
       </ul>
     </div>
   </div>
 </section>
+
+<!-- ============================== WHAT CHANGED ============================== -->
+<section id="changes">
+  <div class="sec-head">
+    <h2>What changed since 29 September</h2>
+    <p>The page was first written when the assistant knew only RTI, searched with the question plus one
+       made-up passage, and spoke only English. Row by row, here is the difference.</p>
+  </div>
+
+  <div class="ba" role="table" aria-label="Before and now">
+    <div class="ba-row head" role="row"><div>Area</div><div>29 September</div><div class="to"></div><div class="now">Now (6 October)</div></div>
+    <div class="ba-row" role="row"><div class="k">Topics</div><div class="was">RTI only</div><div class="to">→</div><div class="now"><strong>RTI and agriculture</strong> on one page</div></div>
+    <div class="ba-row" role="row"><div class="k">Choosing the documents</div><div class="was">Nothing to choose; RTI was always searched</div><div class="to">→</div><div class="now">A <strong>router</strong> LLM picks RTI, agriculture or "neither" (31/32 on fresh questions); "neither" gets a polite reply with ask-anyway buttons</div></div>
+    <div class="ba-row" role="row"><div class="k">Documents indexed</div><div class="was">41 documents, 535 chunks</div><div class="to">→</div><div class="now"><strong>85 documents, 2,430 chunks</strong> (41 RTI + 44 agriculture), one index per topic</div></div>
+    <div class="ba-row" role="row"><div class="k">Search per question</div><div class="was">The question + a HyDE passage, merged</div><div class="to">→</div><div class="now">+ an LLM-written <strong>topic and key terms</strong> (both topics); + a <strong>reranker</strong> (agriculture only)</div></div>
+    <div class="ba-row" role="row"><div class="k">RTI: answer text found</div><div class="was">87% (47/54; 71/82 on today's larger set)</div><div class="to">→</div><div class="now"><strong>96%</strong> (79/82); final unseen set 12 → <strong>15/15</strong></div></div>
+    <div class="ba-row" role="row"><div class="k">Agriculture: answer text found</div><div class="was">did not exist</div><div class="to">→</div><div class="now"><strong>86%</strong> (80/93; 82% before the 4–5 Oct search changes)</div></div>
+    <div class="ba-row" role="row"><div class="k">Telugu questions</div><div class="was">English only; Telugu found its answer only by luck</div><div class="to">→</div><div class="now">Telugu script <em>and</em> Telugu in English letters recognised (29/29), <strong>translated for the search</strong></div></div>
+    <div class="ba-row" role="row"><div class="k">Reply language</div><div class="was">Whatever the model chose</div><div class="to">→</div><div class="now">Always stated to the model. Default: the question's language. <strong>Reply in</strong> menu: English · తెలుగు · Telugu in English letters</div></div>
+    <div class="ba-row" role="row"><div class="k">LLM calls per question</div><div class="was">2 (HyDE, answer)</div><div class="to">→</div><div class="now">4 (router, HyDE, rewrite, answer); <strong>5 for Telugu</strong> (translation); +1 for a follow-up</div></div>
+    <div class="ba-row" role="row"><div class="k">When Groq's daily limit hits</div><div class="was">Retry, then the smaller answer model</div><div class="to">→</div><div class="now">Every LLM step has a fallback; a model at its daily limit is skipped for 10 minutes</div></div>
+    <div class="ba-row" role="row"><div class="k">Running it</div><div class="was"><code>python rag\web.py</code>, port 8000</div><div class="to">→</div><div class="now"><strong>One Docker command</strong> (port 8765), or Python as before</div></div>
+    <div class="ba-row" role="row"><div class="k">Web page</div><div class="was">Wide answers could spill out of the column</div><div class="to">→</div><div class="now">Answer boxes stay inside the column; <strong>Reply in</strong> menu; can't-help reply in three language forms</div></div>
+    <div class="ba-row" role="row"><div class="k">Documentation</div><div class="was">README, context.md, this page</div><div class="to">→</div><div class="now">+ <code>docs/RETRIEVAL_EXPERIMENTS.md</code> (about 40 techniques per topic), router and language tests, all READMEs rewritten</div></div>
+  </div>
+
+  <h3>Repository check, 6 October</h3>
+  <div class="status">
+    <span class="chip"><i class="dot"></i>GitHub <code>main</code> = <code>8e8b1df</code>, all 7 pull requests merged</span>
+    <span class="chip"><i class="dot"></i>Local <code>main</code> pulled and identical to GitHub</span>
+    <span class="chip"><i class="dot"></i>No unmerged branches; nothing uncommitted in the code</span>
+    <span class="chip warn"><i class="dot"></i>Docker image predates the 6 Oct language fix: run <code>docker compose up --build</code> once</span>
+  </div>
+</section>
+
+<!-- ============================== TIMELINE ============================== -->
+<section id="timeline">
+  <div class="sec-head">
+    <h2>Every update, in order</h2>
+    <p>Ten changes in three days on GitHub (<code>Nikhilkarur/AP-ASSIS</code>); all but the first went in
+       through a pull request. Each card says what changed, why, and what it measured.</p>
+  </div>
+
+  <div class="tl">
+
+    <p class="tl-day">Saturday 4 October</p>
+
+    <div class="tl-item" style="--c:var(--muted)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>The project goes on GitHub</h3><span class="tag">setup</span><span class="pr">commit 7ffc0ca</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li>The project was put under git and pushed to <code>Nikhilkarur/AP-ASSIS</code>.</li>
+              <li>Kept out of git: the <code>.env</code> key file, the generated vector database, and README exports that go stale.</li>
+              <li>Stale documents refreshed (PROJECT_BRIEF.md still said "nothing coded yet").</li>
+            </ul>
+          </div>
+          <div><h4>Why</h4><p class="why">Every later change needed a reviewable history, and the next goal (a multi-topic AP
+             government assistant) needed a shared home.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--ingest)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>Data collection for more topics</h3><span class="tag">data</span><span class="pr">PR #1</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li>New collection tools: a catalogue of every ap.gov.in file link, a search of the AP Government
+                  Order register (every G.O. since 2008), and a collector that records checksum, pages, text layer
+                  and language per file.</li>
+              <li>Documents staged for <strong>RTI's gaps</strong> (online filing via RTIMIS, the data-protection law's
+                  amendment to s.8(1)(j) in force since November 2025, the 2019 RTI amendment, the current Commission order) and for
+                  <strong>agriculture</strong>, including the official 2024 scheme-rename table (YSR Rythu Bharosa → Annadata
+                  Sukhibhava, RBK → Rythu Seva Kendram, ...).</li>
+              <li>Finance: scope proposal only, then <strong>deferred</strong> and planned as one topic with subcategories.</li>
+            </ul>
+            <h4>Found on the way</h4>
+            <ul>
+              <li>Every ap.gov.in file link, including all 41 current RTI sources, now returns 401/404.</li>
+              <li>The old agriculture site (apagrisnet) is retired; the department now publishes on
+                  agriculture.ap.gov.in. TLS checking was waived for the old site only, with approval, and no 403 was bypassed.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measured</h4>
+            <div class="tiles">
+              <div class="tile"><b>715</b><span>file links catalogued on ap.gov.in</span></div>
+              <div class="tile"><b>825</b><span>files in the agriculture department's listing</span></div>
+              <div class="tile"><b>27</b><span>RTI documents staged (not yet indexed)</span></div>
+              <div class="tile"><b>46</b><span>agriculture documents staged (44 with text)</span></div>
+              <div class="tile"><b>71</b><span>real questions from official FAQs</span></div>
+              <div class="tile"><b>0</b><span>logins, CAPTCHAs or personal data used</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="files">ingest/collect/ · ingest/incoming/{rti,agriculture,finance,questions}/ · docs/DATA_COLLECTION_BRIEF.md</p>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--agri)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>Agriculture runs through the same pipeline as RTI</h3><span class="tag">new topic</span><span class="pr">PR #2</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li><code>rag/domains.py</code> holds everything that differs per topic: documents, index, prompts, web text.
+                  Every script takes <code>--domain</code>. RTI's prompts moved over unchanged, and RTI still scored 47/54.</li>
+              <li>44 agriculture documents → <strong>1,895 chunks</strong>. Five table-heavy PDFs cut to their useful pages
+                  (the crop-insurance order: pages 1–47 of 864).</li>
+              <li>Agriculture-only fixes: the document title embedded with each chunk; at most <strong>one passage from a
+                  replaced scheme</strong>; a glossary of local abbreviations for HyDE; answer rules that know today's date
+                  and the 2024 renames.</li>
+            </ul>
+            <h4>Why those fixes</h4>
+            <p class="why">The old YSR Rythu Bharosa order took the top two places for every Annadata Sukhibhava question, and
+               HyDE read "RBK" as "Rural Business Knowledge Centre". Titles help here because they name the scheme and
+               crop; they hurt RTI, where every title says "Right to Information Act".</p>
+          </div>
+          <div>
+            <h4>Measured (agriculture sets)</h4>
+            <div class="meters" style="--c:var(--agri)">
+              <div class="meter"><div class="ml"><span>Cap replaced schemes at one passage (formal set)</span><span class="d">+13 pts</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:79%"></i></span><b>79%</b></div>
+                <div class="bar2 now"><span>after</span><span class="tr"><i style="--w:92%"></i></span><b>92%</b></div></div>
+              <div class="meter"><div class="ml"><span>Document title embedded with each chunk</span><span class="d">+13 pts</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:81%"></i></span><b>81%</b></div>
+                <div class="bar2 now"><span>after</span><span class="tr"><i style="--w:94%"></i></span><b>94%</b></div></div>
+              <div class="meter"><div class="ml"><span>HyDE on a clean casual set (heldout2, 13)</span><span class="d">+15 pts</span></div>
+                <div class="bar2 was"><span>without</span><span class="tr"><i style="--w:54%"></i></span><b>54%</b></div>
+                <div class="bar2 now"><span>with</span><span class="tr"><i style="--w:69%"></i></span><b>69%</b></div></div>
+            </div>
+            <p class="muted small" style="margin-top:10px">End state: formal 96%, casual 92%, the two clean casual sets 69% each.</p>
+          </div>
+        </div>
+        <p class="files">rag/domains.py · ingest/load_and_chunk.py · ingest/build_index.py · eval/agri_questions.json</p>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--llm)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>About 40 search techniques tested per topic</h3><span class="tag">experiments</span><span class="pr">PR #3</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li>An experiment bench (<code>eval/experiments.py</code>) that reproduces the live search exactly and
+                  scores any combination of techniques.</li>
+              <li>Fresh test questions written <em>before</em> any experiment ran, including a final set per topic that
+                  was used only once, at the end.</li>
+              <li>Every LLM output (HyDE passages, rewrites, document picks) generated once and cached, so every
+                  technique was compared on identical text.</li>
+            </ul>
+            <h4>The finding</h4>
+            <p class="why"><strong>The two topics need opposite fixes.</strong> RTI improves when an LLM names the legal
+               topic, because the model knows the RTI Act's wording, and a reranker hurts it. Agriculture improves most with a
+               reranker that reads the question and passage together. Full chart in <a href="#domains">Two domains</a>.</p>
+          </div>
+          <div>
+            <h4>Measured (out of 67 RTI / 79 agriculture)</h4>
+            <div class="meters">
+              <div class="meter" style="--c:var(--rti)"><div class="ml"><span>RTI, + topic + key terms</span><span class="d">+5</span></div>
+                <div class="bar2 was"><span>live</span><span class="tr"><i style="--w:88.1%"></i></span><b>59</b></div>
+                <div class="bar2 now"><span>best</span><span class="tr"><i style="--w:95.5%"></i></span><b>64</b></div></div>
+              <div class="meter" style="--c:var(--agri)"><div class="ml"><span>Agriculture, + topic + key terms + reranker</span><span class="d">+5</span></div>
+                <div class="bar2 was"><span>live</span><span class="tr"><i style="--w:78.5%"></i></span><b>62</b></div>
+                <div class="bar2 now"><span>best</span><span class="tr"><i style="--w:84.8%"></i></span><b>67</b></div></div>
+              <div class="meter" style="--c:var(--rti)"><div class="ml"><span>RTI with a reranker that replaces the search order</span><span class="d down">−11</span></div>
+                <div class="bar2 was"><span>live</span><span class="tr"><i style="--w:88.1%"></i></span><b>59</b></div>
+                <div class="bar2 now" style="--c:var(--bad)"><span>rerank</span><span class="tr"><i style="--w:71.6%"></i></span><b>48</b></div></div>
+            </div>
+          </div>
+        </div>
+        <p class="files">eval/experiments.py · rag/query_expansion.py · eval/cache/ · docs/RETRIEVAL_EXPERIMENTS.md</p>
+      </div>
+    </div>
+
+    <p class="tl-day">Sunday 5 October</p>
+
+    <div class="tl-item" style="--c:var(--rti)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>One page for both topics: the router, and each topic's best search switched on</h3><span class="tag">feature</span><span class="pr">PR #4</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li><code>rag/router.py</code>: one small LLM call before any search answers <code>rti</code>,
+                  <code>agriculture</code> or <code>other</code>. "Other" gets a short reply and buttons to ask either
+                  assistant anyway, with no search and no answer-model call.</li>
+              <li>The default everywhere is now <code>--domain auto</code> (web page, terminal chat, answer.py).</li>
+              <li>RTI: + topic and key terms. Agriculture: the same + the MiniLM reranker over the top 30, its order
+                  fused with the search order.</li>
+              <li>Every LLM step falls back instead of failing; a model that reports its <em>daily</em> limit is skipped
+                  for 10 minutes so questions don't each wait on retries.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measured</h4>
+            <div class="meters">
+              <div class="meter" style="--c:var(--rti)"><div class="ml"><span>RTI, all question sets (82)</span><span class="d">+8</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:86.6%"></i></span><b>71</b></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:96.3%"></i></span><b>79</b></div></div>
+              <div class="meter" style="--c:var(--rti)"><div class="ml"><span>RTI, final set never used for tuning (15)</span><span class="d">+3</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:80%"></i></span><b>12</b></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>15</b></div></div>
+              <div class="meter" style="--c:var(--agri)"><div class="ml"><span>Agriculture, all question sets (93)</span><span class="d">+4</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:81.7%"></i></span><b>76</b></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:86%"></i></span><b>80</b></div></div>
+              <div class="meter" style="--c:var(--rti)"><div class="ml"><span>Router, fresh questions (32)</span><span class="d"></span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:96.9%"></i></span><b>31</b></div></div>
+            </div>
+          </div>
+        </div>
+        <p class="files">rag/router.py · rag/domains.py · rag/retrieve.py · rag/answer.py · rag/web.py · rag/web.html · eval/router_eval.py · eval/router_questions.json</p>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--search)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>The whole assistant in one Docker container</h3><span class="tag">infrastructure</span><span class="pr">PR #5</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li><code>Dockerfile</code> + <code>compose.yaml</code>: Python 3.12 with CPU-only PyTorch, both local models and
+                  both search indexes built into the image.</li>
+              <li>Runs as a non-root user, works offline for the local models, and has a health check. The Groq key comes from
+                  <code>.env</code> at run time and is never stored in the image.</li>
+              <li>Port <strong>8765</strong> on this computer, because 8000 was already taken by another local project.</li>
+            </ul>
+            <h4>Why</h4>
+            <p class="why">So anyone can run it with one command, without installing Python packages or building indexes.</p>
+          </div>
+          <div>
+            <h4>Measured</h4>
+            <div class="tiles">
+              <div class="tile"><b>2.77 GB</b><span>image size</span></div>
+              <div class="tile"><b>~12 min</b><span>first build</span></div>
+              <div class="tile"><b>~40 s</b><span>to start after that</span></div>
+              <div class="tile"><b>same</b><span>scores inside the container: RTI 79/82, agriculture 80/93, router 31/32</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="files">Dockerfile · compose.yaml · .dockerignore · rag/web.py (--host)</p>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--bad)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>Web page: answers stay inside the column</h3><span class="tag">fix</span><span class="pr">PR #5</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li>A long answer (a wide table, a long unbroken word) pushed its box past the page column.</li>
+              <li>The column now lets its content shrink, and long words wrap.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Before → after</h4>
+            <div class="lay" aria-hidden="true">
+              <div class="pg bad"><div class="col"></div><div class="ab"><i></i><i style="width:80%"></i><i style="width:92%"></i></div><span class="t">before: spills out</span></div>
+              <div class="pg good"><div class="col"></div><div class="ab"><i></i><i style="width:80%"></i><i style="width:60%"></i></div><span class="t">after: stays in</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="files">rag/web.html</p>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--tel)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>Telugu-script questions translated for the search</h3><span class="tag">language</span><span class="pr">PR #5</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li>Every document is English, and the search reads only English: keyword search drops Telugu letters, and the
+                  embedding and reranker models are English models.</li>
+              <li>A question containing Telugu script is translated to English (qwen3.8-27b); every search step uses the
+                  translation.</li>
+              <li>The answer model gets the <strong>original</strong> question plus an instruction to answer in Telugu script.
+                  Without it, the model followed the English translation and answered in English.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measured (8 Telugu-script questions)</h4>
+            <div class="meters" style="--c:var(--tel)">
+              <div class="meter"><div class="ml"><span>Answer text in the top 10</span><span class="d">+1</span></div>
+                <div class="bar2 was"><span>before</span><span class="tr"><i style="--w:87.5%"></i></span><b>7/8</b></div>
+                <div class="bar2 now"><span>after</span><span class="tr"><i style="--w:100%"></i></span><b>8/8</b></div></div>
+            </div>
+            <p class="muted small" style="margin-top:8px">Biggest moves: "do tenant farmers get Annadata Sukhibhava" rank 9 → 2;
+               "drip subsidy for an SC small farmer" 11 → 2.</p>
+          </div>
+        </div>
+        <p class="files">rag/query_expansion.py (to_english) · rag/answer.py</p>
+      </div>
+    </div>
+
+    <div class="tl-item" style="--c:var(--muted)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>All READMEs rewritten for the two-topic assistant</h3><span class="tag">docs</span><span class="pr">PR #6</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li>README.md now describes the current system first: which model does which step, what each step reads,
+                  results, limitations, and how to run it with or without Docker.</li>
+              <li>PROJECT_BRIEF.md, context.md, the data-collection brief and the incoming-documents README brought up to date.</li>
+            </ul>
+          </div>
+          <div><h4>Why</h4><p class="why">The docs still described an RTI-only bot after four changes that made it a two-topic one.</p></div>
+        </div>
+        <p class="files">README.md · PROJECT_BRIEF.md · context.md · ingest/incoming/README.md · docs/DATA_COLLECTION_BRIEF.md</p>
+      </div>
+    </div>
+
+    <p class="tl-day">Monday 6 October</p>
+
+    <div class="tl-item" style="--c:var(--tel)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>The language is recognised, and the reply is always in the right one</h3><span class="tag">language fix</span><span class="pr">PR #7</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>The bug</h4>
+            <p class="why">Asked in Telugu, it sometimes answered in English. Only Telugu <em>script</em> was recognised (a
+               letter check), so "rti fee entha" got no translation and no reply-language instruction, and came back in English.
+               The can't-help reply was English even for Telugu-script questions.</p>
+            <h4 style="margin-top:12px">What changed</h4>
+            <ul>
+              <li>The router's answer is now two words, topic and language (<code>rti telugu</code>), so Telugu in English
+                  letters is recognised <strong>with no extra call</strong>.</li>
+              <li>Every Telugu question, in either alphabet, is translated for the search.</li>
+              <li>The answer model is <strong>always</strong> told the reply language. Default: the question's (Telugu in
+                  either alphabet → Telugu script). The web page's <strong>Reply in</strong> menu, chat <code>/lang</code> and
+                  <code>answer.py --reply</code> override it.</li>
+              <li>The can't-help reply now exists in English, Telugu script and Telugu in English letters.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measured (29 new questions)</h4>
+            <div class="meters" style="--c:var(--tel)">
+              <div class="meter"><div class="ml"><span>Language recognised</span><span class="d">+11</span></div>
+                <div class="bar2 was"><span>letters</span><span class="tr"><i style="--w:62.1%"></i></span><b>18/29</b></div>
+                <div class="bar2 now"><span>router</span><span class="tr"><i style="--w:100%"></i></span><b>29/29</b></div></div>
+              <div class="meter"><div class="ml"><span>Telugu-script questions: answer text found</span><span class="d">+2</span></div>
+                <div class="bar2 was"><span>as typed</span><span class="tr"><i style="--w:77.8%"></i></span><b>7/9</b></div>
+                <div class="bar2 now"><span>translated</span><span class="tr"><i style="--w:100%"></i></span><b>9/9</b></div></div>
+              <div class="meter"><div class="ml"><span>Reply in the expected language (full answers)</span><span class="d"></span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>6/6</b></div></div>
+            </div>
+            <p class="muted small" style="margin-top:8px">"letters" = the old letter check, counted on the same questions: it cannot
+               see the 11 written in English letters. Routing is unchanged: 270/274 and 31/32.</p>
+          </div>
+        </div>
+        <p class="files">rag/router.py (v2) · rag/query_expansion.py · rag/answer.py · rag/web.py · rag/web.html · rag/chat.py · eval/language_eval.py · eval/language_questions.json</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================== FLOW ============================== -->
+<section id="flow">
+  <div class="sec-head">
+    <h2>What happens to one question, now</h2>
+    <p>First a real question followed through every step, using the outputs actually saved during testing. Then the
+       whole pipeline, which you can click.</p>
+  </div>
+
+  <h3 id="trace">Followed through: "rti fee entha"</h3>
+  <div class="steps">
+    <div class="step" style="--c:var(--tel)"><span class="no">1</span><div>
+      <h4>You type <span class="reads orig">your words</span></h4>
+      <div class="out">rti fee entha</div>
+      <p class="note">Telugu typed in English letters. Before 6 October, the letter check saw no Telugu letters, called it English,
+         skipped translation and replied in English.</p></div></div>
+    <div class="step" style="--c:var(--rti)"><span class="no">2</span><div>
+      <h4>Router: which documents, which language? <span class="model">gpt-oss-20b</span><span class="reads orig">reads your words</span></h4>
+      <div class="out">rti telugu</div>
+      <p class="note">RTI documents; the question is in Telugu. One call does both jobs.</p></div></div>
+    <div class="step" style="--c:var(--tel)"><span class="no">3</span><div>
+      <h4>Translate for the search <span class="model">qwen3.8-27b</span><span class="reads orig">reads your words</span></h4>
+      <div class="out">What is the RTI fee?</div>
+      <p class="note">Runs only for Telugu questions. From here until the answer, every step works on this English version.</p></div></div>
+    <div class="step" style="--c:var(--llm)"><span class="no">4</span><div>
+      <h4>HyDE: a made-up passage in the law's style <span class="model">gpt-oss-20b</span><span class="reads eng">reads English</span></h4>
+      <div class="out">The fee payable for the request is one hundred rupees, payable to the officer in charge of the public authority,
+         and the request shall be processed within the statutory time limits.</div>
+      <p class="note"><strong>The amount is wrong</strong> (AP charges ₹10, ₹5 at mandal level, nothing at village level). That doesn't
+         matter: the passage is only searched with, for words like "fee payable" and "public authority". Nobody ever sees it.</p></div></div>
+    <div class="step" style="--c:var(--llm)"><span class="no">5</span><div>
+      <h4>Topic and key terms <span class="model">qwen3.8-27b</span><span class="reads eng">reads English</span></h4>
+      <div class="out">topic: Application fee for obtaining information<br>
+        key terms: <span class="kw">application fee</span><span class="kw">ten rupees</span><span class="kw">prescribed fee</span><span class="kw">payment</span><span class="kw">demand draft</span><span class="kw">inspection</span><span class="kw">copy</span><span class="kw">certified copy</span></div>
+      <p class="note">The topic names the rule being asked about, in the documents' own words. RTI's misses were mostly about
+         <em>which rule</em> a question is about.</p></div></div>
+    <div class="step" style="--c:var(--search)"><span class="no">6</span><div>
+      <h4>Search and merge <span class="model">bge-small + BM25</span><span class="reads local">on this computer</span></h4>
+      <div class="out">question, HyDE passage, topic → searched by meaning and by keywords · key terms → keywords only<br>
+         → merged by Reciprocal Rank Fusion → top 10 passages + any amending orders</div>
+      <p class="note">Measured: the passage with the AP fee schedule ("per application") reached the top 10. RTI uses no reranker.</p></div></div>
+    <div class="step" style="--c:var(--answer)"><span class="no">7</span><div>
+      <h4>Answer with citations <span class="model">gpt-oss-120b</span><span class="reads orig">reads your words</span></h4>
+      <div class="out">question: "rti fee entha" + the 10–14 numbered passages + the rule:<br>
+         "Write the answer in Telugu script (తెలుగు), even if the question was typed in English letters. Keep section numbers,
+         order numbers, amounts, dates and scheme names exactly as the passages give them."</div>
+      <p class="note">Checked: the reply came back in Telugu script. The answer model gets <em>your</em> question, not the translation,
+         so it answers what you actually asked.</p></div></div>
+  </div>
+
+  <h3>The whole pipeline (click any box)</h3>
+  <div class="flow-legend">
+    <span><span class="reads orig">your words</span> reads the question as you typed it</span>
+    <span><span class="reads eng">English</span> reads the English translation (the same as yours for English questions)</span>
+    <span><span class="only">only sometimes</span> runs only in some cases</span>
+  </div>
+  <div class="flow">
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="q" style="--c:var(--ink-2)"><b>Your question</b><span class="d">English, Telugu script, or Telugu in English letters</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row">
+      <button class="stage" data-s="router" style="--c:var(--rti)"><b>1 · Router: documents + language</b><span class="d">"rti telugu", "agriculture english", "other ..."</span><span class="chips"><span class="model">gpt-oss-20b</span><span class="reads orig">your words</span></span></button>
+      <button class="stage branch" data-s="decline" style="--c:var(--bad)"><b>"other" → polite decline</b><span class="d">no search; ask-anyway buttons; in your language</span><span class="chips"><span class="only">neither topic</span></span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row">
+      <button class="stage" data-s="condense" style="--c:var(--llm)"><b>2 · Follow-up rewrite</b><span class="d">"what if i still dont get it" → a full question</span><span class="chips"><span class="model">gpt-oss-120b</span><span class="reads orig">your words</span><span class="only">follow-ups</span></span></button>
+      <button class="stage" data-s="translate" style="--c:var(--tel)"><b>3 · Translate to English</b><span class="d">for the search only</span><span class="chips"><span class="model">qwen3.8-27b</span><span class="reads orig">your words</span><span class="only">Telugu</span></span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row">
+      <button class="stage" data-s="hyde" style="--c:var(--llm)"><b>4a · HyDE passage</b><span class="d">what the documents would say</span><span class="chips"><span class="model">gpt-oss-20b</span><span class="reads eng">English</span></span></button>
+      <button class="stage" data-s="rewrite" style="--c:var(--llm)"><b>4b · Topic + key terms</b><span class="d">names the rule or scheme asked about</span><span class="chips"><span class="model">qwen3.8-27b</span><span class="reads eng">English</span></span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="search" style="--c:var(--search)"><b>5 · Search by meaning + keywords, merged</b><span class="d">question, HyDE, topic, key terms → Reciprocal Rank Fusion</span><span class="chips"><span class="model">bge-small-en-v1.5 + BM25</span><span class="reads eng">English</span></span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="rerank" style="--c:var(--agri)"><b>6 · Reranker re-reads the top 30</b><span class="d">question and passage read together; order fused with the search order</span><span class="chips"><span class="model">ms-marco-MiniLM-L-6-v2</span><span class="reads eng">English</span><span class="only">agriculture</span></span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="pack" style="--c:var(--ingest)"><b>7 · Top 10 + amending orders</b><span class="d">a rule without its amendment is wrong; replaced schemes capped at one passage</span></button>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="flow-row" style="grid-template-columns:1fr">
+      <button class="stage" data-s="answer" style="--c:var(--answer)"><b>8 · Answer in the reply language</b><span class="d">numbered passages + strict rules + the reply-language rule → cited answer</span><span class="chips"><span class="model">gpt-oss-120b</span><span class="reads orig">your words</span></span></button>
+    </div>
+  </div>
+
+  <div class="card" id="stagePanel" aria-live="polite"></div>
+
+  <h3>Which model does what</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Step</th><th>Model (fallback)</th><th>Runs on</th><th>Reads</th></tr></thead>
+      <tbody>
+        <tr><td>1. Router: documents and language</td><td><code>gpt-oss-20b</code> (<code>qwen3.8-27b</code>, then embedding similarity + letter check)</td><td>Groq</td><td>your words + earlier questions</td></tr>
+        <tr><td>2. Follow-up rewrite <span class="only">follow-ups</span></td><td><code>gpt-oss-120b</code> (<code>gpt-oss-20b</code>)</td><td>Groq</td><td>your words + last 3 turns</td></tr>
+        <tr><td>3. Translate to English <span class="only">Telugu</span></td><td><code>qwen3.8-27b</code> (<code>gpt-oss-20b</code>)</td><td>Groq</td><td>your words</td></tr>
+        <tr><td>4a. HyDE search passage</td><td><code>gpt-oss-20b</code> (skipped)</td><td>Groq</td><td>English</td></tr>
+        <tr><td>4b. Topic + key terms</td><td><code>qwen3.8-27b</code> (<code>gpt-oss-20b</code>, then skipped)</td><td>Groq</td><td>English</td></tr>
+        <tr><td>5. Search by meaning + keywords, merged</td><td><code>bge-small-en-v1.5</code> + BM25</td><td>this computer</td><td>English question, HyDE, topic, key terms</td></tr>
+        <tr><td>6. Reranker <span class="only">agriculture</span></td><td><code>ms-marco-MiniLM-L-6-v2</code></td><td>this computer, 1.3–1.8 s</td><td>English question + top 30</td></tr>
+        <tr><td>7. Top 10 + amending orders</td><td>no model: links built when the documents were indexed</td><td>this computer</td><td>the merged ranking</td></tr>
+        <tr><td>8. Answer with citations</td><td><code>gpt-oss-120b</code> (<code>gpt-oss-20b</code>)</td><td>Groq</td><td>your words + 10–14 passages + reply rule</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted small" style="margin-top:10px;max-width:76ch">Typical time: 3–4 s to search, 3–4 s to answer. When a Groq model hits
+     its daily limit, its step falls back as shown and the app keeps answering, with somewhat weaker search.</p>
+</section>
+
+<!-- ============================== ROUTER ============================== -->
+<section id="router">
+  <div class="sec-head">
+    <h2>The router: which documents, and which language</h2>
+    <p>Before any search, one small LLM call reads a one-line description of each topic and the earlier questions of the
+       conversation, and answers in two words. A conversation can switch between RTI and agriculture.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <p class="label">Embedding similarity vs. an LLM, on 274 labelled questions</p>
+      <div class="meters" style="margin-top:12px">
+        <div class="meter"><div class="ml"><span>Plain, trap, out-of-scope and follow-up questions (57)</span><span class="d">+22</span></div>
+          <div class="bar2 was"><span>similar.</span><span class="tr"><i style="--w:61.4%"></i></span><b>35</b></div>
+          <div class="bar2 now" style="--c:var(--rti)"><span>LLM</span><span class="tr"><i style="--w:100%"></i></span><b>57</b></div></div>
+        <div class="meter"><div class="ml"><span>Real questions from official FAQs (71)</span><span class="d">+13</span></div>
+          <div class="bar2 was"><span>similar.</span><span class="tr"><i style="--w:76.1%"></i></span><b>54</b></div>
+          <div class="bar2 now" style="--c:var(--rti)"><span>LLM</span><span class="tr"><i style="--w:94.4%"></i></span><b>67</b></div></div>
+        <div class="meter"><div class="ml"><span>Every retrieval test question (146)</span><span class="d">+7</span></div>
+          <div class="bar2 was"><span>similar.</span><span class="tr"><i style="--w:95.2%"></i></span><b>139</b></div>
+          <div class="bar2 now" style="--c:var(--rti)"><span>LLM</span><span class="tr"><i style="--w:100%"></i></span><b>146</b></div></div>
+        <div class="meter"><div class="ml"><span><strong>Final set, frozen before the LLM ever ran (32)</strong>, one call per question, as live</span><span class="d"></span></div>
+          <div class="bar2 now" style="--c:var(--rti)"><span>LLM</span><span class="tr"><i style="--w:96.9%"></i></span><b>31</b></div></div>
+      </div>
+      <p class="muted small" style="margin-top:12px">Embedding similarity never says "other" and leans to agriculture, the bigger
+         collection. The LLM's misses: two FAQ lines that make no sense alone ("Who is covered?"), two grievance-portal
+         questions sent to RTI, and "what is suo motu disclosure" (an RTI term) sent to "other".</p>
+    </div>
+
+    <div>
+      <div class="card">
+        <p class="label">If a model is unavailable</p>
+        <div class="chain v" style="margin-top:10px">
+          <div class="box" style="--c:var(--rti)"><b>gpt-oss-20b</b>~650 tokens per question</div>
+          <div class="ar">↓ if it has hit its daily limit</div>
+          <div class="box" style="--c:var(--llm)"><b>qwen3.8-27b</b>55/57 on the first set (earlier prompt)</div>
+          <div class="ar">↓ if no LLM answers</div>
+          <div class="box" style="--c:var(--muted)"><b>Embedding similarity</b>+ Telugu-letter check for the language</div>
+        </div>
+        <p class="muted small" style="margin-top:10px">A model that reports its daily limit is skipped for 10 minutes. Groq's free
+           tier allows 200,000 tokens per model per day.</p>
+      </div>
+
+      <div class="mock" style="margin-top:14px">
+        <p class="cap">When the answer is "other": the same reply, in your language</p>
+        <div class="bubble q">రేషన్ కార్డు కోసం ఎలా దరఖాస్తు చేయాలి?</div>
+        <div class="bubble" style="margin-top:8px">నేను ఆంధ్రప్రదేశ్ ప్రభుత్వ అధికారిక పత్రాల ఆధారంగా ఈ అంశాలపై మాత్రమే సమాధానం ఇవ్వగలను:
+          సమాచార హక్కు చట్టం (RTI); వ్యవసాయ పథకాలు, సబ్సిడీలు, పంట బీమా, నిబంధనలు. మీ ప్రశ్న వేరే విషయం గురించి ఉన్నట్టుంది,
+          కాబట్టి ఊహించి చెప్పను. ఇది వీటిలో ఒకదానికి సంబంధించినదైతే, క్రింద ఎంచుకోండి — ఆ పత్రాలలో వెతుకుతాను.
+          <div class="btns"><span>RTI పత్రాలలో వెతకండి</span><span>Agriculture పత్రాలలో వెతకండి</span></div>
+        </div>
+        <p class="muted small" style="margin-top:8px">In English the buttons read "Ask the RTI assistant" and "Ask the Agriculture
+           assistant". A declined question costs one LLM call, the router's.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== LANGUAGE ============================== -->
+<section id="language">
+  <div class="sec-head">
+    <h2>Telugu: how a question in Telugu is handled</h2>
+    <p>The documents are English and the search only reads English, so a Telugu question is translated for the search. The
+       answer model reads your own question and is told which language to write in.</p>
+  </div>
+
+  <h3>What happened to each kind of question, version by version</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Question typed as</th><th>Step</th><th class="c">Until 5 Oct</th><th class="c">5 Oct (PR #5)</th><th class="c">6 Oct (PR #7)</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3"><strong>Telugu script</strong><br><span class="muted">ఆర్టీఐ దరఖాస్తుకు ఫీజు ఎంత?</span></td>
+            <td>recognised as Telugu</td><td class="c no">✗ no</td><td class="c yes">✓ letter check</td><td class="c yes">✓ router</td></tr>
+        <tr><td>translated for the search</td><td class="c no">✗ no</td><td class="c yes">✓ yes</td><td class="c yes">✓ yes</td></tr>
+        <tr><td>told to reply in Telugu</td><td class="c no">✗ model's choice</td><td class="c yes">✓ yes</td><td class="c yes">✓ yes</td></tr>
+        <tr><td rowspan="3"><strong>Telugu in English letters</strong><br><span class="muted">rti fee entha</span></td>
+            <td>recognised as Telugu</td><td class="c no">✗ no</td><td class="c no">✗ no Telugu letters</td><td class="c yes">✓ router</td></tr>
+        <tr><td>translated for the search</td><td class="c no">✗ no</td><td class="c no">✗ no</td><td class="c yes">✓ yes</td></tr>
+        <tr><td>told to reply in Telugu</td><td class="c no">✗ model's choice</td><td class="c no">✗ came back in English</td><td class="c yes">✓ Telugu script</td></tr>
+        <tr><td><strong>Any question outside both topics</strong></td><td>can't-help reply</td><td class="c no">✗ English only</td><td class="c no">✗ English only</td><td class="c yes">✓ in the reply language</td></tr>
+        <tr><td><strong>Any question</strong></td><td>choose the reply language</td><td class="c na">—</td><td class="c na">—</td><td class="c yes">✓ Reply in menu</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Measured on 29 new questions, written before the fix ran</h3>
+  <div class="card">
+      <div class="tw" style="border:0">
+        <table>
+          <thead><tr><th>Group</th><th class="num">Topic right</th><th class="num">Language right</th><th class="num">Answer found: as typed → translated</th></tr></thead>
+          <tbody>
+            <tr><td>English (8)</td><td class="num">8</td><td class="num">8</td><td class="num">6/6 → 6/6</td></tr>
+            <tr><td>Telugu script (10)</td><td class="num">10</td><td class="num">10</td><td class="num">7/9 → <strong>9/9</strong></td></tr>
+            <tr><td>Telugu in English letters (11)</td><td class="num">11</td><td class="num">11</td><td class="num">10/10 → 10/10</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small" style="margin-top:8px">Reply language, on 6 full answers (2 per group): all right, including
+         "rti fee entha" → Telugu script. "Answer found" counts questions with a known answering text.</p>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="mock">
+      <p class="cap">The web page's new Reply in menu</p>
+      <div class="fake-row"><span class="fake-input">rti fee entha</span><span class="fake-btn">Ask</span></div>
+      <div class="fake-hint">
+        <span>Takes 3–6 seconds. Free tier: leave about 30 seconds between questions.</span>
+        <span class="fake-select">Reply in <span class="sel">Same as my question ▾</span>
+          <span class="menu" style="display:block">
+            <div class="on">Same as my question</div>
+            <div>English</div>
+            <div>తెలుగు</div>
+            <div>Telugu (English letters)</div>
+          </span>
+        </span>
+      </div>
+      <p class="muted small" style="margin-top:10px">"Same as my question" answers Telugu in either alphabet in Telugu script. The
+         choice is remembered in the browser. Below each answer the page notes, for example, "reply in తెలుగు".</p>
+    </div>
+
+  <div class="card">
+    <p class="label" style="margin-bottom:12px">LLM calls per question</p>
+    <div class="calls">
+      <div class="call-row"><span class="who">English question</span>
+        <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span><span class="cb" style="--c:var(--llm)">HyDE</span><span class="cb" style="--c:var(--llm)">topic + key terms</span><span class="cb" style="--c:var(--answer)">answer</span></span><b>4</b></div>
+      <div class="call-row"><span class="who">Telugu question, either alphabet</span>
+        <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span><span class="cb extra" style="--c:var(--tel)">translate</span><span class="cb" style="--c:var(--llm)">HyDE</span><span class="cb" style="--c:var(--llm)">topic + key terms</span><span class="cb" style="--c:var(--answer)">answer</span></span><b>5</b></div>
+      <div class="call-row"><span class="who">Follow-up in a conversation</span>
+        <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span><span class="cb extra" style="--c:var(--llm)">follow-up rewrite</span><span class="cb" style="--c:var(--llm)">HyDE</span><span class="cb" style="--c:var(--llm)">topic + key terms</span><span class="cb" style="--c:var(--answer)">answer</span></span><b>+1</b></div>
+      <div class="call-row"><span class="who">Outside both topics</span>
+        <span class="boxes"><span class="cb" style="--c:var(--rti)">router</span></span><b>1</b></div>
+    </div>
+    <p class="muted small" style="margin-top:12px">Language detection adds no call: it is part of the router's answer. The
+       translation is a short call, about 150 tokens.</p>
+  </div>
+  </div>
+
+  <h3>Weak spot</h3>
+  <p class="prose">Translating Telugu typed in English letters is less faithful than translating Telugu script. Two cases from
+     the test: "rendo appeal enni rojullo file cheyali" (how many days to file the <em>second</em> appeal) became
+     "...a <strong>land</strong> appeal", and "alasyam chesina adhikariki entha jarimana" (fine on an officer who delays)
+     became "punishment for an officer who commits negligence". The search still found every answer, helped by HyDE and the
+     topic rewrite, and the answer model always sees the original question. Telugu answer quality has been checked by
+     reading, not measured.</p>
+</section>
+
+<!-- ============================== TWO DOMAINS ============================== -->
+<section id="domains">
+  <div class="sec-head">
+    <h2>Two topics, opposite fixes</h2>
+    <p>About 40 configurations were scored per topic on frozen question sets, every LLM output cached so each technique saw
+       identical text. The same technique often helped one topic and hurt the other.</p>
+  </div>
+
+  <h3>Which signal carries each topic</h3>
+  <div class="card">
+    <div class="legend"><span style="--c:var(--rti)">RTI (of 67)</span><span style="--c:var(--agri)">Agriculture (of 79)</span></div>
+    <div class="sig">
+      <div class="sig-row"><span class="nm">The question alone, keyword search</span><div class="bars">
+        <div class="hb"><span class="tr"><i style="--c:var(--rti);--w:44.8%"></i></span><b>30</b></div>
+        <div class="hb"><span class="tr"><i style="--c:var(--agri);--w:62%"></i></span><b>49</b></div></div></div>
+      <div class="sig-row"><span class="nm">The question alone, meaning + keywords</span><div class="bars">
+        <div class="hb"><span class="tr"><i style="--c:var(--rti);--w:70.1%"></i></span><b>47</b></div>
+        <div class="hb"><span class="tr"><i style="--c:var(--agri);--w:72.2%"></i></span><b>57</b></div></div></div>
+      <div class="sig-row"><span class="nm">The HyDE passage alone, by meaning</span><div class="bars">
+        <div class="hb"><span class="tr"><i style="--c:var(--rti);--w:86.6%"></i></span><b>58</b></div>
+        <div class="hb"><span class="tr"><i style="--c:var(--agri);--w:63.3%"></i></span><b>50</b></div></div></div>
+      <div class="sig-row"><span class="nm"><strong>Both, merged (the September pipeline)</strong></span><div class="bars">
+        <div class="hb"><span class="tr"><i style="--c:var(--rti);--w:88.1%"></i></span><b>59</b></div>
+        <div class="hb"><span class="tr"><i style="--c:var(--agri);--w:78.5%"></i></span><b>62</b></div></div></div>
+    </div>
+    <p class="small" style="margin-top:12px;color:var(--ink-2)">In RTI the HyDE passage alone does almost everything (58 of 59):
+       the model has read the RTI Act, so its made-up passage uses the Act's real words. It has not read AP's 2024–26
+       agriculture orders, so its agriculture passages are generic, while the farmer's own words (a scheme name, a crop,
+       "drip", "tenant") are rare terms keyword search matches directly. No single signal is good for agriculture; the gain
+       comes from merging.</p>
+  </div>
+
+  <h3>Each technique's effect, compared with the September pipeline</h3>
+  <div class="bf" role="table" aria-label="Change in questions found, per technique and topic">
+    <div class="bf-row head" role="row"><div>Technique</div><div>RTI (59 of 67)</div><div>Agriculture (62 of 79)</div></div>
+    <div class="bf-row" role="row"><span class="nm">LLM names the topic ("the rule asked about")</span>
+      <div class="bf-cell"><i class="up" style="--d:4"></i><b class="up" style="--d:4">+4</b></div>
+      <div class="bf-cell"><i class="up" style="--d:1"></i><b class="up" style="--d:1">+1</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">LLM key terms, keyword search only</span>
+      <div class="bf-cell"><i class="up" style="--d:3"></i><b class="up" style="--d:3">+3</b></div>
+      <div class="bf-cell"><b class="zero">0</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">Three formal rephrasings (multi-query)</span>
+      <div class="bf-cell"><i class="up" style="--d:3"></i><b class="up" style="--d:3">+3</b></div>
+      <div class="bf-cell"><i class="up" style="--d:1"></i><b class="up" style="--d:1">+1</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">HyDE counted twice in the merge</span>
+      <div class="bf-cell"><i class="up" style="--d:3"></i><b class="up" style="--d:3">+3</b></div>
+      <div class="bf-cell"><i class="dn" style="--d:2"></i><b class="dn" style="--d:2">−2</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">An agent picks the likely documents first (light boost)</span>
+      <div class="bf-cell"><i class="up" style="--d:1"></i><b class="up" style="--d:1">+1</b></div>
+      <div class="bf-cell"><i class="up" style="--d:2"></i><b class="up" style="--d:2">+2</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">MiniLM reranker on the top 30, replacing the search order (agriculture's top 5: +12)</span>
+      <div class="bf-cell"><i class="dn" style="--d:11"></i><b class="dn" style="--d:11">−11</b></div>
+      <div class="bf-cell"><b class="zero">0</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">MiniLM reranker on the top 30, fused with the search order</span>
+      <div class="bf-cell"><i class="dn" style="--d:3"></i><b class="dn" style="--d:3">−3</b></div>
+      <div class="bf-cell"><i class="up" style="--d:2"></i><b class="up" style="--d:2">+2</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">Bigger reranker (bge-reranker-base), title + text</span>
+      <div class="bf-cell"><i class="dn" style="--d:2"></i><b class="dn" style="--d:2">−2</b></div>
+      <div class="bf-cell"><i class="up" style="--d:6"></i><b class="up" style="--d:6">+6</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">Bigger embedding model (bge-base)</span>
+      <div class="bf-cell"><i class="dn" style="--d:2"></i><b class="dn" style="--d:2">−2</b></div>
+      <div class="bf-cell"><i class="up" style="--d:4"></i><b class="up" style="--d:4">+4</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">Keyword search with stemming + stopwords</span>
+      <div class="bf-cell"><i class="dn" style="--d:1"></i><b class="dn" style="--d:1">−1</b></div>
+      <div class="bf-cell"><i class="up" style="--d:1"></i><b class="up" style="--d:1">+1</b></div></div>
+    <div class="bf-row" role="row"><span class="nm">At most 2 passages per document</span>
+      <div class="bf-cell"><i class="dn" style="--d:7"></i><b class="dn" style="--d:7">−7</b></div>
+      <div class="bf-cell"><i class="dn" style="--d:8"></i><b class="dn" style="--d:8">−8</b></div></div>
+    <div class="bf-row chosen" role="row"><span class="nm"><strong>Chosen for RTI:</strong> topic + key terms</span>
+      <div class="bf-cell"><i class="up" style="--d:5"></i><b class="up" style="--d:5">+5</b></div>
+      <div class="bf-cell"><i class="up" style="--d:3"></i><b class="up" style="--d:3">+3</b></div></div>
+    <div class="bf-row chosen" role="row"><span class="nm"><strong>Chosen for agriculture:</strong> topic + key terms + MiniLM, fused (not used for RTI)</span>
+      <div class="bf-cell"><b class="zero">—</b></div>
+      <div class="bf-cell"><i class="up" style="--d:5"></i><b class="up" style="--d:5">+5</b></div></div>
+  </div>
+  <p class="muted small" style="margin-top:8px;max-width:76ch">Questions whose answer text reaches the top 10, minus the September
+     pipeline's count. One or two questions either way is within noise. The bigger reranker scored best for agriculture alone
+     but takes 11–15 s per question on this computer's CPU against MiniLM's 1.3–1.8 s, so agriculture runs MiniLM.</p>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card" style="border-left:3px solid var(--rti)">
+      <p class="label">Why RTI wants words, not a reranker</p>
+      <p class="small" style="margin-top:6px;color:var(--ink-2)">RTI questions are abstract ("can they just say no") and the Act
+         answers in legal phrasing ("no obligation to give any citizen"). A reranker trained on web searches can't connect
+         the two, so it promotes passages that merely share surface words like "officer" and "information". What works is
+         putting the Act's own concept names into the search: "third party information", "first appeal", "private body".</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--agri)">
+      <p class="label">Why agriculture wants a reranker</p>
+      <p class="small" style="margin-top:6px;color:var(--ink-2)">Farmers name concrete things (cashew, flood damage, seeds, a cow,
+         a drone) that sit inside long table chunks. A single embedding of the whole chunk blurs them; a cross-encoder reads
+         question and chunk side by side and sees them. The LLM doesn't know AP's recent orders, so rewriting helps less here.</p>
+    </div>
+  </div>
+
+  <h3>Question by question: where the answer ranked, before and after</h3>
+  <div class="grid2">
+    <div class="db">
+      <p class="label" style="margin-bottom:8px">RTI: September pipeline → + topic + key terms</p>
+      <div class="db-legend"><span><i style="border:2px solid var(--muted)"></i>before</span><span><i style="background:var(--good)"></i>after</span><span><i style="background:color-mix(in srgb,var(--good) 25%,transparent);border-radius:2px"></i>top 10: what the answer model sees</span></div>
+      <div class="db-row"><span class="q">can i use rti to get info from an ngo<small>38 → 3</small></span><div class="db-track" style="--a:4.51%;--b:83.49%"><span class="ln"></span><span class="pt was" style="--p:83.49%"></span><span class="pt now" style="--p:4.51%"></span></div></div>
+      <div class="db-row"><span class="q">is rti free if i ask a village panchayat office<small>beyond 60 → 8</small></span><div class="db-track" style="--a:15.79%;--b:96%"><span class="ln"></span><span class="pt was" style="--p:96%"></span><span class="pt now" style="--p:15.79%"></span></div></div>
+      <div class="db-row"><span class="q">if they refuse my rti do they have to tell me why<small>17 → 4</small></span><div class="db-track" style="--a:6.77%;--b:36.1%"><span class="ln"></span><span class="pt was" style="--p:36.1%"></span><span class="pt now" style="--p:6.77%"></span></div></div>
+      <div class="db-row"><span class="q">does rti apply to private companies<small>11 → 1</small></span><div class="db-track" style="--a:0%;--b:22.56%"><span class="ln"></span><span class="pt was" style="--p:22.56%"></span><span class="pt now" style="--p:0%"></span></div></div>
+      <div class="db-row"><span class="q">govt office is not answering my rti for 2 months<small>12 → 2</small></span><div class="db-track" style="--a:2.26%;--b:24.82%"><span class="ln"></span><span class="pt was" style="--p:24.82%"></span><span class="pt now" style="--p:2.26%"></span></div></div>
+      <div class="db-row"><span class="q">how much money do i need to pay for an rti in AP<small>5 → 2</small></span><div class="db-track" style="--a:2.26%;--b:9.03%"><span class="ln"></span><span class="pt was" style="--p:9.03%"></span><span class="pt now" style="--p:2.26%"></span></div></div>
+      <div class="db-row"><span class="q">i sent my rti to the wrong office, will they forward it<small>8 → 1</small></span><div class="db-track" style="--a:0%;--b:15.79%"><span class="ln"></span><span class="pt was" style="--p:15.79%"></span><span class="pt now" style="--p:0%"></span></div></div>
+      <div class="db-head"><div></div><div class="db-axis"><span style="left:0%">1</span><span style="left:20.31%">10</span><span style="left:42.87%">20</span><span style="left:65.44%">30</span><span style="left:88%">40</span><span style="left:97%">&gt;60</span></div></div>
+    </div>
+    <div class="db">
+      <p class="label" style="margin-bottom:8px">Agriculture: September pipeline → + topic + key terms + reranker</p>
+      <div class="db-legend"><span><i style="border:2px solid var(--muted)"></i>before</span><span><i style="background:var(--good)"></i>after</span><span><i style="background:var(--bad)"></i>lost</span></div>
+      <div class="db-row"><span class="q">is my cashew crop covered by insurance<small>21 → 3</small></span><div class="db-track" style="--a:4.51%;--b:45.13%"><span class="ln"></span><span class="pt was" style="--p:45.13%"></span><span class="pt now" style="--p:4.51%"></span></div></div>
+      <div class="db-row"><span class="q">after a flood who comes to check how much of my crop got damaged<small>17 → 3</small></span><div class="db-track" style="--a:4.51%;--b:36.1%"><span class="ln"></span><span class="pt was" style="--p:36.1%"></span><span class="pt now" style="--p:4.51%"></span></div></div>
+      <div class="db-row"><span class="q">where do i get cheap seeds from the govt<small>17 → 4</small></span><div class="db-track" style="--a:6.77%;--b:36.1%"><span class="ln"></span><span class="pt was" style="--p:36.1%"></span><span class="pt now" style="--p:6.77%"></span></div></div>
+      <div class="db-row"><span class="q">i am a lawyer with farm land, can i get annadata sukhibhava money<small>19 → 6</small></span><div class="db-track" style="--a:11.28%;--b:40.62%"><span class="ln"></span><span class="pt was" style="--p:40.62%"></span><span class="pt now" style="--p:11.28%"></span></div></div>
+      <div class="db-row"><span class="q">can kcc loan be used for dairy or fish farming<small>16 → 6</small></span><div class="db-track" style="--a:11.28%;--b:33.85%"><span class="ln"></span><span class="pt was" style="--p:33.85%"></span><span class="pt now" style="--p:11.28%"></span></div></div>
+      <div class="db-row"><span class="q">kcc loan interest if i pay back on time<small>21 → 10</small></span><div class="db-track" style="--a:20.31%;--b:45.13%"><span class="ln"></span><span class="pt was" style="--p:45.13%"></span><span class="pt now" style="--p:20.31%"></span></div></div>
+      <div class="db-row"><span class="q">pm kisan 6000 comes in how many parts<small>4 → 2</small></span><div class="db-track" style="--a:2.26%;--b:6.77%"><span class="ln"></span><span class="pt was" style="--p:6.77%"></span><span class="pt now" style="--p:2.26%"></span></div></div>
+      <div class="db-row"><span class="q">do i have to pay for crop insurance now or is it still free<small>7 → 11, lost</small></span><div class="db-track" style="--a:13.54%;--b:22.56%"><span class="ln"></span><span class="pt was" style="--p:13.54%"></span><span class="pt now lost" style="--p:22.56%"></span></div></div>
+      <div class="db-head"><div></div><div class="db-axis"><span style="left:0%">1</span><span style="left:20.31%">10</span><span style="left:42.87%">20</span><span style="left:65.44%">30</span><span style="left:88%">40</span><span style="left:97%">&gt;60</span></div></div>
+    </div>
+  </div>
+  <p class="muted small" style="margin-top:10px;max-width:76ch">The topic names the legal concept a casual RTI question only
+     describes: "can i use rti to get info from an ngo" got the topic "Definition of public authority and private body". The
+     reranker's agriculture wins are questions naming a concrete thing. Its one loss asks about a policy ("is it still free"),
+     not a thing.</p>
+
+  <h3>Tried and not adopted</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Idea</th><th>What the measurement showed</th></tr></thead>
+      <tbody>
+        <tr><td>Fusion constants, keyword stemming, title-only keyword search, removing near-duplicates</td><td>All within ±3 questions: no reliable gain.</td></tr>
+        <tr><td>At most 2–4 passages per document</td><td>Hurt both topics (−3 to −8): when a document is the right one, the answer usually needs several of its chunks.</td></tr>
+        <tr><td>An agent that picks the documents first</td><td>It names the right agriculture document 69 times in 79, but that document is often huge (crop-insurance guidelines: 465 chunks), so knowing it doesn't find the paragraph. RTI: 42 in 67.</td></tr>
+        <tr><td>Rephrasing the question without HyDE</td><td>Worse than HyDE alone in RTI (58 vs 59): rephrasing doesn't add the Act's wording; a made-up passage does.</td></tr>
+        <tr><td>A corrective agent loop, LLM listwise reranking, index-time hypothetical questions</td><td>Not run: one pass over the test sets needs more than a day of the free tier's tokens.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== SCORES ============================== -->
+<section id="scores">
+  <div class="sec-head">
+    <h2>Scores, and how they are measured</h2>
+    <p>One question, asked mechanically and without an LLM judge: <strong>does the text that answers the question appear in
+       the passages the answer model was given?</strong></p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <p class="label">Where it stands, 6 October</p>
+      <div class="meters" style="margin-top:12px">
+        <div class="meter" style="--c:var(--rti)"><div class="ml"><span>RTI, all question sets (82)</span><span class="d">87% → 96%</span></div>
+          <div class="bar2 was"><span>4 Oct</span><span class="tr"><i style="--w:86.6%"></i></span><b>71</b></div>
+          <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:96.3%"></i></span><b>79</b></div></div>
+        <div class="meter" style="--c:var(--rti)"><div class="ml"><span>RTI, final set used only once (15)</span><span class="d">confirmed</span></div>
+          <div class="bar2 was"><span>4 Oct</span><span class="tr"><i style="--w:80%"></i></span><b>12</b></div>
+          <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>15</b></div></div>
+        <div class="meter" style="--c:var(--agri)"><div class="ml"><span>Agriculture, all question sets (93)</span><span class="d">82% → 86%</span></div>
+          <div class="bar2 was"><span>4 Oct</span><span class="tr"><i style="--w:81.7%"></i></span><b>76</b></div>
+          <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:86%"></i></span><b>80</b></div></div>
+        <div class="meter" style="--c:var(--warn)"><div class="ml"><span>Agriculture, final set used only once (14)</span><span class="d down">−1, not confirmed</span></div>
+          <div class="bar2 was"><span>4 Oct</span><span class="tr"><i style="--w:100%"></i></span><b>14</b></div>
+          <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:92.9%"></i></span><b>13</b></div></div>
+        <div class="meter" style="--c:var(--rti)"><div class="ml"><span>Router, 274 labelled questions incl. 71 real FAQs</span><span class="d">83% → 99%</span></div>
+          <div class="bar2 was"><span>similar.</span><span class="tr"><i style="--w:83.2%"></i></span><b>228</b></div>
+          <div class="bar2 now"><span>LLM</span><span class="tr"><i style="--w:98.5%"></i></span><b>270</b></div></div>
+        <div class="meter" style="--c:var(--tel)"><div class="ml"><span>Language recognised (29)</span><span class="d"></span></div>
+          <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>29</b></div></div>
+      </div>
+      <p class="muted small" style="margin-top:12px">RTI's gain is confirmed on a set never used for tuning. Agriculture's final set
+         was already 14/14 and lost one ("crop insurance last date for rabi this year", rank 9 → 11), so its gain rests on the
+         other 79 questions: real, but smaller and less certain.</p>
+    </div>
+
+    <div>
+      <div class="card">
+        <p class="label">The method</p>
+        <ul class="plain">
+          <li>Each test question carries a <strong>probe</strong>: a short phrase copied verbatim from the passage that
+              answers it, e.g. <code>senior in rank</code>.</li>
+          <li>A question passes if its probe appears in the top 10 retrieved passages. No judging, no cost.</li>
+          <li>Probes are matched with spaces removed, so extraction damage (<code>rup ees</code>) doesn't cause false misses.</li>
+          <li>Every set was written and frozen <em>before</em> the changes it tests. Every LLM output is cached in
+              <code>eval/cache/</code>, so the numbers reproduce without API calls.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <p class="label">The question sets</p>
+        <div class="tw" style="border:0">
+          <table style="min-width:0">
+            <tbody>
+              <tr><td><strong>RTI</strong> · 82</td><td>dev 20 (formal) · heldout 12, 12, 10 · heldout4 13 (clean) · final 15</td></tr>
+              <tr><td><strong>Agriculture</strong> · 93</td><td>dev 24 · dev_casual 12 · heldout 16, 13 · heldout3 14 (clean) · final 14</td></tr>
+              <tr><td><strong>Router</strong> · 274 + 32</td><td>57 written for it · 71 real FAQ questions · 146 retrieval questions · final 32</td></tr>
+              <tr><td><strong>Language</strong> · 29</td><td>8 English · 10 Telugu script · 11 Telugu in English letters</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>RTI in September, for comparison</h3>
+  <div class="grid2">
+    <div class="card">
+      <div class="meters">
+        <div class="meter" style="--c:var(--rti)"><div class="ml"><span>Formal questions (20)</span><span class="d">+30 pts</span></div>
+          <div class="bar2 was"><span>first</span><span class="tr"><i style="--w:65%"></i></span><b>65%</b></div>
+          <div class="bar2 now"><span>29 Sep</span><span class="tr"><i style="--w:95%"></i></span><b>95%</b></div></div>
+        <div class="meter" style="--c:var(--rti)"><div class="ml"><span>Casual questions (34)</span><span class="d">+32 pts</span></div>
+          <div class="bar2 was"><span>first</span><span class="tr"><i style="--w:50%"></i></span><b>~50%</b></div>
+          <div class="bar2 now"><span>29 Sep</span><span class="tr"><i style="--w:82%"></i></span><b>82%</b></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="label">The measurement that pointed at retrieval in the first place</p>
+      <p class="small" style="margin-top:6px;color:var(--ink-2)">RAGAS, an LLM-judged evaluation, scored the first version
+         <strong>0.95 on faithfulness</strong> (the model stuck to what it was given) but only <strong>0.38 on context
+         precision</strong>, and 0.14 on "how do I apply". The model was trustworthy; it was being handed noise. Five answers
+         checked line by line against the Act: four correct, one partly correct (it mixed up the first and second appeal).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== DOCKER ============================== -->
+<section id="docker">
+  <div class="sec-head">
+    <h2>Docker: the whole assistant in one container</h2>
+    <p>Everything the assistant needs is built into one image, except the Groq key, which is handed in when it starts.</p>
+  </div>
+
+  <div class="dk">
+    <div class="side"><b>.env on your computer</b><code>GROQ_API_KEY=...</code><br><span class="muted small">passed in at run time, never stored in the image</span></div>
+    <div class="ar">→</div>
+    <div class="img">
+      <p class="cap">Image <code>ap-assistant</code> · 2.77 GB</p>
+      <div class="layers">
+        <div><b>Python 3.12</b> (slim) + <b>CPU-only PyTorch</b></div>
+        <div><b>bge-small-en-v1.5</b> embeddings + <b>MiniLM</b> reranker, downloaded at build time, used offline</div>
+        <div><b>Both search indexes</b> (RTI + agriculture), built at build time</div>
+        <div><b>rag/</b> code + the web page, listening on port 8000 inside</div>
+        <div>runs as a <b>non-root</b> user · has a <b>health check</b></div>
+      </div>
+    </div>
+    <div class="ar">⇄</div>
+    <div class="side"><b>http://localhost:8765</b><span class="muted small">your port 8765 → the container's 8000 (change with <code>APP_PORT</code> in .env)</span>
+      <br><br><b>Groq API</b><span class="muted small">the LLM calls go out over the internet, as without Docker</span></div>
+  </div>
+
+  <div class="grid3" style="margin-top:16px">
+    <div class="card"><p class="label">First build</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">~12 min</p><p class="muted small">downloads PyTorch and the two models, builds both indexes</p></div>
+    <div class="card"><p class="label">Every start after that</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">~40 s</p><p class="muted small">until it prints <code>ready in …s</code></p></div>
+    <div class="card"><p class="label">Checked inside the container</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">identical</p><p class="muted small">RTI 79/82, agriculture 80/93, router 31/32; one live question answered</p></div>
+  </div>
+  <p class="muted small" style="margin-top:12px;max-width:76ch">The image last built on 5 October does not contain the 6 October
+     language fix. Running <code>docker compose up --build</code> once rebuilds it. PyTorch and the two models are reused, but
+     the language fix touched <code>rag/domains.py</code>, which the index step depends on, so both indexes are rebuilt too
+     (a few minutes). Steps in <a href="#run">Run it</a>.</p>
+</section>
+
+<!-- ============================== PART 2 ============================== -->
+<div class="part" id="foundation">
+  <p class="label">Part 2 · unchanged since 29 September</p>
+  <h2>The RTI foundation</h2>
+  <p>How the RTI assistant was built and why: the problem, the documents, three questions traced through the search, and
+     the decisions with their numbers. Still accurate as history; the figures here are September's.</p>
+</div>
 
 <!-- ============================== PROBLEM ============================== -->
 <section id="problem">
@@ -252,21 +1411,21 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   </div>
 
   <h3>The portal is a filing cabinet, not a guide</h3>
-  <p style="max-width:76ch;color:var(--ink-2)">The "RTI &amp; Acts" menu holds <strong>546 documents</strong>.
+  <p class="prose">The "RTI &amp; Acts" menu holds <strong>546 documents</strong>.
      Most are there because Section 4(1)(b)(v) of the Act obliges every authority to publish
-     "the rules, regulations, instructions, manuals and records held by it" — so the menu fills with
+     "the rules, regulations, instructions, manuals and records held by it", so the menu fills with
      civil-service promotion rules and secretariat manuals.</p>
   <ul class="plain" style="max-width:76ch">
     <li>The <strong>RTI Act itself is not in the "Acts" section</strong>. It sits four levels deep under
         <em>Department&nbsp;–&nbsp;Org RTI → GAD → GOs / Governors Reports under s.4(1)(A)</em>, in a file titled just <code>RTI ACT</code>.</li>
     <li>The one page written for citizens, "Instruction on RTI", lists <em>How to apply · Fee payable ·
-        Time limit · Appeal Provision</em> — and none of them link to anything.</li>
+        Time limit · Appeal Provision</em>, and none of them link to anything.</li>
     <li>A bug in the department section shows the previous department's contents when you open a second one,
         hiding <strong>282 of its 285 files</strong>.</li>
   </ul>
 
   <h3>The words don't match</h3>
-  <p style="max-width:76ch;color:var(--ink-2)">This is the part that breaks ordinary search. Citizens and
+  <p class="prose">This is the part that breaks ordinary search. Citizens and
      statutes use different vocabulary for the same idea, and half the words a citizen reaches for never
      appear in the Act at all.</p>
   <div class="tw" style="margin-top:12px">
@@ -282,9 +1441,9 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   </div>
 
   <h3>Why that defeats a plain search, precisely</h3>
-  <p style="max-width:76ch;color:var(--ink-2)">A search by meaning has no notion of which words matter.
+  <p class="prose">A search by meaning has no notion of which words matter.
      "How do I apply for information under the RTI Act?" shares 60% of its words with the passage that
-     answers it — but every shared word is one the whole corpus uses.</p>
+     answers it, but every shared word is one the whole corpus uses.</p>
   <div class="tw" style="margin-top:12px">
     <table>
       <thead><tr><th>Word in the question</th><th class="num">Chunks containing it</th><th>Worth as a clue</th></tr></thead>
@@ -293,11 +1452,11 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
         <tr><td>under</td><td class="num">288 &nbsp;(38%)</td><td>none</td></tr>
         <tr><td>act</td><td class="num">195 &nbsp;(25%)</td><td>weak</td></tr>
         <tr><td>rti</td><td class="num">46 &nbsp;(6%)</td><td>some</td></tr>
-        <tr><td><strong>apply</strong></td><td class="num">6 &nbsp;(1%)</td><td><strong>the only real clue — and the answer doesn't contain it</strong></td></tr>
+        <tr><td><strong>apply</strong></td><td class="num">6 &nbsp;(1%)</td><td><strong>the only real clue, and the answer doesn't contain it</strong></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="muted" style="margin-top:10px;max-width:76ch;font-size:13.5px">
+  <p class="muted small" style="margin-top:10px;max-width:76ch">
     The rule that explains nearly every result: <strong>retrieval works when the question's rare word also
     appears in the answer.</strong> "penalty" (2 chunks) and "refuse" (1 chunk) do, and those questions
     ranked 2nd and 3rd. "apply" does not, and its answer sat at <strong>rank 106 of 766</strong>.</p>
@@ -316,7 +1475,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 <!-- ============================== CORPUS ============================== -->
 <section id="corpus">
   <div class="sec-head">
-    <h2>The 41 documents</h2>
+    <h2>The 41 RTI documents</h2>
     <p>Every one of the 546 documents in the portal's RTI &amp; Acts menu was examined and classified.
        Most are irrelevant to a citizen; a large share of what remains is statistical filing.</p>
   </div>
@@ -336,21 +1495,27 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   <h3>Three layers, three kinds of question</h3>
   <div class="grid2">
     <div class="card" style="border-left:3px solid var(--ingest)">
-      <p class="label">The law — 1 document, 23 pages</p>
+      <p class="label">The law: 1 document, 23 pages</p>
       <p style="margin-top:6px;color:var(--ink-2)">The RTI Act 2005. Answers "what is my right":
          how to apply (s.6), fees and the 30-day limit (s.7), what can be refused (s.8),
          appeals (s.19), penalties (s.20).</p>
     </div>
     <div class="card" style="border-left:3px solid var(--search)">
-      <p class="label">AP's implementation — 26 orders, 2005–2011</p>
+      <p class="label">AP's implementation: 26 orders, 2005–2011</p>
       <p style="margin-top:6px;color:var(--ink-2)">Government orders: the state fee rules and their
          amendments, the Information Commission's constitution and appointments, compliance instructions.</p>
     </div>
     <div class="card" style="border-left:3px solid var(--answer)">
-      <p class="label">Departments — 13 manuals + the portal page</p>
+      <p class="label">Departments: 13 manuals + the portal page</p>
       <p style="margin-top:6px;color:var(--ink-2)">Each department's own s.4(1)(b) manual: what it holds
          and who its Public Information Officer is. The portal page is the only source naming the
          current Commissioners.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--agri)">
+      <p class="label">Added in October: 44 agriculture documents</p>
+      <p style="margin-top:6px;color:var(--ink-2)">AP government orders (crop insurance, Annadata Sukhibhava, subsidies, MSP
+         procurement, disaster relief), scheme guidelines, and central Acts on seeds, fertilisers and pesticides: 1,895 chunks
+         in their own index. How they were chosen: <code>ingest/incoming/agriculture/REPORT.md</code>.</p>
     </div>
   </div>
 
@@ -358,107 +1523,69 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   <ul class="plain" style="max-width:76ch">
     <li>The <strong>Act is split at its 31 section boundaries</strong> before chunking, so a chunk never
         straddles two sections. All 31 section titles were verified against the Act's own text.</li>
-    <li>Chunks are <strong>350 tokens with 60 overlap, aligned to sentence ends</strong> — sized for the
+    <li>Chunks are <strong>350 tokens with 60 overlap, aligned to sentence ends</strong>, sized for the
         embedding model's 512-token window, so nothing is silently cut off. In the first version, 27% of
         chunks were being truncated.</li>
     <li>Every chunk carries a <strong>citation label</strong>: "RTI Act 2005, Section 19: Appeal", or a
         department name, or "most current source" for the portal page.</li>
     <li><strong>Amendment links</strong> between orders are detected automatically at this stage, from each
-        order's "Amendment to … Read the following" header.</li>
+        order's "Amendment to … Read the following" header. (Agriculture's come from a curated list instead.)</li>
   </ul>
-</section>
-
-<!-- ============================== FLOW ============================== -->
-<section id="flow">
-  <div class="sec-head">
-    <h2>What happens to one question</h2>
-    <p>Two searches run, not one: the question as typed, and a made-up legal passage written from it.
-       Their rankings are merged. Click any box for what it does, where the code lives, and its numbers.</p>
-  </div>
-
-  <div class="flow">
-    <div class="flow-row" style="grid-template-columns:1fr">
-      <button class="stage" data-s="q" style="--c:var(--ink-2)"><b>The question, as typed</b><span>"how much money do i need to pay for an rti"</span></button>
-    </div>
-    <div class="arrow">↓</div>
-    <div class="flow-row">
-      <button class="stage" data-s="condense" style="--c:var(--llm)"><b>1 · Rewrite (follow-ups only)</b><span>turns "what if i still dont get it" into a full question</span></button>
-      <button class="stage" data-s="hyde" style="--c:var(--llm)"><b>2 · HyDE passage</b><span>a small model writes what the law would say</span></button>
-    </div>
-    <div class="arrow">↓</div>
-    <div class="flow-row">
-      <button class="stage" data-s="dense" style="--c:var(--search)"><b>3a · Search by meaning</b><span>bge-small embeddings, cosine, in Chroma</span></button>
-      <button class="stage" data-s="bm25" style="--c:var(--search)"><b>3b · Search by keyword</b><span>BM25, catches rare exact words</span></button>
-    </div>
-    <div class="arrow">↓</div>
-    <div class="flow-row" style="grid-template-columns:1fr">
-      <button class="stage" data-s="rrf" style="--c:var(--search)"><b>4 · Merge the rankings</b><span>Reciprocal Rank Fusion → top 10</span></button>
-    </div>
-    <div class="arrow">↓</div>
-    <div class="flow-row" style="grid-template-columns:1fr">
-      <button class="stage" data-s="amend" style="--c:var(--ingest)"><b>5 · Add amending orders</b><span>a rule without its amendment is wrong, not just incomplete</span></button>
-    </div>
-    <div class="arrow">↓</div>
-    <div class="flow-row" style="grid-template-columns:1fr">
-      <button class="stage" data-s="answer" style="--c:var(--answer)"><b>6 · Write the answer</b><span>numbered passages + strict rules → cited answer</span></button>
-    </div>
-  </div>
-
-  <div class="card" id="stagePanel"></div>
 </section>
 
 <!-- ============================== EXAMPLES ============================== -->
 <section id="examples">
   <div class="sec-head">
-    <h2>Three questions, followed end to end</h2>
+    <h2>Three RTI questions, followed end to end (September)</h2>
     <p>Where the answering passage ranked at each stage, out of 535 chunks. Lower is better; anything
        past 10 never reaches the answering model. Two successes and one failure.</p>
   </div>
 
   <h3>1 · "does rti work for intelligence agencies like IB" <span class="pill good">answered correctly</span></h3>
-  <p style="color:var(--ink-2);max-width:76ch">The answer is Section 24: the Act does <em>not</em> apply to the
+  <p class="prose">The answer is Section 24: the Act does <em>not</em> apply to the
      intelligence organisations in the Second Schedule. The citizen says "IB" and "work for"; the Act says
      "intelligence and security organisations" and "shall apply to".</p>
   <div class="trace">
     <div class="bar"><span class="n">meaning search, question</span><span><i class="rank bad" style="width:180px"></i> 39</span></div>
     <div class="bar"><span class="n">keyword search, question</span><span><i class="rank" style="width:40px"></i> 6</span></div>
-    <div class="bar"><span class="n">both merged, question</span><span><i class="rank bad" style="width:80px"></i> 14 — misses the top 10</span></div>
+    <div class="bar"><span class="n">both merged, question</span><span><i class="rank bad" style="width:80px"></i> 14, misses the top 10</span></div>
     <div class="bar"><span class="n">meaning search, HyDE passage</span><span><i class="rank good" style="width:16px"></i> 2</span></div>
     <div class="bar"><span class="n">keyword search, HyDE passage</span><span><i class="rank good" style="width:16px"></i> 2</span></div>
     <div class="bar"><span class="n"><strong>everything merged</strong></span><span><i class="rank good" style="width:10px"></i> <strong>1</strong></span></div>
   </div>
   <div class="card" style="margin-top:12px">
-    <p class="label">The HyDE passage that found it — which is itself wrong</p>
+    <p class="label">The HyDE passage that found it, which is itself wrong</p>
     <p style="margin-top:6px;color:var(--ink-2);font-style:italic">"The provisions of the information law apply to
        all public authorities, including intelligence agencies, and any request … shall be processed in accordance
        with the statutory procedures, subject to the exemptions enumerated in the Act."</p>
-    <p style="margin-top:8px;font-size:13.5px">It claims the Act <em>does</em> apply to intelligence agencies.
+    <p class="small" style="margin-top:8px">It claims the Act <em>does</em> apply to intelligence agencies.
        That does not matter: it is only ever used to search. The answer, written from the real Section 24, says
-       <strong>"No"</strong> — and cites it. The passage is never shown to the answering model or to the user.</p>
+       <strong>"No"</strong> and cites it. The passage is never shown to the answering model or to the user.</p>
   </div>
 
   <h3>2 · "i sent my rti to the wrong office, will they forward it" <span class="pill good">answered correctly</span></h3>
-  <p style="color:var(--ink-2);max-width:76ch">Section 6 requires the office to transfer the application within
+  <p class="prose">Section 6 requires the office to transfer the application within
      five days. "Wrong office / forward" versus "held by another public authority / transfer".</p>
   <div class="trace">
     <div class="bar"><span class="n">question alone (plain RAG)</span><span><i class="rank bad" style="width:260px"></i> 60</span></div>
     <div class="bar"><span class="n">HyDE passage alone</span><span><i class="rank good" style="width:16px"></i> 2</span></div>
-    <div class="bar"><span class="n"><strong>both merged (what runs)</strong></span><span><i class="rank" style="width:52px"></i> <strong>8</strong> — inside the top 10</span></div>
+    <div class="bar"><span class="n"><strong>both merged (September)</strong></span><span><i class="rank" style="width:52px"></i> <strong>8</strong>, inside the top 10</span></div>
   </div>
-  <p class="muted" style="margin-top:8px;font-size:13.5px;max-width:76ch">Merging is deliberately kept even though
+  <p class="muted small" style="margin-top:8px;max-width:76ch">Merging is deliberately kept even though
      the passage alone scored better here. When a HyDE passage drifts off-topic, the original question is the
-     safety net; across the test sets, merging ranked answers higher overall.</p>
+     safety net. In October the topic rewrite ("Forwarding of application to competent authority") moved this
+     question to <strong>rank 1</strong>.</p>
 
   <h3>3 · "what if my family benglongs to bpl", asked after a fee question <span class="pill bad">incomplete</span></h3>
-  <p style="color:var(--ink-2);max-width:76ch">A follow-up. The rewrite step turned it into
-     <em>"What if my family belongs to BPL?"</em> — correct English, but it dropped <strong>fees</strong>, the
+  <p class="prose">A follow-up. The rewrite step turned it into
+     <em>"What if my family belongs to BPL?"</em>: correct English, but it dropped <strong>fees</strong>, the
      thing the conversation was about.</p>
   <div class="trace">
-    <div class="bar"><span class="n">AP white-card rule (G.O. 740)</span><span><i class="rank bad" style="width:300px"></i> 43 — never retrieved</span></div>
+    <div class="bar"><span class="n">AP white-card rule (G.O. 740)</span><span><i class="rank bad" style="width:300px"></i> 43, never retrieved</span></div>
     <div class="bar"><span class="n">if the topic is carried through</span><span><i class="rank good" style="width:10px"></i> 1</span></div>
   </div>
-  <p style="margin-top:10px;color:var(--ink-2);max-width:76ch">The answer was still <em>correct</em> — it quoted the
-     Act's own rule that no fee is charged to people below the poverty line — but it missed the AP-specific detail
+  <p class="prose" style="margin-top:10px">The answer was still <em>correct</em> (it quoted the
+     Act's own rule that no fee is charged to people below the poverty line) but it missed the AP-specific detail
      that a <strong>white card</strong> is what proves BPL status. Switching the rewrite to the larger model fixed
      this in an isolated test and <em>not</em> in the real conversation. It remains open; see
      <a href="#open">open items</a>.</p>
@@ -467,7 +1594,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 <!-- ============================== DECISIONS ============================== -->
 <section id="decisions">
   <div class="sec-head">
-    <h2>Decisions, and the numbers behind them</h2>
+    <h2>September decisions, and the numbers behind them</h2>
     <p>Question sets were written and frozen <em>before</em> any change, so nothing could be tuned toward them.
        Each row below is a measurement, not an opinion. The figure is the share of questions whose answering
        text reached the model.</p>
@@ -477,36 +1604,37 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
     <table>
       <thead><tr><th>Change</th><th class="num">Formal (20)</th><th class="num">Casual</th><th>Verdict</th></tr></thead>
       <tbody>
-        <tr><td>Original pipeline — 1000-character chunks, MiniLM, top 8</td><td class="num">65%</td><td class="num">50%, 50%</td><td>baseline</td></tr>
+        <tr><td>Original pipeline: 1000-character chunks, MiniLM, top 8</td><td class="num">65%</td><td class="num">50%, 50%</td><td>baseline</td></tr>
         <tr><td>Chunks sized by <strong>tokens</strong>, sentence-aligned</td><td class="num">70%</td><td class="num">—</td><td class="win">kept</td></tr>
         <tr><td>+ RTI Act <strong>split by section</strong></td><td class="num">70%</td><td class="num">—</td><td class="win">kept</td></tr>
-        <tr><td>+ document title added to each chunk before embedding</td><td class="num">70%</td><td class="num">—</td><td class="lose">rejected — ranking got worse</td></tr>
+        <tr><td>+ document title added to each chunk before embedding</td><td class="num">70%</td><td class="num">—</td><td class="lose">rejected: ranking got worse</td></tr>
         <tr><td>+ <strong>hybrid search</strong> (meaning + BM25)</td><td class="num">80%</td><td class="num">—</td><td class="win">kept</td></tr>
         <tr><td><strong>bge-small</strong>, 350-token chunks, hybrid, no title</td><td class="num">95%</td><td class="num">42%, 58%</td><td class="win">kept</td></tr>
-        <tr><td>+ LLM rewrites the question into legal wording (first try)</td><td class="num">85%</td><td class="num">25%</td><td class="lose">rejected — much worse</td></tr>
+        <tr><td>+ LLM rewrites the question into legal wording (first try)</td><td class="num">85%</td><td class="num">25%</td><td class="lose">rejected: much worse</td></tr>
         <tr><td>+ same rewrite, with the corpus-wide words banned</td><td class="num">90%</td><td class="num">58%</td><td>superseded</td></tr>
-        <tr><td>+ <strong>HyDE</strong>, merged with the original question</td><td class="num">95%</td><td class="num">75%, 92%, 60%</td><td class="win">kept — the decisive change</td></tr>
+        <tr><td>+ <strong>HyDE</strong>, merged with the original question</td><td class="num">95%</td><td class="num">75%, 92%, 60%</td><td class="win">kept: the decisive change</td></tr>
         <tr><td>+ section titles on Act chunks (3 variants)</td><td class="num">95%</td><td class="num">no gain</td><td class="lose">rejected</td></tr>
-        <tr><td><strong>+ retrieve 10 passages instead of 8</strong></td><td class="num"><strong>95%</strong></td><td class="num"><strong>75%, 92%, 80%</strong></td><td class="win">kept — final</td></tr>
+        <tr><td><strong>+ retrieve 10 passages instead of 8</strong></td><td class="num"><strong>95%</strong></td><td class="num"><strong>75%, 92%, 80%</strong></td><td class="win">kept: September's final</td></tr>
       </tbody>
     </table>
   </div>
 
   <h3>The single most important line in that table</h3>
-  <p style="max-width:76ch;color:var(--ink-2)">Better chunks, a better embedding model and keyword search took
-     <strong>formal</strong> questions from 65% to 95% — and left <strong>casual</strong> questions at about 50%.
-     Only HyDE moved those. Tuning ordinary RAG did not solve this corpus; bridging the vocabulary gap did.</p>
+  <p class="prose">Better chunks, a better embedding model and keyword search took
+     <strong>formal</strong> questions from 65% to 95%, and left <strong>casual</strong> questions at about 50%.
+     Only HyDE moved those. Tuning ordinary RAG did not solve this corpus; bridging the vocabulary gap did. October's
+     topic rewrite is the same idea pushed further.</p>
 
   <h3>Things that sounded right and were not</h3>
   <div class="tw">
     <table>
       <thead><tr><th>Idea</th><th>What the measurement showed</th></tr></thead>
       <tbody>
-        <tr><td>Swap the embedding model (MiniLM → bge-small)</td><td>60% vs 67% on 15 checks — a one-check difference. Both failed the same questions. bge was kept for its 512-token window, not its accuracy.</td></tr>
-        <tr><td>Add the document title to each chunk before embedding</td><td>Hurt in every form tried. Every order's title contains "Right to Information Act", so titles made chunks look alike. (Anthropic's <em>Contextual Retrieval</em> reports the opposite on other data.)</td></tr>
-        <tr><td>Have the LLM rewrite questions into legal wording</td><td>Casual accuracy fell 42% → 25%. The model padded every rewrite with "under the Right to Information Act, 2005 … Andhra Pradesh" — words in nearly every chunk, which drown the real concept.</td></tr>
+        <tr><td>Swap the embedding model (MiniLM → bge-small)</td><td>60% vs 67% on 15 checks, a one-check difference. Both failed the same questions. bge was kept for its 512-token window, not its accuracy.</td></tr>
+        <tr><td>Add the document title to each chunk before embedding</td><td>Hurt RTI in every form tried: every order's title contains "Right to Information Act", so titles made chunks look alike. (It <em>helped</em> agriculture in October, where titles name the scheme and crop.)</td></tr>
+        <tr><td>Have the LLM rewrite questions into legal wording</td><td>Casual accuracy fell 42% → 25%. The model padded every rewrite with "under the Right to Information Act, 2005 … Andhra Pradesh", words in nearly every chunk, which drown the real concept.</td></tr>
         <tr><td>For follow-ups, also search with the previous question</td><td>Lifted one follow-up slightly, but wrecked topic switches: the IB question fell from rank 1 to 18, "can the officer refuse" from 15 to 46. Rejected.</td></tr>
-        <tr><td>Add OCR for scanned documents</td><td>Not needed. Every scanned file in the chosen set has a text twin of the same order, so v1 ships with no OCR at all.</td></tr>
+        <tr><td>Add OCR for scanned documents</td><td>Not needed for RTI. Every scanned file in the chosen set has a text twin of the same order.</td></tr>
       </tbody>
     </table>
   </div>
@@ -526,92 +1654,43 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   </div>
 </section>
 
-<!-- ============================== NUMBERS ============================== -->
-<section id="numbers">
-  <div class="sec-head">
-    <h2>How it is measured</h2>
-    <p>One question, asked mechanically and without an LLM judge: <strong>does the text that answers the
-       question appear in the passages the model was given?</strong></p>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <p class="label">The method</p>
-      <ul class="plain">
-        <li>Each test question carries a <strong>probe</strong> — a short phrase copied verbatim from the
-            passage that answers it, e.g. <code>senior in rank</code>.</li>
-        <li>A question passes if its probe appears in the retrieved passages. No judging, no cost,
-            runs in seconds.</li>
-        <li>Probes are matched with spaces removed, so the corpus's extraction damage
-            (<code>rup ees</code>, <code>Informati on</code>) doesn't cause false misses.</li>
-        <li>Every set was written and frozen <em>before</em> the changes it was used to test.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <p class="label">The sets — 54 questions</p>
-      <div class="tw" style="border:0">
-        <table style="min-width:0">
-          <tbody>
-            <tr><td><code>dev</code> · 20</td><td>fairly formal</td><td>used while iterating</td></tr>
-            <tr><td><code>heldout</code> · 12</td><td>casual</td><td>after the architecture changes</td></tr>
-            <tr><td><code>heldout2</code> · 12</td><td>casual</td><td>before query rewriting existed</td></tr>
-            <tr><td><code>heldout3</code> · 10</td><td>casual</td><td>before the last two decisions</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <h3>Where it stands</h3>
-  <div class="tw">
-    <table>
-      <thead><tr><th></th><th class="num">Formal (20)</th><th class="num">Casual (34)</th><th class="num">All (54)</th></tr></thead>
-      <tbody>
-        <tr><td>Original pipeline</td><td class="num">65%</td><td class="num">~50%</td><td class="num">—</td></tr>
-        <tr><td><strong>Current</strong></td><td class="num"><strong>95%</strong></td><td class="num"><strong>82%</strong></td><td class="num"><strong>87%</strong></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <p class="label">The measurement that pointed at retrieval in the first place</p>
-    <p style="margin-top:6px;color:var(--ink-2)">RAGAS, an LLM-judged evaluation, scored the first version
-       <strong>0.95 on faithfulness</strong> — the model stuck to what it was given — but only
-       <strong>0.38 on context precision</strong>, and 0.14 on "how do I apply". The model was trustworthy;
-       it was being handed noise. That is why every subsequent change targeted retrieval, not the prompt.</p>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <p class="label">Answers, checked by hand against the Act</p>
-    <p style="margin-top:6px;color:var(--ink-2)">Of five questions checked line by line: <strong>four correct</strong>
-       (how to file, the fee schedule, what can be refused, the penalty) and <strong>one partly correct</strong>
-       (a "no reply for 45 days" question that mixed up the first and second appeal). Saved in
-       <code>eval/demo_backup_answers.md</code>.</p>
-  </div>
-</section>
-
 <!-- ============================== GLOSSARY ============================== -->
 <section id="glossary">
   <div class="sec-head">
     <h2>Glossary</h2>
-    <p>Terms used above, in plain words — both the machine-learning ones and the RTI ones.</p>
+    <p>Terms used above, in plain words: the machine-learning ones, the RTI ones and the agriculture ones.
+       <span class="tag" style="--c:var(--agri)">new</span> marks terms added in October.</p>
   </div>
   <dl class="gloss">
     <div><dt>RAG</dt><dd>Retrieval-Augmented Generation: find relevant passages first, then have a language model answer using only those. It keeps answers tied to real documents.</dd></div>
-    <div><dt>Chunk</dt><dd>A passage-sized piece of a document. Documents are too long to search whole, so they are cut into 535 chunks of about 350 tokens.</dd></div>
+    <div><dt>Router <span class="tag" style="--c:var(--agri)">new</span></dt><dd>One small LLM call before any search that decides which documents a question belongs to (RTI, agriculture, or neither) and what language it is in.</dd></div>
+    <div><dt>Chunk</dt><dd>A passage-sized piece of a document. Documents are too long to search whole, so they are cut into chunks of about 350 tokens: 535 for RTI, 1,895 for agriculture.</dd></div>
     <div><dt>Embedding</dt><dd>A list of numbers representing a piece of text's meaning. Texts with similar meanings get similar numbers, so closeness can be measured.</dd></div>
-    <div><dt>BM25</dt><dd>Classic keyword search. It rewards rare words and ignores common ones — which is why it catches "penalty" or "court fee stamp" where meaning-search blurs them.</dd></div>
+    <div><dt>BM25</dt><dd>Classic keyword search. It rewards rare words and ignores common ones, which is why it catches "penalty" or "court fee stamp" where meaning-search blurs them.</dd></div>
     <div><dt>Hybrid search</dt><dd>Running meaning search and keyword search together and combining the results, because each catches what the other misses.</dd></div>
-    <div><dt>RRF</dt><dd>Reciprocal Rank Fusion: a standard way to merge two ranked lists. A passage ranked highly by either list rises overall.</dd></div>
-    <div><dt>HyDE</dt><dd>Hypothetical Document Embeddings: a small model writes the passage a law <em>would</em> contain to answer the question, and that is searched too. It may be factually wrong; it is used only to find documents.</dd></div>
-    <div><dt>Condense / rewrite</dt><dd>Turning a follow-up ("what if i still dont get it") into a standalone question before searching, using the last few turns.</dd></div>
-    <div><dt>Chroma</dt><dd>The local database holding the chunks and their embeddings. Nothing leaves the machine except the two calls that write the HyDE passage and the answer.</dd></div>
-    <div><dt>PIO</dt><dd>Public Information Officer — the official in each department who receives and answers RTI applications.</dd></div>
+    <div><dt>RRF</dt><dd>Reciprocal Rank Fusion: a standard way to merge several ranked lists. A passage ranked highly by any list rises overall.</dd></div>
+    <div><dt>HyDE</dt><dd>Hypothetical Document Embeddings: a small model writes the passage the documents <em>would</em> contain to answer the question, and that is searched too. It may be factually wrong; it is used only to find documents.</dd></div>
+    <div><dt>Topic + key terms <span class="tag" style="--c:var(--agri)">new</span></dt><dd>An LLM names the rule or scheme the question is about ("Application fee for obtaining information") and lists words the answer likely contains. Both are searched alongside the question; neither is shown to anyone.</dd></div>
+    <div><dt>Reranker (cross-encoder) <span class="tag" style="--c:var(--agri)">new</span></dt><dd>A model that reads the question and one passage together and scores how well they match. Sharper than comparing embeddings, but slower, so it re-checks only the top 30. Used for agriculture only.</dd></div>
+    <div><dt>Fused vs. replaced <span class="tag" style="--c:var(--agri)">new</span></dt><dd>Merging the reranker's order with the search's order instead of trusting the reranker alone. Consistently safer: the reranker is a second opinion, not the judge.</dd></div>
+    <div><dt>Translation for the search <span class="tag" style="--c:var(--agri)">new</span></dt><dd>A Telugu question is translated to English so the English documents and English models can be searched. The answer model still reads the original question.</dd></div>
+    <div><dt>Telugu in English letters <span class="tag" style="--c:var(--agri)">new</span></dt><dd>Telugu typed with the English alphabet, the way people write in chat ("rti fee entha"). Also called romanized Telugu.</dd></div>
+    <div><dt>Reply language <span class="tag" style="--c:var(--agri)">new</span></dt><dd>The language the answer is written in. By default the question's; the Reply in menu can set English, Telugu script, or Telugu in English letters.</dd></div>
+    <div><dt>Condense / follow-up rewrite</dt><dd>Turning a follow-up ("what if i still dont get it") into a standalone question before searching, using the last few turns.</dd></div>
+    <div><dt>Probe, top 10 <span class="tag" style="--c:var(--agri)">new</span></dt><dd>A short verbatim phrase from the passage that answers a test question. A question "passes" when its probe is in the 10 passages the answer model receives.</dd></div>
+    <div><dt>Clean / final set <span class="tag" style="--c:var(--agri)">new</span></dt><dd>Test questions written before an experiment and not used to choose anything. The final set is run only once, at the end, to confirm a gain.</dd></div>
+    <div><dt>Fallback <span class="tag" style="--c:var(--agri)">new</span></dt><dd>When a Groq model hits its daily limit, the step switches to the next model in line (or is skipped), and the limited model is rested for 10 minutes.</dd></div>
+    <div><dt>Groq free tier <span class="tag" style="--c:var(--agri)">new</span></dt><dd>The hosted LLM service used here: 200,000 tokens per model per day, and 8,000 tokens a minute on the answer model. About 40–45 full answers a day on gpt-oss-120b.</dd></div>
+    <div><dt>Chroma</dt><dd>The local database holding the chunks and their embeddings, one collection per topic. Searching happens on this computer; only the LLM calls go to Groq.</dd></div>
+    <div><dt>Docker image / container <span class="tag" style="--c:var(--agri)">new</span></dt><dd>An image is a packaged copy of the app with everything it needs; a container is that image running. Here: one image, started with <code>docker compose up</code>.</dd></div>
+    <div><dt>Not in force <span class="tag" style="--c:var(--agri)">new</span></dt><dd>A label on agriculture orders for schemes that were replaced (e.g. YSR Rythu Bharosa, now Annadata Sukhibhava). At most one such passage reaches the answer model.</dd></div>
+    <div><dt>PIO</dt><dd>Public Information Officer: the official in each department who receives and answers RTI applications.</dd></div>
     <div><dt>First / second appeal</dt><dd>If a request is refused or ignored: first appeal to an officer senior to the PIO within 30 days; then a second appeal to the State Information Commission within 90 days.</dd></div>
     <div><dt>Deemed refusal</dt><dd>No reply within the time limit counts as a refusal, so the appeal clock starts without waiting.</dd></div>
-    <div><dt>Section 4(1)(b)</dt><dd>The clause obliging every public authority to publish information about itself — the manuals that make up a third of this corpus.</dd></div>
-    <div><dt>G.O.</dt><dd>Government Order — how the state issues instructions and rules, e.g. G.O.Ms.No. 454 setting the RTI fees.</dd></div>
+    <div><dt>Section 4(1)(b)</dt><dd>The clause obliging every public authority to publish information about itself: the manuals that make up a third of the RTI corpus.</dd></div>
+    <div><dt>G.O.</dt><dd>Government Order: how the state issues instructions and rules, e.g. G.O.Ms.No. 454 setting the RTI fees.</dd></div>
     <div><dt>White card</dt><dd>The AP ration card treated as proof of below-poverty-line status, which exempts the holder from the RTI application fee.</dd></div>
+    <div><dt>Annadata Sukhibhava <span class="tag" style="--c:var(--agri)">new</span></dt><dd>AP's farmer income-support scheme, the 2024 name for what was YSR Rythu Bharosa. Several test questions ask about its amount, instalments and who is eligible (tenant farmers included).</dd></div>
   </dl>
 </section>
 
@@ -619,39 +1698,56 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
 <section id="run">
   <div class="sec-head">
     <h2>Run it</h2>
-    <p>The documents and the index are already built and committed. Two commands from a fresh PowerShell.</p>
+    <p>Either way, first put a <code>.env</code> file in the project folder with your key from console.groq.com:
+       <code>GROQ_API_KEY=gsk_...</code></p>
   </div>
   <div class="grid2">
-    <div class="card">
-      <p class="label">The web page</p>
+    <div class="card" style="border-top:3px solid var(--search)">
+      <p class="label">With Docker (after a restart)</p>
+      <ol class="steps-n">
+        <li>Open <strong>Docker Desktop</strong> and wait for "Engine running".</li>
+        <li>Open a terminal in the project folder:</li>
+      </ol>
       <pre class="cmd">cd C:\Users\nkk77\Desktop\ap-rti-assistant
+docker compose up --build</pre>
+      <ol class="steps-n" start="3">
+        <li>When it prints <code>ready in …s</code>, open <strong>http://localhost:8765</strong>.</li>
+        <li>Stop with <strong>Ctrl+C</strong>, or the Stop button in Docker Desktop's Containers list (Start there runs it again).</li>
+      </ol>
+      <p class="muted small" style="margin-top:8px">Run the <code>--build</code> command once now: the image from 5 October
+         doesn't have the 6 October language fix.</p>
+    </div>
+    <div class="card">
+      <p class="label">Without Docker</p>
+      <pre class="cmd">pip install -r requirements.txt
+python ingest\build_index.py
+python ingest\build_index.py --domain agriculture
 python rag\web.py</pre>
-      <p style="margin-top:10px;color:var(--ink-2);font-size:13.5px">Takes about 30 seconds to load, then opens
-         <code>http://127.0.0.1:8000</code>. Citations are clickable and open the passage they came from;
-         "How it searched" shows the HyDE passage. <strong>Ctrl+C</strong> stops it.</p>
+      <p class="small" style="margin-top:10px;color:var(--ink-2)">The two index commands are needed once. The page opens at
+         <code>http://127.0.0.1:8000</code> after about 30 seconds; it routes each question to RTI or agriculture. One topic only:
+         <code>python rag\web.py --domain rti</code>. Busy port: <code>--port 8080</code>.</p>
     </div>
     <div class="card">
       <p class="label">The terminal chat</p>
       <pre class="cmd">python rag\chat.py</pre>
-      <p style="margin-top:10px;color:var(--ink-2);font-size:13.5px"><code>/sources</code> shows the passages used,
-         <code>/new</code> starts a fresh conversation, <code>/quit</code> exits.</p>
-    </div>
-    <div class="card">
-      <p class="label">Rebuild the index (only if documents change)</p>
-      <pre class="cmd">python ingest\load_and_chunk.py
-python ingest\build_index.py</pre>
+      <p class="small" style="margin-top:10px;color:var(--ink-2)"><code>/sources</code> shows the passages used and the HyDE passage,
+         <code>/lang</code> sets the reply language, <code>/new</code> starts a fresh conversation, <code>/quit</code> exits.
+         With Docker: <code>docker run --rm -it --env-file .env ap-assistant python rag/chat.py</code>.</p>
     </div>
     <div class="card">
       <p class="label">Re-run the measurements</p>
       <pre class="cmd">python eval\retrieval_eval.py
-python eval\retrieval_eval.py --no-hyde</pre>
-      <p style="margin-top:10px;color:var(--ink-2);font-size:13.5px">The second command shows what HyDE is worth.
-         <code>eval\run_ragas.py</code> runs the LLM-judged evaluation and needs extra packages.</p>
+python eval\retrieval_eval.py --domain agriculture
+python eval\router_eval.py --only final --model openai/gpt-oss-20b
+python eval\language_eval.py
+python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
+      <p class="small" style="margin-top:10px;color:var(--ink-2)">They reuse the LLM outputs saved in <code>eval/cache/</code>, so the
+         numbers reproduce without API calls. <code>language_eval.py --answers 2</code> also writes full answers to check the reply
+         language; those are live calls.</p>
     </div>
   </div>
-  <p class="muted" style="margin-top:14px;font-size:13.5px">Needs <code>GROQ_API_KEY</code> in a <code>.env</code>
-     file at the project root. Leave about 30 seconds between questions: the free tier allows roughly 8,000
-     tokens a minute and one answer uses 3,000–4,000.</p>
+  <p class="muted small" style="margin-top:14px">Leave about 30 seconds between questions: the free tier allows roughly 8,000
+     tokens a minute on the answer model, and one answer uses 3,000–4,000.</p>
 </section>
 
 <!-- ============================== OPEN ============================== -->
@@ -664,84 +1760,118 @@ python eval\retrieval_eval.py --no-hyde</pre>
     <table>
       <thead><tr><th>Item</th><th>Where it stands</th></tr></thead>
       <tbody>
-        <tr><td><strong>One casual question in five still misses its answer</strong></td><td>Some misses are far off: for "can they refuse my RTI", the exemptions section isn't in the top 40.</td></tr>
-        <tr><td><strong>Follow-ups can lose the topic</strong></td><td>"what if my family belongs to bpl" after a fee question dropped "fee"; the AP white-card rule then ranked 43rd. The larger model fixed it in an isolated test but not in a real conversation. Untested idea: have the model emit the topic on its own line and append it to the search in code. Workaround: name the subject in the follow-up.</td></tr>
-        <tr><td><strong>Retrieval noise is unmeasured</strong></td><td>The tests check whether the right passage arrives, not how much irrelevant text arrives with it. In one question only 1–3 of 8 passages were relevant. A reranker is the obvious next step, untried.</td></tr>
-        <tr><td><strong>Appeal stages get mixed up</strong></td><td>Answers sometimes credit the Information Commission with rules belonging to the first appeal. The Act's own layout invites it: the first appeal's time limit is followed immediately by clauses about the Commission.</td></tr>
-        <tr><td><strong>Cannot name current officials</strong></td><td>State orders stop at 2011; only the portal page names the sitting Commissioners. Answers say so rather than guess.</td></tr>
-        <tr><td><strong>No untouched test set remains</strong></td><td>All four sets have now informed a decision. Any further tuning needs a new set written first.</td></tr>
-        <tr><td><strong>Throughput and startup</strong></td><td>About one answer per 30 seconds on the free tier; ~30 seconds to start, caused by a crowded global Python install rather than the pipeline. A project-only virtual environment would fix the latter.</td></tr>
-        <tr><td><strong>English only</strong></td><td>Two Telugu manuals are excluded; the embedding model is English-only.</td></tr>
+        <tr><td><strong>Some questions still miss their answer</strong></td><td>3 of 82 RTI and 13 of 93 agriculture test questions. Two RTI misses ask who the <em>current</em> Commissioner is (the indexed orders stop at 2011); the third is "can the officer just say no" (Section 8 is found at rank 11).</td></tr>
+        <tr><td><strong>Newer RTI documents are collected but not indexed</strong></td><td>27 staged documents, including the current Commission order (G.O.Ms.7/2026), online filing (RTIMIS) and the data-protection law's amendment to s.8(1)(j), in force since November 2025. Indexing them should address the "current Commissioner" misses; not yet done or measured.</td></tr>
+        <tr><td><strong>Agriculture's gain is less certain</strong></td><td>Its final set lost one question (14 → 13). The gain rests on the 79 tuning-period questions and a clean set (8 → 10 of 14).</td></tr>
+        <tr><td><strong>Answers are checked by reading, not measured</strong></td><td>The tests check that the right passage arrives, not that the answer is right. Known: appeal answers can mix up the two appeal stages; an answer can cite the wrong section when the right one wasn't retrieved.</td></tr>
+        <tr><td><strong>Follow-ups can lose the topic</strong></td><td>"what if my family belongs to bpl" after a fee question dropped "fee". Workaround: name the subject in the follow-up.</td></tr>
+        <tr><td><strong>Telugu in English letters translates less faithfully</strong></td><td>"rendo appeal" (second appeal) became "land appeal". Search still found every answer in the test; Telugu answer quality is unmeasured. The two Telugu RTI manuals are not indexed.</td></tr>
+        <tr><td><strong>One topic per question</strong></td><td>A question that needs RTI and agriculture together gets one; the router picks.</td></tr>
+        <tr><td><strong>Free-tier throughput</strong></td><td>4–5 LLM calls per question; about one question per 30 seconds, and about 40–45 full answers a day on gpt-oss-120b before the smaller model takes over.</td></tr>
+        <tr><td><strong>Agriculture data</strong></td><td>Two scanned documents not indexed and one 2025 relief order with garbled text (need OCR); several orders cover one season and need refreshing.</td></tr>
+        <tr><td><strong>Docker must be rebuilt after code changes</strong></td><td>The image holds a copy of the code. Today it predates the language fix: <code>docker compose up --build</code>.</td></tr>
+        <tr><td><strong>Startup</strong></td><td>20–30 seconds to load the models; the reranker adds about 1.5 s per agriculture question on CPU.</td></tr>
       </tbody>
     </table>
   </div>
 
   <h3>Where it goes next</h3>
-  <p style="max-width:76ch;color:var(--ink-2)">Most production systems close quality gaps by spending more
-     <em>per question</em> — bigger models, rerankers, multi-agent pipelines. For a public service the cheaper
-     route is to do the work <strong>once, at ingest</strong>. Two of the biggest wins here already cost nothing
-     per question: splitting the Act by section, and linking amendments. The next experiment is to move HyDE's
-     per-question call into indexing — generating, for each chunk, the questions it answers (the idea behind
-     Doc2Query) — and to see whether quality holds without a per-question LLM call.</p>
+  <div class="grid2">
+    <div class="card" style="border-left:3px solid var(--ingest)">
+      <p class="label">Next topic: finance</p>
+      <p class="small" style="margin-top:6px;color:var(--ink-2)">One topic with subcategories (pensions, stamp duty and registration,
+         vehicle tax, the state budget, professional tax, welfare payment status). A finance question is routed a second time, to
+         its subcategory, each with its own documents. Scope: <code>ingest/incoming/finance/REPORT.md</code>.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--llm)">
+      <p class="label">Other open work</p>
+      <ul class="plain small">
+        <li>A corrective agent loop: check the passages, search again when they don't answer.</li>
+        <li>Answer-level evaluation, not just retrieval.</li>
+        <li>Index-time work instead of per-question calls (store the questions each chunk answers), to cut LLM cost. Two of the
+            biggest wins so far, splitting the Act by section and linking amendments, already cost nothing per question.</li>
+        <li>Index the staged RTI documents; OCR for the scanned agriculture ones.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 </main>
 
 <footer class="wrap">
-  <p>AP RTI Assistant (<code>ap-rti-assistant</code>) — RTI assistant for Andhra Pradesh citizens. Knowledge base written 29 September 2026.</p>
-  <p style="margin-top:6px">Full working log with every decision and measurement: <code>context.md</code> ·
-     Narrative write-up: <code>README.md</code> · Frozen test questions: <code>eval/demo_questions.json</code></p>
+  <p>AP RTI Assistant (<code>ap-rti-assistant</code>, GitHub <code>Nikhilkarur/AP-ASSIS</code>): RTI and agriculture assistant for
+     Andhra Pradesh citizens. Knowledge base first written 29 September 2026, updated 6 October 2026 (main at <code>8e8b1df</code>).</p>
+  <p style="margin-top:6px">Full working log: <code>context.md</code> · Every search experiment: <code>docs/RETRIEVAL_EXPERIMENTS.md</code> ·
+     Write-up and run steps: <code>README.md</code> · Test questions: <code>eval/*_questions.json</code></p>
 </footer>
 
 <script>
 const STAGES = {
   q: {
-    title: "The question, as typed",
-    body: "Nothing is cleaned up or corrected. Spelling mistakes and SMS shorthand are exactly what citizens type, and the whole system is built to cope with them rather than demand better input.",
-    where: "rag/web.py, rag/chat.py",
-    stats: [["length cap", "500 characters"], ["typos", "left as typed"]]
+    title: "Your question, as typed",
+    body: "Nothing is cleaned up or corrected. Spelling mistakes, SMS shorthand and Telugu in either alphabet are exactly what people type, and the system is built to cope with them rather than demand better input.",
+    where: "rag/web.py, rag/web.html, rag/chat.py",
+    stats: [["length cap", "500 characters"], ["typos", "left as typed"], ["languages", "English, Telugu script, Telugu in English letters"]]
+  },
+  router: {
+    title: "1 · Router: which documents, and which language",
+    body: "One small call reads a one-line description of each topic, the earlier questions of the conversation, and the new question, and answers in two words: the topic (rti, agriculture or other) and the language (english or telugu). Telugu typed in English letters is recognised here, with no extra call. If no LLM is available, embedding similarity picks the topic and a Telugu-letter check picks the language. Decisions are cached per model and router version.",
+    where: "rag/router.py — route(), router_prompt(), ROUTER_MODELS; topic descriptions: router_hint in rag/domains.py",
+    stats: [["model", "gpt-oss-20b → qwen3.8-27b → embeddings"], ["cost", "~650 tokens"], ["fresh questions", "31/32"], ["languages", "29/29"]]
+  },
+  decline: {
+    title: "\"other\" → a polite decline",
+    body: "A question outside both topics gets no search and no answer-model call. The reply says what the assistant covers and that it won't guess, in the reply language (English, Telugu script or Telugu in English letters), with one button per topic to search those documents anyway, in case the router was wrong.",
+    where: "rag/answer.py — out_of_scope(); buttons in rag/web.html",
+    stats: [["LLM calls", "1 (the router)"], ["buttons", "Ask the RTI / Agriculture assistant"]]
   },
   condense: {
-    title: "1 · Rewrite the follow-up",
-    body: "Only runs when there is a conversation. The last 3 turns and the new message go to a small model, which writes one standalone question — because a search engine cannot do anything with \"what if i still dont get it\". That rewritten question is what gets searched. The answering model separately sees the recent turns, but only to understand what is meant; facts must still come from the passages, and citation numbers are stripped from earlier answers so old numbers cannot leak into new citations.",
-    where: "rag/answer.py — standalone_question(), CONDENSE_PROMPT",
-    stats: [["model", "gpt-oss-120b, falls back to 20b"], ["cost", "~600 tokens, ~1 s"], ["turns kept", "3"], ["known weakness", "can drop the topic"]]
+    title: "2 · Rewrite the follow-up",
+    body: "Only runs when there is a conversation. The last 3 turns and the new message go to the model, which writes one standalone question, because a search engine can do nothing with \"what if i still dont get it\". That rewritten question is what gets searched. The answering model separately sees the recent turns, but only to understand what is meant; facts must still come from the passages.",
+    where: "rag/answer.py — standalone_question(), per-topic prompt in rag/domains.py",
+    stats: [["model", "gpt-oss-120b, falls back to 20b"], ["turns kept", "3"], ["known weakness", "can drop the topic"]]
+  },
+  translate: {
+    title: "3 · Translate to English, for the search",
+    body: "The documents are English and the search reads only English: keyword search keeps a–z and 0–9, so Telugu letters vanish, and the embedding and reranker models are English models. So a Telugu question, in either alphabet, is translated, with scheme names spelled the usual English way. Every search step from here on uses the translation; the answer model does not.",
+    where: "rag/query_expansion.py — to_english()",
+    stats: [["model", "qwen3.8-27b → gpt-oss-20b"], ["cost", "~150 tokens"], ["runs for", "Telugu questions only"], ["Telugu script found", "7/9 → 9/9"]]
   },
   hyde: {
-    title: "2 · Write a hypothetical passage (HyDE)",
-    body: "A small model is asked to write the sentence a statute would contain to answer the question, in legal drafting style. The passage is often wrong on the facts — it once invented a ₹150 fee — and that is fine, because it is never shown to anyone. Its job is to supply the law's vocabulary so the search has something to match. The prompt forbids the words \"Right to Information\", \"RTI\" and \"Andhra Pradesh\": they appear in nearly every chunk, and including them made retrieval worse.",
-    where: "rag/retrieve.py — hypothetical_passage(), HYDE_PROMPT",
-    stats: [["model", "gpt-oss-20b"], ["time", "~1 s"], ["worth", "casual questions ~50% → 82%"], ["on failure", "search continues without it"]]
+    title: "4a · Write a hypothetical passage (HyDE)",
+    body: "A small model writes the sentence the documents would contain to answer the question, in their drafting style. The passage is often wrong on the facts (for \"rti fee entha\" it said one hundred rupees) and that is fine, because nobody ever sees it. Its job is to supply the documents' vocabulary so the search has something to match. Agriculture's prompt includes a glossary of local names (RBK, KCC...) so the model doesn't guess them.",
+    where: "rag/retrieve.py — hypothetical_passage(); prompts in rag/domains.py",
+    stats: [["model", "gpt-oss-20b"], ["on failure", "search continues without it"], ["worth (Sept, RTI)", "casual ~50% → 82%"]]
   },
-  dense: {
-    title: "3a · Search by meaning",
-    body: "The text is turned into 384 numbers by a local embedding model and compared against all 535 chunks by cosine similarity. This catches paraphrases — a question about \"time limits\" finding a passage about \"thirty days\" — but it has no sense of which words are rare, which is exactly why it fails on citizen phrasing alone.",
-    where: "rag/retrieve.py — _hybrid(); index built by ingest/build_index.py",
-    stats: [["model", "BAAI/bge-small-en-v1.5"], ["dimensions", "384"], ["window", "512 tokens"], ["store", "Chroma, local"]]
+  rewrite: {
+    title: "4b · Name the topic, list key terms",
+    body: "One call returns the topic (the name of the rule or scheme asked about, e.g. \"Forwarding of application to competent authority\") and key terms the answer is likely to contain. The topic is searched by meaning and keywords; the key terms by keywords only. Some details it writes are wrong (\"ten rupees\" where AP's rule varies by level); harmless, because it is only used to search.",
+    where: "rag/query_expansion.py — rewrites(); switched on per topic by expansion in rag/domains.py",
+    stats: [["model", "qwen3.8-27b → gpt-oss-20b"], ["RTI gain", "59 → 64 of 67"], ["RTI final set", "12 → 15 of 15"]]
   },
-  bm25: {
-    title: "3b · Search by keyword",
-    body: "Classic BM25, about thirty lines of Python, built in memory at startup from the stored chunks. It weights rare words heavily and common ones barely at all, so a question containing \"penalty\" (in 2 chunks) or \"court fee stamp\" lands immediately — the cases where meaning-search blurs the distinction.",
-    where: "rag/retrieve.py — class _BM25",
-    stats: [["build time", "under a second"], ["index file", "none needed"], ["dependency", "none"]]
+  search: {
+    title: "5 · Search by meaning and by keywords, then merge",
+    body: "Each search text (the question, the HyDE passage, the topic) is turned into 384 numbers and compared against every chunk of the chosen topic (meaning), and also matched by BM25 (rare exact words). The key terms go to BM25 only. Reciprocal Rank Fusion merges all the ranked lists, so a passage ranked highly by any of them rises. Keeping the original question in the merge is a safety net when a HyDE passage drifts.",
+    where: "rag/retrieve.py — _hybrid(), _expanded(), _rrf(); one Chroma collection per topic",
+    stats: [["embeddings", "BAAI/bge-small-en-v1.5"], ["keyword search", "BM25, built in memory at startup"], ["RRF constant", "60"]]
   },
-  rrf: {
-    title: "4 · Merge the rankings",
-    body: "Up to four ranked lists exist — meaning and keyword, for the question and for the HyDE passage. Reciprocal Rank Fusion scores each chunk by where it appears in each list, so a chunk ranked highly by any one of them rises. Keeping the original question in the merge is a safety net: when a HyDE passage drifts off-topic, the question's own results still carry the answer.",
-    where: "rag/retrieve.py — _rrf()",
-    stats: [["k constant", "60"], ["passages kept", "10"], ["8 → 10 was worth", "casual 76% → 82%"]]
+  rerank: {
+    title: "6 · Reranker (agriculture only)",
+    body: "A cross-encoder reads the English question together with each of the top 30 passages (title + text) and scores the pair. Its order is then fused with the search order rather than replacing it. It finds concrete things a farmer names (cashew, flood damage, a drone) inside long table chunks. For RTI it hurt (59 → 48 when replacing the order), so RTI skips it.",
+    where: "rag/retrieve.py — _reranked(), _cross_encoder(); settings: rerank in rag/domains.py",
+    stats: [["model", "ms-marco-MiniLM-L-6-v2"], ["time", "1.3–1.8 s on CPU"], ["clean set", "8 → 10 of 14"]]
   },
-  amend: {
-    title: "5 · Add amending orders",
-    body: "A rule without its amendment is not merely incomplete, it is wrong. G.O.Ms.No. 454 set the inspection fee at ₹5 per fifteen minutes; G.O.Ms.No. 545 changed it to ₹5 per hour. Similarity search has no reason to fetch both. So when one order in a family is retrieved, the others are added, ranked by how well the search itself scored them. The links are detected at ingest from each order's own \"Amendment to … Read the following\" header.",
-    where: "rag/retrieve.py — _amendment_family(); links built in ingest/load_and_chunk.py",
-    stats: [["families in this corpus", "1 (the AP fee rules)"], ["cap", "4 extra passages"], ["labelled in the answer", "yes"]]
+  pack: {
+    title: "7 · Top 10, plus amending orders",
+    body: "A rule without its amendment is not merely incomplete, it is wrong. G.O.Ms.No. 454 set the inspection fee at ₹5 per fifteen minutes; G.O.Ms.No. 545 changed it to ₹5 per hour. So when one order in a family is retrieved, the others are added. For agriculture, orders of replaced schemes are labelled NOT IN FORCE and at most one such passage gets through, so an old scheme can't crowd out its replacement.",
+    where: "rag/retrieve.py — _amendment_family(), MAX_NOT_IN_FORCE; links built in ingest/load_and_chunk.py",
+    stats: [["passages", "10"], ["extra amendment passages", "up to 4"], ["replaced-scheme passages", "max 1"]]
   },
   answer: {
-    title: "6 · Write the answer",
-    body: "The passages go to the answering model numbered and labelled with their source (\"RTI Act 2005, Section 19: Appeal\"), under rules that have been tightened each time a rehearsal exposed a failure: answer only from these passages; say what they do not cover; copy figures exactly; never call someone the current office-holder on the strength of a dated order; give a department's contacts only for that department; give every remedy the passages contain, not just one.",
-    where: "rag/answer.py — SYSTEM_PROMPT, answer_question()",
-    stats: [["model", "gpt-oss-120b"], ["fallback", "gpt-oss-20b when rate-limited"], ["time", "2–7 s"], ["temperature", "0.1"]]
+    title: "8 · Write the answer, in the reply language",
+    body: "The passages go to the answering model numbered and labelled with their source, with your original question (not the translation) and rules tightened each time a rehearsal exposed a failure: answer only from these passages; say what they do not cover; copy figures exactly; never call someone the current office-holder on the strength of a dated order. The last rule is always the reply language: by default the question's (Telugu in either alphabet → Telugu script), or the Reply in choice.",
+    where: "rag/answer.py — answer_question(), reply_language(), _REPLY_RULE; prompts in rag/domains.py",
+    stats: [["model", "gpt-oss-120b → gpt-oss-20b"], ["temperature", "0.1"], ["time", "3–4 s"], ["reply language", "6/6 checked"]]
   }
 };
 
@@ -774,7 +1904,7 @@ function show(key) {
 }
 
 buttons.forEach(b => b.addEventListener("click", () => show(b.dataset.s)));
-show("hyde");
+show("router");
 </script>
 </body>
 </html>
