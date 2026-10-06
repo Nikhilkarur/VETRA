@@ -160,8 +160,14 @@ def format_history(history: list[dict] | None, answer_chars: int = 600) -> str:
     )
 
 
-def standalone_question(question: str, history: list[dict] | None, domain: str = "rti") -> str:
-    """The question rewritten to stand alone, using earlier turns. Unchanged if no history."""
+def standalone_question(question: str, history: list[dict] | None, domain: str = "rti",
+                        fallback: bool = True) -> str | None:
+    """
+    The question rewritten to stand alone, using earlier turns. Unchanged if no history.
+    If the rewrite call fails: the last question plus this one (good enough to search
+    with), or None with fallback=False -- the router's second look at a follow-up must
+    not mistake that stand-in for a real rewrite (it always reads as the old topic).
+    """
     turns = _recent(history)
     if not turns:
         return question
@@ -171,9 +177,13 @@ def standalone_question(question: str, history: list[dict] | None, domain: str =
                                     f"Latest message: {question}"},
     ]
     try:
+        from dotenv import load_dotenv
         from groq import Groq, RateLimitError
 
-        client = Groq(max_retries=0)  # never sit waiting on a rate limit here
+        load_dotenv(ROOT / ".env")   # callers like the router's evaluation may not have yet
+        # A live question never sits waiting on a rate limit here; the evaluations
+        # (LLM_CACHE_DIR set) wait out per-minute limits, as the other LLM steps do.
+        client = Groq(max_retries=4 if os.environ.get("LLM_CACHE_DIR") else 0)
         try:
             reply = client.chat.completions.create(
                 model=CONDENSE_MODEL, temperature=0, reasoning_effort="low", messages=messages)
@@ -184,8 +194,13 @@ def standalone_question(question: str, history: list[dict] | None, domain: str =
         if rewritten:
             return rewritten
     except Exception as exc:
+        if not fallback:
+            print(f"  (couldn't rewrite the follow-up: {exc})", file=sys.stderr)
+            return None
         print(f"  (couldn't rewrite the follow-up, searching with it plus the last question: {exc})",
               file=sys.stderr)
+    if not fallback:
+        return None
     # Fallback that still carries the topic: the last question plus the new one.
     return f"{turns[-1]['q']} {question}"
 
@@ -279,9 +294,13 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
 
     started = time.perf_counter()
     route = None
+    rewritten = None
     if domain == domains.AUTO:
-        picked = router.route(question, history)
-        route, language = picked.method, picked.language
+        # A follow-up the router sends to "other" is rewritten with the conversation and
+        # routed again (router.rescue_followup); the rewrite is then reused below.
+        picked = router.route(
+            question, history, rewrite=lambda q, h, d: standalone_question(q, h, d, fallback=False))
+        route, language, rewritten = picked.method, picked.language, picked.standalone
         if picked.domain == router.OTHER:
             replying = reply_language(reply, language)
             return {"answer": out_of_scope(buttons, replying), "standalone": question, "hits": [],
@@ -291,7 +310,7 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
         domain = picked.domain
     language = language if language in router.LANGUAGES else router.script_language(question)
     replying = reply_language(reply, language)
-    standalone = standalone_question(question, history, domain)
+    standalone = rewritten or standalone_question(question, history, domain)
     # A Telugu question (either alphabet) -> English for the search steps only
     # (hyde=False means no search-time LLM call, so no translation either). The answer
     # model below still gets the original question, and is told the reply language.

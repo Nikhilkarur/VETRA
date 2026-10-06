@@ -1,5 +1,5 @@
 {
-  "about": "Frozen routing test set, written on 2026-10-04 BEFORE any router code existed. Each question is labelled with the domain whose documents should answer it: 'rti', 'agriculture', or 'other' (outside both, e.g. ration cards, budgets, passports -- finance is not built yet, so finance questions are 'other' for now). 'also_ok' lists other answers that are acceptable for a genuinely two-sided question. The label is about the TOPIC, not whether the documents happen to contain the answer. 'plain' is ordinary casual questions; 'traps' are questions whose words point to the wrong domain (an RTI request about a farm scheme; a farm question that says 'appeal', 'information', 'right' or 'penalty'); 'other' is out of scope, several of them close to a domain; 'followups' carry earlier turns, and the label is for the latest message in that conversation. The router is also tested on the 71 real FAQ questions in ingest/incoming/questions/questions.json (domain 'general' = other) and on every question in eval/demo_questions.json (rti) and eval/agri_questions.json (agriculture). 'final' (32) was added on 2026-10-05, BEFORE the LLM router was run even once; it is scored only at the end, after any change to the router prompt.",
+  "about": "Frozen routing test set, written on 2026-10-04 BEFORE any router code existed. Each question is labelled with the domain whose documents should answer it: 'rti', 'agriculture', or 'other' (outside both, e.g. ration cards, budgets, passports -- finance is not built yet, so finance questions are 'other' for now). 'also_ok' lists other answers that are acceptable for a genuinely two-sided question. The label is about the TOPIC, not whether the documents happen to contain the answer. 'plain' is ordinary casual questions; 'traps' are questions whose words point to the wrong domain (an RTI request about a farm scheme; a farm question that says 'appeal', 'information', 'right' or 'penalty'); 'other' is out of scope, several of them close to a domain; 'followups' carry earlier turns, and the label is for the latest message in that conversation. The router is also tested on the 71 real FAQ questions in ingest/incoming/questions/questions.json (domain 'general' = other) and on every question in eval/demo_questions.json (rti) and eval/agri_questions.json (agriculture). 'final' (32) was added on 2026-10-05, BEFORE the LLM router was run even once; it is scored only at the end, after any change to the router prompt. 'followups2' (18) was added on 2026-10-06, after a live follow-up ('what if i have a white ration card' after an RTI fee question) was declined, and BEFORE the router prompt was changed: 12 follow-ups that stay on the earlier topic although they mention something listed under 'other' (ration card, pension, certificate, land registration, electricity), and 6 real changes of subject that must still be 'other'. 'followups3' (8) was written on 2026-10-06 after followups2 had been used to compare router fixes, and before the chosen fix ran: a fresh check of the same kind (5 follow-ups that stay, 3 real changes of subject).",
   "created": "2026-10-04",
   "plain": [
     {"q": "govt office is ignoring my application for information, what now", "domain": "rti"},
@@ -99,5 +99,35 @@
     {"history": [{"q": "how much is the annadata sukhibhava amount", "domain": "agriculture"}], "q": "i didnt get it, can i file an rti to find out why", "domain": "rti"},
     {"history": [{"q": "is rti free for BPL families", "domain": "rti"}], "q": "ok another thing, what is the paddy msp", "domain": "agriculture"},
     {"history": [{"q": "crop insurance for cotton", "domain": "agriculture"}], "q": "and who decides the claim", "domain": "agriculture"}
+  ],
+  "followups2": [
+    {"history": [{"q": "how much is the rti application fee in andhra pradesh", "domain": "rti"}], "q": "what if i have a white ration card", "domain": "rti"},
+    {"history": [{"q": "how much does an rti cost", "domain": "rti"}], "q": "i am a retired employee getting pension, do i still pay", "domain": "rti"},
+    {"history": [{"q": "how do i file an rti application", "domain": "rti"}], "q": "can i use it to find out why my caste certificate is delayed", "domain": "rti"},
+    {"history": [{"q": "what is the penalty if the officer doesn't reply to my rti", "domain": "rti"}], "q": "what if the officer is from the electricity department", "domain": "rti"},
+    {"history": [{"q": "how long does the office have to reply to an rti", "domain": "rti"}], "q": "what if i asked about my land registration file", "domain": "rti"},
+    {"history": [{"q": "who can file an rti", "domain": "rti"}], "q": "what about someone with a BPL card", "domain": "rti"},
+    {"history": [{"q": "how much money does annadata sukhibhava give", "domain": "agriculture"}], "q": "what if the land is registered in my father's name", "domain": "agriculture"},
+    {"history": [{"q": "pm kisan installments per year", "domain": "agriculture"}], "q": "i also get a government pension, am i still eligible", "domain": "agriculture"},
+    {"history": [{"q": "crop insurance premium for kharif paddy", "domain": "agriculture"}], "q": "do white ration card holders pay less", "domain": "agriculture"},
+    {"history": [{"q": "subsidy for drip irrigation for small farmers", "domain": "agriculture"}], "q": "what documents do i need, is aadhaar and ration card enough", "domain": "agriculture"},
+    {"history": [{"q": "rti fee entha", "domain": "rti"}], "q": "naaku white ration card undi, appudu kuda kattala?", "domain": "rti"},
+    {"history": [{"q": "అన్నదాత సుఖీభవ ఎంత ఇస్తారు?", "domain": "agriculture"}], "q": "నాకు పెన్షన్ వస్తుంది, నాకు కూడా ఇస్తారా?", "domain": "agriculture"},
+    {"history": [{"q": "how much is the rti fee", "domain": "rti"}], "q": "ok thanks. how do i apply for a new ration card", "domain": "other"},
+    {"history": [{"q": "annadata sukhibhava amount per year", "domain": "agriculture"}], "q": "unrelated, how do i apply for old age pension", "domain": "other"},
+    {"history": [{"q": "how do i file a first appeal", "domain": "rti"}], "q": "how do i pay my electricity bill online", "domain": "other"},
+    {"history": [{"q": "crop insurance for cotton", "domain": "agriculture"}], "q": "how do i register a land sale deed", "domain": "other"},
+    {"history": [{"q": "rti fee entha", "domain": "rti"}], "q": "ration card ela apply cheyali?", "domain": "other"},
+    {"history": [{"q": "pm kisan eligibility", "domain": "agriculture"}], "q": "what is the weather in vijayawada today", "domain": "other"}
+  ],
+  "followups3": [
+    {"history": [{"q": "can i get copies of my father's land documents through rti", "domain": "rti"}], "q": "he passed away last year, does that change anything", "domain": "rti"},
+    {"history": [{"q": "what is the time limit for the PIO to reply", "domain": "rti"}], "q": "i applied at the mandal revenue office for my income certificate details", "domain": "rti"},
+    {"history": [{"q": "do i have to pay to inspect records under rti", "domain": "rti"}], "q": "i'm a senior citizen with an old age pension, any concession", "domain": "rti"},
+    {"history": [{"q": "how do i get the drip irrigation subsidy", "domain": "agriculture"}], "q": "i have only 1 acre and a pattadar passbook, is that enough", "domain": "agriculture"},
+    {"history": [{"q": "who is eligible for kisan credit card", "domain": "agriculture"}], "q": "i am also an anganwadi worker with a salary, can i still get it", "domain": "agriculture"},
+    {"history": [{"q": "how to file second appeal", "domain": "rti"}], "q": "different question, how do i get a caste certificate online", "domain": "other"},
+    {"history": [{"q": "pm kisan amount", "domain": "agriculture"}], "q": "how do i apply for an aarogyasri health card", "domain": "other"},
+    {"history": [{"q": "rti fee for district offices", "domain": "rti"}], "q": "what is the property tax rate in guntur", "domain": "other"}
   ]
 }

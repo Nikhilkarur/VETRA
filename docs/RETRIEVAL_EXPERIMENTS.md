@@ -436,3 +436,93 @@ on the final routing set, both unchanged.
 Weak spot: translations of Telugu in English letters are less faithful ("rendo appeal" →
 "land appeal", "alasyam chesina adhikariki entha jarimana" → "punishment for an officer
 who commits negligence"); search still found every answer, helped by HyDE and the rewrite.
+
+## 9. Follow-ups the router declined, and English called Telugu (2026-10-06)
+
+**Bug, found in live testing:** after "how much money do i need to pay for an rti in andhra
+pradesh", the follow-up "what if i have a white ration card" was declined twice ("I can
+only answer ... RTI and Agriculture"). Pressing "Ask the RTI assistant" gave the right
+answer (white-card holders are exempt from the application fee, G.O.Ms.No. 740). The
+router lists "ration cards" under *other*, and gpt-oss-20b's whole reasoning was "User
+asks about white ration card. That's other." -- it never weighed the earlier question.
+
+**Test written first:** `followups2` in `eval/router_questions.json` (18): 12 follow-ups
+that stay on the earlier topic although they name something listed under *other* (ration
+card, pension, certificate, land registration, electricity), and 6 real changes of subject
+that must stay *other*. The router as it was: **12/18** -- all 6 misses were follow-ups sent
+to *other*; the 6 real changes of subject were right.
+
+**What did not work** (on the 4 hardest follow-ups + the 6 changes of subject):
+
+| try | result |
+|---|---|
+| clearer follow-up rule in the prompt ("even when it mentions something listed under other") | 14/18 on the set, the white-card case still *other* |
+| + the rule moved first / "read it as part of this conversation" on the message / both | 6/10 each |
+| same prompt, `reasoning_effort=medium` | 8/12; "That's about ration cards" again |
+| a separate narrow call: "does the latest message continue the earlier question?" | 23/28 over all follow-up sets; the white-card case called "new" |
+
+The router sees only the earlier *questions*. Nothing in "how much is the rti fee" + "what
+if i have a white ration card" says they are connected unless you know the answer: in AP
+a white card exempts you from the fee.
+
+**What works -- route the rewritten follow-up** (`router.rescue_followup`). The follow-up
+rewrite (gpt-oss-120b) already reads the earlier *answer*, and turns the message into a
+standalone question: "What is the RTI application fee if I have a white ration card in
+Andhra Pradesh?", "Do retired employees receiving a pension still have to pay the RTI
+application fee?", "Do white ration card holders pay less for the crop insurance premium
+under PMFBY?". A real change of subject comes back as itself ("How do I apply for a new
+ration card?") and stays *other*. So: when the router says *other* for a message with
+earlier turns, rewrite it with the conversation and route the rewrite. It runs only in that
+case: 2 more calls (rewrite + route), and a rescued question reuses the rewrite, so a rescued
+follow-up costs 1 call more than before and every other question costs nothing more.
+
+A failed rewrite must not count: its stand-in ("last question + this message") always reads
+as the old topic, and one did ("rti fee entha ration card ela apply cheyali?" -> rti) when
+the rewrite hit the per-minute limit. `standalone_question(..., fallback=False)` now returns
+None instead, and failures are never cached.
+
+| set (single calls, gpt-oss-20b) | router alone | + rewrite of follow-ups sent to *other* |
+|---|---|---|
+| `followups2` (18, used to choose the fix) | 12/18 | **18/18** |
+| `followups3` (8, written after the fix was chosen, before it ran) | 6/8 | **8/8** |
+| `final` (32, frozen 2026-10-05) | -- | **31/32** (as before; the miss is now "how do i renew my CCRC card" -> other, and "what is suo motu disclosure" passes) |
+| language set (29) | topic 29/29, language 29/29 (gpt-oss-20b; also 29/29 on the backup qwen3.8-27b, which answered after 20b's daily limit) | unchanged |
+
+Earlier answers for these test conversations are generated once by the assistant
+(gpt-oss-120b, top 6, no HyDE, to save quota) and cached in
+`eval/cache/history-answers@gpt-oss-120b.json`; without HyDE some are weak ("the passages do
+not state..."), so the test is harder than live use, not easier.
+
+**Second bug found on the way: English labelled "telugu".** In single calls the router
+sometimes names plain English as Telugu, and the answer then comes back in Telugu: 2 of
+~40 English questions before this change ("i didnt get it, can i file an rti to find out
+why"), more while the prompt was being changed. The answer format's only example was
+`"rti telugu"`. Fixes: neutral examples (`"rti english"` or `"agriculture telugu"`), a
+clearer rule ("the language the latest message itself is written in ... a message made of
+English words is english"), and a check that needs no LLM (`router.english_words_only`):
+a message with no Telugu letters whose every word is in the indexed documents or the
+embedding model's vocabulary (31,033 words) is English. On every question in the test
+sets: 0 of 18 romanized-Telugu questions would be changed (each has words like "entha",
+"undi", "cheyali" that are in neither), and 99 of 107 English questions are recognised
+(the rest contain a rare word -- "bollworm", "thrips", "didnt" -- and keep the router's own
+label). It only ever corrects telugu -> english.
+
+**The batched evaluation could not be finished:** gpt-oss-20b reached Groq's 200,000-tokens-
+a-day limit after 180 of 300 questions. Of those, plain/traps/other/followups 57/57,
+followups3 8/8, followups2 16/18 (two real changes of subject labelled rti in the batch,
+*other* in single calls). Batches also showed context bleed: adding 26 questions moved the
+20-question batch boundaries, and one batch made of 14 grievance-portal questions labelled
+nearly all 20 *other*, including "What is the Right to Information Act 2005?". Live
+questions are routed one at a time, so those questions were re-checked singly: the 6 RTI and
+PM-KISAN FAQ questions the batch called *other* are all right (rti x4, agriculture x2); "When
+does it come into force?" goes to *other*, as it did before this change (one of the two FAQ
+lines that make no sense on their own); the two follow-ups the batch called rti are *other*
+singly, as they should be. "Who is covered?" was not re-checked before the daily limit. In
+those single calls gpt-oss-20b again labelled "ok thanks. how do i apply for a new ration
+card" as telugu; the English-words check turns it back to english.
+
+**Also fixed:** `eval/retrieval_eval.py` called the LLMs live unless `LLM_CACHE_DIR` and
+`HYDE_CACHE` were set, so a run during heavy use lost rewrites and HyDE passages to rate
+limits (RTI 74/82 instead of 79/82). It now uses `eval/cache/` by default, like the other
+evaluations; `--live` asks the models afresh. From the cache: RTI 79/82, agriculture 80/93,
+unchanged.

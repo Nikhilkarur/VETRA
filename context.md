@@ -536,6 +536,12 @@ Full write-up, every table and the reasons: `docs/RETRIEVAL_EXPERIMENTS.md`. Ben
   one LLM call → rti / agriculture / other. gpt-oss-20b: 270/274 batched on all earlier
   sets incl. 71 real FAQ questions; **31/32 single-call on a set frozen before the
   router ever ran**. Embedding-similarity fallback: 83%, never says "other".
+  **Router v3 (2026-10-06):** a follow-up the router sends to "other" is rewritten with
+  the conversation (the rewrite reads the earlier answer) and routed again -- "what if i
+  have a white ration card" after an RTI fee question was being declined. Follow-up sets:
+  12/18 -> 18/18, fresh 6/8 -> 8/8; final set 31/32 as before. English messages labelled
+  "telugu" are corrected when every word is a known English word. Details:
+  docs/RETRIEVAL_EXPERIMENTS.md, section 9.
 - **Free tier shaped everything:** 200,000 tokens per model per DAY. Experiments used
   qwen's and much of gpt-oss-20b's. Every LLM step now falls back (router 20b → qwen →
   embedding; rewrite qwen → 20b → none; HyDE → none; answer 120b → 20b), and a model
@@ -570,6 +576,7 @@ Improvements to the RTI domain itself:
 
 ## Changelog
 
+- **2026-10-06** — **Router v3: follow-ups and language.** A follow-up the router sent to "other" ("what if i have a white ration card" after an RTI fee question, declined twice in live testing) is now rewritten with the conversation and routed again (`router.rescue_followup`; only in that case, +1 call when rescued). Prompt-only fixes and medium reasoning did not work. New frozen follow-up sets: followups2 12/18 -> 18/18, followups3 (fresh) 6/8 -> 8/8; final 31/32 unchanged; language set 29/29. English mislabelled "telugu" (2 of ~40 single calls) is corrected by a check against the documents' and the embedding model's English words (0/18 romanized Telugu affected). A failed rewrite no longer stands in for a real one in routing. `eval/retrieval_eval.py` now uses eval/cache/ by default (`--live` for fresh calls); RTI 79/82, agriculture 80/93 unchanged. The batched router run stopped at gpt-oss-20b's daily limit (180/300 routed).
 - **2026-10-06** — **Reply language fixed.** The router also names the language (Telugu in either alphabet); Telugu questions in English letters are now translated for searching too; the answer model is always told the reply language (default: the question's; the page's Reply in menu and chat `/lang` override); the can't-help reply in English/Telugu/romanized Telugu. eval/language_eval.py: language 29/29, Telugu-script search 7/9 -> 9/9, reply language 6/6; routing unchanged (270/274, 31/32).
 - **2026-10-05** — **Telugu questions translated for searching.** A question in Telugu script is translated to English (qwen3.8-27b) for every search step; the answer model gets the original plus an instruction to answer in Telugu script. 8 Telugu questions: 7/8 -> 8/8 in the top 10 (docs/RETRIEVAL_EXPERIMENTS.md, section 7). Web page fix: answer boxes stay inside the column.
 - **2026-10-05** — **Docker.** `Dockerfile` + `compose.yaml` (+ allowlist `.dockerignore`):

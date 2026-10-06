@@ -300,6 +300,7 @@ flowchart TD
 | step | model | runs on | gets |
 |---|---|---|---|
 | 1. Router: which documents, and which language? | `gpt-oss-20b` (then `qwen3.8-27b`, then embedding similarity) | Groq | original question + earlier questions |
+| 1b. Only if the router says "neither" for a follow-up: rewrite it with the conversation, route the rewrite | `gpt-oss-120b`, then the router | Groq | original question + earlier turns |
 | 2. Follow-up rewrite (only with earlier turns) | `gpt-oss-120b` | Groq | original question + earlier turns |
 | 3. Telugu (script or English letters) → English, for searching | `qwen3.8-27b` (then `gpt-oss-20b`) | Groq | original question |
 | 4. HyDE search passage | `gpt-oss-20b` | Groq | English question |
@@ -315,7 +316,19 @@ answer model is always told which language to write in. By default that is the
 question's language (Telugu in either alphabet → Telugu script); the page's **Reply in**
 menu changes it: English, తెలుగు, or Telugu in English letters. The "can't help"
 reply follows the same setting. Per question that is 4 LLM calls for English, 5 for
-Telugu (the translation).
+Telugu (the translation). If the router calls a message Telugu but it has no Telugu
+letters and every word is a known English word (from the documents and the embedding
+model's vocabulary), it is treated as English: the router occasionally mislabels plain
+English, and the answer then came back in Telugu.
+
+**Follow-ups the router would decline.** The router sees only the earlier questions, so
+"what if i have a white ration card" after an RTI fee question looked like a ration-card
+question and was declined. When the router says "neither" for a message with earlier
+turns, the message is rewritten into a standalone question with the conversation
+(including the earlier answer) -- "What is the RTI application fee if I have a white
+ration card?" -- and that is routed again. A real change of subject ("how do i apply for
+a new ration card") is rewritten unchanged and still declined. This runs only in that
+case; a rescued follow-up reuses its rewrite, so it costs one call more.
 
 Typical time: 3–4 s to search, 3–4 s to answer. If a Groq model hits its daily limit
 the step falls back as shown, and HyDE is skipped; the app keeps answering, with
@@ -359,6 +372,7 @@ Retrieval = does the text that answers the question reach the answer model (top 
 | Agriculture, all question sets (93) | 76 | **80** |
 | Agriculture, final set (14) | 14 | 13 |
 | Router, fresh questions (32) | — | **31** |
+| Router, follow-ups that mention a ration card, pension, certificate... (18 + 8 fresh) | 12 + 6 | **18 + 8** (6 Oct) |
 | Router, 274 labelled questions incl. 71 real FAQs | 83% (similarity only) | **99%** |
 | Telugu-script questions (8) | 7 | **8** |
 | Router: language recognised (29: English, Telugu script, Telugu in English letters) | — | **29** |
@@ -404,10 +418,14 @@ Stated plainly, because a demo audience should hear them.
   the right one wasn't retrieved.
 - **The follow-up rewrite can drop the topic.** "what if my family belongs to bpl" after
   a fee question was once rewritten without "fee". Workaround: name the subject.
+- **Follow-ups the router sends to "neither"** now get a second look (rewrite + route
+  again; 6 Oct). If that rewrite fails (rate limit), the question is still declined, with
+  the "Ask the RTI / Agriculture assistant" buttons.
 - **Free tier:** Groq allows 200,000 tokens per model per day — about 40–45 full answers
   on `gpt-oss-120b`, after which the smaller model answers. One question every ~30 s.
 - **Four LLM calls per question** (router, HyDE, rewrite, answer), plus one for
-  follow-ups and one for Telugu-script questions.
+  follow-ups and one for Telugu questions (either alphabet); a follow-up the router would
+  decline costs one or two more.
 - **Telugu:** translating Telugu typed in English letters is less accurate than Telugu
   script ("rendo appeal", second appeal, became "land appeal"; the search still found
   the answer). Telugu answer quality has been checked by reading, not measured. The two
@@ -572,8 +590,9 @@ python eval/router_eval.py
 python eval/experiments.py --domain agriculture --exp baseline chosen
 ```
 Add `--no-hyde` to `retrieval_eval.py` to see the difference HyDE makes. The LLM outputs
-used in the experiments are cached in `eval/cache/`, so their numbers reproduce without
-API calls. `eval/run_ragas.py` runs the LLM-judged RAGAS evaluation; it needs extra
+the evaluations use (HyDE passages, rewrites, translations, router decisions) are cached
+in `eval/cache/`, so their numbers reproduce without API calls; `retrieval_eval.py --live`
+asks the models afresh instead. `eval/run_ragas.py` runs the LLM-judged RAGAS evaluation; it needs extra
 packages (`ragas`, `langchain-groq`, `langchain-community<0.4`).
 
 ### Project layout

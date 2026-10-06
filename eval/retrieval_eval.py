@@ -9,22 +9,33 @@ passage, and --no-hyde removes that too.
 Probes are matched with all whitespace removed, so extraction artifacts in the
 PDFs ("rup ees", "Informati on") can't cause false misses.
 
-Run:  python eval/retrieval_eval.py              # RTI: all four question sets
+By default the LLM outputs (HyDE passages, query rewrites) come from eval/cache/, the
+same text every earlier result was measured on, so a run makes no API calls and
+reproduces the published numbers; --live asks the models afresh (gpt-oss drifts
+even at temperature 0, and a rate-limited call silently drops that signal).
+
+Run:  python eval/retrieval_eval.py              # RTI: every question set
       python eval/retrieval_eval.py --no-hyde
       python eval/retrieval_eval.py --set heldout2 --verbose
       python eval/retrieval_eval.py --domain agriculture --set dev
+      python eval/retrieval_eval.py --live         # fresh LLM calls instead of the cache
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "rag"))
+# Read when rag/retrieve.py and rag/query_expansion.py load, so set before importing them.
+if "--live" not in sys.argv:
+    os.environ.setdefault("HYDE_CACHE", str(ROOT / "eval" / "cache" / "hyde.json"))
+    os.environ.setdefault("LLM_CACHE_DIR", str(ROOT / "eval" / "cache"))
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -48,6 +59,8 @@ def main() -> int:
     parser.add_argument("--set", action="append", help="question set(s) to run; default: all")
     parser.add_argument("--k", type=int, default=TOP_K)
     parser.add_argument("--no-hyde", action="store_true")
+    parser.add_argument("--live", action="store_true",
+                        help="call the LLMs afresh instead of using eval/cache/ (read at import time)")
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--ranks", action="store_true",
                         help="for misses, show where each probe first appears in the top 60")

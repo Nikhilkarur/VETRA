@@ -2,7 +2,8 @@
 Does the router send each question to the right domain?
 
 Three sources, all labelled before the router existed:
-  router_questions.json   plain / traps / other / followups (written for this test)
+  router_questions.json   plain / traps / other / followups / followups2 / followups3
+                          (written for this test)
   ingest/incoming/questions/questions.json   71 real questions from official FAQs
                           (rti, agriculture, and PGRS grievance FAQs = "other")
   demo_questions.json + agri_questions.json  every retrieval-eval question
@@ -18,11 +19,20 @@ limit resumes. --batch routes 20 questions per call (one prompt, ~1/15 of the
 tokens); live questions are always routed one at a time, so batch scores are
 checked against single-call scores on the same questions.
 
+Follow-ups are scored as the live app routes them: when the router says "other" for a
+message with earlier turns, the message is rewritten with the conversation and routed
+again (router.rescue_followup). The rewrite reads the earlier ANSWER, so each earlier
+test question is answered once by the assistant (gpt-oss-120b, top 6, no HyDE) and
+cached in eval/cache/history-answers@gpt-oss-120b.json; the rewrites are cached in
+eval/cache/condense@gpt-oss-120b.json. --no-rescue scores the router call alone.
+
 Run:  python eval/router_eval.py                  # LLM router, the live model order
       python eval/router_eval.py --model openai/gpt-oss-20b --batch   # 20 per call
       python eval/router_eval.py --router embedding
       python eval/router_eval.py --only router    # just router_questions.json
       python eval/router_eval.py --only final     # the frozen final routing set (run last)
+      python eval/router_eval.py --only followups2   # follow-ups that mention an "other" service
+      python eval/router_eval.py --only followups3   # the same kind, written after the fix was chosen
 """
 
 from __future__ import annotations
@@ -50,9 +60,12 @@ def cases(only: str | None, final: bool = False) -> dict[str, list[dict]]:
     if only == "final":   # the routing set frozen before the LLM router ever ran
         data = json.loads((ROOT / "eval" / "router_questions.json").read_text(encoding="utf-8"))
         return {"final": data["final"]}
+    if only in ("followups2", "followups3"):   # follow-ups naming a ration card, pension, ...; 2026-10-06
+        data = json.loads((ROOT / "eval" / "router_questions.json").read_text(encoding="utf-8"))
+        return {only: data[only]}
     if only in (None, "router"):
         data = json.loads((ROOT / "eval" / "router_questions.json").read_text(encoding="utf-8"))
-        for name in ("plain", "traps", "other", "followups"):
+        for name in ("plain", "traps", "other", "followups", "followups2", "followups3"):
             groups[name] = data[name]
     if only in (None, "faq"):
         faq = json.loads((ROOT / "ingest" / "incoming" / "questions" / "questions.json")
@@ -71,11 +84,13 @@ def cases(only: str | None, final: bool = False) -> dict[str, list[dict]]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--router", choices=["llm", "embedding"], default="llm")
-    parser.add_argument("--only", choices=["router", "faq", "eval", "final"],
+    parser.add_argument("--only", choices=["router", "faq", "eval", "final", "followups2", "followups3"],
                         help="final = router_questions.json's 'final' set, run once at the end")
     parser.add_argument("--verbose", action="store_true", help="show every question, not just misses")
     parser.add_argument("--model", help="pin one router model (default: the live order, router.ROUTER_MODELS)")
     parser.add_argument("--batch", action="store_true", help="20 questions per call (needs --model)")
+    parser.add_argument("--no-rescue", action="store_true",
+                        help="score the router call alone, without the follow-up rewrite")
     args = parser.parse_args()
     if args.model:
         os.environ["ROUTER_MODEL"] = args.model
@@ -107,6 +122,31 @@ def main() -> int:
                     QX.cached_as(stem, "router", router._message(c["q"], c.get("history")), lambda: value)
         batch = json.loads(file.read_text(encoding="utf-8")) if file.exists() else {}
 
+    import query_expansion as QX
+
+    def with_answers(history: list[dict]) -> list[dict]:
+        """Earlier turns with the assistant's answer to each, as the live page sends them."""
+        import answer
+
+        return [{**t, "a": t.get("a") or QX.cached_as(
+                    "history-answers@gpt-oss-120b", t["domain"], t["q"],
+                    lambda t=t: answer.answer_question(t["q"], 6, hyde=False, domain=t["domain"])["answer"])}
+                for t in history]
+
+    def rewrite(question: str, history: list[dict], domain: str) -> str:
+        import answer
+
+        key = " | ".join(t["q"] for t in history) + " || " + question
+        return QX.cached_as("condense@gpt-oss-120b", domain, key,
+                            lambda: answer.standalone_question(question, history, domain, fallback=False))
+
+    def rescued(case: dict, label: str) -> str:
+        """The live app's second look at a follow-up the router sent to "other"."""
+        if label != router.OTHER or not case.get("history") or args.no_rescue:
+            return label
+        found = router.rescue_followup(case["q"], with_answers(case["history"]), rewrite)
+        return found[0] if found else label
+
     def decide(case: dict) -> str:
         if args.router == "embedding":
             history = case.get("history")
@@ -115,17 +155,19 @@ def main() -> int:
                 return history[-1]["domain"]
             return router.route_embedding(case["q"])
         if args.batch:
-            return (batch.get("router|" + router._message(case["q"], case.get("history"))) or "ERROR").split()[0]
+            return rescued(case, (batch.get("router|" + router._message(case["q"], case.get("history")))
+                                  or "ERROR").split()[0])
         for attempt in range(3):
             try:
-                return router.route_llm(case["q"], case.get("history"))
+                return rescued(case, router.route_llm(case["q"], case.get("history")))
             except Exception as exc:  # rate limit after the SDK's own retries
                 print(f"      (retrying after error: {exc})", file=sys.stderr)
                 time.sleep(20)
         return "ERROR"
 
     print(f"router eval  |  {args.router}" + (f"  |  {args.model}" if args.model else "")
-          + ("  |  batched" if args.batch else "") + "\n")
+          + ("  |  batched" if args.batch else "")
+          + ("  |  router call only" if args.no_rescue else "  |  with the follow-up rewrite") + "\n")
     total = right = to_other = 0
     confusion: Counter = Counter()
     started = time.perf_counter()
