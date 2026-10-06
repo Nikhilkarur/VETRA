@@ -190,19 +190,49 @@ def standalone_question(question: str, history: list[dict] | None, domain: str =
     return f"{turns[-1]['q']} {question}"
 
 
-def is_telugu(text: str) -> bool:
-    """True if the question is written in Telugu script (see query_expansion.to_english)."""
-    from query_expansion import TELUGU_SCRIPT
+# The language the answer is written in. "auto" = the question's language; a Telugu
+# question gets Telugu script whether it was typed in Telugu letters or English ones.
+# The web page lets the reader pick another (its "Reply in" menu).
+REPLY_LANGUAGES = ("auto", "english", "telugu", "telugu_roman")
 
-    return bool(TELUGU_SCRIPT.search(text))
+_REPLY_RULE = {
+    "english": "Write the answer in English.",
+    "telugu": ("Write the answer in Telugu script (తెలుగు), even if the question was typed in "
+               "English letters. Keep section numbers, order numbers, amounts, dates and scheme "
+               "names exactly as the passages give them."),
+    "telugu_roman": ("Write the answer in Telugu using English letters (romanized Telugu, the way "
+                     "people type Telugu in chat messages), not Telugu script. Keep section numbers, "
+                     "order numbers, amounts, dates and scheme names exactly as the passages give them."),
+}
+
+
+def reply_language(preference: str | None, language: str) -> str:
+    """english / telugu / telugu_roman, from the reader's choice and the question's language."""
+    if preference in _REPLY_RULE:
+        return preference
+    return "telugu" if language == "telugu" else "english"
 
 
 class MissingKey(RuntimeError):
     """No GROQ_API_KEY in the environment or .env."""
 
 
-def out_of_scope(buttons: bool = False) -> str:
-    """The reply to a question no domain covers (the router said "other")."""
+def out_of_scope(buttons: bool = False, language: str = "english") -> str:
+    """The reply to a question no domain covers (the router said "other"), in the reply language."""
+    if language == "telugu":
+        topics = "; ".join(d.topic_te for d in domains.DOMAINS.values())
+        tail = ("ఇది వీటిలో ఒకదానికి సంబంధించినదైతే, క్రింద ఎంచుకోండి — ఆ పత్రాలలో వెతుకుతాను."
+                if buttons else "ఇది వీటిలో ఒకదానికి సంబంధించినదైతే, ప్రశ్నను మరోలా అడగండి.")
+        return ("నేను ఆంధ్రప్రదేశ్ ప్రభుత్వ అధికారిక పత్రాల ఆధారంగా ఈ అంశాలపై మాత్రమే సమాధానం "
+                f"ఇవ్వగలను: {topics}. మీ ప్రశ్న వేరే విషయం గురించి ఉన్నట్టుంది, కాబట్టి ఊహించి "
+                f"చెప్పను. {tail}")
+    if language == "telugu_roman":
+        topics = "; ".join(d.topic_te_roman for d in domains.DOMAINS.values())
+        tail = ("Idi veetilo okadaniki sambandhinchinadaite, kinda enchukondi — aa patralalo vetukutanu."
+                if buttons else "Idi veetilo okadaniki sambandhinchinadaite, prashnanu marola adagandi.")
+        return ("Nenu Andhra Pradesh prabhutva adhikarika patrala adharanga ee amshalapai matrame "
+                f"samadhanam ivvagalanu: {topics}. Mee prashna vere vishayam gurinchi unnattundi, "
+                f"kabatti oohinchi cheppanu. {tail}")
     topics = " and ".join(f"{d.label} ({d.blurb.split('.')[0].removeprefix('Ask about ')})"
                           for d in domains.DOMAINS.values())
     tail = ("If it is about one of them, choose it below and I'll search those documents."
@@ -215,7 +245,8 @@ def out_of_scope(buttons: bool = False) -> str:
 
 def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
                     history: list[dict] | None = None, domain: str = "rti",
-                    buttons: bool = False) -> dict:
+                    buttons: bool = False, reply: str = "auto",
+                    language: str | None = None) -> dict:
     """
     Retrieve, then answer. Returns everything a caller might display:
     answer, standalone (the question as searched), hits (the numbered passages),
@@ -225,7 +256,11 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
 
     history: earlier turns, oldest first, as [{"q": question, "a": answer}, ...];
     a turn may also carry "domain", which helps the router with follow-ups.
-    domain="auto": the router (rag/router.py) picks the domain for this question.
+    domain="auto": the router (rag/router.py) picks the domain for this question, and
+    names its language. reply: the answer's language (REPLY_LANGUAGES; "auto" follows
+    the question). language: the question's language if already known ("telugu" /
+    "english", e.g. from an earlier routing of the same question); with a fixed
+    domain and no language given, only Telugu script is recognised.
     """
     from dotenv import load_dotenv
     from groq import Groq
@@ -240,26 +275,30 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
 
     from groq import APIStatusError
 
+    import router
+
     started = time.perf_counter()
     route = None
     if domain == domains.AUTO:
-        import router
-
         picked = router.route(question, history)
-        route = picked.method
+        route, language = picked.method, picked.language
         if picked.domain == router.OTHER:
-            return {"answer": out_of_scope(buttons), "standalone": question, "hits": [],
+            replying = reply_language(reply, language)
+            return {"answer": out_of_scope(buttons, replying), "standalone": question, "hits": [],
                     "passage": None, "context": "", "model": None, "domain": router.OTHER,
-                    "route": route, "search_s": time.perf_counter() - started, "answer_s": 0.0}
+                    "route": route, "language": language, "reply_language": replying,
+                    "search_s": time.perf_counter() - started, "answer_s": 0.0}
         domain = picked.domain
+    language = language if language in router.LANGUAGES else router.script_language(question)
+    replying = reply_language(reply, language)
     standalone = standalone_question(question, history, domain)
-    # Telugu script -> English for the search steps only (hyde=False means no
-    # search-time LLM call, so no translation either). The answer model below still
-    # gets the original question and answers in its language.
+    # A Telugu question (either alphabet) -> English for the search steps only
+    # (hyde=False means no search-time LLM call, so no translation either). The answer
+    # model below still gets the original question, and is told the reply language.
     if hyde:
         import query_expansion
 
-        standalone = query_expansion.to_english(standalone, domain)
+        standalone = query_expansion.to_english(standalone, domain, telugu=language == "telugu")
     hits, passage = retrieve_with_trace(standalone, k, hyde, domain)
     searched = time.perf_counter()
     earlier = format_history(history)
@@ -280,12 +319,10 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
         prompt += f"Question: {question}"
         if standalone != question:
             prompt += f"\n(In context, this means: {standalone})"
-        # The English line above is for clarity; without this the model followed it
-        # and answered a Telugu question in English (checked 2026-10-05).
-        if is_telugu(question):
-            prompt += ("\n\nWrite the answer in Telugu script, the language of the question. Keep "
-                       "section numbers, order numbers, amounts, dates and scheme names exactly "
-                       "as the passages give them.")
+        # Always say which language to answer in. Left to itself the model followed
+        # the English line above, or guessed for Telugu typed in English letters
+        # ("rti fee entha" came back in English; checked 2026-10-06).
+        prompt += "\n\n" + _REPLY_RULE[replying]
         messages = [
             # {today}: agriculture's rules tell the model the date, so a 2024 order
             # is not described as "the current season" in 2026. RTI's prompt has no
@@ -315,16 +352,18 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
         "model": used,
         "domain": domain,
         "route": route,
+        "language": language,
+        "reply_language": replying,
         "search_s": searched - started,
         "answer_s": done - searched,
     }
 
 
 def ask(question: str, k: int = TOP_K, show_context: bool = False, hyde: bool = True,
-        history: list[dict] | None = None, domain: str = "rti") -> dict:
+        history: list[dict] | None = None, domain: str = "rti", reply: str = "auto") -> dict:
     """Answer a question and print it, with sources, for the terminal. Returns the result."""
     try:
-        result = answer_question(question, k, hyde, history, domain)
+        result = answer_question(question, k, hyde, history, domain, reply=reply)
     except MissingKey as exc:
         print(exc)
         sys.exit(1)
@@ -363,8 +402,10 @@ def main() -> int:
     parser.add_argument("--no-hyde", action="store_true", help="search with the question only")
     parser.add_argument("--domain", default=domains.AUTO, choices=[domains.AUTO, *domains.DOMAINS],
                         help="auto (default): the router picks RTI or agriculture for the question")
+    parser.add_argument("--reply", default="auto", choices=REPLY_LANGUAGES,
+                        help="answer language; auto (default) follows the question")
     args = parser.parse_args()
-    ask(args.question, args.k, args.show_context, not args.no_hyde, domain=args.domain)
+    ask(args.question, args.k, args.show_context, not args.no_hyde, domain=args.domain, reply=args.reply)
     return 0
 
 

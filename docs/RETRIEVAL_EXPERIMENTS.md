@@ -403,3 +403,36 @@ as it is (no reliable way to detect it without another call).
 
 Cost: one extra small call (~150 tokens) for Telugu-script questions only. Small sample;
 Telugu answer quality is checked by reading, not measured.
+
+## 8. Recognising the language, and replying in it (2026-10-06)
+
+**Bug:** asked in Telugu, the assistant sometimes answered in English. Only Telugu
+*script* was recognised (a letter check), so "rti fee entha" got no translation and no
+reply-language instruction (it came back in English), and the "can't help" reply was
+fixed English text even for Telugu-script questions.
+
+**Fix:**
+- The router call now returns two words, topic and language (`rti telugu`), so Telugu in
+  English letters is recognised with no extra call (`rag/router.py`, router v2).
+- Every Telugu question (either alphabet) is translated to English for the search.
+- The answer model is always told the reply language: by default the question's
+  (Telugu in either alphabet → Telugu script), or the page's **Reply in** choice
+  (English / తెలుగు / Telugu in English letters). The "can't help" reply exists in all three.
+
+**Measured** (`eval/language_eval.py` on `eval/language_questions.json`, written before
+the fix ran; router decisions, HyDE passages, rewrites and translations cached in
+`eval/cache/`):
+
+| group | topic right | language right | answer found: as typed → translated |
+|---|---|---|---|
+| English (8) | 8 | 8 | 6/6 → 6/6 |
+| Telugu script (10) | 10 | 10 | 7/9 → 9/9 |
+| Telugu in English letters (11) | 11 | 11 | 10/10 → 10/10 |
+
+Reply language, 6 full answers (2 per group): all right, including "rti fee entha" → Telugu.
+Routing did not get worse with the two-word reply: 270/274 batched and 31/32 single-call
+on the final routing set, both unchanged.
+
+Weak spot: translations of Telugu in English letters are less faithful ("rendo appeal" →
+"land appeal", "alasyam chesina adhikariki entha jarimana" → "punishment for an officer
+who commits negligence"); search still found every answer, helped by HyDE and the rewrite.

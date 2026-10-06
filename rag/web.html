@@ -135,6 +135,11 @@
   }
   .hint { margin: 8px 2px 0; font-size: 12.5px; color: var(--ink-3); display: flex; gap: 12px; }
   .hint span { flex: 1; }
+  .hint label { white-space: nowrap; }
+  .hint select {
+    font: inherit; font-size: 12.5px; color: var(--ink-2); background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 1px 4px;
+  }
   button.link {
     font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent);
     background: none; border: 0; padding: 0; cursor: pointer;
@@ -171,6 +176,14 @@
     </div>
     <p class="hint">
       <span id="memory">Takes 3–6 seconds. Free tier: leave about 30 seconds between questions.</span>
+      <label>Reply in
+        <select id="reply" aria-label="Language of the answers">
+          <option value="auto">Same as my question</option>
+          <option value="english">English</option>
+          <option value="telugu">తెలుగు</option>
+          <option value="telugu_roman">Telugu (English letters)</option>
+        </select>
+      </label>
       <button class="link" id="new" type="button" disabled>New chat</button>
     </p>
   </div>
@@ -188,6 +201,14 @@ const idleHint = memory.textContent;
 let turns = 0;
 let busy = false;
 let history = [];   // [{q, a, domain}], oldest first -- sent with every question
+
+// "Reply in": "auto" answers in the question's language (Telugu in either alphabet ->
+// Telugu script). Remembered in this browser only; the page works without storage.
+const replySel = document.getElementById("reply");
+try { const saved = localStorage.getItem("reply"); if (saved) replySel.value = saved; } catch (e) {}
+if (!replySel.value) replySel.value = "auto";
+replySel.addEventListener("change", () => { try { localStorage.setItem("reply", replySel.value); } catch (e) {} });
+const REPLY_NAMES = { english: "English", telugu: "తెలుగు", telugu_roman: "Telugu (English letters)" };
 
 function bindChips() {
   document.querySelectorAll(".chip").forEach(chip =>
@@ -218,8 +239,9 @@ form.addEventListener("submit", (event) => {
 });
 
 // domain: set only by an "Ask the ... assistant" button after a declined question;
-// otherwise the server's router picks the documents.
-async function ask(question, domain) {
+// otherwise the server's router picks the documents. language: the question's
+// language as the router found it, passed back on that retry.
+async function ask(question, domain, language) {
   if (!question || busy) return;
   busy = true; button.disabled = true;
   document.getElementById("empty")?.remove();
@@ -243,7 +265,7 @@ async function ask(question, domain) {
     const res = await fetch("/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, history: history.slice(-3), domain }),
+      body: JSON.stringify({ question, history: history.slice(-3), domain, language, reply: replySel.value }),
     });
     const data = await res.json();
     clearInterval(timer);
@@ -269,9 +291,12 @@ function render(article, answer, data, turn, question) {
     answer.innerHTML = md(data.answer, turn);
     const row = el("div", "choices");
     for (const c of data.choices) {
-      const choice = el("button", "chip", `Ask the ${c.label} assistant`);
+      const text = data.reply_language === "telugu" ? `${c.label} పత్రాలలో వెతకండి`
+        : data.reply_language === "telugu_roman" ? `${c.label} documents lo vetakandi`
+        : `Ask the ${c.label} assistant`;
+      const choice = el("button", "chip", text);
       choice.type = "button";
-      choice.addEventListener("click", () => ask(question, c.name));
+      choice.addEventListener("click", () => ask(question, c.name, data.language));
       row.append(choice);
     }
     article.append(row);
@@ -287,7 +312,8 @@ function render(article, answer, data, turn, question) {
   answer.innerHTML = md(data.answer, turn);
 
   article.append(el("p", "meta",
-    `found in ${data.search_s} s · answered in ${data.answer_s} s · ${data.model}`));
+    `found in ${data.search_s} s · answered in ${data.answer_s} s · ${data.model}` +
+    (data.reply_language ? ` · reply in ${REPLY_NAMES[data.reply_language] || data.reply_language}` : "")));
 
   const sources = el("details", "box");
   sources.append(el("summary", "", `Sources (${data.sources.length})`));

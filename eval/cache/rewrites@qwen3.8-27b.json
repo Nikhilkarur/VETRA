@@ -3168,5 +3168,706 @@
    "grant",
    "small scale"
   ]
+ },
+ "rti|how do i file an rti application": {
+  "topic": "Procedure for filing an application for information",
+  "queries": [
+   "procedure for submitting application to Public Information Officer",
+   "format and manner of filing request for information",
+   "steps to present application under section 6"
+  ],
+  "keywords": [
+   "application",
+   "Public Information Officer",
+   "section 6",
+   "manner",
+   "request",
+   "information",
+   "fee",
+   "submission"
+  ]
+ },
+ "agriculture|annadata sukhibhava eligibility for tenant farmers": {
+  "topic": "Annadata Sukhibhava eligibility criteria for tenant farmers",
+  "queries": [
+   "Annadata Sukhibhava scheme guidelines eligibility tenant farmers cultivator card",
+   "PM-KISAN and Annadata Sukhibhava benefits for sharecroppers holding cultivator card",
+   "Eligibility conditions for tenant farmers under Annadata Sukhibhava income support scheme"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "tenant farmers",
+   "cultivator card",
+   "eligibility",
+   "sharecroppers",
+   "income support",
+   "PM-KISAN",
+   "beneficiaries"
+  ]
+ },
+ "rti|ఆర్టీఐ దరఖాస్తుకు ఫీజు ఎంత?": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for filing application under section 7",
+   "amount of fee payable for obtaining information",
+   "payment of application fee to Public Information Officer"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "section 7",
+   "prescribed fee",
+   "payment",
+   "demand draft",
+   "postal order",
+   "cash"
+  ]
+ },
+ "rti|How much is the fee for an RTI application?": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for filing application under section 7",
+   "amount payable as application fee for inspection or copy of records",
+   "payment of ten rupees as application fee"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "prescribed fee",
+   "section 7",
+   "payment",
+   "inspection",
+   "copy of records",
+   "cash",
+   "postal order",
+   "demand draft"
+  ]
+ },
+ "rti|30 రోజుల్లో సమాధానం రాకపోతే ఏం చేయాలి?": {
+  "topic": "First Appeal to Appellate Authority",
+  "queries": [
+   "procedure for filing first appeal when public information officer fails to provide information within thirty days",
+   "time limit and jurisdiction of appellate authority for hearing first appeal under section 19",
+   "consequences of non-compliance with thirty day deadline for furnishing information and remedy available to applicant"
+  ],
+  "keywords": [
+   "first appeal",
+   "appellate authority",
+   "thirty days",
+   "section 19",
+   "public information officer",
+   "deemed refusal",
+   "furnishing information",
+   "application"
+  ]
+ },
+ "rti|What should I do if I do not receive a response within 30 days?": {
+  "topic": "Deemed refusal and first appeal procedure",
+  "queries": [
+   "procedure for filing first appeal when no response received within thirty days",
+   "legal consequences of failure to provide information within statutory time limit",
+   "process for treating non-response as refusal under section 19"
+  ],
+  "keywords": [
+   "deemed refusal",
+   "thirty days",
+   "first appeal",
+   "Appellate Authority",
+   "Section 19",
+   "non-response",
+   "statutory time limit",
+   "appeal fee"
+  ]
+ },
+ "rti|ఆలస్యం చేసిన అధికారికి ఎంత జరిమానా విధిస్తారు?": {
+  "topic": "Penalty for delay in providing information",
+  "queries": [
+   "penalty imposed on Public Information Officer for delay in furnishing information",
+   "Section 20 penalty for failure to provide information within time limit",
+   "fine amount for delay in responding to request for information"
+  ],
+  "keywords": [
+   "penalty",
+   "delay",
+   "Public Information Officer",
+   "furnishing information",
+   "time limit",
+   "Section 20",
+   "fine",
+   "officer"
+  ]
+ },
+ "rti|How much fine is imposed on the officer who delayed?": {
+  "topic": "Penalty for delay in furnishing information",
+  "queries": [
+   "penalty imposed on Public Information Officer for failure to provide information within time limit",
+   "fine amount for delay in responding to request under section 20",
+   "punishment for non-compliance with time limits by PIO"
+  ],
+  "keywords": [
+   "penalty",
+   "Public Information Officer",
+   "delay",
+   "fine",
+   "time limit",
+   "section 20",
+   "officer",
+   "furnishing information"
+  ]
+ },
+ "rti|రెండో అప్పీల్ ఎంత రోజుల్లో దాఖలు చేయాలి?": {
+  "topic": "Time limit for filing second appeal",
+  "queries": [
+   "period for filing second appeal before State Information Commission",
+   "deadline for submission of second appeal against first appellate authority order",
+   "number of days allowed for second appeal under section 19"
+  ],
+  "keywords": [
+   "second appeal",
+   "forty-five days",
+   "State Information Commission",
+   "first appellate authority",
+   "written appeal",
+   "section 19",
+   "prescribed time",
+   "commissioner"
+  ]
+ },
+ "rti|How many days does it take to file a second appeal?": {
+  "topic": "Time limit for filing second appeal",
+  "queries": [
+   "period for filing second appeal before State Information Commission",
+   "time limit for second appeal under section 20",
+   "days allowed for second appeal against first appellate authority decision"
+  ],
+  "keywords": [
+   "second appeal",
+   "forty-five days",
+   "State Information Commission",
+   "first appellate authority",
+   "time limit",
+   "filing",
+   "appeal",
+   "section 20"
+  ]
+ },
+ "agriculture|అన్నదాత సుఖీభవ కింద సంవత్సరానికి ఎంత డబ్బు ఇస్తారు?": {
+  "topic": "Annadata Sukhibhava Scheme annual financial assistance",
+  "queries": [
+   "Annadata Sukhibhava Scheme annual amount per acre",
+   "PM-KISAN and Annadata Sukhibhava combined financial assistance rate",
+   "Farmer income support scheme annual disbursement amount"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "annual assistance",
+   "per acre",
+   "PM-KISAN",
+   "financial support",
+   "farmer income",
+   "disbursement",
+   "scheme guidelines"
+  ]
+ },
+ "agriculture|How much money is given per year under the Annadata Sukhibhava scheme?": {
+  "topic": "Annadata Sukhibhava Scheme annual financial assistance",
+  "queries": [
+   "Annadata Sukhibhava Scheme annual amount per acre",
+   "financial assistance per year under Annadata Sukhibhava",
+   "Annadata Sukhibhava benefit amount per farmer per annum"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "annual",
+   "financial assistance",
+   "per acre",
+   "benefit",
+   "scheme",
+   "amount",
+   "farmer"
+  ]
+ },
+ "agriculture|కౌలు రైతులకు అన్నదాత సుఖీభవ వస్తుందా?": {
+  "topic": "Annadata Sukhibhava eligibility for tenant farmers",
+  "queries": [
+   "Annadata Sukhibhava scheme eligibility criteria for kulu raitulu or tenant farmers",
+   "Does Annadata Sukhibhava benefit extend to cultivators holding land under tenancy",
+   "Eligibility of tenant farmers for Annadata Sukhibhava direct benefit transfer"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "tenant farmers",
+   "kulu raitulu",
+   "eligibility",
+   "cultivator",
+   "benefit",
+   "scheme",
+   "tenancy"
+  ]
+ },
+ "agriculture|Will tenant farmers receive Annadata Sukhibhava?": {
+  "topic": "Annadata Sukhibhava eligibility for tenant farmers",
+  "queries": [
+   "Annadata Sukhibhava scheme guidelines tenant farmer eligibility criteria",
+   "cultivator card holder benefit under Annadata Sukhibhava",
+   "tenant farmer inclusion in Annadata Sukhibhava beneficiary list"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "tenant farmer",
+   "cultivator card",
+   "eligibility",
+   "beneficiary",
+   "scheme guidelines",
+   "landless",
+   "sharecropper"
+  ]
+ },
+ "agriculture|ఎస్సీ చిన్న రైతుకు డ్రిప్ ఇరిగేషన్ పై ఎంత సబ్సిడీ ఇస్తారు?": {
+  "topic": "Subsidy for drip irrigation to SC small farmers",
+  "queries": [
+   "Subsidy percentage for drip irrigation system to Scheduled Caste small and marginal farmers",
+   "Financial assistance for micro irrigation drip sprinkler to SC small farmers",
+   "Drip irrigation subsidy rate for small farmers belonging to SC category"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "subsidy",
+   "SC",
+   "small farmers",
+   "micro irrigation",
+   "financial assistance",
+   "sprinkler",
+   "percentage"
+  ]
+ },
+ "agriculture|How much subsidy is given for drip irrigation to an SC small farmer?": {
+  "topic": "Subsidy for drip irrigation to SC small farmers",
+  "queries": [
+   "financial assistance percentage drip irrigation SC small farmer",
+   "subsidy rate micro irrigation sprinkler drip SC category small holder",
+   "government scheme support drip irrigation system SC small farmer eligibility"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "SC",
+   "small farmer",
+   "subsidy",
+   "financial assistance",
+   "micro irrigation",
+   "percentage",
+   "eligible beneficiary"
+  ]
+ },
+ "agriculture|ఖరీఫ్ పంట బీమాకు రైతు ఎంత ప్రీమియం కట్టాలి?": {
+  "topic": "Pradhan Mantri Fasal Bima Yojana premium contribution",
+  "queries": [
+   "PMFBY Kharif crop insurance premium rate percentage",
+   "Pradhan Mantri Fasal Bima Yojana farmer contribution towards premium",
+   "Kharif season crop insurance premium amount under PMFBY"
+  ],
+  "keywords": [
+   "PMFBY",
+   "premium",
+   "Kharif",
+   "contribution",
+   "crop insurance",
+   "farmer",
+   "percentage",
+   "Pradhan Mantri Fasal Bima Yojana"
+  ]
+ },
+ "agriculture|How much premium should a farmer pay for Kharif crop insurance?": {
+  "topic": "Premium contribution for Kharif season under PMFBY",
+  "queries": [
+   "Farmer premium contribution percentage Kharif season Pradhan Mantri Fasal Bima Yojana",
+   "Crop insurance premium rate Kharif crops PMFBY guidelines",
+   "Subsidy on premium Kharif season crop insurance farmer share"
+  ],
+  "keywords": [
+   "premium",
+   "Kharif",
+   "PMFBY",
+   "contribution",
+   "crop insurance",
+   "farmer",
+   "subsidy",
+   "percentage"
+  ]
+ },
+ "agriculture|PM kisan డబ్బులు సంవత్సరానికి ఎన్ని సార్లు వస్తాయి?": {
+  "topic": "PM-KISAN instalment disbursement schedule",
+  "queries": [
+   "PM-KISAN annual instalment frequency and disbursement schedule",
+   "Pranam Kisan Samman Nidhi benefit amount per year and number of instalments",
+   "PM-KISAN scheme guidelines on quarterly disbursement of income support"
+  ],
+  "keywords": [
+   "PM-KISAN",
+   "instalments",
+   "disbursement",
+   "annual",
+   "benefit",
+   "schedule",
+   "quarterly",
+   "income support"
+  ]
+ },
+ "agriculture|How many times a year is the PM Kisan money received?": {
+  "topic": "PM-KISAN income support disbursement frequency",
+  "queries": [
+   "PM-KISAN scheme guidelines annual income support installment frequency",
+   "Pradhan Mantri Kisan Samman Nidhi benefit disbursement schedule per year",
+   "PM-KISAN farmer income support transfer intervals and number of installments"
+  ],
+  "keywords": [
+   "PM-KISAN",
+   "installments",
+   "disbursement",
+   "annual",
+   "income support",
+   "benefit",
+   "transfer",
+   "frequency"
+  ]
+ },
+ "rti|rti fee entha": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for filing application under section 7",
+   "payment of ten rupees as application fee",
+   "mode of payment for information request fee"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "prescribed fee",
+   "payment",
+   "section 7",
+   "application"
+  ]
+ },
+ "rti|What is the RTI fee?": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for application under section 7",
+   "amount payable for obtaining information or inspection of records",
+   "payment of application fee by demand draft or bank draft"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "prescribed fee",
+   "payment",
+   "demand draft",
+   "inspection",
+   "copy",
+   "certified copy"
+  ]
+ },
+ "rti|rti application ki fee entha?": {
+  "topic": "Fees for filing an application for information",
+  "queries": [
+   "prescribed fee for submission of application under section 7",
+   "amount payable as fee for obtaining information from public authority",
+   "payment of fee for first appeal and second appeal"
+  ],
+  "keywords": [
+   "fee",
+   "application",
+   "ten rupees",
+   "prescribed",
+   "payment",
+   "cash",
+   "postal order",
+   "bank draft",
+   "section 7",
+   "section 19"
+  ]
+ },
+ "rti|What is the fee for an RTI application?": {
+  "topic": "Application fee for obtaining information",
+  "queries": [
+   "prescribed fee for submission of application under section 7",
+   "payment of ten rupees as application fee",
+   "mode of payment for application fee by demand draft or bank draft"
+  ],
+  "keywords": [
+   "application fee",
+   "ten rupees",
+   "section 7",
+   "prescribed fee",
+   "payment",
+   "cash",
+   "postal order",
+   "bank draft"
+  ]
+ },
+ "rti|30 rojullo samadhanam rakapothe em cheyali?": {
+  "topic": "First Appeal to Appellate Authority",
+  "queries": [
+   "procedure for filing first appeal when no response received within 30 days",
+   "time limit and process for appeal to Appellate Authority under Section 19",
+   "remedy for non-compliance with 30-day deadline for providing information"
+  ],
+  "keywords": [
+   "first appeal",
+   "Appellate Authority",
+   "30 days",
+   "Section 19",
+   "no response",
+   "deemed refusal",
+   "filing fee",
+   "hearing",
+   "decision"
+  ]
+ },
+ "rti|What should be done if a solution is not provided within 30 days?": {
+  "topic": "First Appeal to the Appellate Authority",
+  "queries": [
+   "procedure for filing first appeal when information not provided within thirty days",
+   "time limit for filing appeal against deemed refusal of information",
+   "remedy for non-compliance with statutory period for furnishing information"
+  ],
+  "keywords": [
+   "first appeal",
+   "Appellate Authority",
+   "thirty days",
+   "deemed refusal",
+   "furnishing of information",
+   "statutory period",
+   "application",
+   "public authority"
+  ]
+ },
+ "rti|alasyam chesina adhikariki entha jarimana vestharu?": {
+  "topic": "Penalty for delay in providing information",
+  "queries": [
+   "penalty imposed on public authority for failure to provide information within time limit",
+   "section 20 penalty for delay in furnishing information",
+   "financial penalty for non-compliance with time limits by public authority"
+  ],
+  "keywords": [
+   "penalty",
+   "public authority",
+   "delay",
+   "time limit",
+   "five hundred rupees",
+   "per day",
+   "failure",
+   "provide information",
+   "section 20"
+  ]
+ },
+ "rti|What is the punishment for an officer who commits negligence?": {
+  "topic": "Penalty for negligence by Public Information Officer",
+  "queries": [
+   "penalty for negligence in performing duties under the Act",
+   "punishment for Public Information Officer failing to provide information",
+   "offence of negligence by officer and imprisonment or fine"
+  ],
+  "keywords": [
+   "negligence",
+   "penalty",
+   "imprisonment",
+   "fine",
+   "Public Information Officer",
+   "offence",
+   "punishable",
+   "six months",
+   "five thousand rupees"
+  ]
+ },
+ "rti|rendo appeal enni rojullo file cheyali?": {
+  "topic": "Time limit for filing second appeal",
+  "queries": [
+   "period for filing second appeal before State Information Commission",
+   "time limit for second appeal under section 20",
+   "deadline for filing second appeal against first appellate authority order"
+  ],
+  "keywords": [
+   "second appeal",
+   "ninety days",
+   "State Information Commission",
+   "first appellate authority",
+   "filing",
+   "time limit",
+   "section 20"
+  ]
+ },
+ "rti|How many days does it take to file a land appeal?": {
+  "topic": "Time limit for filing a second appeal",
+  "queries": [
+   "time limit for filing a second appeal under the Act",
+   "period within which a second appeal may be filed",
+   "deadline for submitting a second appeal to the Appellate Authority"
+  ],
+  "keywords": [
+   "second appeal",
+   "forty-five days",
+   "Appellate Authority",
+   "time limit",
+   "filing",
+   "appeal"
+  ]
+ },
+ "agriculture|annadata sukhibhava kinda samvatsaraniki entha dabbu istaru?": {
+  "topic": "Annadata Sukhibhava Scheme annual financial assistance",
+  "queries": [
+   "Annadata Sukhibhava Scheme annual income support amount per acre",
+   "financial assistance provided under Annadata Sukhibhava for eligible farmers",
+   "Annadata Sukhibhava scheme benefit amount per year"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "annual assistance",
+   "per acre",
+   "income support",
+   "eligible farmers",
+   "financial benefit",
+   "scheme guidelines"
+  ]
+ },
+ "agriculture|What is the amount given for one year under the Annadata Sukhibhava scheme?": {
+  "topic": "Annadata Sukhibhava Scheme annual assistance amount",
+  "queries": [
+   "Annadata Sukhibhava Scheme annual financial assistance amount per acre",
+   "PM-KISAN and Annadata Sukhibhava combined benefit amount for farmers",
+   "Government order on Annadata Sukhibhava Scheme disbursement amount per year"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "annual assistance",
+   "per acre",
+   "financial support",
+   "scheme guidelines",
+   "disbursement",
+   "farmer income",
+   "amount"
+  ]
+ },
+ "agriculture|koulu raithulaku annadata sukhibhava vastunda?": {
+  "topic": "Annadata Sukhibhava eligibility for tenant farmers",
+  "queries": [
+   "eligibility criteria for tenant farmers under Annadata Sukhibhava scheme",
+   "benefits for kulu raithu in Annadata Sukhibhava direct benefit transfer",
+   "tenant farmer cultivator card requirement for Annadata Sukhibhava"
+  ],
+  "keywords": [
+   "tenant farmers",
+   "Annadata Sukhibhava",
+   "eligibility",
+   "cultivator card",
+   "direct benefit transfer",
+   "kulu raithu",
+   "scheme guidelines"
+  ]
+ },
+ "agriculture|Will Annadata Sukhibhava be provided to tenant farmers?": {
+  "topic": "Annadata Sukhibhava eligibility for tenant farmers",
+  "queries": [
+   "Annadata Sukhibhava scheme guidelines tenant farmer eligibility",
+   "cultivator card holder financial assistance under Annadata Sukhibhava",
+   "tenant farmers inclusion in Annadata Sukhibhava beneficiary list"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "tenant farmers",
+   "cultivator card",
+   "eligibility",
+   "financial assistance",
+   "beneficiary",
+   "guidelines",
+   "landless"
+  ]
+ },
+ "agriculture|SC chinna raithuku drip irrigation ki entha subsidy istaru?": {
+  "topic": "Subsidy for drip irrigation to small and marginal farmers",
+  "queries": [
+   "subsidy percentage for drip irrigation system small marginal farmers",
+   "financial assistance for micro irrigation drip sprinkler small farmers",
+   "government scheme subsidy drip irrigation small and marginal farmers"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "subsidy",
+   "small and marginal farmers",
+   "micro irrigation",
+   "financial assistance",
+   "sprinkler",
+   "scheme",
+   "benefit"
+  ]
+ },
+ "agriculture|What subsidy is provided for drip irrigation to small farmers under the SC scheme?": {
+  "topic": "Subsidy for drip irrigation under SC scheme",
+  "queries": [
+   "subsidy rate for drip irrigation small farmers SC scheme",
+   "financial assistance for micro irrigation small and marginal farmers",
+   "drip irrigation subsidy percentage small farmers government order"
+  ],
+  "keywords": [
+   "drip irrigation",
+   "small farmers",
+   "SC scheme",
+   "subsidy",
+   "micro irrigation",
+   "financial assistance",
+   "marginal farmers",
+   "irrigation subsidy"
+  ]
+ },
+ "agriculture|kharif panta bheemaku raithu entha premium kattali?": {
+  "topic": "Crop Insurance Premium for Kharif Paddy",
+  "queries": [
+   "PMFBY premium contribution rate Kharif paddy crop",
+   "Farmer share insurance premium paddy Kharif season",
+   "Crop insurance premium percentage paddy Kharif"
+  ],
+  "keywords": [
+   "premium",
+   "paddy",
+   "Kharif",
+   "PMFBY",
+   "farmer share",
+   "crop insurance",
+   "contribution"
+  ]
+ },
+ "agriculture|What premium will the farmer pay for Kharif Panta Bheema?": {
+  "topic": "Crop Insurance Premium for Kharif Panta Bheema",
+  "queries": [
+   "premium contribution rate Kharif Panta Bheema crop insurance",
+   "farmer share premium percentage Panta Bheema scheme guidelines",
+   "subsidized premium structure Kharif Panta Bheema rice variety"
+  ],
+  "keywords": [
+   "premium",
+   "Kharif",
+   "Panta Bheema",
+   "farmer contribution",
+   "crop insurance",
+   "subsidy",
+   "rice",
+   "percentage"
+  ]
+ },
+ "agriculture|How many installments will the Annadata Sukhibhava payments be made in?": {
+  "topic": "Annadata Sukhibhava payment installment schedule",
+  "queries": [
+   "Annadata Sukhibhava scheme payment release in installments",
+   "number of installments for Annadata Sukhibhava direct benefit transfer",
+   "Annadata Sukhibhava fund disbursement schedule per year"
+  ],
+  "keywords": [
+   "Annadata Sukhibhava",
+   "installments",
+   "payment",
+   "disbursement",
+   "schedule",
+   "direct benefit transfer",
+   "annual",
+   "release"
+  ]
  }
 }

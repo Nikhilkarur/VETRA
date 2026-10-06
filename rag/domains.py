@@ -49,6 +49,8 @@ class Domain:
     abbreviations: dict | None = None  # expanded in the question before searching
     router_hint: str = ""      # what this domain covers, for the question router (router.py)
     common_terms: tuple = ()   # words in nearly every document; query expansion must not add them
+    topic_te: str = ""         # the domain in Telugu script, for the "can't help" reply
+    topic_te_roman: str = ""   # the same in English letters
 
 
 # ====================================================================== RTI
@@ -253,6 +255,8 @@ DOMAINS = {
         name="rti",
         title="AP RTI assistant",
         label="RTI",
+        topic_te="సమాచార హక్కు చట్టం (RTI)",
+        topic_te_roman="Samachara Hakku Chattam (RTI)",
         blurb="Ask about the Right to Information Act as it applies in Andhra Pradesh. "
               "Answers come only from the 41 documents published by the AP government.",
         docs_dir=ROOT / "ingest" / "documents",
@@ -287,6 +291,8 @@ DOMAINS = {
         name="agriculture",
         title="AP agriculture assistant",
         label="Agriculture",
+        topic_te="వ్యవసాయ పథకాలు, సబ్సిడీలు, పంట బీమా, నిబంధనలు",
+        topic_te_roman="vyavasaya pathakalu, subsidies, panta bheema, nibandhanalu",
         blurb="Ask about farm schemes, subsidies, crop insurance and rules in Andhra Pradesh. "
               "Answers come only from 44 official AP and central government documents.",
         # Staged, not yet promoted to ingest/documents (see ingest/incoming/README.md).

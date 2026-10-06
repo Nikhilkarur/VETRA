@@ -302,23 +302,28 @@ def select_documents(question: str, domain: str = "rti", most: int = 3) -> list[
 TELUGU_SCRIPT = re.compile(r"[ఀ-౿]")
 
 
-def to_english(question: str, domain: str = "rti") -> str:
+def to_english(question: str, domain: str = "rti", telugu: bool | None = None) -> str:
     """
-    A question written in Telugu script, translated to English for SEARCHING only.
+    A Telugu question translated to English, for SEARCHING only.
 
     Every document is English, and the search side reads only English: keyword search
     keeps a-z/0-9 (Telugu letters vanish), bge-small-en and the MiniLM reranker are
-    English models. Before this step a Telugu question was found only through HyDE and
-    the rewrite, which happen to write English. The answer model still receives the
-    original question, so it still replies in Telugu. Other questions (English, or
-    Telugu typed in English letters) are returned unchanged, with no LLM call.
+    English models. The answer model still receives the original question, and is told
+    which language to reply in (answer.py).
+
+    telugu: what the router said about the question's language -- it recognises Telugu
+    typed in English letters ("rti fee entha"), which no letter check can. None means
+    "not known": then only Telugu script is translated. English is returned unchanged,
+    with no LLM call.
     """
-    if not TELUGU_SCRIPT.search(question):
+    if not (telugu or TELUGU_SCRIPT.search(question)):
         return question
-    system = ("Translate the user's question into plain English. Keep its meaning exactly. "
-              "Write scheme, office, place and crop names in their usual English spelling "
-              "(for example అన్నదాత సుఖీభవ -> Annadata Sukhibhava, కౌలు రైతు -> tenant farmer, "
-              "ఆర్టీఐ -> RTI). Keep every number. Do not answer the question. "
+    system = ("The user's question is in Telugu -- written in Telugu script or in English letters "
+              "(for example \"rti fee entha\"), possibly mixed with English words. Translate it into "
+              "plain English. Keep its meaning exactly. Write scheme, office, place and crop names in "
+              "their usual English spelling (for example అన్నదాత సుఖీభవ or annadata sukhibhava -> "
+              "Annadata Sukhibhava, కౌలు రైతు or koulu raithu -> tenant farmer, ఆర్టీఐ -> RTI). Keep "
+              "every number. If it is already English, return it unchanged. Do not answer the question. "
               "Output only the English question, on one line.")
 
     def make():
