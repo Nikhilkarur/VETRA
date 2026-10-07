@@ -386,6 +386,75 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   .tl-item, .step, .card { break-inside: avoid; }
   #stagePanel { display: block !important; }
 }
+
+/* ---------- architecture diagram (interactive, LLM calls highlighted) ---------- */
+.arch-ctl { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.arch-ctl button.sc { font: 500 13px/1.3 var(--f-body); cursor: pointer; color: var(--ink); background: var(--surface);
+                      border: 1px solid var(--hair-2); border-radius: 999px; padding: 6px 13px; }
+.arch-ctl button.sc:hover { background: var(--surface-2); }
+.arch-ctl button.sc[aria-pressed="true"] { background: var(--llm); border-color: var(--llm); color: #fff; }
+.arch-opts { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--ink-2); }
+.arch-opts label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.arch-opts button { font: 600 13px/1.3 var(--f-body); cursor: pointer; color: var(--ink); background: var(--surface);
+                    border: 1px solid var(--hair-2); border-radius: 6px; padding: 5px 12px; }
+.arch-opts button:hover { background: var(--surface-2); }
+.arch-sum { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; background: var(--surface); border: 1px solid var(--hair);
+            border-radius: 10px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: var(--ink-2); }
+.arch-sum .big { font: 500 26px/1 var(--f-mono); color: var(--llm); }
+.arch-sum ol { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.arch-sum li { font-size: 12px; border: 1px solid color-mix(in srgb, var(--llm) 45%, transparent); background: color-mix(in srgb, var(--llm) 10%, transparent);
+               border-radius: 6px; padding: 1px 8px; }
+.arch-sum li b { font: 600 11px var(--f-mono); color: var(--llm); margin-right: 5px; }
+.arch-wrap { background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; overflow-x: auto; }
+svg#archSvg { display: block; width: 100%; min-width: 760px; height: auto; font-family: var(--f-body); }
+#archSvg .g-node { cursor: pointer; transition: opacity .2s; }
+#archSvg .g-node rect.box { fill: var(--surface); stroke: var(--hair-2); stroke-width: 1.3; transition: fill .2s, stroke .2s; }
+#archSvg .g-node.llm rect.box { stroke: var(--llm); stroke-width: 2; }
+#archSvg .g-node.local rect.box { stroke-dasharray: none; fill: var(--surface-2); }
+#archSvg .g-node.on.llm rect.box { fill: color-mix(in srgb, var(--llm) 14%, var(--surface)); }
+#archSvg .g-node.pass rect.box { stroke-dasharray: 5 4; stroke: var(--hair-2); fill: var(--surface); }
+#archSvg .g-node.off { opacity: .22; }
+#archSvg .g-node.dim { opacity: .38; }
+#archSvg .g-node.sel rect.box { stroke: var(--ink); stroke-width: 2.6; }
+#archSvg .g-node:focus-visible rect.box { stroke: var(--ink); stroke-width: 2.6; }
+#archSvg .g-node:focus { outline: none; }
+#archSvg .t1 { font-weight: 600; font-size: 13.5px; fill: var(--ink); }
+#archSvg .t2 { font-size: 11.2px; fill: var(--muted); }
+#archSvg .t3 { font: 500 10.8px var(--f-mono); fill: var(--llm); }
+#archSvg .t3.loc { fill: var(--muted); }
+#archSvg .tag { font: 700 9.5px var(--f-body); letter-spacing: .06em; }
+#archSvg .tag-bg.llm { fill: var(--llm); }
+#archSvg .tag-bg.loc { fill: var(--sunk); }
+#archSvg .tag.llm { fill: #fff; }
+#archSvg .tag.loc { fill: var(--muted); }
+#archSvg .badge circle { fill: var(--llm); }
+#archSvg .badge text { font: 600 11px var(--f-mono); fill: #fff; text-anchor: middle; }
+#archSvg .skipnote { font: 600 9.5px var(--f-body); fill: var(--muted); letter-spacing: .05em; }
+#archSvg path.edge { fill: none; stroke: var(--hair-2); stroke-width: 1.6; transition: stroke .2s, opacity .2s, stroke-width .2s; }
+#archSvg path.edge.alt { stroke-dasharray: 5 4; }
+#archSvg path.edge.off { opacity: .18; }
+#archSvg path.edge.on { stroke: var(--ink-2); stroke-width: 2.2; }
+#archSvg path.edge.cur { stroke: var(--llm); stroke-width: 3; }
+#archSvg .elabel { font-size: 10.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+#archSvg .elabel.off { opacity: .2; }
+#archSvg .lane { font: 600 10.5px var(--f-body); letter-spacing: .08em; fill: var(--muted); text-transform: uppercase; }
+#archSvg marker path { fill: var(--ink-2); }
+.arch-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: var(--ink-2); margin: 10px 0 0; align-items: center; }
+.arch-legend i { display: inline-block; width: 22px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -2px; box-sizing: border-box; }
+.arch-legend i.l { border: 2px solid var(--llm); background: color-mix(in srgb, var(--llm) 14%, var(--surface)); }
+.arch-legend i.p { border: 1.5px dashed var(--hair-2); }
+.arch-legend i.n { border: 1.3px solid var(--hair-2); background: var(--surface-2); }
+#archPanel { margin-top: 12px; }
+#archPanel h3 { margin: 0 0 6px; }
+#archPanel dl { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 8px 14px; margin: 12px 0 0; font-size: 13.5px; }
+#archPanel dt { font: 600 11px/1.6 var(--f-body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+#archPanel dd { margin: 0; color: var(--ink-2); }
+#archPanel dd.idea { color: var(--ink); }
+#archPanel .where { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-top: 12px; }
+#archPanel .ideas { margin: 12px 0 0; padding: 10px 14px; border-radius: 8px; background: color-mix(in srgb, var(--warn) 10%, transparent);
+                    border-left: 3px solid var(--warn); font-size: 13.5px; color: var(--ink-2); }
+#archPanel .ideas b { color: var(--ink); }
+@media (max-width: 600px) { #archPanel dl { grid-template-columns: 1fr; gap: 2px; } #archPanel dd { margin-bottom: 8px; } }
 </style>
 </head>
 <body>
@@ -419,6 +488,7 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
     <li><a class="new" href="#changes">What changed</a></li>
     <li><a class="new" href="#timeline">Timeline</a></li>
     <li><a class="new" href="#flow">One question, now</a></li>
+    <li><a class="new" href="#architecture">Architecture</a></li>
     <li><a class="new" href="#router">Router</a></li>
     <li><a class="new" href="#language">Telugu</a></li>
     <li><a class="new" href="#domains">Two domains</a></li>
@@ -1026,6 +1096,34 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
   </div>
   <p class="muted small" style="margin-top:10px;max-width:76ch">Typical time: 3–4 s to search, 3–4 s to answer. When a Groq model hits
      its daily limit, its step falls back as shown and the app keeps answering, with somewhat weaker search.</p>
+</section>
+
+
+<!-- ============================== ARCHITECTURE ============================== -->
+<section id="architecture">
+  <div class="sec-head">
+    <h2>Architecture: where the LLM calls are</h2>
+    <p>The whole assistant as one diagram, built to show <strong>where a language model is called, which one, and what it reads</strong>.
+       Pick the kind of question, press Play to watch the path run, and click any box for its prompt, fallback, failure behaviour and
+       ideas for improving it. Purple boxes call an LLM; grey boxes run on this computer.</p>
+  </div>
+
+  <div class="arch-ctl" role="group" aria-label="Kind of question" id="archScenarios"></div>
+  <div class="arch-opts">
+    <button type="button" id="archPlay">▶ Play</button>
+    <label><input type="checkbox" id="archFocus"> Fade the steps that need no LLM</label>
+    <label><input type="checkbox" id="archFb"> Show fallback models</label>
+  </div>
+  <div class="arch-sum" id="archSum" aria-live="polite"></div>
+
+  <div class="arch-wrap"><svg id="archSvg" viewBox="0 -40 1000 915" role="group" aria-label="Architecture diagram of the assistant"></svg></div>
+  <div class="arch-legend">
+    <span><i class="l"></i>makes an LLM call on this path (numbered in order)</span>
+    <span><i class="p"></i>on the path, but makes no call this time</span>
+    <span><i class="n"></i>runs locally, no model on Groq</span>
+  </div>
+
+  <div class="card" id="archPanel" aria-live="polite"></div>
 </section>
 
 <!-- ============================== ROUTER ============================== -->
@@ -1966,6 +2064,319 @@ function show(key) {
 
 buttons.forEach(b => b.addEventListener("click", () => show(b.dataset.s)));
 show("router");
+</script>
+<script>
+/* ---------- architecture diagram ---------- */
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 300, SW = 270, H = 58, PITCH = 90, COL = { L: 20, M: 350, R: 710 };
+
+  // llm: true = can call a model. t3 = what runs; fb = the whole fallback chain.
+  const N = {
+    q:        { c: "M", r: 0, t1: "Your question", t2: "English, Telugu, or Telugu in English letters", t3: "rag/web.py · 500-character cap" },
+    router:   { c: "M", r: 1, llm: true, t1: "1 · Router: topic + language", t2: "reads question + earlier questions (with topic)", t3: "gpt-oss-20b", fb: "gpt-oss-20b → qwen3.8-27b → embeddings" },
+    decline:  { c: "L", r: 1, t1: "Decline, don't guess", t2: "says what it covers + ask-anyway buttons", t3: "no LLM, no search" },
+    rescue:   { c: "R", r: 1, llm: true, t1: "Second look at a follow-up", t2: "rewrite with the answer, then route again", t3: "120b rewrite → 20b re-route", fb: "rewrite 120b→20b · re-route as router", calls: 2 },
+    condense: { c: "L", r: 2, llm: true, t1: "2 · Rewrite the follow-up", t2: "last 3 turns → one standalone question", t3: "gpt-oss-120b", fb: "gpt-oss-120b → 20b → last Q + this Q" },
+    translate:{ c: "M", r: 3, llm: true, t1: "3 · Translate to English", t2: "for the search only", t3: "qwen3.8-27b", fb: "qwen3.8-27b → gpt-oss-20b → unchanged" },
+    hyde:     { c: "L", r: 4, llm: true, t1: "4a · HyDE: a made-up passage", t2: "the words the documents would use", t3: "gpt-oss-20b", fb: "gpt-oss-20b → skipped" },
+    topic:    { c: "R", r: 4, llm: true, t1: "4b · Topic + key terms", t2: "names the rule or scheme asked about", t3: "qwen3.8-27b", fb: "qwen3.8-27b → gpt-oss-20b → skipped" },
+    search:   { c: "M", r: 5, t1: "5 · Hybrid search + merge", t2: "meaning + keywords, Reciprocal Rank Fusion", t3: "bge-small-en-v1.5 · BM25 · RRF k=60" },
+    index:    { c: "L", r: 5, t1: "Per-topic index", t2: "Chroma vectors + BM25 over 2,430 chunks", t3: "built once, at ingest" },
+    rerank:   { c: "R", r: 6, t1: "6 · Reranker", t2: "agriculture only: re-reads the top 30", t3: "ms-marco-MiniLM-L-6-v2 · CPU" },
+    pack:     { c: "M", r: 7, t1: "7 · Top 10 + amending orders", t2: "up to 4 amendment passages, ≤1 replaced scheme", t3: "no model: links built at ingest" },
+    answer:   { c: "M", r: 8, llm: true, t1: "8 · Answer with citations", t2: "passages + your own words + reply-language rule", t3: "gpt-oss-120b", fb: "gpt-oss-120b → 20b; 413 → fewer passages" },
+    result:   { c: "M", r: 9, t1: "Cited answer", t2: "in the reply language, with numbered sources", t3: "rag/web.py shows the sources" },
+  };
+  const box = id => { const n = N[id]; return { x: COL[n.c], y: n.r * PITCH, w: n.c === "M" ? W : SW, h: H }; };
+  // anchor points on a node's sides
+  const pt = (id, side, f = 0.5) => {
+    const b = box(id);
+    return side === "t" ? [b.x + b.w * f, b.y] : side === "b" ? [b.x + b.w * f, b.y + b.h]
+         : side === "l" ? [b.x, b.y + b.h * f] : [b.x + b.w, b.y + b.h * f];
+  };
+  const cx = id => box(id).x + box(id).w / 2;
+  const bottom = id => box(id).y + box(id).h;
+  const cy = id => box(id).y + box(id).h / 2;
+  const elbowV = (a, b, ya, yb, mid) => [a, [a[0], mid], [b[0], mid], b]; // down, across, down
+
+  // edges: [from, to, points, label, label position, dashed]
+  const E = {
+    qr:  { pts: [pt("q", "b"), pt("router", "t")] },
+    rd:  { pts: [pt("router", "l"), pt("decline", "r")], label: "other", lp: [(box("decline").x + box("decline").w + box("router").x) / 2, cy("router") - 6] },
+    rr:  { pts: [pt("router", "r"), pt("rescue", "l")], label: "other", lp: [(box("router").x + box("router").w + box("rescue").x) / 2, cy("router") - 6] },
+    rt:  { pts: [pt("router", "b"), pt("translate", "t")], label: "new topic / first message", lp: [cx("router") + 6, 228], anchor: "start" },
+    rc:  { pts: elbowV(pt("router", "b"), pt("condense", "t"), 0, 0, bottom("router") + 16), label: "follow-up", lp: [cx("condense") + 6, bottom("router") + 12], anchor: "start" },
+    ct:  { pts: elbowV(pt("condense", "b"), pt("translate", "t"), 0, 0, bottom("condense") + 16) },
+    rst: { pts: [pt("rescue", "b"), [cx("rescue"), cy("translate")], pt("translate", "r")], label: "rescued: topic + rewrite reused", lp: [cx("rescue") - 6, cy("translate") - 8], anchor: "end" },
+    rsd: { pts: [pt("rescue", "t"), [cx("rescue"), -22], [cx("decline"), -22], pt("decline", "t")], label: "still \"other\"", lp: [(cx("rescue") + cx("decline")) / 2, -28], alt: true },
+    ts:  { pts: [pt("translate", "b"), pt("search", "t")] },
+    th:  { pts: elbowV(pt("translate", "b"), pt("hyde", "t"), 0, 0, bottom("translate") + 16) },
+    tk:  { pts: elbowV(pt("translate", "b"), pt("topic", "t"), 0, 0, bottom("translate") + 16) },
+    hs:  { pts: elbowV(pt("hyde", "b"), pt("search", "t"), 0, 0, bottom("hyde") + 16) },
+    ks:  { pts: elbowV(pt("topic", "b"), pt("search", "t"), 0, 0, bottom("topic") + 16) },
+    is:  { pts: [pt("index", "r"), pt("search", "l")] },
+    sr:  { pts: elbowV(pt("search", "b"), pt("rerank", "t"), 0, 0, bottom("search") + 16), label: "agriculture", lp: [cx("rerank") - 6, bottom("search") + 12], anchor: "end" },
+    sp:  { pts: [pt("search", "b"), pt("pack", "t")], label: "RTI", lp: [cx("search") + 6, 568], anchor: "start" },
+    rp:  { pts: elbowV(pt("rerank", "b"), pt("pack", "t"), 0, 0, bottom("rerank") + 16) },
+    pa:  { pts: [pt("pack", "b"), pt("answer", "t")] },
+    ar:  { pts: [pt("answer", "b"), pt("result", "t")] },
+  };
+  const ends = { qr: ["q", "router"], rd: ["router", "decline"], rr: ["router", "rescue"], rt: ["router", "translate"], rc: ["router", "condense"],
+    ct: ["condense", "translate"], rst: ["rescue", "translate"], rsd: ["rescue", "decline"], ts: ["translate", "search"], th: ["translate", "hyde"],
+    tk: ["translate", "topic"], hs: ["hyde", "search"], ks: ["topic", "search"], is: ["index", "search"], sr: ["search", "rerank"],
+    sp: ["search", "pack"], rp: ["rerank", "pack"], pa: ["pack", "answer"], ar: ["answer", "result"] };
+
+  const CALL = {
+    router: ["Router · gpt-oss-20b"], condense: ["Rewrite follow-up · gpt-oss-120b"],
+    rescue: ["Rewrite follow-up · gpt-oss-120b", "Route again · gpt-oss-20b"], translate: ["Translate · qwen3.8-27b"],
+    hyde: ["HyDE passage · gpt-oss-20b"], topic: ["Topic + key terms · qwen3.8-27b"], answer: ["Answer · gpt-oss-120b"],
+  };
+  const search = ["ts", "is", "th", "hs", "tk", "ks"];
+  const tail = ["pa", "ar"];
+  const SC = [
+    { id: "en", label: "English question", calls: ["router", "hyde", "topic", "answer"], path: ["qr", "rt", ...search, "sp", ...tail],
+      note: "Four calls. Translation is skipped, so English costs nothing there." },
+    { id: "te", label: "Telugu question", calls: ["router", "translate", "hyde", "topic", "answer"], path: ["qr", "rt", ...search, "sp", ...tail],
+      note: "The router recognises Telugu, in either alphabet. A fifth call translates it for the search; the answer model still reads your original words." },
+    { id: "ag", label: "Agriculture question", calls: ["router", "hyde", "topic", "answer"], path: ["qr", "rt", ...search, "sr", "rp", ...tail],
+      note: "Same four calls as English RTI. The reranker adds time but no Groq call." },
+    { id: "fu", label: "Follow-up in a chat", calls: ["router", "condense", "hyde", "topic", "answer"], path: ["qr", "rc", "ct", ...search, "sp", ...tail],
+      note: "With earlier turns, every message gets the rewrite call, even one that already stands alone." },
+    { id: "fr", label: "Follow-up the router calls \"other\"", calls: ["router", "rescue", "rescue", "hyde", "topic", "answer"], path: ["qr", "rr", "rst", ...search, "sp", ...tail],
+      note: "\"what if i have a white ration card\" after an RTI fee question. The rescue is two extra calls; its rewrite is reused, so the normal rewrite is skipped." },
+    { id: "od", label: "Off-topic, first message", calls: ["router"], path: ["qr", "rd"],
+      note: "One call and a polite decline. No search, no answer model." },
+    { id: "ox", label: "Off-topic follow-up", calls: ["router", "rescue", "rescue"], path: ["qr", "rr", "rsd"],
+      note: "The most expensive way to be declined: three calls, then nothing is searched." },
+  ];
+
+  // What each box does, in the code as it is today.
+  const D = {
+    q: { what: "The message as typed, plus the last 3 turns of the conversation (question, answer, topic). Nothing is corrected or cleaned.",
+         when: "Always.", where: "rag/web.py, rag/web.html, rag/chat.py" },
+    router: { what: "One call answers two things in two words, e.g. \"rti telugu\": the topic (rti, agriculture or other) and the language. A local English-word check then stops English messages being labelled Telugu.",
+      model: "gpt-oss-20b, reasoning low. Falls back to qwen3.8-27b, then to embedding similarity (and, for a follow-up, to the previous turn's topic).",
+      reads: "A one-line description of each topic, the earlier questions of the chat with the topic each used, and the new message. Never the earlier answers.",
+      returns: "\"rti telugu\" · \"agriculture english\" · \"other english\"", cost: "about 650 tokens, cached per model and router version",
+      when: "Every message.", fail: "Next model; if none answers, embeddings pick the topic and a Telugu-letter check picks the language.",
+      where: "rag/router.py: route(), route_llm_full(), router_prompt(); topic descriptions in rag/domains.py",
+      ideas: ["gpt-oss-20b is also HyDE's model (and the fallback of several steps), so these calls draw on one daily quota (about 200k tokens). Moving one of them to another model would spread the load; re-run the retrieval evals after any swap.",
+              "The router never sees answers, which is exactly why the rescue exists. Scores today: 31/32 fresh, 18/18 + 8/8 follow-ups."] },
+    decline: { what: "A message no topic covers gets no search and no answer model. The reply says what the assistant covers and that it won't guess, in the reply language, with one button per topic to ask anyway.",
+      when: "The router says \"other\" and the second look (if any) does not change it.", where: "rag/answer.py: out_of_scope(); buttons in rag/web.html" },
+    rescue: { what: "The router reads only earlier questions, and gpt-oss-20b files \"what if i have a white ration card\" under other. So the follow-up is rewritten using the earlier answer (\"Can I get exemption from the RTI application fee if I have a white ration card?\") and routed again.",
+      model: "Two calls: the rewrite on gpt-oss-120b (falls to 20b), then the router chain again.",
+      reads: "The message and the last 3 turns, answers included (as plain sentences, 300 characters each).", returns: "A standalone question and its topic, or nothing if it is still \"other\".",
+      cost: "two extra calls, only in this case",
+      when: "The router said \"other\", there is history, and an earlier turn was answered from a topic.", fail: "Treated as a real change of subject: decline.",
+      where: "rag/router.py: rescue_followup(); rewrite from rag/answer.py: standalone_question()",
+      ideas: ["It turned follow-up routing from 12/18 into 18/18. The open question is how often it fires in real use; logging each firing and its outcome would show whether two calls per rescue is worth it."] },
+    condense: { what: "A search engine can do nothing with \"what if i still dont get it\". One standalone question is written from the last 3 turns, and that is what gets searched.",
+      model: "gpt-oss-120b, reasoning low. Falls back to gpt-oss-20b on a rate limit; if both fail, the last question plus this one.",
+      reads: "The last 3 turns (answers flattened to plain sentences, tables turned into text) and the new message.", returns: "One question, in English or the user's language.",
+      cost: "about 600 tokens, about 1 s; shares gpt-oss-120b's 8,000-tokens-a-minute cap with the answer",
+      when: "Any message that has history and was not rescued.", fail: "Last question + this one.", where: "rag/answer.py: standalone_question(), _plain()",
+      ideas: ["It runs on every message in a chat, including a fresh, fully stand-alone question, and then returns it unchanged. A cheap local test for \"has no 'it', 'that', 'what if'\" could skip the call. Check on the follow-up sets that nothing regresses.",
+              "Known weakness: it can drop the topic (the white-card fee rule once ranked 43rd). The answer is flattened to plain sentences for exactly this reason."] },
+    translate: { what: "The documents are English and the search reads only English, so a Telugu question is translated, with scheme names spelled the usual English way. Only the search uses the translation; the answer model still gets your own words.",
+      model: "qwen3.8-27b, reasoning off. Falls back to gpt-oss-20b, then the original question is searched as is.", reads: "Your words.",
+      returns: "\"What is the RTI fee?\" from \"rti fee entha\"", cost: "about 150 tokens",
+      when: "The router said the language is Telugu, in either alphabet. English: no call.", fail: "Searches with the original question.",
+      where: "rag/query_expansion.py: to_english()",
+      ideas: ["Telugu pays for two calls before any searching (router, then translator). The router could also return the English version, saving one call, but its prompt is tuned (31/32, 29/29 languages), so that has to be re-measured first."] },
+    hyde: { what: "Writes the sentence the documents would contain, in their drafting style. Often wrong on facts (it wrote \"one hundred rupees\" for the RTI fee) and that is fine: it is only searched with, for its vocabulary, and nobody sees it.",
+      model: "gpt-oss-20b. If it is rate-limited or fails, the search carries on without it.", reads: "The English question, with abbreviations expanded (agriculture's RBK, KCC...).",
+      returns: "One short passage", cost: "not measured separately",
+      when: "Every search.", fail: "Search without it (weaker).", where: "rag/retrieve.py: hypothetical_passage(), retrieve_with_trace()",
+      ideas: ["HyDE and \"topic + key terms\" never read each other's output, yet they run one after the other (HyDE in retrieve_with_trace, then the rewrite in _expanded). Running them in parallel would remove roughly one call's latency; check the per-minute limits first.",
+              "Or merge them into one prompt: one call fewer. They use different models today, so measure retrieval before trusting it."] },
+    topic: { what: "Names the rule or scheme the question is about, in the documents' own words, and lists key terms the answer probably contains. The topic is searched by meaning and keywords, the key terms by keywords only.",
+      model: "qwen3.8-27b, reasoning off. Falls back to gpt-oss-20b, then is skipped.", reads: "The English question.",
+      returns: "JSON: the topic and 5 to 10 key terms (plus rephrased queries)", cost: "not measured separately",
+      when: "Every search.", fail: "Skipped, search continues.", where: "rag/query_expansion.py: rewrites(); used from rag/retrieve.py: _expanded()",
+      ideas: ["Same independence as HyDE (see there): a parallel call, or one merged call, are the two ways to cut latency."] },
+    search: { what: "Each search text (question, HyDE passage, topic) is searched by meaning (bge-small, 384 numbers) and by keywords (BM25). Key terms go to BM25 only. Reciprocal Rank Fusion merges the ranked lists. The original question stays in the merge as a safety net if a HyDE passage drifts.",
+      model: "No LLM. BAAI/bge-small-en-v1.5 and BM25, on this computer.", reads: "English question, HyDE passage, topic, key terms.",
+      returns: "One ranked list of chunks", when: "Every question that is not declined.", where: "rag/retrieve.py: _hybrid(), _expanded(), _rrf()",
+      ideas: ["Scores: RTI 79/82, agriculture 80/93 (the right text in the top 10). The remaining misses are mostly search misses, not LLM misses; see docs/RETRIEVAL_EXPERIMENTS.md."] },
+    index: { what: "One Chroma collection and one in-memory BM25 index per topic: 535 RTI chunks, 1,895 agriculture chunks, from the 85 indexed documents. A new topic means a new collection.",
+      model: "No LLM.", when: "Loaded at start-up.", where: "ingest/, rag/retrieve.py: _collection(), _corpus()" },
+    rerank: { what: "A cross-encoder reads the question and each of the top 30 passages together and scores the pair; its order is fused with the search order, not substituted for it. It finds concrete things a farmer names inside long table chunks. For RTI it hurt (59 to 48) so RTI skips it.",
+      model: "No LLM. ms-marco-MiniLM-L-6-v2 on CPU.", cost: "1.3 to 1.8 s", when: "Agriculture only.", where: "rag/retrieve.py: _reranked(), _cross_encoder()" },
+    pack: { what: "A rule without its amendment is wrong, not just incomplete. When one order in a family is retrieved the others are added (up to 4). Orders of replaced schemes are labelled NOT IN FORCE and at most one gets through.",
+      model: "No LLM: links were built when the documents were indexed.", returns: "10 passages + amendments", when: "Every answered question.",
+      where: "rag/retrieve.py: _amendment_family(), MAX_NOT_IN_FORCE" },
+    answer: { what: "The passages, numbered and labelled with their source, go to the answering model with your original question and rules tightened each time a rehearsal exposed a failure: answer only from the passages, say what they do not cover, copy figures exactly. The last rule is always the reply language.",
+      model: "gpt-oss-120b, temperature 0.1, reasoning medium. Falls back to gpt-oss-20b on a rate limit. On a 413 (request over 8,000 tokens a minute) the lowest-ranked passages are dropped and it asks again.",
+      reads: "Your original words, 10 to 14 passages, a short history (for understanding only, never as a source of facts), the rule for the reply language.",
+      returns: "A cited answer", cost: "about 3,000 to 4,000 tokens, 3 to 4 s", when: "Every answered question.", fail: "Fallback model, else an error.",
+      where: "rag/answer.py: answer_question(), _complete(), _REPLY_RULE; prompts in rag/domains.py",
+      ideas: ["This is the only call whose output the user reads, and nothing checks it: answers are \"checked by reading, not measured\" (an open item). A local check that every [n] cited exists and every figure in the answer appears in a cited passage needs no LLM; an LLM judge could live in the evaluations only.",
+              "It also shares gpt-oss-120b's 8,000-tokens-a-minute cap with the follow-up rewrite, so two quick follow-ups can push one of them to the 20b fallback."] },
+    result: { what: "The answer, the question as searched, the numbered source passages, the topic and language used, and the time spent searching and answering.", when: "Always, on every path.", where: "rag/answer.py: answer_question() return value; rag/web.py" },
+  };
+
+  const svg = document.getElementById("archSvg");
+  const panel = document.getElementById("archPanel");
+  const sumEl = document.getElementById("archSum");
+  const scBox = document.getElementById("archScenarios");
+  const focus = document.getElementById("archFocus"), fbBox = document.getElementById("archFb"), playBtn = document.getElementById("archPlay");
+  const el = (name, attrs = {}, text) => {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text !== undefined) e.textContent = text;
+    return e;
+  };
+
+  // arrow head
+  const defs = el("defs");
+  const mk = el("marker", { id: "archArrow", viewBox: "0 0 10 10", refX: "8", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" });
+  mk.append(el("path", { d: "M0 0 L10 5 L0 10 z" }));
+  defs.append(mk); svg.append(defs);
+
+  const edgeEls = {}, labelEls = {}, nodeEls = {}, t3Els = {}, badgeEls = {};
+  for (const id in E) {
+    const e = E[id];
+    const d = e.pts.map((p, i) => (i ? "L" : "M") + p[0] + " " + p[1]).join(" ");
+    const p = el("path", { d, class: "edge" + (e.alt ? " alt" : ""), "marker-end": "url(#archArrow)" });
+    svg.append(p); edgeEls[id] = p;
+    if (e.label) {
+      const t = el("text", { x: e.lp[0], y: e.lp[1], class: "elabel", "text-anchor": e.anchor || "middle" }, e.label);
+      svg.append(t); labelEls[id] = t;
+    }
+  }
+  for (const id in N) {
+    const n = N[id], b = box(id);
+    const g = el("g", { class: "g-node " + (n.llm ? "llm" : "local"), tabindex: "0", role: "button", "aria-label": n.t1 });
+    g.append(el("rect", { class: "box", x: b.x, y: b.y, width: b.w, height: b.h, rx: 9 }));
+    g.append(el("text", { class: "t1", x: b.x + 12, y: b.y + 21 }, n.t1));
+    g.append(el("text", { class: "t2", x: b.x + 12, y: b.y + 37 }, n.t2));
+    const t3 = el("text", { class: "t3" + (n.llm ? "" : " loc"), x: b.x + 12, y: b.y + 52 }, n.t3);
+    g.append(t3); t3Els[id] = t3;
+    const label = n.llm ? "LLM" : "LOCAL", tw = n.llm ? 30 : 42;
+    g.append(el("rect", { class: "tag-bg " + (n.llm ? "llm" : "loc"), x: b.x + b.w - tw - 8, y: b.y + 7, width: tw, height: 15, rx: 4 }));
+    g.append(el("text", { class: "tag " + (n.llm ? "llm" : "loc"), x: b.x + b.w - tw / 2 - 8, y: b.y + 18, "text-anchor": "middle" }, label));
+    const skip = el("text", { class: "skipnote", x: b.x + b.w - tw - 16, y: b.y + 18, "text-anchor": "end", visibility: "hidden" }, "NO CALL HERE");
+    g.append(skip); g._skip = skip;
+    const badge = el("g", { class: "badge", visibility: "hidden" });
+    g.append(badge); badgeEls[id] = badge;
+    g.addEventListener("click", () => select(id));
+    g.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); select(id); } });
+    svg.append(g); nodeEls[id] = g;
+  }
+
+  let sc = SC[0], selected = "router", progress = Infinity, timer = null;
+
+  function reached() {
+    const nodes = new Set(["q"]), edges = new Set();
+    sc.path.forEach((eid, i) => { if (i < progress) { edges.add(eid); nodes.add(ends[eid][1]); nodes.add(ends[eid][0]); } });
+    return { nodes, edges };
+  }
+
+  function callNumbers() {
+    const map = {}; sc.calls.forEach((id, i) => (map[id] = map[id] || []).push(i + 1)); return map;
+  }
+
+  function paint() {
+    const full = new Set(); sc.path.forEach(e => { full.add(ends[e][0]); full.add(ends[e][1]); });
+    const { nodes, edges } = reached();
+    const nums = callNumbers();
+    const live = progress !== Infinity;
+    const lastEdge = live && progress > 0 ? sc.path[Math.min(progress, sc.path.length) - 1] : null;
+    for (const id in N) {
+      const g = nodeEls[id], n = N[id];
+      const onPath = full.has(id), seen = nodes.has(id), calls = nums[id];
+      g.classList.toggle("off", !onPath);
+      g.classList.toggle("dim", onPath && !seen);
+      g.classList.toggle("on", onPath && seen);
+      g.classList.toggle("pass", !!n.llm && onPath && !calls);
+      g.classList.toggle("sel", id === selected);
+      if (focus.checked && !n.llm && onPath) g.classList.add("dim");
+      g._skip.setAttribute("visibility", n.llm && onPath && !calls && seen ? "visible" : "hidden");
+      t3Els[id].textContent = fbBox.checked && n.fb ? n.fb : n.t3;
+      const bd = badgeEls[id]; while (bd.firstChild) bd.firstChild.remove();
+      if (calls && seen) {
+        const b = box(id);
+        const txt = calls.join("·"), w = Math.max(22, 9 + txt.length * 7);
+        bd.append(el("rect", { x: b.x - 8, y: b.y - 8, width: w, height: 20, rx: 10, fill: "var(--llm)" }));
+        bd.append(el("text", { x: b.x - 8 + w / 2, y: b.y + 6 }, txt));
+        bd.setAttribute("visibility", "visible");
+      } else bd.setAttribute("visibility", "hidden");
+    }
+    for (const id in E) {
+      const onPath = sc.path.includes(id), done = edges.has(id);
+      edgeEls[id].setAttribute("class", "edge" + (E[id].alt ? " alt" : "") + (!onPath ? " off" : done ? " on" : " off") + (id === lastEdge ? " cur" : ""));
+      if (labelEls[id]) labelEls[id].setAttribute("class", "elabel" + (onPath && done ? "" : " off"));
+    }
+  }
+
+  function summary() {
+    sumEl.textContent = "";
+    const big = document.createElement("span"); big.className = "big"; big.textContent = sc.calls.length;
+    const lab = document.createElement("span"); lab.append(document.createTextNode("LLM "), document.createTextNode(sc.calls.length === 1 ? "call" : "calls"));
+    const tally = {};
+    const seq = []; const used = {};
+    sc.calls.forEach((id, i) => { const k = used[id] = (used[id] || 0); used[id]++; const l = CALL[id][k]; seq.push(l); const m = l.split(" · ")[1]; tally[m] = (tally[m] || 0) + 1; });
+    const ol = document.createElement("ol");
+    seq.forEach((l, i) => { const li = document.createElement("li"); const b = document.createElement("b"); b.textContent = i + 1; li.append(b, l); ol.append(li); });
+    const by = document.createElement("span"); by.className = "muted";
+    by.textContent = Object.entries(tally).map(([m, n]) => `${m} ×${n}`).join(" · ");
+    const note = document.createElement("p"); note.style.flexBasis = "100%"; note.textContent = sc.note;
+    sumEl.append(big, lab, ol, by, note);
+  }
+
+  function select(id) {
+    selected = id; paint();
+    const n = N[id], d = D[id];
+    panel.textContent = "";
+    const lbl = document.createElement("p"); lbl.className = "label"; lbl.textContent = n.llm ? "LLM step" : "Local step";
+    const h = document.createElement("h3"); h.textContent = n.t1;
+    const p = document.createElement("p"); p.style.color = "var(--ink-2)"; p.textContent = d.what;
+    panel.append(lbl, h, p);
+    const used = sc.path.some(e => ends[e].includes(id));
+    const calls = sc.calls.filter(c => c === id).length;
+    const rows = [
+      ["In this scenario", !used ? "Not on this path." : n.llm ? (calls ? `${calls} call${calls > 1 ? "s" : ""}.` : "On the path, but makes no call.") : "Runs, locally."],
+      ["Model", d.model], ["Reads", d.reads], ["Returns", d.returns], ["Cost", d.cost], ["Runs when", d.when], ["If it fails", d.fail],
+    ].filter(r => r[1]);
+    const dl = document.createElement("dl");
+    rows.forEach(([k, v]) => { const dt = document.createElement("dt"); dt.textContent = k; const dd = document.createElement("dd"); dd.textContent = v; dl.append(dt, dd); });
+    panel.append(dl);
+    if (d.ideas) {
+      const box = document.createElement("div"); box.className = "ideas";
+      const b = document.createElement("b"); b.textContent = "Ideas to improve it (none tried yet; measure before adopting)";
+      const ul = document.createElement("ul"); ul.style.margin = "6px 0 0"; ul.style.paddingLeft = "18px";
+      d.ideas.forEach(t => { const li = document.createElement("li"); li.textContent = t; ul.append(li); });
+      box.append(b, ul); panel.append(box);
+    }
+    const w = document.createElement("p"); w.className = "where"; w.textContent = d.where; panel.append(w);
+  }
+
+  function setScenario(s) {
+    stop(); sc = s; progress = Infinity;
+    [...scBox.children].forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === s.id)));
+    summary(); select(selected);
+  }
+  function stop() { if (timer) clearInterval(timer); timer = null; playBtn.textContent = "▶ Play"; }
+  function play() {
+    if (timer) { stop(); progress = Infinity; paint(); return; }
+    progress = 0; paint(); playBtn.textContent = "■ Stop";
+    timer = setInterval(() => {
+      progress++; paint();
+      if (progress >= sc.path.length) { stop(); progress = Infinity; setTimeout(paint, 900); }
+    }, 650);
+  }
+
+  SC.forEach(s => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "sc"; b.dataset.id = s.id; b.textContent = s.label;
+    b.addEventListener("click", () => setScenario(s)); scBox.append(b);
+  });
+  playBtn.addEventListener("click", play);
+  focus.addEventListener("change", () => { for (const id in nodeEls) nodeEls[id].classList.remove("dim"); paint(); });
+  fbBox.addEventListener("change", paint);
+  setScenario(SC[0]);
+})();
 </script>
 </body>
 </html>
