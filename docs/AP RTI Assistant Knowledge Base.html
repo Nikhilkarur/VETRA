@@ -657,12 +657,12 @@ header.hero { padding: 38px 0 22px; }
     <div class="ba-row" role="row"><div class="k">Documentation</div><div class="was">README, context.md, this page</div><div class="to">→</div><div class="now">+ <code>docs/RETRIEVAL_EXPERIMENTS.md</code> (about 40 techniques per topic), router and language tests, all READMEs rewritten</div></div>
   </div>
 
-  <h3>Repository check, 6 October</h3>
+  <h3>Repository check, 8 October</h3>
   <div class="status">
-    <span class="chip"><i class="dot"></i>GitHub <code>main</code>: all 8 pull requests merged (the language fix, then this page)</span>
+    <span class="chip"><i class="dot"></i>GitHub <code>main</code>: all 11 pull requests merged, the latest being this tabbed page</span>
     <span class="chip"><i class="dot"></i>Local <code>main</code> pulled and identical to GitHub</span>
-    <span class="chip warn"><i class="dot"></i>Router follow-up fix (evening of 6 Oct): goes in the next pull request</span>
-    <span class="chip warn"><i class="dot"></i>Docker image predates the 6 Oct language fix: run <code>docker compose up --build</code> once</span>
+    <span class="chip"><i class="dot"></i>Router follow-up fix: merged as PR #9; no other branches are left open</span>
+    <span class="chip warn"><i class="dot"></i>Docker: the image holds a copy of the code. After any change, run <code>docker compose up --build</code> (the last build recorded here, 5 October, predates the language fix)</span>
   </div>
 </section>
 
@@ -1387,13 +1387,13 @@ header.hero { padding: 38px 0 22px; }
 <section id="timeline">
   <div class="sec-head">
     <h2>Every update, in order</h2>
-    <p>Eleven changes in three days on GitHub (<code>Nikhilkarur/AP-ASSIS</code>); all but the first went in,
-       or will go in, through a pull request. Each card says what changed, why, and what it measured.</p>
+    <p>Twelve changes in five days on GitHub (<code>Nikhilkarur/AP-ASSIS</code>); all but the first went in
+       through a pull request. Each card says what changed, why, and what it measured.</p>
   </div>
 
   <div class="tl">
 
-    <p class="tl-day">Saturday 4 October</p>
+    <p class="tl-day">Sunday 4 October</p>
 
     <div class="tl-item" style="--c:var(--muted)">
       <div class="tl-card">
@@ -1530,7 +1530,7 @@ header.hero { padding: 38px 0 22px; }
       </div>
     </div>
 
-    <p class="tl-day">Sunday 5 October</p>
+    <p class="tl-day">Monday 5 October</p>
 
     <div class="tl-item" style="--c:var(--rti)">
       <div class="tl-card">
@@ -1671,7 +1671,7 @@ header.hero { padding: 38px 0 22px; }
       </div>
     </div>
 
-    <p class="tl-day">Monday 6 October</p>
+    <p class="tl-day">Tuesday 6 October</p>
 
     <div class="tl-item" style="--c:var(--tel)">
       <div class="tl-card">
@@ -1715,7 +1715,7 @@ header.hero { padding: 38px 0 22px; }
 
     <div class="tl-item" style="--c:var(--rti)">
       <div class="tl-card">
-        <div class="tl-top"><h3>Follow-ups no longer declined; English no longer taken for Telugu</h3><span class="tag">router fix</span><span class="pr">next PR</span></div>
+        <div class="tl-top"><h3>Follow-ups no longer declined; English no longer taken for Telugu</h3><span class="tag">router fix</span><span class="pr">PR #9</span></div>
         <div class="tl-body">
           <div>
             <h4>The bug (found in live testing)</h4>
@@ -1755,6 +1755,35 @@ header.hero { padding: 38px 0 22px; }
       </div>
     </div>
 
+    <p class="tl-day">Wednesday 7 and Thursday 8 October</p>
+
+    <div class="tl-item" style="--c:var(--llm)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>This page: an architecture map, and a tabbed layout</h3><span class="tag">docs</span><span class="pr">PR #10, #11</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li><strong>Architecture tab:</strong> the whole system left to right in three lanes (build, ask, measure): collecting the
+                  documents, chunking, indexing, every LLM call, and the evaluations. Nine scenarios, a Play button, and for each box its
+                  model, fallbacks, failure behaviour, command and untried improvement ideas.</li>
+              <li>The page is split into seven tabs; the old vertical pipeline is gone, replaced by the diagram.</li>
+              <li>The whole page was re-checked against the code and the data on 8 October (see the corrections below).</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Corrected on 8 October</h4>
+            <ul>
+              <li>The weekday names on this timeline were all one day off (4 October 2026 is a Sunday).</li>
+              <li>Status lines still said the router fix was "next"; it went in as PR #9.</li>
+              <li>The index step: agriculture embeds each chunk with its document title, RTI does not.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="files">docs/AP RTI Assistant Knowledge Base.html</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1791,8 +1820,8 @@ header.hero { padding: 38px 0 22px; }
     <div class="card"><p class="label">Every start after that</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">~40 s</p><p class="muted small">until it prints <code>ready in …s</code></p></div>
     <div class="card"><p class="label">Checked inside the container</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">identical</p><p class="muted small">RTI 79/82, agriculture 80/93, router 31/32; one live question answered</p></div>
   </div>
-  <p class="muted small" style="margin-top:12px;max-width:76ch">The image last built on 5 October does not contain the 6 October
-     language fix. Running <code>docker compose up --build</code> once rebuilds it. PyTorch and the two models are reused, but
+  <p class="muted small" style="margin-top:12px;max-width:76ch">The image built on 5 October does not contain the 6 October language fix, or anything after it.
+     Running <code>docker compose up --build</code> rebuilds it. PyTorch and the two models are reused, but
      the language fix touched <code>rag/domains.py</code>, which the index step depends on, so both indexes are rebuilt too
      (a few minutes). Steps in <a href="#run">Run it</a>.</p>
 </section>
@@ -1910,7 +1939,7 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
         <tr><td><strong>One topic per question</strong></td><td>A question that needs RTI and agriculture together gets one; the router picks.</td></tr>
         <tr><td><strong>Free-tier throughput</strong></td><td>4–5 LLM calls per question; about one question per 30 seconds, and about 40–45 full answers a day on gpt-oss-120b before the smaller model takes over.</td></tr>
         <tr><td><strong>Agriculture data</strong></td><td>Two scanned documents not indexed and one 2025 relief order with garbled text (need OCR); several orders cover one season and need refreshing.</td></tr>
-        <tr><td><strong>Docker must be rebuilt after code changes</strong></td><td>The image holds a copy of the code. Today it predates the language fix: <code>docker compose up --build</code>.</td></tr>
+        <tr><td><strong>Docker must be rebuilt after code changes</strong></td><td>The image holds a copy of the code. The last build recorded here (5 October) predates the language fix: <code>docker compose up --build</code>.</td></tr>
         <tr><td><strong>Startup</strong></td><td>20–30 seconds to load the models; the reranker adds about 1.5 s per agriculture question on CPU.</td></tr>
       </tbody>
     </table>
@@ -1984,8 +2013,8 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
     answer:  { lane: "B", c: 7, r: 1, kind: "llm", t1: "8 · Answer + citations", t2: ["passages + your own words", "+ reply-language rule"], t3: "gpt-oss-120b", fb: "→ 20b; 413 → fewer passages" },
     result:  { lane: "B", c: 7, r: 2, kind: "local", t1: "Cited answer", t2: ["JSON: answer, sources,", "topic, language, timings"], t3: "back to the page" },
 
-    qs: { lane: "C", c: 0, r: 0, kind: "data",  t1: "Question sets", t2: ["RTI 82 · agriculture 93", "router 274 · language 29"], t3: "eval/*.json" },
-    re: { lane: "C", c: 1, r: 0, kind: "local", t1: "router_eval.py", t2: ["topic + follow-up routing,", "71 of 274 are real FAQs"], t3: "31/32 · 18/18 · 8/8" },
+    qs: { lane: "C", c: 0, r: 0, kind: "data",  t1: "Question sets", t2: ["RTI 82 · agriculture 93", "router 300 · language 29"], t3: "eval/*.json" },
+    re: { lane: "C", c: 1, r: 0, kind: "local", t1: "router_eval.py", t2: ["topic + follow-up routing,", "71 of 300 are real FAQs"], t3: "31/32 · 18/18 · 8/8" },
     le: { lane: "C", c: 2, r: 0, kind: "local", t1: "language_eval.py", t2: ["English, Telugu script,", "Telugu in English letters"], t3: "29 / 29" },
     ra: { lane: "C", c: 3, r: 0, kind: "local", t1: "run_ragas.py", t2: ["LLM-judged answer quality,", "needs extra packages"], t3: "optional" },
     ca: { lane: "C", c: 4, r: 0, kind: "data",  t1: "eval/cache", t2: ["saved HyDE, rewrite and", "router outputs"], t3: "no quota to re-run" },
@@ -2107,8 +2136,8 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
       model: "No LLM; the embedding model's tokenizer only.", returns: "ingest/chunks.json (535) and chunks_agriculture.json (1,895): text, source label, title, department, section, order, amends, in_force, URL, position",
       when: "After any change to the documents.",
       where: "ingest/load_and_chunk.py: chunk_tokens(), split_act(), amended_orders(), agriculture_units()", run: "python ingest/load_and_chunk.py   ·   python ingest/load_and_chunk.py --domain agriculture",
-      ideas: ["Tested and rejected: prefixing each chunk with its title before embedding. Every RTI order's title says \"Right to Information Act\", so it made chunks look alike and retrieval worse."] },
-    idx: { what: "Embeds every chunk with BAAI/bge-small-en-v1.5 (384 dimensions, 512-token window, local) and writes one Chroma collection per topic, with cosine distance. Chunks go in raw; only queries get bge's instruction prefix. The model's name is stored in the collection, and the search side reads it from there, so queries can never silently use a different model from the one that built the index. The collection is deleted and rebuilt each run.",
+      ideas: ["The title prefix is a per-topic setting, not a rule: for RTI it was tested and rejected (every order's title says \"Right to Information Act\", so chunks looked alike and retrieval got worse); for agriculture, where titles name the scheme and crop, it is on and helped."] },
+    idx: { what: "Embeds every chunk with BAAI/bge-small-en-v1.5 (384 dimensions, 512-token window, local) and writes one Chroma collection per topic, with cosine distance. Only queries get bge's instruction prefix. RTI chunks go in raw (a title prefix hurt there); agriculture embeds each chunk as its document title plus the text (title_prefix is on in its collection), which helped there. The model's name is stored in the collection, and the search side reads it from there, so queries can never silently use a different model from the one that built the index. The collection is deleted and rebuilt each run.",
       model: "No LLM; a local embedding model.", returns: "collections ap_rti and ap_agriculture in data/chroma", when: "After any change to the chunks.",
       where: "ingest/build_index.py", run: "python ingest/build_index.py   ·   python ingest/build_index.py --domain agriculture" },
     store: { what: "What the live assistant searches: one Chroma collection of vectors per topic (RTI 535 chunks, agriculture 1,895), and a keyword (BM25) index built in memory from the stored chunk texts when the assistant starts, in under a second. The Docker image builds both collections (about 50 MB) at image build time.",
@@ -2156,8 +2185,8 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
               "Or merge them into one prompt: one call fewer. They use different models today, so measure retrieval before trusting it."] },
     topic: { what: "Names the rule or scheme the question is about, in the documents' own words, and lists key terms the answer probably contains. The topic is searched by meaning and keywords, the key terms by keywords only.",
       model: "qwen3.8-27b, reasoning off. Falls back to gpt-oss-20b, then is skipped.", reads: "The English question.",
-      returns: "JSON: the topic and 5 to 10 key terms (plus rephrased queries)", cost: "not measured separately",
-      when: "Every search.", fail: "Skipped, search continues.", where: "rag/query_expansion.py: rewrites(); used from rag/retrieve.py: _expanded()",
+      returns: "JSON: the topic and 5 to 10 key terms. Rephrased queries come back too but are not searched (only \"topic\" and \"kw\" are switched on)", cost: "not measured separately",
+      when: "Every search. If the reply is not valid JSON it asks once more.", fail: "Skipped, search continues.", where: "rag/query_expansion.py: rewrites(); used from rag/retrieve.py: _expanded()",
       ideas: ["Same independence as HyDE (see there): a parallel call, or one merged call, are the two ways to cut latency."] },
     search: { what: "Each search text (question, HyDE passage, topic) is searched by meaning (bge-small, 384 numbers) and by keywords (BM25). Key terms go to BM25 only. Reciprocal Rank Fusion merges the ranked lists. The original question stays in the merge as a safety net if a HyDE passage drifts.",
       model: "No LLM. BAAI/bge-small-en-v1.5 and BM25, on this computer.", reads: "English question, HyDE passage, topic, key terms.",
@@ -2177,10 +2206,10 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
               "It also shares gpt-oss-120b's 8,000-tokens-a-minute cap with the follow-up rewrite, so two quick follow-ups can push one of them to the 20b fallback."] },
     result: { what: "The answer, the question as searched, the numbered source passages, the topic and language used, and the time spent searching and answering. The page shows each source with its text.", when: "Always, on every answered path.", where: "rag/answer.py: answer_question() return value; rag/web.py" },
 
-    qs: { what: "Hand-labelled question files: RTI 82 retrieval questions in 6 sets, agriculture 93, a router file of 274 labelled questions (71 of them real FAQ questions from official sites), and 29 language questions. Some sets were used only once, at the end, so a gain can be checked on questions never used for tuning.",
+    qs: { what: "Hand-labelled question files: RTI 82 retrieval questions in 6 sets, agriculture 93, a router test of 300 labelled questions (the 71 real FAQ questions from official sites, the 146 retrieval questions outside the final sets, 57 written for it, and 26 follow-ups added on 6 October; a further 32 are the frozen final set), and 29 language questions. Some sets were used only once, at the end, so a gain can be checked on questions never used for tuning.",
       when: "Written before each change, so a result is measured, not argued.", where: "eval/demo_questions.json, agri_questions.json, router_questions.json, language_questions.json, ingest/incoming/questions/questions.json" },
     re: { what: "Does the router send each question to the right topic? A question is right if the router's topic is its label or one of its also-ok labels; sending a valid question to \"other\" is counted separately as the costly mistake. Follow-ups are scored the way the live app routes them, rescue included.",
-      returns: "31/32 fresh · follow-ups 18/18 and 8/8 · 270/274 over all sources", model: "gpt-oss-20b via the real router (replayed from cache, or --live)",
+      returns: "31/32 fresh · follow-ups 18/18 and 8/8 · 270/274 on the original three sources", model: "gpt-oss-20b via the real router (replayed from cache, or --live)",
       where: "eval/router_eval.py", run: "python eval/router_eval.py --only final|followups2|followups3" },
     le: { what: "Three checks on English, Telugu script and Telugu typed in English letters (\"rti fee entha\"): does the router get the topic and the language right; is the answering text found when searching with the question as typed versus its English translation; and, with --answers N, does the reply come back in the right language.", returns: "29 of 29 languages recognised",
       where: "eval/language_eval.py", run: "python eval/language_eval.py   ·   --answers 2" },
