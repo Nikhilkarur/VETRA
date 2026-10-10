@@ -1,9 +1,32 @@
-# AP Government Assistant — RTI and Agriculture
+# AP Government Assistant
 
-A chatbot that answers ordinary people's questions about two areas of the Andhra Pradesh
-government — the **Right to Information (RTI) Act, 2005** as it applies in AP, and **farm
-schemes, subsidies, crop insurance and agriculture rules** — using only official
-documents, and citing where each answer comes from. Questions can be in English or Telugu.
+**Ask the Andhra Pradesh government a question in your own words, in English or Telugu,
+and get the answer its own documents give, with the document named.**
+
+It answers only from official documents and cites every source. When the documents don't
+cover something, it says so instead of guessing. It understands Telugu typed in Telugu
+script or in English letters ("rti fee entha"), and it follows a conversation, not just
+single questions.
+
+**The bigger idea** (every department, every state, general politics, and the people who
+most need government help) is in [VISION.md](VISION.md). This README covers what is
+built today: the Andhra Pradesh assistant.
+
+## What works today, and what is planned
+
+| Area | State |
+|---|---|
+| Right to Information: applying, fees, time limits, appeals, penalties | **Live**: 41 official documents |
+| Agriculture: farm schemes, subsidies, crop insurance, farm rules | **Live**: 44 official documents |
+| Answers in English, Telugu script, or Telugu in English letters | **Live** |
+| Finance: pensions, stamp duty and registration, vehicle tax, the state budget | Planned next |
+| Schemes and opportunities by social category (SC, ST, BC, EWS) | Planned |
+| Government jobs and recruitment | Planned |
+| Land: buying, title checks, registration | Planned |
+
+Everything below describes how the live part was built and measured.
+
+---
 
 It started as an RTI-only bot: sections 1–3 tell that story, section 4 onwards describes
 the current two-domain system. The detailed working log, with every decision and number,
@@ -600,6 +623,7 @@ packages (`ragas`, `langchain-groq`, `langchain-community<0.4`).
 ```
 ap-rti-assistant/
 ├── README.md                 ← this file
+├── VISION.md                 ← the long-term idea: every department, every state
 ├── context.md                ← detailed working log, every decision and number
 ├── PROJECT_BRIEF.md          ← one-page summary and next goal
 ├── requirements.txt
