@@ -495,13 +495,13 @@ header.hero { padding: 38px 0 22px; }
 
 <header class="hero">
   <div class="wrap">
-    <p class="label">Knowledge base · updated 8 October 2026</p>
-    <h1>AP RTI Assistant <span class="new-badge">now RTI + agriculture, English + Telugu</span></h1>
+    <p class="label">Knowledge base · version 1 · updated 14 October 2026</p>
+    <h1>AP RTI Assistant <span class="new-badge">version 1 · RTI + agriculture, English + Telugu</span></h1>
     <p class="sub">An assistant that answers ordinary people's questions about two areas of the Andhra Pradesh
        government: the <strong>Right to Information Act</strong>, and <strong>farm schemes, subsidies, crop insurance
        and agriculture rules</strong>. It uses only documents the government publishes, cites every source, and
        answers in English or Telugu.</p>
-    <p class="meta">First written 29 Sep 2026 · updated 8 Oct 2026 after 10 merged pull requests, the router follow-up fix and the architecture diagram · every figure is
+    <p class="meta">First written 29 Sep 2026 · updated 14 Oct 2026 for version 1 (git tag <code>v1.0</code>): every feature retested, the measurements re-run, the Docker image rebuilt · every figure is
        measured; sources: <code>context.md</code>, <code>docs/RETRIEVAL_EXPERIMENTS.md</code>, <code>README.md</code></p>
   </div>
 </header>
@@ -621,12 +621,12 @@ header.hero { padding: 38px 0 22px; }
       </ul>
     </div>
     <div class="card">
-      <p class="label">Where things stand (8 Oct)</p>
+      <p class="label">Where things stand (14 Oct)</p>
       <ul class="plain">
-        <li>All 10 pull requests are merged, including the router follow-up fix and the architecture diagram.</li>
+        <li><strong>Version 1</strong> is tagged <code>v1.0</code> on GitHub: the code as of 6 October, retested end to end on 14 October.</li>
         <li>The web page answers both topics and has a <strong>Reply in</strong> menu.</li>
-        <li>Runs with one Docker command, or with Python directly.</li>
-        <li>Next planned topic: <strong>finance</strong>, with subcategories.</li>
+        <li>Runs with one Docker command, or with Python directly; the Docker image was rebuilt from this code on 14 October.</li>
+        <li>Next planned topic: <strong>finance</strong>, with subcategories. The long-term idea is in <code>VISION.md</code>.</li>
       </ul>
     </div>
   </div>
@@ -657,12 +657,14 @@ header.hero { padding: 38px 0 22px; }
     <div class="ba-row" role="row"><div class="k">Documentation</div><div class="was">README, context.md, this page</div><div class="to">→</div><div class="now">+ <code>docs/RETRIEVAL_EXPERIMENTS.md</code> (about 40 techniques per topic), router and language tests, all READMEs rewritten</div></div>
   </div>
 
-  <h3>Repository check, 8 October</h3>
+  <h3>Version 1 check, 14 October</h3>
   <div class="status">
-    <span class="chip"><i class="dot"></i>GitHub <code>main</code>: all 11 pull requests merged, the latest being this tabbed page</span>
-    <span class="chip"><i class="dot"></i>Local <code>main</code> pulled and identical to GitHub</span>
-    <span class="chip"><i class="dot"></i>Router follow-up fix: merged as PR #9; no other branches are left open</span>
-    <span class="chip warn"><i class="dot"></i>Docker: the image holds a copy of the code. After any change, run <code>docker compose up --build</code> (the last build recorded here, 5 October, predates the language fix)</span>
+    <span class="chip"><i class="dot"></i>GitHub <code>main</code>: pull requests #1–#13 merged; version 1 tagged <code>v1.0</code></span>
+    <span class="chip"><i class="dot"></i>Web page, tried in a browser: RTI and agriculture answers with clickable citations, a follow-up, Telugu script, Telugu in English letters, a declined question and its ask-anyway buttons, the Reply in menu, New chat, and bad input (empty, over 500 characters, not JSON)</span>
+    <span class="chip"><i class="dot"></i>Also working: the RTI-only and agriculture-only pages, and the terminal chat with <code>/sources</code></span>
+    <span class="chip"><i class="dot"></i>Measurements re-run, unchanged: RTI 79/82, agriculture 80/93, routing 31/32, languages 29/29</span>
+    <span class="chip"><i class="dot"></i>Docker: image rebuilt from this code (about 14 minutes, both indexes rebuilt); it starts in about 15 seconds and answered RTI, Telugu and declined questions at <code>http://localhost:8765</code></span>
+    <span class="chip warn"><i class="dot"></i>Found while testing: four small problems, listed under <a href="#open">Open items</a></span>
   </div>
 </section>
 
@@ -1387,7 +1389,7 @@ header.hero { padding: 38px 0 22px; }
 <section id="timeline">
   <div class="sec-head">
     <h2>Every update, in order</h2>
-    <p>Twelve changes in five days on GitHub (<code>Nikhilkarur/AP-ASSIS</code>); all but the first went in
+    <p>Every change on GitHub (<code>Nikhilkarur/AP-ASSIS</code>) from 4 to 14 October; all but the first went in
        through a pull request. Each card says what changed, why, and what it measured.</p>
   </div>
 
@@ -1759,7 +1761,7 @@ header.hero { padding: 38px 0 22px; }
 
     <div class="tl-item" style="--c:var(--llm)">
       <div class="tl-card">
-        <div class="tl-top"><h3>This page: an architecture map, and a tabbed layout</h3><span class="tag">docs</span><span class="pr">PR #10, #11</span></div>
+        <div class="tl-top"><h3>This page: an architecture map, and a tabbed layout</h3><span class="tag">docs</span><span class="pr">PR #10, #11, #12</span></div>
         <div class="tl-body">
           <div>
             <h4>What changed</h4>
@@ -1778,6 +1780,69 @@ header.hero { padding: 38px 0 22px; }
               <li>Status lines still said the router fix was "next"; it went in as PR #9.</li>
               <li>The index step: agriculture embeds each chunk with its document title, RTI does not.</li>
             </ul>
+          </div>
+        </div>
+        <p class="files">docs/AP RTI Assistant Knowledge Base.html</p>
+      </div>
+    </div>
+
+    <p class="tl-day">Saturday 10 October</p>
+
+    <div class="tl-item" style="--c:var(--muted)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>VISION.md: the long-term idea; the README opens with what works today</h3><span class="tag">docs</span><span class="pr">PR #13</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li><strong>VISION.md</strong> holds the long-term idea: one assistant for every department and every state, for people
+                  who want politics and policy from the source, and for less-privileged citizens looking for schemes, jobs,
+                  reservations and land rules.</li>
+              <li><strong>README.md</strong> now opens with the working Andhra Pradesh assistant, a table of what is live and what is
+                  planned, and a link to the vision.</li>
+            </ul>
+          </div>
+          <div><h4>Why</h4><p class="why">A reader should see what is built before what is planned, and the larger plan needed
+             one place of its own instead of being spread across the README.</p></div>
+        </div>
+        <p class="files">VISION.md · README.md</p>
+      </div>
+    </div>
+
+    <p class="tl-day">Wednesday 14 October</p>
+
+    <div class="tl-item" style="--c:var(--search)">
+      <div class="tl-card">
+        <div class="tl-top"><h3>Version 1: everything retested, the Docker image rebuilt, tagged v1.0</h3><span class="tag">release</span><span class="pr">tag v1.0</span></div>
+        <div class="tl-body">
+          <div>
+            <h4>What changed</h4>
+            <ul>
+              <li><strong>No code changes.</strong> Version 1 is the code as of 6 October (PR #9), with the documentation since.</li>
+              <li><strong>Every feature tried by hand:</strong> the web page in a browser (both topics, citations, a follow-up, both
+                  forms of Telugu, a declined question and its ask-anyway buttons, the Reply in menu, New chat, bad input), the
+                  RTI-only and agriculture-only pages, and the terminal chat.</li>
+              <li><strong>Docker image rebuilt:</strong> the one from 5 October predated the language fix. The rebuild took about 14
+                  minutes (PyTorch and the models reused, both indexes rebuilt), and the new container answered at
+                  <code>http://localhost:8765</code>.</li>
+              <li>This page brought up to date, and the repository tagged <code>v1.0</code>.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Measured (re-run from the saved LLM outputs)</h4>
+            <div class="meters" style="--c:var(--search)">
+              <div class="meter"><div class="ml"><span>RTI test questions: answer text found</span><span class="d">same</span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:96.3%"></i></span><b>79/82</b></div></div>
+              <div class="meter"><div class="ml"><span>Agriculture test questions: answer text found</span><span class="d">same</span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:86%"></i></span><b>80/93</b></div></div>
+              <div class="meter"><div class="ml"><span>Final routing set</span><span class="d">same</span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:96.9%"></i></span><b>31/32</b></div></div>
+              <div class="meter"><div class="ml"><span>Languages recognised</span><span class="d">same</span></div>
+                <div class="bar2 now"><span>now</span><span class="tr"><i style="--w:100%"></i></span><b>29/29</b></div></div>
+            </div>
+            <p class="muted small" style="margin-top:8px">Found while testing, none blocking: a line-break tag shown as text in a
+               table, one Telugu-in-English-letters mistranslation, one wrong section number in a Telugu answer, and a language test
+               that is not fully offline. All four are under <a href="#open">Open items</a>.</p>
           </div>
         </div>
         <p class="files">docs/AP RTI Assistant Knowledge Base.html</p>
@@ -1820,10 +1885,11 @@ header.hero { padding: 38px 0 22px; }
     <div class="card"><p class="label">Every start after that</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">~40 s</p><p class="muted small">until it prints <code>ready in …s</code></p></div>
     <div class="card"><p class="label">Checked inside the container</p><p style="margin-top:6px;font:500 22px/1.2 var(--f-mono)">identical</p><p class="muted small">RTI 79/82, agriculture 80/93, router 31/32; one live question answered</p></div>
   </div>
-  <p class="muted small" style="margin-top:12px;max-width:76ch">The image built on 5 October does not contain the 6 October language fix, or anything after it.
-     Running <code>docker compose up --build</code> rebuilds it. PyTorch and the two models are reused, but
-     the language fix touched <code>rag/domains.py</code>, which the index step depends on, so both indexes are rebuilt too
-     (a few minutes). Steps in <a href="#run">Run it</a>.</p>
+  <p class="muted small" style="margin-top:12px;max-width:76ch">Rebuilt on 14 October from the version 1 code (the 5 October image
+     predated the language fix). PyTorch and the two models were reused, but the language fix touched <code>rag/domains.py</code>,
+     which the index step depends on, so both indexes were rebuilt too: about 14 minutes in all. The image holds a copy of the
+     code, so after any later change run <code>docker compose up --build</code>; with no changes, <code>--build</code> reuses
+     everything. Steps in <a href="#run">Run it</a>.</p>
 </section>
 
 <section id="run">
@@ -1845,8 +1911,8 @@ docker compose up --build</pre>
         <li>When it prints <code>ready in …s</code>, open <strong>http://localhost:8765</strong>.</li>
         <li>Stop with <strong>Ctrl+C</strong>, or the Stop button in Docker Desktop's Containers list (Start there runs it again).</li>
       </ol>
-      <p class="muted small" style="margin-top:8px">Run the <code>--build</code> command once now: the image from 5 October
-         doesn't have the 6 October language fix.</p>
+      <p class="muted small" style="margin-top:8px">The image was rebuilt from the version 1 code on 14 October, so for a demo,
+         pressing Start in Docker Desktop (or <code>docker compose up</code>) is enough.</p>
     </div>
     <div class="card">
       <p class="label">Without Docker</p>
@@ -1932,14 +1998,16 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
         <tr><td><strong>Some questions still miss their answer</strong></td><td>3 of 82 RTI and 13 of 93 agriculture test questions. Two RTI misses ask who the <em>current</em> Commissioner is (the indexed orders stop at 2011); the third is "can the officer just say no" (Section 8 is found at rank 11).</td></tr>
         <tr><td><strong>Newer RTI documents are collected but not indexed</strong></td><td>27 staged documents, including the current Commission order (G.O.Ms.7/2026), online filing (RTIMIS) and the data-protection law's amendment to s.8(1)(j), in force since November 2025. Indexing them should address the "current Commissioner" misses; not yet done or measured.</td></tr>
         <tr><td><strong>Agriculture's gain is less certain</strong></td><td>Its final set lost one question (14 → 13). The gain rests on the 79 tuning-period questions and a clean set (8 → 10 of 14).</td></tr>
-        <tr><td><strong>Answers are checked by reading, not measured</strong></td><td>The tests check that the right passage arrives, not that the answer is right. Known: appeal answers can mix up the two appeal stages; an answer can cite the wrong section when the right one wasn't retrieved.</td></tr>
+        <tr><td><strong>Answers are checked by reading, not measured</strong></td><td>The tests check that the right passage arrives, not that the answer is right. Known: appeal answers can mix up the two appeal stages; an answer can cite the wrong section when the right one wasn't retrieved. On 14 October a Telugu answer gave the below-poverty-line fee exemption as Section 5 of the Act; it is Section 7(5).</td></tr>
         <tr><td><strong>Follow-ups can lose the topic</strong></td><td>"what if my family belongs to bpl" after a fee question dropped "fee". Workaround: name the subject in the follow-up. Follow-ups the router would decline now get a second look (6 Oct); if that rewrite is rate-limited, the question is still declined, with the ask-anyway buttons.</td></tr>
         <tr><td><strong>Batched router test unfinished</strong></td><td>The 300-question batch run stopped at gpt-oss-20b's daily limit (180 routed). Batches also lean toward their neighbours, so the questions whose batch label changed were re-checked one at a time, as live.</td></tr>
-        <tr><td><strong>Telugu in English letters translates less faithfully</strong></td><td>"rendo appeal" (second appeal) became "land appeal". Search still found every answer in the test; Telugu answer quality is unmeasured. The two Telugu RTI manuals are not indexed.</td></tr>
+        <tr><td><strong>Telugu in English letters translates less faithfully</strong></td><td>"rendo appeal" (second appeal) became "land appeal", and on 14 October "panta bima ki dabbulu kattala?" (do I pay for crop insurance?) was understood as "paddy insurance"; that answer still gave the crop-insurance premium. Search still found every answer in the test; Telugu answer quality is unmeasured. The two Telugu RTI manuals are not indexed.</td></tr>
         <tr><td><strong>One topic per question</strong></td><td>A question that needs RTI and agriculture together gets one; the router picks.</td></tr>
         <tr><td><strong>Free-tier throughput</strong></td><td>4–5 LLM calls per question; about one question per 30 seconds, and about 40–45 full answers a day on gpt-oss-120b before the smaller model takes over.</td></tr>
         <tr><td><strong>Agriculture data</strong></td><td>Two scanned documents not indexed and one 2025 relief order with garbled text (need OCR); several orders cover one season and need refreshing.</td></tr>
-        <tr><td><strong>Docker must be rebuilt after code changes</strong></td><td>The image holds a copy of the code. The last build recorded here (5 October) predates the language fix: <code>docker compose up --build</code>.</td></tr>
+        <tr><td><strong>Docker must be rebuilt after code changes</strong></td><td>The image holds a copy of the code. Rebuilt on 14 October for version 1; after any later code change: <code>docker compose up --build</code> (about 14 minutes when <code>rag/domains.py</code> changes, because both indexes are rebuilt).</td></tr>
+        <tr><td><strong>A tag the model writes can show as text</strong></td><td>When the answer model puts a line break (<code>&lt;br&gt;</code>) inside a table cell, the page shows the tag itself, because its small Markdown renderer escapes HTML (<code>rag/web.html</code>). Seen on the tenant-farmer question on 14 October; the answer stays readable.</td></tr>
+        <tr><td><strong>The language test is not fully offline</strong></td><td>Its saved router decisions are qwen3.8-27b's, the router's second choice. When gpt-oss-20b, its first choice, is available, <code>eval/language_eval.py</code> makes those calls live and adds them to <code>eval/cache/route-v3@gpt-oss-20b.json</code>. On 14 October the result was the same (29/29).</td></tr>
         <tr><td><strong>Startup</strong></td><td>20–30 seconds to load the models; the reranker adds about 1.5 s per agriculture question on CPU.</td></tr>
       </tbody>
     </table>
@@ -1972,7 +2040,7 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
 
 <footer class="wrap">
   <p>AP RTI Assistant (<code>ap-rti-assistant</code>, GitHub <code>Nikhilkarur/AP-ASSIS</code>): RTI and agriculture assistant for
-     Andhra Pradesh citizens. Knowledge base first written 29 September 2026, updated 8 October 2026.</p>
+     Andhra Pradesh citizens. Knowledge base first written 29 September 2026, updated 14 October 2026 for version 1.</p>
   <p style="margin-top:6px">Full working log: <code>context.md</code> · Every search experiment: <code>docs/RETRIEVAL_EXPERIMENTS.md</code> ·
      Write-up and run steps: <code>README.md</code> · Test questions: <code>eval/*_questions.json</code></p>
 </footer>
