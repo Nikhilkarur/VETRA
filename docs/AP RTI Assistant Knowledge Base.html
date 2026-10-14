@@ -395,6 +395,9 @@ footer { padding: 34px 0 60px; color: var(--muted); font-size: 13px; }
                       border: 1px solid var(--hair-2); border-radius: 999px; padding: 6px 13px; }
 .arch-ctl button.sc:hover { background: var(--surface-2); }
 .arch-ctl button.sc[aria-pressed="true"] { background: var(--llm); border-color: var(--llm); color: #fff; }
+.arch-ctl button.sc .n { font: 500 11px/1 var(--f-mono); color: var(--llm); margin-left: 3px; }
+.arch-ctl button.sc .n.zero { color: var(--muted); }
+.arch-ctl button.sc[aria-pressed="true"] .n { color: #fff; opacity: .85; }
 .arch-opts { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--ink-2); }
 .arch-opts label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
 .arch-opts button { font: 600 13px/1.3 var(--f-body); cursor: pointer; color: var(--ink); background: var(--surface);
@@ -1826,6 +1829,8 @@ header.hero { padding: 38px 0 22px; }
                   minutes (PyTorch and the models reused, both indexes rebuilt), and the new container answered at
                   <code>http://localhost:8765</code>.</li>
               <li>This page brought up to date, and the repository tagged <code>v1.0</code>.</li>
+              <li>After the tag: the Architecture tab gained a <strong>Telugu follow-up</strong> scenario (six calls), and every
+                  scenario button now shows its number of LLM calls.</li>
             </ul>
           </div>
           <div>
@@ -2165,6 +2170,8 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
       note: "Same four calls as RTI. The reranker adds time but no Groq call." },
     { id: "fu", group: "Ask", label: "Follow-up in a chat", calls: ["router", "condense", "hyde", "topic", "answer"], path: ["wr", "rc", "ct", ...search, "sp", ...tail],
       note: "With earlier turns, every message gets the rewrite call, even one that already stands alone." },
+    { id: "tf", group: "Ask", label: "Telugu follow-up", calls: ["router", "condense", "translate", "hyde", "topic", "answer"], path: ["wr", "rc", "ct", ...search, "sp", ...tail],
+      note: "Six calls: a follow-up in Telugu needs both the rewrite (it reads the conversation) and then the translation (the search reads only English). The answer model still reads your original words." },
     { id: "fr", group: "Ask", label: "Follow-up the router calls \"other\"", calls: ["router", "rescue", "rescue", "hyde", "topic", "answer"], path: ["wr", "rr", "rst", ...search, "sp", ...tail],
       note: "\"what if i have a white ration card\" after an RTI fee question. The rescue is two extra calls; its rewrite is reused, so the normal rewrite is skipped." },
     { id: "od", group: "Ask", label: "Off-topic, first message", calls: ["router"], path: ["wr", "rd", "wa"],
@@ -2457,6 +2464,9 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
       const g = document.createElement("span"); g.className = "grp"; g.textContent = group; scBox.append(g);
     }
     const b = document.createElement("button"); b.type = "button"; b.className = "sc"; b.dataset.id = s.id; b.textContent = s.label;
+    const k = s.calls.length, n = document.createElement("span");
+    n.className = "n" + (k ? "" : " zero"); n.textContent = k ? `${k} call${k > 1 ? "s" : ""}` : "no LLM";
+    b.append(" ", n);
     b.addEventListener("click", () => setScenario(s)); scBox.append(b);
   });
   playBtn.addEventListener("click", play);
