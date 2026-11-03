@@ -197,6 +197,16 @@ def agri_source(entry: dict) -> str:
     return label
 
 
+def season_of(text: str, start: int) -> str:
+    """The season heading (domains.SEASON_HEADING) whose list is open at position `start`, or ""."""
+    heading = None
+    for m in domains.SEASON_HEADING.finditer(text, 0, start):
+        heading = m
+    if not heading or domains.CAPS_HEADING.search(text, heading.end(), start):
+        return ""
+    return heading.group(1)
+
+
 def agriculture_units(count) -> list[dict]:
     entries = json.loads(MANIFEST.read_text(encoding="utf-8"))
     items: list[dict] = []
@@ -209,7 +219,9 @@ def agriculture_units(count) -> list[dict]:
             continue
         source = agri_source(entry)
         pieces = chunk_tokens(text, count, CHUNK_TOKENS, OVERLAP_TOKENS)
+        at = 0
         for i, piece in enumerate(pieces):
+            at = text.find(piece, at)   # chunks overlap, but each starts later than the last
             items.append({
                 "id": f"{path.stem}::0::{i}",
                 "text": piece,
@@ -217,6 +229,7 @@ def agriculture_units(count) -> list[dict]:
                 "title": entry["title"],
                 "department": entry["department"],
                 "section": None,
+                "season": season_of(text, at) if at >= 0 else "",
                 "order": agri_key(entry),
                 "order_label": agri_label(entry),
                 "amends": ",".join(resolve_amends(entry, entries)),

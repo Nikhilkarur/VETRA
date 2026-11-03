@@ -51,12 +51,53 @@ DEFAULT_MODEL = "openai/gpt-oss-120b"
 # are per domain and live in rag/domains.py. RTI's were moved there verbatim.
 
 
-def build_context(hits: list[dict]) -> str:
+def _past_season(season: str, question: str) -> bool:
+    """A one-season heading whose year has gone, in a question that doesn't name that year."""
+    match = re.fullmatch(r"(?:Kharif|Rabi) (\d{4})(-\d{2,4})?", season)
+    if not match or match.group(1) in question:
+        return False
+    last_year = int(match.group(1)) + (1 if match.group(2) else 0)  # Rabi 2024-25 ends in 2025
+    return last_year < int(time.strftime("%Y"))
+
+
+def _open_section(text: str, start: int) -> int:
+    """Where the season list running at `start` ends: the next heading, or the end of the text."""
+    ends = [m.start() for m in (domains.SEASON_HEADING.search(text, start),
+                                domains.CAPS_HEADING.search(text, start)) if m]
+    return min(ends, default=len(text))
+
+
+def without_past_seasons(hit: dict, question: str) -> tuple[str, str]:
+    """
+    The passage text and season label for the answer model, past seasons' rule lists cut.
+
+    Labelling alone was not enough: told a clause was "Kharif 2024" and today's date,
+    the model still answered "Kharif 2024 (the current season) is free" in most of 8
+    runs. Which season has passed is arithmetic, so code decides it. The stored chunk
+    is untouched: search and the page's Sources still use the full text.
+    """
+    text, season = hit["text"], hit.get("season") or ""
+    if _past_season(season, question):
+        end = _open_section(text, 0)
+        text = f"[Rules for {season} only, a past season, left out here.] {text[end:]}"
+        season = ""
+    for m in reversed(list(domains.SEASON_HEADING.finditer(text))):
+        if _past_season(m.group(1), question):
+            end = _open_section(text, m.end())
+            text = (f"{text[:m.start()]}[Rules for {m.group(1)} only, a past season, left out here.] "
+                    f"{text[end:]}")
+    return text, season
+
+
+def build_context(hits: list[dict], question: str = "") -> str:
     """Number each passage and label its source, so the model can cite precisely."""
     blocks = []
     for n, hit in enumerate(hits, 1):
         note = f" -- included because it {hit['added_because']}" if hit.get("added_because") else ""
-        blocks.append(f"[{n}] Source: {hit['source']}{note}\n    {hit['text']}")
+        text, season = without_past_seasons(hit, question)
+        if season:
+            note += f" -- BEGINS UNDER THE HEADING \"{season}\""
+        blocks.append(f"[{n}] Source: {hit['source']}{note}\n    {text}")
     return "\n\n".join(blocks)
 
 
@@ -330,7 +371,7 @@ def answer_question(question: str, k: int = TOP_K, hyde: bool = True,
     # once came to 8,025. So on a 413, drop the lowest-ranked passages and ask
     # again. A normal request is sent exactly as before.
     while True:
-        context = build_context(hits)
+        context = build_context(hits, f"{question} {standalone}")
         prompt = f"Context passages:\n\n{context}\n\n"
         if earlier:
             prompt += ("Earlier in this conversation (to understand the question only -- "

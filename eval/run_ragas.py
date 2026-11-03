@@ -69,7 +69,7 @@ def generate_answers(questions: list[dict], k: int) -> list[dict]:
     for n, item in enumerate(questions, 1):
         question = item["question"]
         hits = retrieve(question, k)
-        context = build_context(hits)
+        context = build_context(hits, question)
 
         reply = client.chat.completions.create(
             model=model,

@@ -98,6 +98,7 @@ def main() -> int:
             "order_label": i.get("order_label") or "",
             "in_force": i.get("in_force") or "",
             "date": i.get("date") or "",
+            "season": i.get("season") or "",
         }
         for i in items
     ]

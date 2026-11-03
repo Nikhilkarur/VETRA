@@ -17,10 +17,19 @@ each question is routed by rag/router.py. --domain rti / agriculture skips routi
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+
+# "Kharif 2024: i. In the Kharif 2024 season ..." -- a numbered list of rules for one
+# season inside a crop-insurance order. Only G.O.Ms.80 and 81 use this form today; the
+# annexures' "RABI 2025-26:" titles are not it. Without the heading a chunk that starts
+# mid-list reads as a general rule: G.O.Ms.81's "The State Govt will bear both the
+# Farmer's share of premium" was answered as true for 2026 (checked 2026-11-03).
+SEASON_HEADING = re.compile(r"\b((?:Kharif|Rabi) \d{4}(?:-\d{2,4})?(?: onwards)?): (?=i\.)")
+CAPS_HEADING = re.compile(r"\b[A-Z][A-Z &/-]{5,}:")  # "COVERAGE MODEL:" ends a season's list
 
 
 @dataclass(frozen=True)
@@ -229,6 +238,12 @@ Four traps in these documents:
   past season "current". Say the period; if even the latest order may have
   ended, say the current season's order should be checked. When guidelines are
   several years old, say their date.
+- SEASON HEADINGS. A source label ending BEGINS UNDER THE HEADING "Rabi 2024-25
+  onwards" means the passage's opening text, up to the next heading in it, is a
+  rule for that season only, even if the text never names the season. An order
+  extended "on the same terms" keeps each rule's season. "[Rules for Kharif 2024
+  only, a past season, left out here.]" marks rules that no longer apply: never
+  describe that season as current or offer it as an option today.
 - STATE vs CENTRAL. Say whether a rule comes from an AP order or a central
   scheme. Department manuals list officers and phone numbers for THAT office
   only -- give them only if the question is about that office.
