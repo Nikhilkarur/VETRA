@@ -149,7 +149,7 @@ def test_claiming_a_printed_fact_is_missing_is_rejected():
 
 def test_a_past_year_question_gets_history_not_todays_rates(kb, monkeypatch):
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "It was free in 2024.")])
-    r, _ = run(kb, plan(needs=[{"type": "deadline", "subject": "cut-off rabi"}, {"type": "procedure", "subject": "x"}]),
+    r, _ = run(kb, plan(needs=[{"type": "deadline", "subject": "cut-off rabi"}, {"type": "procedure", "subject": "how to apply"}]),
                "It was free in 2024 [E1].", q="was the rabi cut-off free in 2024?")
     assert "Open now" not in r.answer and "free in 2024" in r.answer
 
@@ -182,7 +182,7 @@ def test_planner_is_offered_every_data_type_and_no_tools():
 
 
 def test_plan_keeps_known_data_types_and_drops_the_rest():
-    p = agent.parse_plan(plan(needs=[{"type": "send_money", "subject": "x"}, {"type": "form", "subject": "y"}]))
+    p = agent.parse_plan(plan(needs=[{"type": "send_money", "subject": "how to apply"}, {"type": "form", "subject": "y"}]))
     assert [n.data_type for n in p.needs] == ["form"] and p.needs[0].domain == "agriculture"
 
 
@@ -216,7 +216,7 @@ def test_exact_store_answers_without_searching_text(kb, monkeypatch):
 
 def test_no_exact_data_falls_back_to_text_and_records_a_gap(kb, monkeypatch):
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
-    r, gaps = run(kb, plan(needs=[{"type": "contact", "subject": "crop insurance office"}]), "See the document [E1].")
+    r, gaps = run(kb, plan(needs=[{"type": "contact", "subject": "office"}]), "See the document [E1].")
     assert r.coverage[0]["level"] == "text"
     assert [(g.data_type, g.level, g.state) for g in gaps] == [("contact", "text_only", "AP")]
     assert "Not in our documents" not in r.answer
@@ -230,7 +230,7 @@ def test_a_procedure_in_text_is_not_a_gap(kb, monkeypatch):
 
 def test_state_with_only_central_data_answers_and_says_what_is_missing(monkeypatch, tmp_path):
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "IN")])
-    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Karnataka", needs=[{"type": "procedure", "subject": "PMFBY"}]),
+    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Karnataka", needs=[{"type": "procedure", "subject": "how to apply"}]),
                   "The central guideline says this [E1].")
     assert r.kind == "answer" and r.coverage[0]["level"] == "central_text"
     assert "Karnataka" in r.answer and "Not in our documents" in r.answer
@@ -240,12 +240,12 @@ def test_state_with_only_central_data_answers_and_says_what_is_missing(monkeypat
 def test_no_state_named_answers_from_central_and_asks_which_state(monkeypatch, tmp_path):
     seen = {}
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: seen.update(state=c.state) or [chunk("c1", "IN")])
-    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, needs=[{"type": "explanation", "subject": "PMFBY"}]), "It covers crops [E1].")
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, needs=[{"type": "explanation", "subject": "how to apply"}]), "It covers crops [E1].")
     assert r.kind == "answer" and seen["state"] is None and "Which state" in r.answer
 
 
 def test_nothing_anywhere_says_so_and_records_it(tmp_path):
-    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Goa", needs=[{"type": "procedure", "subject": "x"}]))
+    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Goa", needs=[{"type": "procedure", "subject": "how to apply"}]))
     assert r.kind == "not_covered" and "Goa" in r.answer and r.trace["calls"] == 1
     assert gaps[0].level == "no_data" and gaps[0].state == "GA"
 
@@ -253,7 +253,7 @@ def test_nothing_anywhere_says_so_and_records_it(tmp_path):
 def test_one_text_search_serves_several_needs(tmp_path, monkeypatch):
     calls = []
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: calls.append(q) or [chunk("c1", "AP")])
-    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "a"}, {"type": "explanation", "subject": "b"}]), "Text [E1].")
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "how to apply"}, {"type": "explanation", "subject": "how to apply"}]), "Text [E1].")
     assert len(calls) == 1 and len(r.sources) == 1
 
 
@@ -268,6 +268,57 @@ def test_a_failing_gap_log_never_costs_an_answer(tmp_path):
     blocker = tmp_path / "file"
     blocker.write_text("x")
     gaps_module.GapLog(blocker / "g.jsonl").report(gaps_module.Gap("a", "KA", "form", "x", "no_data", TODAY))
+
+
+def test_a_chosen_state_beats_the_models_guess(kb):
+    r, _ = run(kb, plan(state="Telangana", needs=[{"type": "deadline", "subject": "cut-off rabi"}]), state="AP")
+    assert r.state == "AP"
+
+
+def test_a_state_named_in_the_question_beats_the_chosen_one(tmp_path):
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, needs=[{"type": "procedure", "subject": "how to apply"}]),
+               state="AP", q="how do i apply in tamil nadu")
+    assert r.state == "TN"
+
+
+def test_the_models_reading_is_used_when_nothing_else_says(kb):
+    r, _ = run(kb, plan(state="Andhra Pradesh"))
+    assert r.state == "AP"
+
+
+def test_off_topic_results_get_one_more_search_then_count_as_missing(tmp_path, monkeypatch):
+    calls = []
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: calls.append(q) or [chunk("c1", "IN", "PM-KISAN pays income support.")])
+    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Karnataka", needs=[{"type": "eligibility", "subject": "Rythu Bharosa"}]))
+    assert len(calls) == 2 and calls[1] == "Rythu Bharosa" and r.kind == "not_covered" and gaps[0].level == "no_data"
+
+
+def test_the_second_search_can_rescue_the_question(tmp_path, monkeypatch):
+    def search(q, c):
+        return [chunk("c2", "IN", "Rythu Bharosa rules.")] if q == "Rythu Bharosa" else [chunk("c1", "IN", "Something else.")]
+    monkeypatch.setitem(agent.TOOLS, "text_search", search)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(state="Karnataka", needs=[{"type": "eligibility", "subject": "Rythu Bharosa"}]), "Rules say [E1].")
+    assert r.kind == "answer" and r.coverage[0]["level"] == "central_text"
+
+
+def test_a_generic_subject_is_never_called_off_topic():
+    assert checks.on_topic([Evidence("a", "t", "unrelated", "doc")], "scheme application process")
+
+
+def test_one_common_word_is_not_enough_to_be_on_topic():
+    results = [Evidence("a", "t", "PM-Kisan income support", "doc")]
+    assert not checks.on_topic(results, "Mukhyamantri Kisan Kalyan Yojana")
+    assert checks.on_topic(results, "PM Kisan")
+
+
+def test_rti_at_its_rate_limit_says_busy_not_an_error(kb, monkeypatch):
+    import answer as rag_answer  # rag/ is on the path once the agent has loaded search
+
+    def fail(*a, **k):
+        raise RuntimeError("vendor limit")
+    monkeypatch.setattr(rag_answer, "answer_question", fail)
+    r, _ = run(kb, json.dumps({"domain": "rti"}), q="rti fee")
+    assert r.kind == "failed" and "busy" in r.answer
 
 
 # ---------------------------------------------------------------- exact facts
@@ -422,7 +473,7 @@ def test_a_short_rate_limit_rests_only_that_long():
 def test_without_an_explanation_no_raw_document_text_is_shown(tmp_path, monkeypatch):
     raw = "The P.S. to the Hon'ble Minister for Food and Civil Supplies"
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", raw)])
-    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "x"}]), llm.LLMError("down"))
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "how to apply"}]), llm.LLMError("down"))
     assert raw not in r.answer and "doc c1" in r.answer and "try again" in r.answer
 
 
@@ -460,7 +511,7 @@ def test_id_numbers_never_reach_the_model(kb):
 
 def test_telugu_notes_are_in_telugu(monkeypatch, tmp_path):
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "IN")])
-    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, language="telugu", needs=[{"type": "procedure", "subject": "x"}]), "తెలుగు [E1].")
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, language="telugu", needs=[{"type": "procedure", "subject": "how to apply"}]), "తెలుగు [E1].")
     assert "మీది ఏ రాష్ట్రం" in r.answer
 
 

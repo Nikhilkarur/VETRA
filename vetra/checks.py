@@ -77,6 +77,31 @@ def about_a_past_year(question: str, as_of: str) -> bool:
     return any(int(y) < int(as_of[:4]) for y in re.findall(r"\b(?:19|20)\d{2}\b", question))
 
 
+_GENERIC = frozenset(
+    "a about act amount an and application applications apply benefit benefits beneficiary card central claim cost criteria date "
+    "deadline department details documents eligibility eligible farmer farmers fee form forms get government india "
+    "how in information is last money of office officer on order package pay payment premium process procedure rate rates "
+    "rule rules scheme schemes state subsidy the to yojana".split())
+_WORD = re.compile(r"[a-z0-9]+")
+
+
+def on_topic(items: list[Evidence], subject: str) -> bool:
+    """
+    Do the results mention what was asked about? Search always returns something, so a scheme
+    we hold nothing on still brings back the nearest other scheme, looking relevant. More than
+    half of the subject's distinctive words must appear: one isn't enough, because "Kisan" is
+    in nearly everything. If it has no distinctive words, there's nothing to test.
+    """
+    def stems(words: set[str]) -> set[str]:  # first letters, so seed, seeds and seedlings match
+        return {w[:4] for w in words}
+
+    wanted = stems(set(_WORD.findall(subject.lower())) - _GENERIC)
+    if not wanted:
+        return True
+    found = stems(set(_WORD.findall(" ".join(f"{e.doc} {e.text}" for e in items).lower())))
+    return len(wanted & found) * 2 > len(wanted)
+
+
 def has_facts(evidence: list[Evidence]) -> bool:
     return any(e.fact for e in evidence)
 

@@ -30,5 +30,14 @@ def normalise(state: str | None) -> str | None:
     return _BY_NAME.get(text.lower())
 
 
+def named_in(text: str) -> str | None:
+    """The state a person's own words name, if any. Longest names first: "Andhra" isn't enough."""
+    lowered = f" {text.lower()} "
+    for full in sorted(_BY_NAME, key=len, reverse=True):
+        if f" {full} " in lowered:
+            return _BY_NAME[full]
+    return None
+
+
 def name(code: str) -> str:
     return "the central government" if code == CENTRAL else STATES.get(code, code)

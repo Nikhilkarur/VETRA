@@ -174,6 +174,11 @@ def find(need: Need, plan: Plan, today: str, knowledge: Knowledge, asked: str, t
     if need.domain not in text_cache:  # one search per topic: the same text serves every need
         text_cache[need.domain] = TOOLS["text_search"](plan.standalone or need.subject, ctx)
     items = text_cache[need.domain]
+    if not checks.on_topic(items, need.subject):  # corrective: once more, on the subject alone
+        retry = Context(need.domain, plan.state, today, knowledge, plan.facts, question=asked)
+        items = TOOLS["text_search"](need.subject, retry)
+        if not checks.on_topic(items, need.subject):
+            return Found(need, "none"), ctx
     if not items:
         return Found(need, "none"), ctx
     local = any(e.jurisdiction == plan.state for e in items)
@@ -280,7 +285,11 @@ def _legacy(question: str, history: list[dict], plan: Plan) -> Result:
         sys.path.insert(0, rag)
     from answer import answer_question
 
-    r = answer_question(question, history=history, domain=plan.domain, language=plan.language)
+    try:
+        r = answer_question(question, history=history, domain=plan.domain, language=plan.language)
+    except Exception as exc:  # rag/ raises its vendor's errors; the citizen just needs to hear "busy"
+        print(f"  (rag/ failed: {type(exc).__name__})", file=sys.stderr)
+        return Result("failed", messages.say("busy", "english"), plan.domain, plan.state, plan.language)
     sources = [{"n": n, "doc": h["source"], "url": h.get("source_url"), "tool": "legacy", "text": h["text"]}
                for n, h in enumerate(r["hits"], 1)]
     return Result("legacy", r["answer"], plan.domain, plan.state, plan.language, sources)
@@ -319,7 +328,9 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
 
     if reply in LANGUAGES:   # the reader's choice wins over the question's language
         plan.language = reply
-    plan.state = plan.state or jurisdictions.normalise(state)
+    # The user's own words, then the state they chose, then the model's reading of the rest.
+    # The model can guess from a scheme's name, and a guess mustn't override a person's choice.
+    plan.state = jurisdictions.named_in(question) or jurisdictions.normalise(state) or plan.state
     place = jurisdictions.name(plan.state) if plan.state else "India"
     needs = plan.needs or [Need("explanation", plan.topic or plan.standalone or question, plan.domain)]
     asked = f"{question} {plan.standalone}"
