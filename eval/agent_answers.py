@@ -14,6 +14,7 @@ Run:  python eval/agent_answers.py --show
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 import time
 from pathlib import Path
@@ -58,8 +59,9 @@ def problems(case: dict, r) -> list[str]:
     found = []
     if case.get("kind") and r.kind != case["kind"]:
         found.append(f"kind {r.kind}, wanted {case['kind']}")
-    found += [f"missing '{m}'" for m in case["must"] if m.lower() not in r.answer.lower()]
-    found += [f"contains '{n}'" for n in case["never"] if n.lower() in r.answer.lower()]
+    text = re.sub(r"\s+", " ", r.answer.lower())  # models use unusual spaces: "Kharif 2024"
+    found += [f"missing '{m}'" for m in case["must"] if m.lower() not in text]
+    found += [f"contains '{n}'" for n in case["never"] if n.lower() in text]
     if case.get("calls") and r.trace.get("calls") != case["calls"]:
         found.append(f"used {r.trace.get('calls')} LLM calls, wanted {case['calls']}")
     return found
