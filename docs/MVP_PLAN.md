@@ -34,7 +34,7 @@ A working API key without the free tier's limits is needed to measure Phases 1 t
 ### Phase 0: Foundation (done, 4 November 2026)
 
 - **Repo:** one clone, `C:\Users\nkk77\Desktop\VETRA`. No nested copies. Work is on `feat/modular-agent-core`, ahead of `main`, and not pushed yet. `main` matches GitHub.
-- **Docker:** the image builds and answered live questions in a container. It was built before Phase 1, so rebuild it to include navigation.
+- **Docker:** the image builds and answered live questions in a container. It was last built before Phase 1, so it doesn't include navigation or depth. A rebuild on 4 November couldn't run because Docker Desktop wasn't responding, so `docker build -t vetra .` still needs checking.
 - **Tests:** `python -m pytest tests -q`.
 - **Older folder:** `Desktop\ap-rti-assistant` is an older copy, and its container uses port 8765, the same port as `docker compose up` here. Stop that container first.
 
