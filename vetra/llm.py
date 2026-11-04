@@ -1,0 +1,150 @@
+"""
+Language-model access. Nothing outside this file knows which vendor is in use.
+
+Any OpenAI-compatible service works by setting three things in .env:
+
+    LLM_BASE_URL=https://api.example.com/v1
+    LLM_API_KEY=...
+    LLM_MODEL_PLAN=model-a,model-b       # tried in order when one is rate-limited
+    LLM_MODEL_COMPOSE=model-c,model-d
+
+With none of them set it uses Groq and GROQ_API_KEY, as rag/ does.
+
+A vendor that isn't OpenAI-compatible needs one class with this file's complete() method.
+"""
+
+from __future__ import annotations
+
+import os
+import time
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Protocol
+
+GROQ_URL = "https://api.groq.com/openai/v1"
+DEFAULT_ROLES = {
+    "plan": ("openai/gpt-oss-20b", "qwen/qwen3.8-27b"),
+    "compose": ("openai/gpt-oss-120b", "openai/gpt-oss-20b"),
+}
+REST_SECONDS = 600  # a model at its limit isn't tried again for this long
+MAX_CALLS = 6       # for one question: the limit the proposal holds to
+
+
+class LLMError(RuntimeError):
+    """The call failed and retrying the same request won't help."""
+
+
+class RateLimited(LLMError):
+    """This model is at its limit; another model may not be."""
+
+
+class RequestTooLarge(LLMError):
+    """Too much text for this model; send less."""
+
+
+class BadOutput(LLMError):
+    """The model's reply failed the vendor's own format check; asking again may work."""
+
+
+class BudgetExceeded(LLMError):
+    """This question has used all its LLM calls."""
+
+
+@dataclass
+class Reply:
+    text: str
+    model: str
+    tokens: int = 0
+
+
+class Provider(Protocol):
+    def complete(self, model: str, messages: list[dict], json_mode: bool = False) -> Reply: ...
+
+
+class OpenAICompatible:
+    def __init__(self, base_url: str, key: str, timeout: float = 120):
+        self.base_url, self.key, self.timeout = base_url.rstrip("/"), key, timeout
+
+    def complete(self, model: str, messages: list[dict], json_mode: bool = False) -> Reply:
+        import requests
+
+        body: dict = {"model": model, "messages": messages, "temperature": 0.1}
+        if json_mode:
+            body["response_format"] = {"type": "json_object"}
+        try:
+            r = requests.post(f"{self.base_url}/chat/completions", json=body, timeout=self.timeout,
+                              headers={"Authorization": f"Bearer {self.key}"})
+        except requests.RequestException as exc:
+            raise LLMError(f"{model}: {type(exc).__name__}") from exc
+        if r.status_code == 429:
+            raise RateLimited(model)
+        if r.status_code == 413:
+            raise RequestTooLarge(model)
+        if r.status_code == 400 and "json_validate_failed" in r.text:
+            raise BadOutput(model)
+        if not r.ok:
+            raise LLMError(f"{model}: HTTP {r.status_code}: {r.text[:200]}")
+        data = r.json()
+        text = (data["choices"][0]["message"].get("content") or "").strip()
+        return Reply(text, model, (data.get("usage") or {}).get("total_tokens", 0))
+
+
+def from_env() -> "Models":
+    """The configured models. Reads .env at the project root."""
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+    key = os.environ.get("LLM_API_KEY") or os.environ.get("GROQ_API_KEY")
+    if not key:
+        raise LLMError("No API key: set LLM_API_KEY (or GROQ_API_KEY) in .env")
+    roles = dict(DEFAULT_ROLES)
+    for role in roles:
+        chosen = os.environ.get(f"LLM_MODEL_{role.upper()}")
+        if chosen:
+            roles[role] = tuple(m.strip() for m in chosen.split(",") if m.strip())
+    return Models(OpenAICompatible(os.environ.get("LLM_BASE_URL") or GROQ_URL, key), roles)
+
+
+@dataclass
+class Models:
+    """Which models do which job, and which of them are resting after a rate limit."""
+    provider: Provider
+    roles: dict[str, tuple[str, ...]]
+    resting: dict[str, float] = field(default_factory=dict)
+
+    def call(self, role: str, messages: list[dict], meter: "Meter", json_mode: bool = False) -> Reply:
+        models = self.roles[role]
+        ready = [m for m in models if self.resting.get(m, 0) <= time.time()] or list(models)
+        last: LLMError | None = None
+        for model in ready:
+            meter.spend()
+            try:
+                reply = self.provider.complete(model, messages, json_mode)
+            except RateLimited as exc:
+                self.resting[model] = time.time() + REST_SECONDS
+                last = exc
+                continue
+            except BadOutput as exc:
+                last = exc
+                continue
+            meter.record(role, reply)
+            return reply
+        raise last or LLMError(f"no model for {role}")
+
+
+@dataclass
+class Meter:
+    """LLM calls and tokens for one question. Refuses to go over the limit."""
+    limit: int = MAX_CALLS
+    calls: int = 0
+    tokens: int = 0
+    steps: list[dict] = field(default_factory=list)
+
+    def spend(self) -> None:
+        if self.calls >= self.limit:
+            raise BudgetExceeded(f"{self.limit} LLM calls used")
+        self.calls += 1
+
+    def record(self, role: str, reply: Reply) -> None:
+        self.tokens += reply.tokens
+        self.steps.append({"role": role, "model": reply.model, "tokens": reply.tokens})
