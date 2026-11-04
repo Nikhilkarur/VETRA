@@ -31,14 +31,16 @@ RUN useradd --create-home --uid 1000 app \
 USER app
 WORKDIR /app
 
-# The two local models, downloaded once at build time:
-#   embeddings  -- the "model" field of ingest/chunks*.json (the indexes are built with it)
-#   reranker    -- agriculture's "rerank" model in rag/domains.py
-# If either changes there, change it here; the offline checks below fail the build otherwise.
+# The local models, downloaded once at build time:
+#   embeddings        -- the "model" field of ingest/chunks*.json (the RTI indexes are built with it)
+#   agent embeddings  -- the default in vetra/text_index.py (the all-India index is built with it)
+#   reranker          -- agriculture's "rerank" model in rag/domains.py
+# If any changes there, change it here; the offline checks below fail the build otherwise.
 ARG EMBED_MODEL=BAAI/bge-small-en-v1.5
+ARG AGENT_EMBED_MODEL=intfloat/multilingual-e5-base
 ARG RERANK_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
 RUN python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; \
-SentenceTransformer('${EMBED_MODEL}'); CrossEncoder('${RERANK_MODEL}')"
+SentenceTransformer('${EMBED_MODEL}'); SentenceTransformer('${AGENT_EMBED_MODEL}'); CrossEncoder('${RERANK_MODEL}')"
 ENV HF_HUB_OFFLINE=1
 
 # Both search indexes (Chroma, ~50 MB), built from the committed chunk files. Only
@@ -52,6 +54,8 @@ COPY --chown=app:app rag/ rag/
 COPY --chown=app:app eval/ eval/
 
 # The agent, and its all-India search index. rag/ supplies the shared search parts.
+# This step took about 40 minutes on the development laptop's CPU, because the multilingual
+# model is much slower than the RTI one. Docker reuses it until vetra/ or knowledge/ changes.
 COPY --chown=app:app vetra/ vetra/
 COPY --chown=app:app knowledge/ knowledge/
 RUN python -m vetra.text_index build agriculture && python -m vetra.text_index build finance

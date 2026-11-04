@@ -15,7 +15,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
+import unicodedata
 import sys
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
@@ -24,8 +28,34 @@ from .jurisdictions import CENTRAL
 
 ROOT = Path(__file__).resolve().parent.parent
 RAG = str(ROOT / "rag")
-CHROMA_DIR = ROOT / "data" / "chroma"
+CHROMA_DIR = Path(os.environ.get("VETRA_INDEX") or ROOT / "data" / "chroma")
 MAX_AMENDMENTS = 4  # keeps the prompt within small models' limits
+# Words in Latin letters or in an Indian or Perso-Arabic script, whole, with their vowel signs.
+# The two Devanagari danda marks end a sentence, so they aren't part of a word.
+_WORD = re.compile(r"[a-z0-9]+|[\u0600-\u06ff\u0900-\u0963\u0750-\u077f\u0966-\u0dff\u1c50-\u1c7f\uaae0-\uaaff\uabc0-\uabff]+")
+# The same word can be typed differently: joiners that don't change it, and any script's digits.
+_SAME_WORD = {0x200c: None, 0x200d: None, 0xad: None}
+_SAME_WORD.update({0xd7a: "\u0d23\u0d4d", 0xd7b: "\u0d28\u0d4d", 0xd7c: "\u0d30\u0d4d", 0xd7d: "\u0d32\u0d4d",  # Malayalam chillu letters
+                   0xd7e: "\u0d33\u0d4d", 0xd7f: "\u0d15\u0d4d"})
+_SAME_WORD.update({ord(c): str(unicodedata.digit(c)) for start in (0x660, 0x6f0, *range(0x966, 0xd67, 0x80), 0x1c50, 0xabf0)
+                   for c in map(chr, range(start, start + 10)) if unicodedata.category(c) == "Nd"})
+
+
+@dataclass(frozen=True)
+class Embedding:
+    name: str
+    tag: str = ""             # kept apart in the index, so changing models can't mix their vectors
+    query_prefix: str = ""    # some models were trained to expect these
+    passage_prefix: str = ""
+
+
+EMBEDDINGS = {e.name: e for e in (
+    Embedding("BAAI/bge-small-en-v1.5", query_prefix="Represent this sentence for searching relevant passages: "),
+    Embedding("BAAI/bge-m3", tag="bge-m3"),
+    Embedding("intfloat/multilingual-e5-base", tag="e5-base", query_prefix="query: ", passage_prefix="passage: "),
+    Embedding("intfloat/multilingual-e5-large", tag="e5-large", query_prefix="query: ", passage_prefix="passage: "),
+)}
+EMBEDDING = EMBEDDINGS[os.environ.get("VETRA_EMBEDDING") or "intfloat/multilingual-e5-base"]
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -64,8 +94,8 @@ def chunks_in(domain: str, place: str) -> int:
 def _collection(domain: str):
     import chromadb
 
-    return chromadb.PersistentClient(path=str(CHROMA_DIR)).get_or_create_collection(
-        f"vetra_{domain}", metadata={"hnsw:space": "cosine"})
+    name = f"vetra_{domain}_{EMBEDDING.tag}" if EMBEDDING.tag else f"vetra_{domain}"
+    return chromadb.PersistentClient(path=str(CHROMA_DIR)).get_or_create_collection(name, metadata={"hnsw:space": "cosine"})
 
 
 def build(domain: str) -> int:
@@ -74,7 +104,6 @@ def build(domain: str) -> int:
     if not items:
         print(f"{domain}: no chunks yet")
         return 0
-    model_name = "BAAI/bge-small-en-v1.5"
     collection = _collection(domain)
     have = set(collection.get(include=[])["ids"])
     wanted = {i["id"] for i in items}
@@ -84,9 +113,9 @@ def build(domain: str) -> int:
     new = [i for i in items if i["id"] not in have]
     if new:
         titled = DOMAINS[domain].embed_title
-        vectors = _rag()._load_model(model_name).encode(
-            [f"{i['title']}\n{i['text']}" if titled else i["text"] for i in new],
-            batch_size=32, normalize_embeddings=True, show_progress_bar=True).tolist()
+        vectors = _rag()._load_model(EMBEDDING.name).encode(
+            [EMBEDDING.passage_prefix + (f"{i['title']}\n{i['text']}" if titled else i["text"]) for i in new],
+            batch_size=16, normalize_embeddings=True, show_progress_bar=True).tolist()
         for start in range(0, len(new), 256):
             part = new[start:start + 256]
             collection.add(ids=[i["id"] for i in part], documents=[i["text"] for i in part],
@@ -94,6 +123,11 @@ def build(domain: str) -> int:
                            metadatas=[{"jurisdiction": i["jurisdiction"]} for i in part])
     print(f"{domain}: {collection.count()} chunks indexed ({len(new)} new, {len(stale)} removed)")
     return len(new)
+
+
+def words(text: str) -> list[str]:
+    """What keyword search matches on. Without the Indian scripts, a Hindi document has no keywords."""
+    return _WORD.findall(unicodedata.normalize("NFKC", text).translate(_SAME_WORD).lower())
 
 
 def _places(state: str | None) -> tuple[str, ...]:
@@ -104,13 +138,12 @@ def _places(state: str | None) -> tuple[str, ...]:
 def _view(domain: str, places: tuple[str, ...]):
     """The chunks searchable from these places, their keyword index, and id positions."""
     items = [i for i in corpus(domain) if i["jurisdiction"] in places]
-    bm25 = _rag()._BM25([i["text"] for i in items]) if items else None
+    bm25 = _rag()._BM25([i["text"] for i in items], tokenize=words) if items else None
     return items, bm25, {item["id"]: n for n, item in enumerate(items)}
 
 
 def _dense(text: str, domain: str, places: tuple[str, ...], position: dict) -> list[int]:
-    R = _rag()
-    vector = R._load_model("BAAI/bge-small-en-v1.5").encode([R.QUERY_PREFIX + text], normalize_embeddings=True).tolist()
+    vector = _rag()._load_model(EMBEDDING.name).encode([EMBEDDING.query_prefix + text], normalize_embeddings=True).tolist()
     where = {"jurisdiction": {"$in": list(places)}} if len(places) > 1 else {"jurisdiction": places[0]}
     found = _collection(domain).query(query_embeddings=vector, n_results=len(position), where=where, include=[])
     return [position[i] for i in found["ids"][0] if i in position]

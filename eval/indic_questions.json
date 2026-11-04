@@ -1,0 +1,31 @@
+{
+  "_about": "Can search find answers that exist only in documents written in an Indian language? Both documents are in Marathi. Each question is asked in English, as the planner would send it, and in Marathi, as a farmer would. 'any' is what the passage must contain. It uses the documents' own spelling, including letters damaged by the PDF's fonts. Labels were written from the documents before any search ran on them. The Marathi questions were written by Claude and haven't been checked by a Marathi speaker.",
+  "documents": [
+    {"title": "Maharashtra: Government Resolution on revised PMFBY, Kharif 2026 and Rabi 2026-27", "file": "pmfby-gr-2026-27.pdf",
+     "source_url": "https://krishi.maharashtra.gov.in/Site/Upload/GR/PMFBY%20GR%202026-27%20dtd%2003_07_2026.pdf", "doc_type": "go", "department": "Agriculture", "date": "2026-07-03", "in_force": "yes"},
+    {"title": "Maharashtra: Press note on the Ahilyadevi Holkar farmer loan waiver scheme 2026", "file": "mh-loan.pdf",
+     "source_url": "https://sahakarayukta.maharashtra.gov.in/site/upload/documents/Press%20Note%202026.pdf", "doc_type": "explainer", "department": "Cooperation", "date": "2026-07-28", "in_force": "yes"}
+  ],
+  "questions": [
+    {"english": "Is the AgriStack farmer ID compulsory for PMFBY crop insurance in Maharashtra", "marathi": "पीक विमा योजनेत सहभागासाठी शेतकरी ओळखपत्र क्रमांक आवश्यक आहे का", "any": ["AGRISTACK Farmer ID"]},
+    {"english": "digital crop survey requirement for crop insurance compensation", "marathi": "पीक विमा नुकसान भरपाईसाठी डिजिटल पीक सर्वेक्षण बंधनकारक आहे का", "any": ["Digital Crop Survey"]},
+    {"english": "minimum area per application for PMFBY in Maharashtra", "marathi": "पीक विमा अर्जासाठी किमान किती हेक्टर क्षेत्र लागते", "any": ["0\\.10 हेक्टि"]},
+    {"english": "penalty for bogus or fraudulent crop insurance applications, ban from schemes", "marathi": "बोगस पीक विमा घेतल्यास किती वर्षे योजनांचा लाभ मिळणार नाही", "any": ["पाच ििध बंदी"]},
+    {"english": "can tenant or lease farmers enrol in crop insurance, registered lease agreement", "marathi": "भाडेपट्टीने शेती करणारे शेतकरी पीक विमा घेऊ शकतात का", "any": ["भािेकिाि", "भािेपट्टीने"]},
+    {"english": "farmer premium rate for kharif, rabi and cash crops under PMFBY Maharashtra", "marathi": "खरीप आणि रब्बी हंगामासाठी शेतकऱ्यांनी भरायचा पीक विमा हप्ता किती टक्के आहे", "any": ["खिीप हंगामासाठी 2 टक्क"]},
+    {"english": "indemnity level 70 percent for notified crops Kharif 2026", "marathi": "अधिसूचित पिकांसाठी जोखीमस्तर किती टक्के आहे", "any": ["जोरखम्ति 70 टक्क"]},
+    {"english": "how threshold yield is calculated, best five of last seven years", "marathi": "उंबरठा उत्पादन कसे ठरवले जाते", "any": ["मागील 7 ििापैकी"]},
+    {"english": "insurance company liability cap, 80:110 cup and cap model", "marathi": "कप आणि कॅप मॉडेलमध्ये विमा कंपनीचे दायित्व किती आहे", "any": ["हप्ता िक्कमेच्या 110 टक्क"]},
+    {"english": "which crops are notified for kharif and rabi under crop insurance in Maharashtra", "marathi": "खरीप आणि रब्बी हंगामात पीक विम्यासाठी कोणती पिके अधिसूचित आहेत", "any": ["खिीप ज्िािी"]},
+    {"english": "insurance in the name of a dead farmer, proposal cancelled", "marathi": "मृत शेतकऱ्यांच्या नावे विमा काढला तर काय होते", "any": ["मृत शेतकऱयांच्या"]},
+    {"english": "mobile app compulsory for crop cutting experiments", "marathi": "पीक कापणी प्रयोगासाठी कोणते मोबाईल ॲप वापरणे बंधनकारक आहे", "any": ["CCE Agri App"]},
+    {"english": "district level grievance redressal committee for crop insurance", "marathi": "पीक विम्याच्या तक्रारींसाठी जिल्हास्तरीय समिती कोणती आहे", "any": ["तक्राि रनिािर् सरमती"]},
+    {"english": "last date to enrol for PMFBY Kharif 2026 in Maharashtra", "marathi": "खरीप 2026 साठी पीक विमा अर्ज करण्याची शेवटची तारीख कोणती", "any": ["31 जुलै"]},
+    {"english": "how much crop loan is waived under the Ahilyadevi Holkar farmer loan waiver scheme", "marathi": "अहिल्यादेवी होळकर शेतकरी कर्जमुक्ती योजनेत किती कर्जमाफी मिळते", "any": ["रुपये दोन लाख"]},
+    {"english": "which loan period is covered by the Maharashtra farmer loan waiver 2026", "marathi": "कर्जमुक्ती योजनेत कोणत्या कालावधीतील पीक कर्जाचा समावेश आहे", "any": ["01/04/2019 ते 31/03/2025"]},
+    {"english": "incentive for farmers who repay crop loans on time under the loan waiver scheme", "marathi": "नियमित कर्ज परतफेड करणाऱ्या शेतकऱ्यांना किती प्रोत्साहनपर अनुदान मिळते", "any": ["पन्नास हजार"]},
+    {"english": "one time settlement, deadline to deposit the amount above two lakh", "marathi": "दोन लाखांवरील रक्कम बँकेत जमा करण्याची अंतिम मुदत कोणती", "any": ["31 माचण 2027"]},
+    {"english": "haircut concession on non performing loan accounts by banks", "marathi": "अनुत्पादित कर्ज खात्यांना बँकांनी किती सवलत द्यायची आहे", "any": ["Haircut"]},
+    {"english": "how many loan accounts were published for Aadhaar authentication in the loan waiver", "marathi": "आधार प्रमाणीकरणासाठी किती कर्जखात्यांची यादी प्रसिद्ध झाली", "any": ["16\\.96 लाख"]}
+  ]
+}

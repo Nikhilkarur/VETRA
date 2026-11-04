@@ -110,8 +110,9 @@ def _tokens(text: str) -> list[str]:
 class _BM25:
     """Standard Okapi BM25. ~30 lines; not worth a dependency for 500 chunks."""
 
-    def __init__(self, texts: list[str], k1: float = 1.5, b: float = 0.75):
-        docs = [_tokens(t) for t in texts]
+    def __init__(self, texts: list[str], k1: float = 1.5, b: float = 0.75, tokenize=None):
+        self.tokenize = tokenize or _tokens
+        docs = [self.tokenize(t) for t in texts]
         self.k1, self.b = k1, b
         self.lengths = [len(d) for d in docs]
         self.avg = sum(self.lengths) / len(docs)
@@ -129,7 +130,7 @@ class _BM25:
 
     def rank(self, query: str) -> list[int]:
         scores = [0.0] * len(self.tf)
-        for w in _tokens(query):
+        for w in self.tokenize(query):
             idf = self.idf.get(w)
             if idf is None:
                 continue
