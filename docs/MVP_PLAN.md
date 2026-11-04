@@ -32,7 +32,7 @@ A working API key without the free tier's limits is needed to measure Phases 1 t
 ### Phase 0: Foundation (done, 4 November 2026)
 
 - **Repo:** one clone, `C:\Users\nkk77\Desktop\VETRA`. No nested copies. Work is on `feat/modular-agent-core`, ahead of `main`, and not pushed yet. `main` matches GitHub.
-- **Docker:** the image builds and answered a live deadline question in a container.
+- **Docker:** the image builds and answered live questions in a container. It was built before Phase 1, so rebuild it to include navigation.
 - **Tests:** `python -m pytest tests -q`.
 - **Older folder:** `Desktop\ap-rti-assistant` is an older copy, and its container uses port 8765, the same port as `docker compose up` here. Stop that container first.
 
@@ -40,7 +40,7 @@ A working API key without the free tier's limits is needed to measure Phases 1 t
 
 - After the first look, a model judges whether the evidence answers every part of the question. If not, it searches in other words or reads the passages around one it found, for up to 2 rounds. See `vetra/navigate.py` and "Finding its way" in [AGENT.md](AGENT.md).
 - Every path is covered by tests with a fake model.
-- **First live try (4 questions needing searched text):** the judge stopped when it had enough, and on the multi-part PM-KISAN question it read further and named what was still missing. None of these reached a written answer, because the answer model hit Groq's rate limit each time.
+- **First live try (3 questions needing searched text):** the judge stopped when it had enough, and on the multi-part PM-KISAN question it read further and named what was still missing. None of these reached a written answer, because the answer model hit Groq's rate limit each time.
 - **Not known yet:** how much this improves answers. It costs one more LLM call per searched question, so it needs the new API key to measure.
 - **To finish the phase:** a set of questions that take more than one step, run with this step on and off.
 
