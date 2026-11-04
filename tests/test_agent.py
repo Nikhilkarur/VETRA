@@ -9,7 +9,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from vetra import agent, checks, facts, intake, jurisdictions, knowledge, llm, rules, sorter, text_index  # noqa: E402
+from vetra import agent, checks, facts, intake, jurisdictions, knowledge, llm, rules, sorter, text_index, web  # noqa: E402
 from vetra import gaps as gaps_module  # noqa: E402
 from vetra.datatypes import DATA_TYPES  # noqa: E402
 from vetra.domains import DOMAINS  # noqa: E402
@@ -369,7 +369,7 @@ def test_facts_decide_the_rule(kb):
 
 def test_missing_facts_show_every_case_and_ask(kb):
     r, _ = run(kb, plan(needs=NEED_RULE), q="premium rule scheme?")
-    assert r.trace["missing"] == ["crop"] and "tell me your crop" in r.answer
+    assert r.trace["missing"] == ["crop", "income"] and "tell me your crop, income" in r.answer
     assert "(1) crop is commercial" in r.answer and "(2)" in r.answer
 
 
@@ -462,6 +462,30 @@ def test_telugu_notes_are_in_telugu(monkeypatch, tmp_path):
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "IN")])
     r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, language="telugu", needs=[{"type": "procedure", "subject": "x"}]), "తెలుగు [E1].")
     assert "మీది ఏ రాష్ట్రం" in r.answer
+
+
+# ---------------------------------------------------------------- the web page
+
+def test_page_is_the_shared_page_with_a_state_picker():
+    page = web.page_html()
+    assert 'id="reply"' in page and "Karnataka" in page and "{{" not in page and "python -m vetra.web" in page
+
+
+def test_result_reaches_the_page_in_the_shape_it_renders():
+    r = agent.Result("answer", "Closes soon [E1].", "agriculture", "AP", "english",
+                     [{"n": 1, "doc": "G.O.", "url": "u", "text": "fact", "tool": "dates_lookup"}], trace={"steps": []})
+    out = web.to_page(r)
+    assert out["answer"] == "Closes soon [1]." and out["sources"][0]["source"] == "G.O." and out["domain_label"] == "Agriculture"
+
+
+def test_a_declined_question_has_no_label_or_sources():
+    out = web.to_page(agent.Result("decline", "No."))
+    assert out["domain_label"] is None and out["sources"] == []
+
+
+def test_the_readers_language_choice_wins(kb):
+    r, _ = run(kb, plan(), "వివరణ.", reply="telugu")
+    assert r.language == "telugu" and r.trace["calls"] == 2
 
 
 # ---------------------------------------------------------------- adding a state

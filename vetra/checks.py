@@ -146,5 +146,5 @@ def citations(answer: str, evidence: list[Evidence]) -> list[dict]:
     used = sorted({int(x) for x in _CITATION.findall(answer)})
     return [{"n": n, "doc": evidence[n - 1].doc, "url": evidence[n - 1].url, "date": evidence[n - 1].date,
              "status": evidence[n - 1].status, "tool": evidence[n - 1].tool,
-             "reviewed": evidence[n - 1].reviewed}
+             "reviewed": evidence[n - 1].reviewed, "text": evidence[n - 1].fact or evidence[n - 1].text}
             for n in used if 1 <= n <= len(evidence)]
