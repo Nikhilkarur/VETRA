@@ -49,7 +49,7 @@ A deep answer differs in these ways:
 Every sentence is checked, in this order:
 
 1. **Code corrects citations.** If a figure or date is in the evidence but its sentence cites the wrong passage or none, code adds the passage that says it. This costs no LLM call.
-2. **Code finds what can't be true.** A figure or date in no passage, a citation to a passage that doesn't exist, or a wrong "today".
+2. **Code finds what can't be true.** A figure or date in no passage, a citation to a passage that doesn't exist, a wrong "today", a lakh or crore amount that isn't in the evidence, per acre where the evidence says per hectare, or a pointer to "the amount above" when nothing is printed above.
 3. **A second model reads it (deep only).** It sees each statement and only the passages that statement cites, and can only report statement numbers. If it can't run, the answer stands on the code checks, and `trace["verified"]` says so.
 4. **One rewrite.** The writer is told exactly what failed. If the rewrite is worse, the first answer is kept.
 5. **What still fails is cut.** Only the failing sentences come out, and the reader is told some details were left out. If that would remove more than half the answer, the reader gets the exact records or the document names instead.
@@ -75,6 +75,9 @@ A question can be in any of India's 22 scheduled languages or English, in its ow
 - **English and Telugu:** exact facts are printed from templates, so no model touches them.
 - **Other languages:** the model translates the facts. Code throws out any translation that changes a number, and prints the English original beside each fact.
 - **RTI:** English and Telugu only, since `rag/` stays as it is.
+- **Search:** `intfloat/multilingual-e5-base` by default, set in `vetra/text_index.py` and overridable with `VETRA_EMBEDDING`. Each model has its own index, so changing it means rebuilding with `python -m vetra.text_index build agriculture` and `build finance`, about 39 minutes on a laptop CPU. Keyword search treats joiner characters, compatibility forms and every script's digits as the same word.
+
+Earlier turns: the planner sees earlier questions but not earlier answers, because the plan is made before any document is read. ID numbers, PAN and email are masked in every turn.
 
 ## Adding your data
 
@@ -139,7 +142,10 @@ LLM_BASE_URL=https://api.example.com/v1
 LLM_API_KEY=...
 LLM_MODEL_PLAN=small-model,fallback-model
 LLM_MODEL_COMPOSE=large-model,fallback-model
+LLM_REASONING=large-model:none
 ```
+
+`LLM_REASONING` sets a model's hidden thinking, which many providers bill as output. Not every model accepts every value, so test it. See [LLM_PROVIDERS.md](LLM_PROVIDERS.md).
 
 ## Running it
 

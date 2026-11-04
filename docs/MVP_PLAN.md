@@ -12,7 +12,7 @@
 
 RTI stays as it is, on `rag/`. How deep an answer should go for a particular kind of user is decided later.
 
-How the design compares with published work, and what to adopt next, is in [ARCHITECTURE_RESEARCH.md](ARCHITECTURE_RESEARCH.md). In short, the engine's structure holds up, and the biggest gains left are in what the search reads.
+Which LLM provider to use, what it costs and how to pay is in [LLM_PROVIDERS.md](LLM_PROVIDERS.md). How the design compares with published work, and what to adopt next, is in [ARCHITECTURE_RESEARCH.md](ARCHITECTURE_RESEARCH.md). In short, the engine's structure holds up, and the biggest gains left are in what the search reads.
 
 ## Phases
 
@@ -23,18 +23,18 @@ Each phase ends with its tests passing, its documentation updated, and its own c
 | 0 | **Foundation:** one clean repo, a working Docker image, accurate docs | Tests pass, the image answers a question, and the docs match the code | Done |
 | 1 | **Navigation:** the engine judges what it has and goes after what's missing | It can reach an answer that takes more than one step, within a fixed limit, and stops when it has enough | Built. Measuring it needs a new API key |
 | 2 | **Depth:** research-style answers | Answers cover conditions, exceptions, changes over time and disagreements between sources, and short questions still get short answers | Built. Search measured; answer quality needs a new API key |
-| 3 | **Languages:** all 22 scheduled languages and English | Live checks per language, and documents written in Indian languages can be searched, using a multilingual embedding model that beats today's scores | Code built. Hindi and Tamil tried live on exact facts |
+| 3 | **Languages:** all 22 scheduled languages and English | Live checks per language, and documents written in Indian languages can be searched | Built and measured. Search model switched to E5-base. Documents in Indian languages still need OCR and a person's check |
 | 4 | **Data:** agriculture and finance for every state | Each state has its main schemes, its key deadlines and rates are exact records, PDFs are read properly including tables and scans, and chunks carry context from their document | Started |
 | 5 | **Quality and release:** measured on real questions, ready to use | Question sets per topic, a final LLM provider, a safety check, and a person's review of the rules | Not started |
 
-A working API key without the free tier's limits is needed to measure Phases 1 to 3 properly: on the current key, live test runs keep hitting Groq's rate limit.
+Live tests now run on Gemini's free tier. Its models are often busy, so writing often falls back to a cheaper model.
 
 ## Where things stand
 
 ### Phase 0: Foundation (done, 4 November 2026)
 
 - **Repo:** one clone, `C:\Users\nkk77\Desktop\VETRA`. No nested copies. Work is on `feat/modular-agent-core`, ahead of `main`, and not pushed yet. `main` matches GitHub.
-- **Docker:** the image builds and answered live questions in a container. It was last built before Phase 1, so it doesn't include navigation or depth. A rebuild on 4 November couldn't run because Docker Desktop wasn't responding, so `docker build -t vetra .` still needs checking.
+- **Docker:** the image builds and answered live questions in a container. Rebuilt on 4 November with Phases 0 to 2 and the Phase 3 work so far, and it runs healthy at http://localhost:8765. Docker Desktop stopped opening that day because Windows wouldn't remove leftover socket files: see "If Docker won't open" in the knowledge base's Run it tab.
 - **Tests:** `python -m pytest tests -q`.
 - **Older folder:** `Desktop\ap-rti-assistant` is an older copy, and its container uses port 8765, the same port as `docker compose up` here. Stop that container first.
 
@@ -81,15 +81,45 @@ After these fixes, the same PM-KISAN question gave a clean, correct answer at th
 2. `python eval/agent_answers.py --show`, then read the deep answers.
 3. Score about 20 real questions with a judge: factual accuracy, citation accuracy, completeness and source quality.
 
-### Phase 3: Languages (code built)
+### Phase 3: Languages (built and measured)
 
 - Questions can come in any of the 22 scheduled languages or English, in the language's own script or typed in English letters.
 - English and Telugu facts come from templates. For other languages the model translates them, code rejects any translation that changes a number, and the English original is printed beside it.
 - **Known limits:**
-  - The search model reads English, so documents written in Indian languages aren't found reliably.
+  - Search now uses E5-base, which reads Indian languages, but still found only 12 of 20 Marathi test questions. Rebuilding the index takes about 39 minutes on this laptop, and the Docker build has to do it too.
   - RTI replies in English or Telugu only.
   - Translations can get terms wrong, and only numbers are checked by code. In a live test, "actuarial rate" came out in Hindi as a word meaning "enacted rate". That's why the English is printed beside each fact, and a speaker of each language should check before release.
   - Santali's Ol Chiki script needs a font that many phones lack.
+
+**Measured on 5 November 2026 (Gemini, E5-base search):**
+
+| Test | Result | How far to trust it |
+|---|---|---|
+| Planner: language, in 22 languages and English | 31/32, only Dogri missed | Prompt hints overlap some test words |
+| Planner: topic, state, needs | 32/33, 30/33, 33/33 | Needs are scored loosely |
+| Planner: depth level | 26/27 | Tuned on these questions |
+| 16 real answers, known cases | 16/16 pass | Text guards only, so answers were also read by hand. Writing fell back to Gemini 3.5 Flash-Lite in most of the runs, because 3.8 timed out or was refused |
+| Search, E5-base | Marathi 12/20, AP 82/93, deep parts 54/59, about 5s a deep question | bge-small scored 9/20, 80/93, 55/59, 3.9s. These gaps are too small to prove anything |
+| Search with the reranker off | AP 75/93, Marathi 12/20 | Kept on |
+| Second reader, 16 planted statements in English, Hindi and Telugu | 9/9 false caught, 0/7 false alarms, with or without the new rules | Too easy to show a difference, so the new rules are unproven |
+
+**Head-to-head, 32 questions, read by hand:**
+
+| Group | VETRA | Gemini from memory | Claude Haiku with web search |
+|---|---|---|---|
+| 22 questions VETRA holds documents for | **21 right, 1 "not found", 0 wrong** | 10 right, 9 "can't say", 3 wrong | 13 right (2 hedged), 9 "couldn't confirm", 0 wrong |
+| 4 questions on states it doesn't hold | 0 answered, 4 honest "not found" | **4 right** | **4 right** |
+| 3 real gaps | 3 admitted | 2 admitted, 1 unchecked figure stated | 2 admitted, 1 unchecked figure stated with a warning |
+| 3 invented schemes | 3 admitted | 3 admitted | 3 admitted |
+| Tokens a question | About 5,900 | About 200 | About 3,600 |
+
+- **Don't quote 21/22 as a score.** On its first run VETRA got 17 right, 1 "not found" and 4 wrong. Reading those answers found real bugs, which were fixed and re-run on the same questions, so expect lower on new ones.
+- **Bugs this found and fixed:** a question about Kharif 2026 got Rabi dates; a question about another scheme got the crop insurance premium rule printed as its answer; a timeout said "busy" instead of trying the next model; and answers pointed to "the amount stated above" when nothing was printed above.
+- **What it shows:** VETRA wins where it holds the documents, especially exact dates and orders that a model can't know. A model with web search wins on states VETRA doesn't hold yet, so coverage is the biggest thing missing.
+- **West Bengal's expected answer was changed** from ₹5,000 to ₹10,000 per acre after checking: press reports say it was doubled, while official documents found still show ₹5,000, so the current order is unconfirmed.
+- **Gemini with Google Search couldn't be tested:** the free tier refused it, so Claude Haiku filled that arm.
+
+**What to do next, ranked with evidence:** [the research report](../reports/VETRA%20engine%20techniques%202026.md). The first three are a hand-read test of 150 to 200 questions, start and end dates on rules, and reading figures from scans reliably.
 
 ### Phase 4: Data (started)
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AP RTI Assistant — Knowledge Base</title>
+<title>VETRA: Knowledge Base</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&display=swap">
@@ -505,37 +505,648 @@ header.hero { padding: 38px 0 22px; }
 #tab-agent ol.plain { margin: 10px 0 0; padding-left: 22px; color: var(--ink-2); }
 #tab-agent ol.plain li { margin: 6px 0; }
 #tab-agent .note { border-left: 3px solid var(--llm); padding: 2px 0 2px 14px; margin: 16px 0; color: var(--ink-2); max-width: 86ch; }
+.ver-switch { display: flex; gap: 8px; padding-top: 10px; padding-bottom: 8px; }
+nav.tabs .ver-switch button { flex: 1 1 0; min-width: 0; text-align: left; padding: 8px 12px; border: 1px solid var(--hair-2); border-radius: 8px; background: var(--surface); color: var(--ink-2); cursor: pointer; }
+nav.tabs .ver-switch b { display: block; font: 600 14px/1.3 var(--f-body); color: var(--ink); }
+nav.tabs .ver-switch span { display: block; font: 400 12px/1.3 var(--f-body); color: var(--muted); margin-top: 2px; }
+nav.tabs .ver-switch button[data-ver="now"][aria-pressed="true"] { border-color: var(--llm); box-shadow: inset 0 0 0 1px var(--llm); background: color-mix(in srgb, var(--llm) 8%, var(--surface)); }
+nav.tabs .ver-switch button[data-ver="old"][aria-pressed="true"] { border-color: var(--warn); box-shadow: inset 0 0 0 1px var(--warn); background: color-mix(in srgb, var(--warn) 12%, var(--surface)); }
+body[data-ver="old"] nav.tabs button[role="tab"][aria-selected="true"] { border-bottom-color: var(--warn); }
+.v1-note { margin: 18px auto 0; max-width: 1180px; padding: 12px 16px; border: 1px solid var(--warn); border-left-width: 5px; border-radius: 8px;
+  background: color-mix(in srgb, var(--warn) 10%, var(--surface)); color: var(--ink); font-size: 14px; }
+#tab-architecture .v1-note { width: min(1180px, calc(100% - 32px)); }
+.ar-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.ar-legend .node { padding: 4px 10px; flex: none; }
+.ar-lane { background: var(--surface-2); border: 1px solid var(--hair); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.ar-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin-top: 10px; }
+.ar-row > i { align-self: center; color: var(--muted); font-style: normal; flex: none; }
+.ar-row > i::before { content: "\2192"; }
+.ar-branch { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 0 4px; font-size: 13px; color: var(--ink-2); }
+.node { flex: 1 1 150px; min-width: 0; font-size: 12.5px; line-height: 1.35; color: var(--ink-2); background: var(--surface); border: 1px solid var(--hair-2); border-radius: 7px; padding: 8px 10px; }
+.node b { display: block; font-size: 13px; color: var(--ink); margin-bottom: 2px; }
+.node.code { border-top: 3px solid var(--search); }
+.node.llm { border-top: 3px solid var(--llm); background: color-mix(in srgb, var(--llm) 8%, var(--surface)); }
+.node.data { border-top: 3px solid var(--ingest); }
+.node.later { border: 1px dashed var(--hair-2); background: transparent; color: var(--muted); }
+#tab-arch td code, #tab-run td code { white-space: normal; overflow-wrap: anywhere; }
+#tab-plan .big { font: 600 21px/1.25 var(--f-display); color: var(--ink); margin: 6px 0; }
+#tab-plan .pl-flow { list-style: none; counter-reset: pl; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+#tab-plan .pl-flow li { counter-increment: pl; background: var(--surface); border: 1px solid var(--hair); border-left: 4px solid var(--search); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+#tab-plan .pl-flow li.llm { border-left-color: var(--llm); background: color-mix(in srgb, var(--llm) 7%, var(--surface)); }
+#tab-plan .pl-flow b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 4px; }
+#tab-plan .pl-flow b::before { content: counter(pl) ". "; color: var(--muted); font-family: var(--f-mono); font-weight: 500; }
+#tab-plan .pl-flow span { display: block; font-size: 13.5px; color: var(--ink-2); }
+#tab-plan .wrap > section:last-child { border-bottom: 0; }
 </style>
 </head>
 <body>
 
 <header class="hero">
   <div class="wrap">
-    <p class="label">Knowledge base · version 1 · updated 14 October 2026</p>
-    <h1>AP RTI Assistant <span class="new-badge">version 1 · RTI + agriculture, English + Telugu</span></h1>
-    <p class="sub">An assistant that answers ordinary people's questions about two areas of the Andhra Pradesh
-       government: the <strong>Right to Information Act</strong>, and <strong>farm schemes, subsidies, crop insurance
-       and agriculture rules</strong>. It uses only documents the government publishes, cites every source, and
-       answers in English or Telugu.</p>
-    <p class="meta">First written 29 Sep 2026 · updated 14 Oct 2026 for version 1 (git tag <code>v1.0</code>): every feature retested, the measurements re-run, the Docker image rebuilt · every figure is
-       measured; sources: <code>context.md</code>, <code>docs/RETRIEVAL_EXPERIMENTS.md</code>, <code>README.md</code></p>
+    <p class="label">Knowledge base · updated 4 November 2026</p>
+    <h1>VETRA <span class="new-badge">MVP in progress · agriculture and finance, every state</span></h1>
+    <p class="sub">An assistant that answers agriculture and finance questions for every Indian state, in depth, from official
+       documents, with every statement traced to its source.</p>
+    <p class="meta">Two versions, kept apart. Use the switch below: <strong>Current</strong> is VETRA as it's being built, and <strong>Old</strong> is the record of
+       the earlier Andhra Pradesh assistant (git tag <code>v1.0</code>, 14 October 2026), which is where words like HyDE and the router come from.</p>
   </div>
 </header>
 
-<nav class="tabs" aria-label="Sections"><ul class="wrap" role="tablist">
-  <li><button type="button" role="tab" id="tabbtn-architecture" data-tab="architecture" aria-controls="tab-architecture" aria-selected="true" class="main">Architecture</button></li>
+<nav class="tabs" aria-label="Sections">
+<div class="wrap ver-switch" role="group" aria-label="Which version">
+  <button type="button" data-ver="now" aria-pressed="true"><b>Current: VETRA</b><span>What we're building now</span></button>
+  <button type="button" data-ver="old" aria-pressed="false"><b>Old: Version 1</b><span>The earlier AP assistant, to 14 October. RTI still runs on it</span></button>
+</div>
+<ul class="wrap" role="tablist">
+  <li><button type="button" role="tab" id="tabbtn-plan" data-tab="plan" aria-controls="tab-plan" aria-selected="true" class="main">Current plan</button></li>
+  <li><button type="button" role="tab" id="tabbtn-arch" data-tab="arch" aria-controls="tab-arch" aria-selected="false" class="main">Architecture</button></li>
+  <li><button type="button" role="tab" id="tabbtn-run" data-tab="run" aria-controls="tab-run" aria-selected="false" class="main">Run it</button></li>
+  <li><button type="button" role="tab" id="tabbtn-architecture" data-tab="architecture" aria-controls="tab-architecture" aria-selected="false">Architecture</button></li>
   <li><button type="button" role="tab" id="tabbtn-overview" data-tab="overview" aria-controls="tab-overview" aria-selected="false">Overview</button></li>
-  <li><button type="button" role="tab" id="tabbtn-pipeline" data-tab="pipeline" aria-controls="tab-pipeline" aria-selected="false">How a question is answered</button></li>
-  <li><button type="button" role="tab" id="tabbtn-data" data-tab="data" aria-controls="tab-data" aria-selected="false">Documents and data</button></li>
-  <li><button type="button" role="tab" id="tabbtn-results" data-tab="results" aria-controls="tab-results" aria-selected="false">Results and decisions</button></li>
+  <li><button type="button" role="tab" id="tabbtn-pipeline" data-tab="pipeline" aria-controls="tab-pipeline" aria-selected="false">How a question was answered</button></li>
+  <li><button type="button" role="tab" id="tabbtn-data" data-tab="data" aria-controls="tab-data" aria-selected="false">Documents</button></li>
+  <li><button type="button" role="tab" id="tabbtn-results" data-tab="results" aria-controls="tab-results" aria-selected="false">Results</button></li>
   <li><button type="button" role="tab" id="tabbtn-history" data-tab="history" aria-controls="tab-history" aria-selected="false">History</button></li>
   <li><button type="button" role="tab" id="tabbtn-reference" data-tab="reference" aria-controls="tab-reference" aria-selected="false">Run it and reference</button></li>
-  <li><button type="button" role="tab" id="tabbtn-agent" data-tab="agent" aria-controls="tab-agent" aria-selected="false" class="main">Proposed agent</button></li>
+  <li><button type="button" role="tab" id="tabbtn-agent" data-tab="agent" aria-controls="tab-agent" aria-selected="false">Original proposal</button></li>
 </ul></nav>
 
 <main class="wrap">
 
-<div class="tabpanel wide" id="tab-architecture" role="tabpanel" aria-labelledby="tabbtn-architecture">
+<div class="tabpanel wide" id="tab-plan" role="tabpanel" aria-labelledby="tabbtn-plan">
+<div class="wrap">
+<div class="subnav"><a href="#pl-now">Where we are</a><a href="#pl-phases">Phases</a><a href="#pl-engine">How the engine works</a><a href="#pl-depth">Depth</a><a href="#pl-checks">Checks</a><a href="#pl-results">Measured results</a><a href="#pl-real">Real answers</a><a href="#pl-phase3">Phase 3 now</a><a href="#pl-next">What's next</a><a href="#pl-research">Research</a><a href="#pl-llm">LLM and cost</a><a href="#pl-data">Data</a><a href="#pl-done">Everything done</a><a href="#pl-parts">Other parts</a><a href="#pl-you">Needed from you</a></div>
+
+<section id="pl-now">
+  <div class="sec-head">
+    <p class="label">Updated 5 November 2026 · branch feat/modular-agent-core · not pushed yet</p>
+    <h2>VETRA: where we are</h2>
+    <p><strong>What we're building:</strong> an assistant for agriculture and finance questions, for every Indian state. Answers are deep and factual, closer to research than a chatbot reply, with every statement traced to an official document.</p>
+  </div>
+  <p class="small" style="margin-bottom:14px">The diagram of the whole system is in the <a href="#ar-map">Architecture</a> tab.</p>
+  <div class="grid3">
+    <div class="card"><p class="label">Built and tested</p><p class="big">Phases 0 to 3</p><p class="small muted">Foundation, navigation, depth and languages, measured on real answers read by hand.</p></div>
+    <div class="card"><p class="label">Next</p><p class="big">Test, dates, scans</p><p class="small muted">A bigger hand-read test, start and end dates on rules, and reading figures from scans reliably.</p></div>
+    <div class="card"><p class="label">Biggest gap</p><p class="big">Coverage</p><p class="small muted">Only Andhra Pradesh is well covered. A model with web search beats VETRA on states it doesn't hold yet.</p></div>
+  </div>
+  <h3>The three parts of the system</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Part</th><th>What it does</th><th>In the MVP?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Agentic engine</strong></td><td>Works out what a question needs, finds its way to that information, and answers</td><td><span class="tag" style="--c:var(--good)">Yes: this is the MVP</span></td></tr>
+      <tr><td><strong>Data engineering</strong></td><td>Collects, verifies and sorts documents automatically</td><td><span class="tag" style="--c:var(--muted)">No</span> Documents are added by hand with <code>vetra.intake</code></td></tr>
+      <tr><td><strong>Auto-update</strong></td><td>Finds missing or new data on the internet and adds it</td><td><span class="tag" style="--c:var(--muted)">No</span> Gaps are logged, so it can plug in later</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px">RTI stays as it is, on the old pipeline. How deep an answer should go for a particular kind of user is decided later.</p>
+</section>
+
+<section id="pl-phases">
+  <div class="sec-head">
+    <h2>The phases</h2>
+    <p>Each phase ends with its tests passing, its documentation updated, and its own commits.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Phase</th><th>Done when</th><th>State</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0</td><td><strong>Foundation</strong><br>One clean repo, Docker, accurate docs</td><td>Tests pass, the image answers a question, and the docs match the code</td><td><span class="tag" style="--c:var(--good)">Done</span><br><span class="small">Docker rebuilt on 4 November with Phases 0 to 2</span></td></tr>
+      <tr><td class="num">1</td><td><strong>Navigation</strong><br>The engine judges what it has and goes after what's missing</td><td>It can reach an answer that takes more than one step, within a fixed limit, and stops when it has enough</td><td><span class="tag" style="--c:var(--search)">Built</span><br><span class="small">Benefit not yet measured: needs an API key</span></td></tr>
+      <tr><td class="num">2</td><td><strong>Depth</strong><br>Research-style answers</td><td>Answers cover conditions, exceptions, changes over time and disagreements between sources, and short questions still get short answers</td><td><span class="tag" style="--c:var(--search)">Built</span><br><span class="small">Search measured. Answer quality needs an API key</span></td></tr>
+      <tr><td class="num">3</td><td><strong>Languages</strong><br>All 22 scheduled languages and English</td><td>Live checks per language, and documents in Indian languages can be searched, using a model that beats today's scores</td><td><span class="tag" style="--c:var(--warn)">In progress</span></td></tr>
+      <tr><td class="num">4</td><td><strong>Data</strong><br>Agriculture and finance for every state</td><td>Each state has its main schemes, key deadlines and rates are exact records, PDFs are read properly including tables and scans, and chunks carry context from their document</td><td><span class="tag" style="--c:var(--warn)">Started</span></td></tr>
+      <tr><td class="num">5</td><td><strong>Quality and release</strong><br>Measured on real questions, ready to use</td><td>Question sets per topic, a final LLM provider, a safety check, and a person's review of the rules</td><td><span class="tag" style="--c:var(--muted)">Not started</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="pl-engine">
+  <div class="sec-head">
+    <h2>How the engine answers a question now</h2>
+    <p>One loop with fixed limits. Code does anything that can be decided exactly, and the model only plans, judges and explains. Purple steps call an LLM.</p>
+  </div>
+  <ol class="pl-flow">
+    <li><b>Guard</b><span>Hides long ID-like numbers and limits the length.</span></li>
+    <li class="llm"><b>Plan</b><span>From the question alone: topic, state, language, how deep to go, and which types of data each part needs. No document has been read yet, so no document can steer it.</span></li>
+    <li><b>Settle the language</b><span>Telugu letters can only be Telugu, so a planner mistake there doesn't matter.</span></li>
+    <li><b>Look</b><span>Exact stores first (dates, rules, numbers, contacts, forms, amendment links), then text. State plus central only. Deep answers search each part on its own.</span></li>
+    <li><b>Keep what applies</b><span>Past seasons' rules are cut, unless they're being read for how a rule changed.</span></li>
+    <li class="llm"><b>Go further</b><span>A model judges whether every part is covered. If not, it searches again, reads around a passage, or looks inside a document. Every move only reads, and code fixes the state and topic.</span></li>
+    <li><b>Record gaps</b><span>What's missing goes on the to-do list: <code>python -m vetra.gaps</code>. The future web collector plugs in here.</span></li>
+    <li class="llm"><b>Write</b><span>Explains what was found. It never sees exact figures, because code prints those. If exact records answer everything in a short answer, this step is skipped.</span></li>
+    <li><b>Check</b><span>Every sentence, by code. Deep answers also go to a second model (purple). See "Checks" below.</span></li>
+    <li><b>Assemble</b><span>Exact facts as stored, then the explanation, then what couldn't be found, with sources.</span></li>
+  </ol>
+</section>
+
+<section id="pl-depth">
+  <div class="sec-head">
+    <h2>Three levels of depth</h2>
+    <p>The planner picks from the question. If it found many parts, code sends it deep anyway. Everything that differs is one table in <code>vetra/depth.py</code>, so a user preference can plug in later.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Level</th><th>Example</th><th>Search</th><th>Looks further</th><th>Second reader</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Quick</strong></td><td>"last date to insure my cashew"</td><td>One search</td><td>1 round</td><td>No</td><td>One or two sentences, or the exact records alone</td></tr>
+      <tr><td><strong>Standard</strong></td><td>"how do I get a kisan credit card"</td><td>One search</td><td>2 rounds</td><td>No</td><td>The answer, then steps, conditions and exceptions</td></tr>
+      <tr><td><strong>Deep</strong></td><td>"compare PMFBY and RWBCIS"</td><td>Each part alone, plus the whole question</td><td>3 rounds</td><td>Yes</td><td>A research brief: what changed, where sources differ, what the documents don't settle</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="pl-checks">
+  <div class="sec-head">
+    <h2>How every answer is checked</h2>
+    <p>Longer answers have more room to go wrong, so checks work sentence by sentence and cut only what fails.</p>
+  </div>
+  <ol class="pl-flow pl-short">
+    <li><b>Code corrects citations</b><span>A right figure with a wrong or missing citation gets the passage that says it. No LLM call.</span></li>
+    <li><b>Code rejects what can't be true</b><span>A figure or date in no passage, a citation that doesn't exist, working notes, or talk of "the evidence".</span></li>
+    <li class="llm"><b>Second reader (deep only)</b><span>Sees each statement and only the passages it cites. It can only report statement numbers.</span></li>
+    <li class="llm"><b>One rewrite</b><span>The writer is told exactly what failed. A worse rewrite is thrown away.</span></li>
+    <li><b>Cut what still fails</b><span>Only those sentences, and the reader is told. If that removes over half, the reader gets the exact records or the document names instead.</span></li>
+  </ol>
+  <p class="small muted" style="margin-top:12px"><strong>Not caught by code:</strong> a sentence that gets a rule wrong in words. The second reader covers that for deep answers only, and how well it does this is not yet measured.</p>
+</section>
+
+<section id="pl-results">
+  <div class="sec-head">
+    <h2>What's been measured</h2>
+    <p>Each test's expected answers were written before it ran. Some settings were then tuned on the same questions, marked below, so expect lower numbers on new ones.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Check</th><th class="num">Result</th><th>How far to trust it</th></tr></thead>
+    <tbody>
+      <tr><td>Parts of a deep question reached by search</td><td class="num">55 / 59</td><td>Up from 40 with one search. Tuned on these questions, split by hand</td></tr>
+      <tr><td>AP agriculture search, older question sets</td><td class="num">80 / 93</td><td>Unchanged after every change so far</td></tr>
+      <tr><td>Off-topic check: good results wrongly rejected</td><td class="num">0 / 84</td><td>Tuned on this set</td></tr>
+      <tr><td>Off-topic check: schemes we don't hold, recognised</td><td class="num">7 / 8</td><td>Tuned on this set, and I chose the scheme names</td></tr>
+      <tr><td>Planner picks the right data types</td><td class="num">32 / 33</td><td>Earlier prompt. The prompt has changed, so this needs re-measuring</td></tr>
+      <tr><td>Planner picks the right depth</td><td class="num">17 / 17</td><td>10 more calls failed on the rate limit, mostly the harder questions</td></tr>
+      <tr><td>Language recognised, after code's script check</td><td class="num">24 / 31</td><td>22 by the planner alone, one call failed. Prompt improved since: 9 of 9 so far, the rest hit the limit</td></tr>
+      <tr><td>Mechanics tests</td><td class="num">200 pass</td><td>Fake model: they prove the logic, not the answers</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Measuring overturned two of my own design choices</h3>
+  <ul class="plain">
+    <li>Adding the scheme's name as a search vote <strong>reached fewer parts</strong> (53 against 58), so each part now searches alone.</li>
+    <li>The slow reranking step <strong>added nothing</strong> for part searches (56 off, 55 on) and took about 50 times longer, so it's off there.</li>
+  </ul>
+</section>
+
+<section id="pl-real">
+  <div class="sec-head">
+    <h2>What reading real answers showed</h2>
+    <p>Tests with a fake model passed while real answers still had serious problems, so reading real answers is part of every phase now.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Found by reading</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>The answer printed its working notes: "Wait, [E5] is PM-KMY…"</td><td>Code rejects the whole answer, and the writer is told to give only the finished answer</td></tr>
+      <tr><td>Another scheme's exclusions were mixed into PM-KISAN</td><td>Writer and second reader both have a rule against crossing schemes</td></tr>
+      <tr><td>It talked about its own prompt: "the EXACT record", "the evidence provided"</td><td>Now a fault code catches</td></tr>
+      <tr><td>The second reader flagged correct sentences, because it couldn't see the notes behind exact records</td><td>It sees them now, plus each statement's section heading</td></tr>
+      <tr><td>A rewrite with no citations replaced a mostly good answer</td><td>A rewrite that can't be repaired no longer replaces a first answer that can</td></tr>
+      <tr><td>A scanned FAQ read Rs.6000/- as Rs.60001, ten times too big</td><td>Corrected, and new scans should be watched for it</td></tr>
+      <tr><td>Correct dates rejected: "1 .6.2019" from a scan, and the year inside "28.02.2027"</td><td>Both now count</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small" style="margin-top:12px"><strong>After the fixes:</strong> the PM-KISAN question gave a clean, correct answer at the standard level. A Hindi brief printed its translated records but hit the daily limit before the explanation. <strong>No deep answer has yet been read with all the fixes and full evidence.</strong></p>
+</section>
+
+<section id="pl-phase3">
+  <div class="sec-head">
+    <h2>Phase 3: what was done</h2>
+    <p>Committed on the branch, not pushed. The Docker image hasn't been rebuilt with it.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th>State</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Keyword search couldn't read Indian scripts</strong><br><span class="small">It only saw a-z and 0-9, so a Hindi or Marathi document had no keywords at all</span></td><td><span class="tag" style="--c:var(--good)">Fixed</span> RTI search is unchanged</td></tr>
+      <tr><td><strong>Script check</strong><br><span class="small">Code settles the language where the script allows it</span></td><td><span class="tag" style="--c:var(--good)">Built</span></td></tr>
+      <tr><td><strong>Saved translations</strong><br><span class="small">The same fact isn't paid for twice</span></td><td><span class="tag" style="--c:var(--good)">Built</span></td></tr>
+      <tr><td><strong>Plans missing their topic</strong><br><span class="small">A good plan was being thrown away</span></td><td><span class="tag" style="--c:var(--good)">Fixed</span></td></tr>
+      <tr id="pl-model-row"><td><strong>Multilingual search model</strong><br><span class="small">E5-base against today's model: Marathi 12/20 against 9/20, AP 82/93 against 80/93, deep parts 53/59 against 55/59, about a third slower. The gaps are too small to prove anything. BGE-M3 was stopped as too slow on this laptop</span></td><td><span class="tag" style="--c:var(--good)">Switched to E5-base</span> Your decision, for all-India coverage. Rebuilding the index takes about 39 minutes</td></tr>
+      <tr><td><strong>Keeping the reranker</strong><br><span class="small">Off: AP fell to 75/93, and Marathi stayed at 12/20</span></td><td><span class="tag" style="--c:var(--good)">Kept</span></td></tr>
+      <tr><td><strong>Head-to-head against asking a model directly</strong><br><span class="small">32 questions, read by hand. On 22 VETRA holds documents for: VETRA 21 right and 0 wrong, Gemini from memory 10 right and 3 wrong, Claude Haiku with web search 13 right and 0 wrong. On 4 states VETRA doesn't hold: VETRA 0, the others 4. VETRA's first run got 17 right and 4 wrong, then bugs were fixed on these questions, so expect lower on new ones</span></td><td><span class="tag" style="--c:var(--good)">Done</span> Full table in <code>docs/MVP_PLAN.md</code></td></tr>
+      <tr><td><strong>Bugs found by reading those answers</strong><br><span class="small">Kharif 2026 got Rabi dates; other schemes got the crop insurance rule; a timeout said "busy" instead of trying the next model; answers pointed to "the amount above" with nothing above</span></td><td><span class="tag" style="--c:var(--good)">Fixed</span> With tests</td></tr>
+      <tr><td><strong>Small fixes from the research</strong><br><span class="small">The planner no longer sees earlier answers; earlier turns, PAN and email are masked; token details are logged; keyword search handles more scripts and spellings; lakh, crore, acre and hectare are checked by code; a rule counts for any year it ran in</span></td><td><span class="tag" style="--c:var(--good)">Done</span> With tests</td></tr>
+      <tr><td><strong>Language detection, new prompt</strong></td><td><span class="tag" style="--c:var(--good)">Done</span> 31/32 on Gemini, only Dogri missed</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Known limits on languages</h3>
+  <ul class="plain">
+    <li><strong>Small languages:</strong> Dogri, Konkani, Bodo and Manipuri were read as Hindi, Marathi or Bengali, which share their scripts. Readers can choose a reply language on the page.</li>
+    <li><strong>Translations:</strong> code only checks the numbers. In one test, "actuarial rate" came out in Hindi as a word meaning "enacted rate", so the English prints beside each fact.</li>
+    <li><strong>RTI:</strong> replies in English or Telugu only.</li>
+    <li><strong>Test questions:</strong> Claude wrote them, and no speaker of these languages has checked them.</li>
+  </ul>
+</section>
+
+<section id="pl-next">
+  <div class="sec-head">
+    <h2>What happens next, in order</h2>
+    <p>Steps 1 to 3 and 5 need no API key.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Step</th><th>Needs</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td><strong>Build a hand-read test of 150 to 200 questions,</strong> counting right answers, wrong answers and refusals, by state and language</td><td>Your reading time</td></tr>
+      <tr><td class="num">2</td><td><strong>Give every rule start and end dates,</strong> and have the planner name the date the question means</td><td>Reading the orders</td></tr>
+      <tr><td class="num">3</td><td><strong>Rebuild Docker</strong> with the new search model. Expect about 40 minutes or more</td><td>You, with Docker open</td></tr>
+      <tr><td class="num">4</td><td><strong>Compare models by reading answers:</strong> 3.8 Flash mostly timed out or was refused, so most tests were written by 3.5 Flash-Lite. Thinking on the second reader too</td><td>Paid or quieter API</td></tr>
+      <tr><td class="num">5</td><td><strong>Phase 4, reading PDFs:</strong> read scans with Gemini and compare every number with Tesseract, starting with 150 to 200 labelled pages</td><td>API key</td></tr>
+      <tr><td class="num">6</td><td><strong>Phase 4, chunks:</strong> a fixed line naming state, scheme and order on each chunk, split at numbered paragraphs, in one rebuild. Then test Gemini embeddings before the documents grow</td><td>About 39 minutes a rebuild</td></tr>
+      <tr><td class="num">7</td><td><strong>Phase 4, data:</strong> documents and exact records, state by state, biggest schemes first</td><td>Your documents and time</td></tr>
+      <tr><td class="num">8</td><td><strong>Phase 5, release:</strong> question sets per topic, final provider, safety check, a person's review, and showing how each answer searched</td><td>New API key, reviewers</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px"><strong>After the MVP:</strong> automated data engineering, auto-update from the internet, depth chosen per user, and several agents in parallel if the open-web search justifies them.</p>
+</section>
+
+<section id="pl-research">
+  <div class="sec-head">
+    <h2>What published work says</h2>
+    <p><strong>The engine's structure holds up, so it doesn't need replacing, and no new model or framework is needed now.</strong> The biggest gains left are a proper test, dates on rules, and reliable figures from scans. Skip graph systems, ColBERT and agent frameworks. Ranked report from 5 November: <code>reports/VETRA engine techniques 2026.md</code>. Earlier comparison: <code>docs/ARCHITECTURE_RESEARCH.md</code>.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Idea</th><th>Evidence</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Add context to every chunk before indexing</strong></td><td>Anthropic: failures in the top 20 fell from 5.7% to 2.9%, or 1.9% with reranking. A statute tool that kept each provision's context reached 83%, against 58% and 64% for commercial legal AI</td><td>Phase 4, needs an API key</td></tr>
+      <tr><td><strong>Multilingual search model</strong></td><td>E5-base adopted. Correction: IndicRAGSuite's own table shows BGE-M3 and e5-large tied in 10 of 13 languages, not BGE-M3 leading in 8</td><td>Done</td></tr>
+      <tr><td><strong>Read PDFs properly</strong></td><td>Correction: Gemini for Indian-script scans with Tesseract checking digits, not Marker or Surya. Docling only for born-digital tables. No benchmark on government documents exists, so we test on ours</td><td>Phase 4</td></tr>
+      <tr><td><strong>Score answers on 150 to 200 hand-read questions</strong></td><td>Correction: about 20 is only a smoke test, with roughly 10% power for a mid-sized difference</td><td>Next</td></tr>
+      <tr><td><strong>Stronger reranker</strong></td><td>No evidence in Indian languages, and likely slow on this CPU. Today's stays, since turning it off lost 7 AP questions</td><td>Later</td></tr>
+      <tr><td><strong>Show how it searched on the page</strong></td><td>Traceable paths let reviewers find errors</td><td>Phase 5</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Newer techniques worth trying</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Technique</th><th>What it adds</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Grow the tests from real failures</strong></td><td>Every bad answer becomes a test, so failures can't quietly come back</td><td>Practitioner guides</td></tr>
+      <tr><td><strong>Score refusals too</strong></td><td>Checks that the engine admits what it doesn't know</td><td>Recommended by OpenAI's 2025 paper, seen through a summary</td></tr>
+      <tr><td><strong>Quote first, then answer</strong></td><td>Code can check each quote is word for word in its passage, which would catch wrong wording</td><td>Practitioner guides. The code check is my addition</td></tr>
+      <tr><td><strong>Independent fact-checking</strong></td><td>Each claim is checked as a question, without seeing the draft</td><td>Chain-of-Verification paper, not on documents like ours</td></tr>
+      <tr><td><strong>Search from the reasoning</strong></td><td>Better follow-up searches on multi-step questions</td><td>IRCoT: up to 21 points better retrieval on its datasets</td></tr>
+      <tr><td><strong>Pin down the period first</strong></td><td>Fewer mix-ups between old and current rules</td><td>Upgraded to adopt: strongest new evidence. A question naming a season now gets that season</td></tr>
+      <tr><td><strong>Caching</strong></td><td>Correction: saves only about 5-10%, by estimate</td><td>Our prompts are far below Gemini's 4,096-token minimum</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px">None is tested here yet. Details: <code>docs/ARCHITECTURE_RESEARCH.md</code>.</p>
+  <p class="small muted" style="margin-top:12px"><strong>Not worth it yet:</strong> several agents working in parallel. It beat a single agent by 90.2% in Anthropic's own test but costs about 15 times a chat's tokens, and suits open-web research better than local search. Revisit it when the agent searches the internet. None of these numbers come from Indian government documents, so each idea must beat our own scores first.</p>
+</section>
+
+<section id="pl-llm">
+  <div class="sec-head">
+    <h2>Which LLM to use, and what it costs</h2>
+    <p>Prices checked 4 November 2026. Details and sources: <code>docs/LLM_PROVIDERS.md</code>. Switching only needs a <code>.env</code> change.</p>
+  </div>
+  <div class="grid2">
+    <div class="card"><p class="label">Now, free</p><p class="big">Gemini free tier</p><p class="small muted">For development only, because Google may use free-tier data to improve its products. Exact limits show inside AI Studio.</p></div>
+    <div class="card"><p class="label">Later, paid</p><p class="big">Gemini paid tier</p><p class="small muted">Same provider, so no code or setup change. Paid data isn't used to improve Google's products. Which models is still open: test the cheaper and stronger ones, then read the answers.</p></div>
+  </div>
+  <h3>Approximate cost per question</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th class="num">Tokens</th><th class="num">3.1 Flash-Lite</th><th class="num">3.8 Flash to Dec</th><th class="num">3.8 Flash from Jan</th></tr></thead>
+    <tbody>
+      <tr><td>Quick, exact records</td><td class="num">2,000</td><td class="num">₹0.07</td><td class="num">₹0.19</td><td class="num">₹0.38</td></tr>
+      <tr><td>Standard</td><td class="num">10,000</td><td class="num">₹0.34</td><td class="num">₹0.95</td><td class="num">₹1.89</td></tr>
+      <tr><td>Deep, measured with evidence cut</td><td class="num">Up to 41,000</td><td class="num">₹1.38</td><td class="num">₹3.87</td><td class="num">₹7.75</td></tr>
+      <tr><td>Deep, full evidence (my estimate)</td><td class="num">80,000</td><td class="num">₹2.70</td><td class="num">₹7.56</td><td class="num">₹15.12</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px">Assumes 90% input tokens, about ₹90 to the dollar, and hidden thinking off. Token counts come from runs on Groq's models. Rewrites and translations add to this, and caching reduces it. Gemini 2.5 Flash-Lite is cheaper on paper, but isn't offered to new users.</p>
+  <p class="small" style="margin-top:8px"><strong>Hidden thinking:</strong> on one short question, 3.6 Flash used 574 tokens by default and 52 with thinking off, for about the same answer. It's billed as output, so the engine turns it off per model with <code>LLM_REASONING</code>, and we raise it only if answers suffer.</p>
+  <p class="small" style="margin-top:8px"><strong>UPI works for Gemini:</strong> the billing screen offers a QR code, with a ₹1,000 minimum first payment on this account. Credits are non-refundable and expire after a year. No payment is needed for the free tier.</p>
+  <p class="small muted" style="margin-top:8px"><strong>If Gemini's Indian-language answers disappoint:</strong> compare with Sarvam 105B, which is built for Indian languages, bills in rupees, and gives ₹100 of free credit.</p>
+</section>
+
+<section id="pl-data">
+  <div class="sec-head">
+    <h2>Data so far</h2>
+    <p>Current counts: <code>python -m vetra.intake status agriculture</code>, or <code>status finance</code>.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Topic</th><th>Have</th><th>Missing</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Agriculture</strong></td><td>Andhra Pradesh, central documents, and a few from Odisha and Himachal Pradesh. 8 dated records and 2 rules, for AP only</td><td>33 of 36 states and union territories have nothing of their own</td></tr>
+      <tr><td><strong>Finance</strong></td><td>Union Budget 2026-27, Atal Pension and Income-tax Act explainers, and a Rajasthan budget notification</td><td>The Income-tax Act's full text, stamp duty, vehicle tax, professional tax, pensions, and 35 of 36 states</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px">These sites failed from this network and may work in a normal browser: incometaxindia.gov.in, egazette.gov.in, jansuraksha.gov.in, krishakbandhu.wb.gov.in, pmkisan.gov.in.</p>
+</section>
+
+<section id="pl-done">
+  <div class="sec-head">
+    <h2>Everything done since version 1</h2>
+    <p>Taken from the git history. Work from 4 to 14 October is in the History tab under Old: Version 1, card by card.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>When</th><th>What</th><th>Commit</th><th>Where it is</th></tr></thead>
+    <tbody>
+      <tr><td>14 Oct</td><td><strong>Last additions to version 1's knowledge base,</strong> after it was tagged: the wrong crop insurance answer listed, a Telugu follow-up scenario, and call counts on every scenario</td><td><code>a963f57</code>, <code>02587b7</code>, <code>6e52102</code></td><td>GitHub, <code>main</code></td></tr>
+      <tr><td>3 Nov</td><td><strong>Reproduced the system and found a wrong answer.</strong> Past seasons' crop insurance rules were reaching the answer model, so it could call an old rule current. Code now cuts them, then re-measured</td><td><code>623e291</code></td><td>GitHub, <code>main</code></td></tr>
+      <tr><td>4 Nov</td><td><strong>Compared the code with the architecture diagram,</strong> ran it front to back, and studied the AI-powered government report. Wrote the agent proposal as a new tab, and added the missing past-season step to the diagram</td><td><code>70d7e31</code>, <code>4915885</code></td><td>GitHub, <code>main</code></td></tr>
+      <tr><td>4 Nov</td><td><strong>Merged to <code>main</code> and pushed,</strong> and confirmed Claude isn't listed as a contributor. Then rebuilt the agriculture search index</td><td></td><td>GitHub, <code>main</code></td></tr>
+      <tr><td>4 Nov</td><td><strong>Modular agent core:</strong> sorted knowledge stores and a planner that works from a fixed list of data types</td><td><code>92f5a6c</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Exact facts by code:</strong> code writes amounts and deadlines, and the model never sees them</td><td><code>6ba66b5</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Your main idea built:</strong> the planner names the types of data needed, code checks whether we have them for that state, and what's missing is recorded</td><td><code>2c51726</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>No answer model when it isn't needed:</strong> if exact records answer everything, they're printed directly</td><td><code>b1fc678</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Web page</strong> with a state selector, reusing the existing page</td><td><code>826ff57</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>A chosen state beats a guess,</strong> and off-topic results get one corrective search</td><td><code>357f608</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Docs and Docker for the agent,</strong> then exact facts printed in Telugu, and a fix to how answer tests compare text</td><td><code>01650be</code>, <code>9c274de</code>, <code>78d921f</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Phase 0:</strong> all 22 languages, rules limited to each scheme's own crops, first finance documents, and the MVP plan. Checked the AP dates and rates against the orders. Removed leftover clone files and duplicates</td><td><code>10c93ca</code>, <code>222262d</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Phase 1:</strong> the engine judges its evidence and goes after what's missing</td><td><code>7431317</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Phase 2:</strong> three levels of depth, each part searched on its own, sentence-by-sentence checks and a second reader. Compared the design with published work</td><td><code>5f6e163</code>, <code>7e8cc78</code></td><td>Local</td></tr>
+      <tr><td>4 Nov</td><td><strong>Phase 3, so far:</strong> keyword search reads Indian scripts, code settles the language from the script, translations are saved, Marathi and language tests written, and the model comparison started</td><td>None yet</td><td>Not committed</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Problems along the way</h3>
+  <ul class="plain">
+    <li><strong>Long file paths:</strong> the first clone failed in a deeply nested temporary folder. The project now lives in one clone at <code>Desktop\VETRA</code>, with no nested copies.</li>
+    <li><strong>Copied files:</strong> the app copied a clone into <code>vetra/</code>. I confirmed all 203 files matched <code>main</code> before removing them.</li>
+    <li><strong>A failing test committed once,</strong> early on, because commands were chained. Commits now wait for the tests to pass.</li>
+    <li><strong>Docker Desktop stopped opening</strong> partway through, because Windows wouldn't remove leftover socket files. Fixed on 4 November by moving those folders aside (see the Run it tab). The image was then rebuilt with Phases 0 to 2 and answered a live question at http://localhost:8765.</li>
+    <li><strong>Older copy:</strong> <code>Desktop\ap-rti-assistant</code> is an earlier version, and its container uses port 8765, the same port as VETRA.</li>
+  </ul>
+</section>
+
+<section id="pl-parts">
+  <div class="sec-head">
+    <h2>Other parts of the system</h2>
+    <p>Built along the way, and easy to miss in the steps above.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Part</th><th>What it does</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Any LLM provider</strong></td><td>Changing from Groq is a <code>.env</code> setting, with no code change, for any OpenAI-compatible service. When one model hits its limit, the next is tried. Each question has a budget of LLM calls. RTI still uses Groq directly</td><td><code>vetra/llm.py</code></td></tr>
+      <tr><td><strong>Web page</strong></td><td>State selector, reply language menu, sources under each answer. Run <code>python -m vetra.web</code></td><td><code>vetra/web.py</code></td></tr>
+      <tr><td><strong>All-India search</strong></td><td>One index per topic, filtered to the person's state plus central documents. So a farmer in any state gets central rules today, and a note that their state's own documents aren't in yet</td><td><code>vetra/text_index.py</code></td></tr>
+      <tr><td><strong>Sorted data stores</strong></td><td>Documents, dates, rules, numbers, directory, links and forms, in plain files a person can review. A record with no source or place is rejected. Numbers, directory and forms have readers but no data yet</td><td><code>knowledge/</code>, <code>vetra/sorter.py</code></td></tr>
+      <tr><td><strong>Rules decided by code</strong></td><td>Which rate applies is worked out from rule files, not by the model, and it asks for what it still needs, like the crop or season. AP's 2 premium rules work this way</td><td><code>vetra/rules.py</code></td></tr>
+      <tr><td><strong>Adding a state's documents</strong></td><td>Put the PDFs in a folder, list them in a manifest, then check and build. No code change. Scans with no text get flagged</td><td><code>vetra/intake.py</code></td></tr>
+      <tr><td><strong>List of what's missing</strong></td><td>What people asked for that we don't have, by state, most needed first. This is the to-do list for collecting documents</td><td><code>vetra/gaps.py</code></td></tr>
+      <tr><td><strong>Safety built in</strong></td><td>Long ID-like numbers are hidden from the model, every tool only reads, and the plan is made before any document is read. There's no input and output safety classifier yet</td><td><code>vetra/agent.py</code></td></tr>
+    </tbody>
+  </table></div>
+  <h3>Documents downloaded so far</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Result</th><th>Documents</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Kept and searchable</strong></td><td>Agriculture: PMFBY explainer (central), PMFBY 2026-27 letter (Himachal Pradesh, typed pages only), and two Odisha documents. Finance: Union Budget at a Glance, Summary and Speech 2026-27, Atal Pension explainer, Income-tax Act 2025 explainer, and Rajasthan's budget notification</td></tr>
+      <tr><td><strong>Set aside</strong></td><td>Maharashtra's PMFBY order and its loan waiver press note, both in Marathi with damaged letters. They're used only in the Phase 3 test for now</td></tr>
+      <tr><td><strong>Left out on purpose</strong></td><td>PMFBY's 2020 guidelines (replaced by the 2023 ones we hold), a second copy of the 2023 guidelines, a press note on AI in agriculture (no scheme content), and Maharashtra's 2023-24 budget speech (out of date)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>How to check it yourself</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Command</th><th>Checks</th><th>API key?</th></tr></thead>
+    <tbody>
+      <tr><td><code>python -m pytest tests -q</code></td><td>The mechanics</td><td>No</td></tr>
+      <tr><td><code>python eval/agent_retrieval_eval.py</code></td><td>AP search stays at 80/93</td><td>No</td></tr>
+      <tr><td><code>python eval/depth_eval.py</code></td><td>Deep search reaches each part</td><td>No</td></tr>
+      <tr><td><code>python eval/on_topic_eval.py</code></td><td>The off-topic check</td><td>No</td></tr>
+      <tr><td><code>python eval/embedding_eval.py BAAI/bge-m3</code></td><td>One search model, on every search test</td><td>No</td></tr>
+      <tr><td><code>python eval/needs_eval.py --live</code></td><td>The planner picks the right data types</td><td>Yes</td></tr>
+      <tr><td><code>python eval/depth_eval.py --planner --live</code></td><td>The planner picks the right depth</td><td>Yes</td></tr>
+      <tr><td><code>python eval/language_detect_eval.py</code></td><td>Language detection</td><td>Yes</td></tr>
+      <tr><td><code>python eval/agent_answers.py --show</code></td><td>Real answers on known cases</td><td>Yes</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="pl-you">
+  <div class="sec-head">
+    <h2>What's needed from you</h2>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>What</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Replace the Gemini key before release</strong></td><td>The key was pasted into this chat, so create a new one in AI Studio when convenient. It's only in the private <code>.env</code> file otherwise</td></tr>
+      <tr><td><strong>Free tier for now</strong></td><td>To read and score deep answers, and to measure Phases 1 to 3. One deep test used about 41,000 tokens, with its evidence cut to 12 passages to fit the free tier</td></tr>
+      <tr><td><strong>When to push to GitHub</strong></td><td>All commits are local on <code>feat/modular-agent-core</code>, with no Claude attribution</td></tr>
+      <tr><td><strong>A person to check the rules</strong></td><td>Dates and rates match the orders, but Claude checked them, so they stay marked unreviewed</td></tr>
+      <tr><td><strong>Speakers to check the languages</strong></td><td>Telugu first, since those facts print from templates, then Hindi and the others</td></tr>
+      <tr><td><strong>Documents, state by state</strong></td><td>Steps are in <code>docs/AGENT.md</code>. Starting with each state's biggest schemes helps farmers most</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px">More detail: <code>docs/MVP_PLAN.md</code> (plan and status), <code>docs/AGENT.md</code> (how it works and how to add data).</p>
+</section>
+
+</div>
+</div>
+
+<div class="tabpanel wide" id="tab-arch" role="tabpanel" aria-labelledby="tabbtn-arch" hidden>
+<div class="wrap">
+<div class="subnav"><a href="#ar-map">The whole system</a><a href="#ar-parts">Each part</a><a href="#ar-old">What happened to the old parts</a></div>
+
+<section id="ar-map">
+  <div class="sec-head">
+    <p class="label">VETRA as built today · 4 November 2026</p>
+    <h2>The whole system</h2>
+    <p>Three lanes: how data gets in, how a question gets answered, and how we measure it. Agriculture and finance run on this. Only RTI still goes to the old pipeline.</p>
+  </div>
+  <div class="ar-legend">
+    <span class="node code">Code, no LLM</span><span class="node llm">Calls an LLM</span><span class="node data">Stored data</span><span class="node later">Not in the MVP</span>
+  </div>
+
+  <div class="ar-lane">
+    <p class="label">1. Adding data, by hand for now</p>
+    <div class="ar-row">
+      <span class="node later"><b>Data engineering</b>Automatic collection and checking</span><i></i>
+      <span class="node data"><b>PDFs and a manifest</b>documents/&lt;topic&gt;/&lt;STATE&gt;/</span><i></i>
+      <span class="node code"><b>Intake</b>Checks, reads, chunks. Flags scans with no text</span><i></i>
+      <span class="node data"><b>Text index</b>One per topic. Each chunk knows its state</span>
+    </div>
+    <div class="ar-row">
+      <span class="node data"><b>Records written by hand</b>knowledge/inbox/</span><i></i>
+      <span class="node code"><b>Sorter</b>Rejects anything with no source or place</span><i></i>
+      <span class="node data"><b>Exact stores</b>Dates, rules, numbers, directory, links, forms, documents</span>
+    </div>
+  </div>
+
+  <div class="ar-lane">
+    <p class="label">2. Answering a question</p>
+    <div class="ar-row">
+      <span class="node data"><b>Question</b>Any of 23 languages</span><i></i>
+      <span class="node code"><b>Guard</b>Hides ID numbers</span><i></i>
+      <span class="node llm"><b>Planner</b>Topic, state, language, depth, and the types of data needed. Reads no documents</span><i></i>
+      <span class="node code"><b>Settle</b>Language from the script, depth from the parts</span>
+    </div>
+    <div class="ar-branch">
+      <span><b>Off the topics:</b> a polite decline.</span>
+      <span><b>RTI:</b> hands over to the old pipeline in <code>rag/</code>, unchanged.</span>
+    </div>
+    <div class="ar-row">
+      <span class="node code"><b>Look</b>Exact stores, then text. State plus central. Deep: each part on its own</span><i></i>
+      <span class="node code"><b>Keep what applies</b>Cuts past seasons unless read for history. Shares evidence fairly</span><i></i>
+      <span class="node llm"><b>Judge, up to 3 rounds</b>Is every part covered? If not: search, read around, or look inside. Read-only</span><i></i>
+      <span class="node code"><b>Record gaps</b>The to-do list</span><i></i>
+      <span class="node later"><b>Auto-update</b>Finds missing data online. It plugs in here</span>
+    </div>
+    <div class="ar-branch">
+      <span><b>Short answer, and exact records cover it all:</b> printed as stored, with no writer.</span>
+    </div>
+    <div class="ar-row">
+      <span class="node llm"><b>Writer</b>Explains. Never sees exact figures</span><i></i>
+      <span class="node code"><b>Code checks</b>Each figure and date against what its sentence cites. Corrects citations</span><i></i>
+      <span class="node llm"><b>Second reader, deep only</b>Is each statement backed by its passages?</span><i></i>
+      <span class="node llm"><b>One rewrite</b>Told exactly what failed</span><i></i>
+      <span class="node code"><b>Cut and assemble</b>Exact facts, explanation, what's missing, sources</span>
+    </div>
+  </div>
+
+  <div class="ar-lane">
+    <p class="label">3. Measuring, separate from answering</p>
+    <div class="ar-row">
+      <span class="node code"><b>Mechanics tests</b>Fake model, no key</span>
+      <span class="node code"><b>Search tests</b>AP sets, deep parts, Marathi, off-topic. No key</span>
+      <span class="node llm"><b>Planner tests</b>Data types, depth, language</span>
+      <span class="node llm"><b>Real answers</b>Known cases, then read by a person</span>
+    </div>
+  </div>
+</section>
+
+<section id="ar-parts">
+  <div class="sec-head">
+    <h2>Each part, and what happens when it fails</h2>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Part</th><th>File</th><th>LLM?</th><th>What it does</th><th>If it fails</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Planner</strong></td><td><code>agent.py</code></td><td>Yes, small</td><td>Names the topic, state, language, depth and types of data, from the question alone</td><td>One retry on a bad plan, then the reader is asked to rephrase. If the LLM is down, "busy"</td></tr>
+      <tr><td><strong>Language</strong></td><td><code>languages.py</code></td><td>Only to translate</td><td>Script check, and translating facts into languages with no templates</td><td>If a number changes or the call fails, the English is kept</td></tr>
+      <tr><td><strong>Depth</strong></td><td><code>depth.py</code></td><td>No</td><td>One table of everything that differs by level</td><td>An unreadable level becomes standard</td></tr>
+      <tr><td><strong>Data types</strong></td><td><code>datatypes.py</code></td><td>No</td><td>Maps each type of data to its store</td><td>Unknown types are dropped</td></tr>
+      <tr><td><strong>Exact stores</strong></td><td><code>knowledge.py</code>, <code>tools.py</code>, <code>facts.py</code>, <code>rules.py</code></td><td>No</td><td>Dates and rates decided and worded by code</td><td>If nothing is held, it goes to text, and the gap is logged</td></tr>
+      <tr><td><strong>Text search</strong></td><td><code>text_index.py</code></td><td>No</td><td>Meaning search and keyword search combined, state plus central</td><td>Off-topic results get one more search, then count as missing</td></tr>
+      <tr><td><strong>Judge</strong></td><td><code>navigate.py</code></td><td>Yes, small</td><td>Decides whether to look further, and where</td><td>The answer is written from what's in hand</td></tr>
+      <tr><td><strong>Gap list</strong></td><td><code>gaps.py</code></td><td>No</td><td>Records what people asked for that we don't hold</td><td>Not applicable</td></tr>
+      <tr><td><strong>Writer</strong></td><td><code>agent.py</code></td><td>Yes, large</td><td>Explains what was found, at the level's depth</td><td>Too much text: evidence is thinned fairly. LLM down: the exact records or document names, with "try again"</td></tr>
+      <tr><td><strong>Code checks</strong></td><td><code>checks.py</code></td><td>No</td><td>Citations, figures, dates, working notes, past seasons</td><td>One rewrite, then failing sentences are cut. Too much cut: exact records or document names</td></tr>
+      <tr><td><strong>Second reader</strong></td><td><code>verify.py</code></td><td>Yes, large</td><td>Checks each statement in deep answers</td><td>The answer stands on code's checks, and the trace says so</td></tr>
+      <tr><td><strong>LLM access</strong></td><td><code>llm.py</code></td><td>Is the LLM</td><td>Any OpenAI-compatible provider, with a call budget per question</td><td>Tries the next model, or waits out a short limit</td></tr>
+      <tr><td><strong>Web page</strong></td><td><code>web.py</code></td><td>No</td><td>Serves the page, with state and language menus</td><td>Shows an error asking the reader to try again</td></tr>
+      <tr><td><strong>RTI</strong></td><td><code>rag/</code></td><td>Yes</td><td>The old pipeline, unchanged, and still on Groq</td><td>"Busy"</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="ar-old">
+  <div class="sec-head">
+    <h2>What happened to the old parts</h2>
+    <p>This explains the words you'll see under Old: Version 1, like HyDE and the router. Nothing was thrown away without a reason: the search parts that were already measured are reused.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Old part</th><th>What it was</th><th>For agriculture and finance now</th></tr></thead>
+    <tbody>
+      <tr><td><strong>HyDE</strong></td><td>A separate small LLM call wrote a passage in the style of an official order, only to help search find the right words</td><td><strong>Still used, but no longer a separate call.</strong> The planner writes that passage in its one call. It helps single searches and the whole-question search. A deep answer's part searches don't use it, because they did better alone. RTI still makes its own HyDE call</td></tr>
+      <tr><td><strong>Router</strong></td><td>Chose RTI or agriculture, and the language</td><td><strong>Replaced by the planner,</strong> which also works out state, depth and data types. Code adds the script check</td></tr>
+      <tr><td><strong>Query rewrite and translation</strong></td><td>Separate steps to make a question searchable</td><td><strong>Part of the planner:</strong> it writes one complete English question and key terms</td></tr>
+      <tr><td><strong>Abbreviation glossary</strong></td><td>Expanded terms like PMFBY for search</td><td><strong>Reused</strong> as it was</td></tr>
+      <tr><td><strong>Hybrid search</strong></td><td>Meaning search and keyword search, combined</td><td><strong>Reused.</strong> Now filtered by state, and keyword search can read Indian scripts</td></tr>
+      <tr><td><strong>Reranker</strong></td><td>A small model re-ordered the top results</td><td><strong>Kept for single searches, off for part searches,</strong> where it added nothing and took about 50 times longer</td></tr>
+      <tr><td><strong>Amendment linking</strong></td><td>Added orders that amend what was found</td><td><strong>Reused,</strong> and the writer is now told why each was added</td></tr>
+      <tr><td><strong>Past-season cut</strong></td><td>Removed old seasons' rules from the evidence</td><td><strong>Reused,</strong> except for passages read to explain what changed, which are marked as history</td></tr>
+      <tr><td><strong>One answer model</strong></td><td>Saw all the text, and wrote everything including figures</td><td><strong>Replaced:</strong> code prints exact figures, the writer explains, and every sentence is checked</td></tr>
+      <tr><td><strong>Fixed topics, one state</strong></td><td>Andhra Pradesh only, set up per topic in code</td><td><strong>Replaced:</strong> every state, and adding a state is data, not code</td></tr>
+      <tr><td><strong>English and Telugu</strong></td><td>The only two languages</td><td><strong>Extended</strong> to 23, with Telugu templates kept</td></tr>
+      <tr><td><strong>Web page</strong></td><td>The page in <code>rag/web.html</code></td><td><strong>Same page,</strong> served by <code>vetra/web.py</code> with the new menus</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="tabpanel wide" id="tab-run" role="tabpanel" aria-labelledby="tabbtn-run" hidden>
+<div class="wrap">
+<div class="subnav"><a href="#rn-run">Run it</a><a href="#rn-docker">If Docker won't open</a><a href="#rn-data">Add data</a><a href="#rn-glossary">Glossary</a></div>
+
+<section id="rn-run">
+  <div class="sec-head">
+    <p class="label">VETRA as built today</p>
+    <h2>Run it</h2>
+    <p>From <code>Desktop\VETRA</code>. The branch with all of this is <code>feat/modular-agent-core</code>.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>To do this</th><th>Run this</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Open the web page</strong></td><td><code>python -m vetra.web</code>, then http://127.0.0.1:8000</td></tr>
+      <tr><td><strong>Ask from the terminal</strong></td><td><code>python -m vetra.agent "your question" --state KA</code></td></tr>
+      <tr><td><strong>Force a depth</strong></td><td>Add <code>--depth deep</code> (or <code>quick</code>, <code>standard</code>)</td></tr>
+      <tr><td><strong>Rebuild a search index</strong></td><td><code>python -m vetra.text_index build agriculture</code></td></tr>
+      <tr><td><strong>Run with Docker</strong></td><td><code>docker compose up --build</code>, then http://localhost:8765. Stop any older container on that port first</td></tr>
+      <tr><td><strong>Change the LLM provider</strong></td><td>In <code>.env</code>: <code>LLM_BASE_URL</code>, <code>LLM_API_KEY</code>, <code>LLM_MODEL_PLAN</code>, <code>LLM_MODEL_COMPOSE</code>. No code change</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="rn-docker">
+  <div class="sec-head">
+    <h2>If Docker Desktop won't open</h2>
+    <p>On this PC, if Docker closes badly it can leave socket files that Windows then refuses to remove, and Docker crashes on its next start with "The file cannot be accessed by the system". Restarting the PC doesn't help. It happened on 4 November. Others have <a href="https://forums.docker.com/t/docker-desktop-4-88-1-fails-to-start-on-windows-af-unix-socket-file-cannot-be-accessed/152314">reported the same error</a>, and that thread had no confirmed fix when checked.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Step</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Close Docker Desktop, and end any leftover Docker processes in Task Manager</td></tr>
+      <tr><td class="num">2</td><td>In <code>%LOCALAPPDATA%</code>, rename <code>Docker\run</code> and <code>docker-secrets-engine</code> to anything else. Renaming works when deleting doesn't</td></tr>
+      <tr><td class="num">3</td><td>Create new empty folders with the original names, then start Docker Desktop</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted" style="margin-top:12px">Images and data aren't affected: they're in a separate disk file. Don't use "Reset to factory defaults" for this, as it could wipe them. To avoid it, quit Docker from its tray icon before shutting down.</p>
+</section>
+
+<section id="rn-data">
+  <div class="sec-head">
+    <h2>Add data</h2>
+    <p>Full steps and record formats are in <code>docs/AGENT.md</code>.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>To do this</th><th>Run this</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Start a state</strong></td><td><code>python -m vetra.intake template agriculture KA</code>. Then put the PDFs in <code>documents/agriculture/KA/</code> and list them in its <code>manifest.json</code></td></tr>
+      <tr><td><strong>Check without changing anything</strong></td><td><code>python -m vetra.intake check agriculture KA</code></td></tr>
+      <tr><td><strong>Make them searchable</strong></td><td><code>python -m vetra.intake build agriculture KA</code></td></tr>
+      <tr><td><strong>See what we hold</strong></td><td><code>python -m vetra.intake status agriculture</code></td></tr>
+      <tr><td><strong>Add exact dates and rates</strong></td><td>Write records in <code>knowledge/inbox/</code>, then <code>python -m vetra.sorter sort knowledge/inbox/yourfile.jsonl</code></td></tr>
+      <tr><td><strong>See what people asked for that we lack</strong></td><td><code>python -m vetra.gaps</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="rn-glossary">
+  <div class="sec-head">
+    <h2>Glossary</h2>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Term</th><th>Means</th></tr></thead>
+    <tbody>
+      <tr><td><strong>RAG</strong></td><td>Search the documents, then have a model answer from what was found. In VETRA it's one source among several</td></tr>
+      <tr><td><strong>Chunk, or passage</strong></td><td>A piece of a document, about 350 tokens, which is what search returns</td></tr>
+      <tr><td><strong>Embedding model</strong></td><td>Turns text into numbers so search can match meaning, not just words. Phase 3 is testing one that reads Indian languages</td></tr>
+      <tr><td><strong>BM25, or keyword search</strong></td><td>Matches the actual words. Good for scheme names and order numbers</td></tr>
+      <tr><td><strong>Hybrid search</strong></td><td>Runs both of the above and combines their rankings</td></tr>
+      <tr><td><strong>HyDE</strong></td><td>Writing an imagined answer in official language, purely to search with, because orders don't use people's words. The imagined text is never shown or trusted</td></tr>
+      <tr><td><strong>Reranker</strong></td><td>A model that re-orders the top search results by reading each one against the question</td></tr>
+      <tr><td><strong>Exact record</strong></td><td>A date, rate or rule stored as data, printed by code so the model can't garble it</td></tr>
+      <tr><td><strong>Planner</strong></td><td>The first LLM call, which decides what the question needs</td></tr>
+      <tr><td><strong>Judge</strong></td><td>The LLM call that decides whether the evidence is enough, and where to look next</td></tr>
+      <tr><td><strong>Writer</strong></td><td>The LLM call that explains what was found</td></tr>
+      <tr><td><strong>Second reader</strong></td><td>An LLM call that checks a deep answer's statements against what they cite</td></tr>
+      <tr><td><strong>Gap</strong></td><td>Something people asked for that we don't hold</td></tr>
+      <tr><td><strong>Central</strong></td><td>A central government document, which applies in every state</td></tr>
+      <tr><td><strong>Token</strong></td><td>The unit LLMs are charged and limited by, roughly three-quarters of an English word</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="tabpanel wide" id="tab-architecture" role="tabpanel" aria-labelledby="tabbtn-architecture" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> This tab describes the earlier Andhra Pradesh assistant as it stood on 14 October. Agriculture and finance no longer work this way, and only RTI still does. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <section id="architecture">
   <div class="sec-head">
     <h2>The whole system, left to right</h2>
@@ -570,6 +1181,7 @@ header.hero { padding: 38px 0 22px; }
 </div>
 
 <div class="tabpanel" id="tab-overview" role="tabpanel" aria-labelledby="tabbtn-overview" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> This tab describes the earlier Andhra Pradesh assistant as it stood on 14 October. Agriculture and finance no longer work this way, and only RTI still does. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <div class="hero-stats"><div class="stats">
       <div class="stat"><b>2</b><span>topics on one page, RTI and agriculture (was RTI only)</span></div>
       <div class="stat"><b>85</b><span>documents indexed: 41 RTI + 44 agriculture</span></div>
@@ -688,6 +1300,7 @@ header.hero { padding: 38px 0 22px; }
 </div>
 
 <div class="tabpanel" id="tab-pipeline" role="tabpanel" aria-labelledby="tabbtn-pipeline" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> This tab describes the earlier Andhra Pradesh assistant as it stood on 14 October. Agriculture and finance no longer work this way, and only RTI still does. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <div class="subnav"><a href="#flow">What happens to one question, now</a><a href="#router">The router: which documents, and which language</a><a href="#language">Telugu: how a question in Telugu is handled</a><a href="#domains">Two topics, opposite fixes</a></div>
 <section id="flow">
   <div class="sec-head">
@@ -1063,6 +1676,7 @@ header.hero { padding: 38px 0 22px; }
 </div>
 
 <div class="tabpanel" id="tab-data" role="tabpanel" aria-labelledby="tabbtn-data" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> This tab describes version 1's documents. What VETRA holds today is under <a href="#pl-data">Data so far</a>. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <div class="subnav"><a href="#problem">Why the information exists but citizens can't use it</a><a href="#corpus">The 41 RTI documents</a></div>
 <section id="problem">
   <div class="sec-head">
@@ -1196,6 +1810,7 @@ header.hero { padding: 38px 0 22px; }
 </div>
 
 <div class="tabpanel" id="tab-results" role="tabpanel" aria-labelledby="tabbtn-results" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> These scores and decisions are version 1's. Today's are under <a href="#pl-results">Measured results</a>. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <div class="subnav"><a href="#scores">Scores, and how they are measured</a><a href="#decisions">September decisions, and the numbers behind them</a><a href="#examples">Three RTI questions, followed end to end (September)</a></div>
 <section id="scores">
   <div class="sec-head">
@@ -1403,11 +2018,13 @@ header.hero { padding: 38px 0 22px; }
 </div>
 
 <div class="tabpanel" id="tab-history" role="tabpanel" aria-labelledby="tabbtn-history" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> This tab covers 4 to 14 October. Everything since is under <a href="#pl-done">Everything done since version 1</a>. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <section id="timeline">
   <div class="sec-head">
     <h2>Every update, in order</h2>
     <p>Every change on GitHub (<code>Nikhilkarur/AP-ASSIS</code>) from 4 to 14 October; all but the first went in
-       through a pull request. Each card says what changed, why, and what it measured.</p>
+       through a pull request. Each card says what changed, why, and what it measured. For everything since then, see
+       <a href="#pl-done">Everything done since version 1</a> in the Current plan tab.</p>
   </div>
 
   <div class="tl">
@@ -1875,6 +2492,7 @@ header.hero { padding: 38px 0 22px; }
 </div>
 
 <div class="tabpanel wide" id="tab-agent" role="tabpanel" aria-labelledby="tabbtn-agent" hidden>
+<div class="v1-note"><strong>Original proposal, not today's system.</strong> This is the proposal as written on 3 November. What got built differs, and scope changed after it was written. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <div class="wrap">
 <div class="subnav"><a href="#ag-summary">Summary</a><a href="#ag-why">Why change</a><a href="#ag-borrow">What we borrow</a><a href="#ag-map">Architecture</a><a href="#ag-parts">Each part</a><a href="#ag-walk">Four questions</a><a href="#ag-cost">Cost</a><a href="#ag-safety">Safety</a><a href="#ag-eval">Evaluation</a><a href="#ag-plan">Build plan</a><a href="#ag-decide">Decisions</a><a href="#ag-refs">Sources</a></div>
 
@@ -1884,7 +2502,7 @@ header.hero { padding: 38px 0 22px; }
     <h2>From one search pipeline to an agent that checks its evidence</h2>
   </div>
   <div class="card" style="margin-bottom:20px;border-color:var(--llm)">
-    <p class="label">Where it stands, 4 November</p>
+    <p class="label">Where it stands, 4 November. The Current plan tab has the latest</p>
     <p class="small" style="margin-top:8px"><strong>Scope changed after this proposal was written:</strong> agriculture and finance in depth for every state, RTI left as it is, documents collected by hand for now, and the LLM vendor made replaceable. How to run it and add data: <code>docs/AGENT.md</code>.</p>
     <div class="tw" style="margin-top:12px"><table>
       <thead><tr><th>Part</th><th>State</th></tr></thead>
@@ -2303,6 +2921,7 @@ eval/answers/    temporal, decision, refusal, repeat and safety sets</pre></div>
 </script>
 
 <div class="tabpanel" id="tab-reference" role="tabpanel" aria-labelledby="tabbtn-reference" hidden>
+<div class="v1-note"><strong>Version 1 record, not today's system.</strong> These commands and this glossary are version 1's. Current ones are in the <a href="#rn-run">Run it</a> tab. Today's engine is in the <a href="#ar-map">Architecture</a> tab, and <a href="#ar-old">this table</a> shows what happened to each old part, including HyDE and the router.</div>
 <div class="subnav"><a href="#docker">Docker: the whole assistant in one container</a><a href="#run">Run it</a><a href="#glossary">Glossary</a><a href="#open">Open items</a></div>
 <section id="docker">
   <div class="sec-head">
@@ -2921,12 +3540,19 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
 </script>
 <script>
 (function () {
-  const btns = [...document.querySelectorAll('nav.tabs button')];
+  const btns = [...document.querySelectorAll('nav.tabs button[role="tab"]')];
+  const vers = [...document.querySelectorAll('.ver-switch button')];
+  const CURRENT = ['plan', 'arch', 'run'];
+  const versionOf = pid => CURRENT.includes(pid) ? 'now' : 'old';
   const panels = [...document.querySelectorAll('.tabpanel')];
   const bar = document.querySelector('nav.tabs');
   function show(pid) {
     panels.forEach(p => { p.hidden = p.id !== 'tab-' + pid; });
     btns.forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === pid)));
+    const ver = versionOf(pid);
+    document.body.dataset.ver = ver;
+    btns.forEach(b => { b.closest('li').hidden = versionOf(b.dataset.tab) !== ver; });
+    vers.forEach(v => v.setAttribute('aria-pressed', String(v.dataset.ver === ver)));
   }
   function fromHash() {
     const t = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
@@ -2940,7 +3566,13 @@ python eval\experiments.py --domain agriculture --exp baseline chosen</pre>
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
     window.scrollTo(0, bar.offsetTop);
   }));
+  vers.forEach(v => v.addEventListener('click', () => {
+    show(v.dataset.ver === 'now' ? 'plan' : 'architecture');
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    window.scrollTo(0, bar.offsetTop);
+  }));
   window.addEventListener('hashchange', fromHash);
+  show('plan');
   fromHash();
 })();
 </script>
