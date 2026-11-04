@@ -14,3 +14,8 @@ README.jpeg
 
 # Re-embedded corpora for embedding-model experiments (eval/experiments.py); rebuilt on demand
 eval/cache/*.npy
+
+# Test cache; questions the data does not cover yet (rebuilt by use); documents collected by hand
+.pytest_cache/
+data/gaps.jsonl
+documents/

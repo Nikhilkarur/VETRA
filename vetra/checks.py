@@ -66,14 +66,39 @@ def _digits(text: str) -> str:
     return re.sub(r"[^\d.]", "", text).rstrip(".")
 
 
+_MONTHS = "january february march april may june july august september october november december".split()
+_MONTH = "|".join(m[:3] + m[3:].join(["(?:", ")?"]) for m in _MONTHS)
+_DATE = re.compile(rf"\b\d{{1,2}}(?:st|nd|rd|th)?[ -]+(?:{_MONTH})\b|\b(?:{_MONTH})\s+\d{{1,2}}(?:st|nd|rd|th)?\b"
+                   rf"|\b\d{{1,2}}[./-]\d{{1,2}}[./-]\d{{2,4}}\b|\b\d{{4}}-\d{{2}}-\d{{2}}\b", re.I)
+_PERCENT = re.compile(r"\d[\d,]*(?:\.\d+)?\s*(?:%|per ?cent)", re.I)
+
+
+def has_facts(evidence: list[Evidence]) -> bool:
+    return any(e.fact for e in evidence)
+
+
+def fact_lines(evidence: list[Evidence]) -> str:
+    """The block code prints: every exact fact, word for word, with its citation."""
+    return "\n".join(f"- {e.fact} [E{n}]" for n, e in enumerate(evidence, 1) if e.fact)
+
+
+def prose_problems(prose: str) -> list[str]:
+    """Exact figures belong to the printed block. In the explanation they can only be garbled."""
+    found = [f"states the date '{m.group(0)}'; dates are printed above" for m in _DATE.finditer(prose)]
+    found += [f"states '{m.group(0)}'; percentages are printed above" for m in _PERCENT.finditer(prose)]
+    return found
+
+
 def claim_problems(answer: str, evidence: list[Evidence], as_of: str, question: str = "") -> list[str]:
     """Citations that point nowhere, and figures found in no evidence. Empty means it passed."""
     found = []
     for n in {int(x) for x in _CITATION.findall(answer)}:
         if not 1 <= n <= len(evidence):
             found.append(f"cites [E{n}], which doesn't exist")
-    if evidence and not _CITATION.search(answer):
+    if evidence and not has_facts(evidence) and not _CITATION.search(answer):
         found.append("cites nothing")
+    if has_facts(evidence):
+        found += prose_problems(answer)
     for stated in re.findall(r"today[^.\n]{0,20}?(\d{4}-\d{2}-\d{2})", answer, re.I):
         if stated != as_of:
             found.append(f"gives today as {stated}; today is {as_of}")

@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "knowledge"
@@ -33,6 +34,12 @@ def problems(record: dict) -> list[str]:
         found.append("no source document")
     if record.get("store") == "rules" and not record.get("cases"):
         found.append("rule has no cases")
+    if record.get("closes"):
+        try:
+            if record.get("opens") and date.fromisoformat(record["opens"]) > date.fromisoformat(record["closes"]):
+                found.append("window closes before it opens")
+        except ValueError:
+            found.append("window dates aren't YYYY-MM-DD")
     return found
 
 

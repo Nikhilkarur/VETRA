@@ -8,7 +8,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from vetra import agent, checks, jurisdictions, knowledge, llm, rules, sorter, text_search  # noqa: E402
+from vetra import agent, checks, facts, jurisdictions, knowledge, llm, rules, sorter, text_search  # noqa: E402
 from vetra.domains import DOMAINS  # noqa: E402
 from vetra.tools import Evidence  # noqa: E402
 
@@ -43,10 +43,11 @@ RULE = {"id": "r1", "store": "rules", "domain": "agriculture", "jurisdiction": "
         "source": {"doc": "G.O.1"}, "cases": [
             {"when": {"crop": "commercial"}, "outcome": {"percent": 5}},
             {"when": {"crop": "food", "income": {"max": 100}}, "outcome": {"percent": 2}}]}
-DATE = {"id": "d1", "store": "dates", "domain": "agriculture", "jurisdiction": "AP", "text": "Rabi cut-off rabi is 15 December 2026.",
-        "source": {"doc": "G.O.2"}, "status": "in_force"}
-OTHER_STATE = {**DATE, "id": "d2", "jurisdiction": "KA", "text": "Karnataka cut-off rabi is 1 January 2027."}
-CENTRAL = {**DATE, "id": "d3", "jurisdiction": "IN", "text": "Central cut-off rabi note."}
+DATE = {"id": "d1", "store": "dates", "domain": "agriculture", "jurisdiction": "AP", "text": "Rabi cut-off rabi window.",
+        "source": {"doc": "G.O.2"}, "status": "in_force", "scheme": "PMFBY", "for_season": "Rabi 2026-27",
+        "opens": "2026-10-01", "closes": "2026-12-15"}
+OTHER_STATE = {**DATE, "id": "d2", "jurisdiction": "KA", "text": "Karnataka cut-off rabi window."}
+CENTRAL = {**DATE, "id": "d3", "jurisdiction": "IN", "text": "Central cut-off rabi window.", "closes": "2026-12-20"}
 
 
 @pytest.fixture
@@ -121,29 +122,37 @@ def test_past_season_rule_is_cut_from_text():
 # ---------------------------------------------------------------- the workflow
 
 def test_answers_from_exact_store_with_citations_by_code(kb):
-    m = models(plan(), "Rabi closes 15 December 2026 [E1].")
+    m = models(plan(), "You can still enrol before the window closes.")
     r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
-    assert r.kind == "answer" and r.sources[0]["doc"] == "G.O.2"
+    assert r.kind == "answer" and {s["doc"] for s in r.sources} == {"G.O.2"}
+    assert "15 December 2026" in r.answer and "Open now" in r.answer and "[E" in r.answer
     assert r.trace["calls"] == 2 and r.trace["plan"] == ["dates_lookup"]
 
 
 def test_rule_is_consulted_even_if_the_plan_forgot_it_and_all_cases_are_shown(kb):
-    m = models(plan(standalone="premium rule scheme"), "Commercial crops pay 5 percent [E1].")
+    m = models(plan(standalone="premium rule scheme", facts={"crop": "commercial"}), "That is the rate you pay.")
     r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
-    assert r.sources[0]["tool"] == "rule_check" and r.trace["missing"] == []
-    assert "All cases" in json.dumps(m.provider.sent[1][1])
+    assert any(s["tool"] == "rule_check" for s in r.sources) and r.trace["missing"] == []
+    assert "percent: 5" in r.answer
+
+
+def test_an_undecided_rule_the_plan_did_not_choose_stays_out(kb):
+    m = models(plan(standalone="premium rule scheme rabi cut-off"), "Enrol before it closes.")
+    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
+    assert not any(s["tool"] == "rule_check" for s in r.sources)
 
 
 def test_a_rule_the_plan_chose_asks_for_its_missing_facts(kb):
-    m = models(plan(steps=[{"tool": "rule_check", "args": {"query": "premium rule scheme"}}]), "Commercial pays 5 percent [E1].")
+    m = models(plan(steps=[{"tool": "rule_check", "args": {"query": "premium rule scheme"}}]), "Which crop do you grow?")
     r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
     assert r.trace["missing"] and "Not known yet" in json.dumps(m.provider.sent[1][1])
+    assert "(1) crop is commercial" in r.answer and "(2)" in r.answer
 
 
 def test_facts_decide_the_rule(kb):
-    m = models(plan(standalone="premium rule scheme", facts={"crop": "commercial"}), "You pay 5 percent [E1].")
-    agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
-    assert "percent = 5" in json.dumps(m.provider.sent[1][1])
+    m = models(plan(standalone="premium rule scheme", facts={"crop": "commercial"}), "That applies to you.")
+    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
+    assert "percent: 5" in r.answer and "percent: 5" not in json.dumps(m.provider.sent[1][1])
 
 
 def test_rule_inputs_reach_the_planner(tmp_path):
@@ -159,15 +168,67 @@ def test_any_citation_style_is_understood():
 
 
 def test_vendor_format_failure_moves_to_the_next_model(kb):
-    m = models(llm.BadOutput("p1"), plan(), "Closes 15 December 2026 [E1].")
+    m = models(llm.BadOutput("p1"), plan(), "Enrol before it closes.")
     assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY).kind == "answer"
 
 
 def test_plan_is_made_without_any_document_text(kb):
-    m = models(plan(), "Closes 15 December 2026 [E1].")
+    m = models(plan(), "Enrol before it closes.")
     agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
-    planner_sent = json.dumps(m.provider.sent[0][1])
-    assert DATE["text"] not in planner_sent
+    assert DATE["text"] not in json.dumps(m.provider.sent[0][1])
+
+
+def test_the_model_never_sees_exact_figures(kb):
+    m = models(plan(), "Enrol before it closes.")
+    agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    composer_sent = json.dumps(m.provider.sent[1][1])
+    assert "15 December" not in composer_sent and "2026-12-15" not in composer_sent and "EXACT" in composer_sent
+
+
+def test_garbled_figure_in_the_explanation_is_rejected_and_never_shown(kb):
+    m = models(plan(), "Rabi closes 25 December 2026.", "It closes on 25 December.")
+    r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    assert "25 December" not in r.answer and "15 December 2026" in r.answer
+    assert r.trace["first_try_problems"] and r.trace["calls"] == 3
+
+
+def test_rice_gets_its_own_deadline_not_the_general_one():
+    rice = {"scheme": "PMFBY", "opens": "2026-10-01", "closes": "2026-12-31", "applies_to": ["rice", "paddy"]}
+    rest = {"scheme": "PMFBY", "opens": "2026-10-01", "closes": "2026-12-15", "except": ["rice", "paddy"]}
+    assert facts.windows_for([rest, rice], "i grow paddy", TODAY) == [rice]
+    assert len(facts.windows_for([rest, rice], "what is the last date", TODAY)) == 2
+
+
+def test_a_crop_only_one_scheme_names_still_sees_the_other_schemes_general_window():
+    rice = {"scheme": "PMFBY", "opens": "2026-10-01", "closes": "2026-12-31", "applies_to": ["rice"]}
+    rest = {"scheme": "PMFBY", "opens": "2026-10-01", "closes": "2026-12-15", "except": ["rice"]}
+    tomato = {"scheme": "RWBCIS", "opens": "2026-10-01", "closes": "2026-12-15", "applies_to": ["tomato"]}
+    assert facts.windows_for([rice, rest, tomato], "my tomato crop", TODAY) == [rest, tomato]
+
+
+def test_a_named_scheme_excludes_the_other():
+    a = {"scheme": "PMFBY", "scheme_words": ["pmfby"], "opens": "2026-10-01", "closes": "2026-12-15"}
+    b = {"scheme": "RWBCIS", "scheme_words": ["weather"], "opens": "2026-10-01", "closes": "2026-12-15"}
+    assert facts.windows_for([a, b], "weather insurance date", TODAY) == [b]
+
+
+def test_closed_window_says_closed_and_open_window_counts_days():
+    closed = {"scheme": "X", "opens": "2026-04-01", "closes": "2026-07-15"}
+    assert "Closed" in facts.window_fact(closed, TODAY)
+    assert facts.windows_for([closed], "date", TODAY) == [closed]
+    opened = {"scheme": "X", "opens": "2026-10-01", "closes": "2026-11-15"}
+    assert "closes in 11 days" in facts.window_fact(opened, TODAY)
+
+
+def test_rule_cases_are_kept_apart():
+    text = facts.all_cases_fact({"name": "S", "render": "pays {p}%", "cases": [
+        {"label": "Commercial", "when": {"c": "x"}, "outcome": {"p": 5}},
+        {"label": "Food, Rabi", "when": {"c": "y"}, "outcome": {"p": 1.5}}]})
+    assert "(1) Commercial: pays 5%." in text and "(2) Food, Rabi: pays 1.5%." in text
+
+
+def test_a_window_that_closes_before_it_opens_is_rejected():
+    assert any("closes before" in p for p in knowledge.problems({**DATE, "closes": "2026-01-01"}))
 
 
 def test_document_text_cannot_add_tools():
@@ -187,13 +248,13 @@ def test_state_with_no_data_says_so_honestly(kb):
 
 
 def test_failed_check_regenerates_then_falls_back_to_the_facts(kb):
-    m = models(plan(), "You pay 9% [E1].", "Still 9% [E1].")
+    m = models(plan(), "You pay 9%.", "Still 9%.")
     r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
     assert "9%" not in r.answer and "15 December 2026" in r.answer and r.trace["calls"] == 3
 
 
 def test_rate_limit_moves_to_the_next_model(kb):
-    m = models(llm.RateLimited("p1"), plan(), "Closes 15 December 2026 [E1].")
+    m = models(llm.RateLimited("p1"), plan(), "Enrol before it closes.")
     assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY).kind == "answer"
     assert "p1" in m.resting
 

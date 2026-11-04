@@ -10,6 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Callable
 
+from . import facts as F
 from . import rules, text_search
 from .knowledge import Knowledge
 
@@ -29,6 +30,8 @@ class Evidence:
     valid_until: str | None = None
     season: str = ""          # the one-season rule list this text opens in, if any
     reviewed: bool = False
+    fact: str = ""            # written by code and printed as is; the model never sees it
+    note: str = ""            # what the model sees instead of an exact record's figures
 
 
 @dataclass
@@ -41,6 +44,7 @@ class Context:
     passage: str = ""         # the planner's search aids
     topic: str = ""
     keywords: tuple[str, ...] = ()
+    question: str = ""        # the user's words, for matching a crop or a scheme by code
     missing: list[str] = field(default_factory=list)  # facts a rule needs, for the agent to ask
 
 
@@ -64,22 +68,37 @@ def text_search_tool(args: dict, ctx: Context) -> list[Evidence]:
             for h in hits]
 
 
-def _pairs(values: dict) -> str:
-    return ", ".join(f"{k.replace('_', ' ')} = {str(v).replace('_', ' ')}" for k, v in values.items())
-
-
 def rule_check(args: dict, ctx: Context) -> list[Evidence]:
     query = str(args.get("query") or args.get("scheme") or "")
     facts = {**ctx.facts, **(args.get("facts") or {})}
+    found = ctx.knowledge.find(ctx.domain, "rules", ctx.state, query, top=4)
     out = []
-    for r in ctx.knowledge.find(ctx.domain, "rules", ctx.state, query, top=2):
+    for r in F.names_scheme(found, ctx.question.lower()):
         result = rules.evaluate(r, facts)
         if result.outcome is not None:
-            out.append(_from_record(r, "rule_check", f"{r['text']} Decided for this user: {_pairs(result.outcome)}."))
+            fact = f"{r.get('name', '')}: {F.decided_fact(r, result.outcome)}.".strip(": ")
         else:
             ctx.missing += [m for m in result.missing if m not in ctx.missing]
-            cases = "; ".join(f"if {_pairs(c['when'])}: {_pairs(c['outcome'])}" for c in r["cases"])
-            out.append(_from_record(r, "rule_check", f"{r['text']} All cases: {cases}."))
+            fact = F.all_cases_fact(r)
+        out.append(_from_record(r, "rule_check", fact))
+        out[-1].fact, out[-1].note = fact, r.get("note") or r["text"]
+    return out
+
+
+def dates_lookup(args: dict, ctx: Context) -> list[Evidence]:
+    query = str(args.get("query") or args.get("subject") or "")
+    found = ctx.knowledge.find(ctx.domain, "dates", ctx.state, query, top=12)
+    windows = [r for r in found if F.is_window(r)]
+    if not windows:
+        return [_from_record(r, "dates_lookup") for r in found[:6]]
+    # Other dated records can still inform the explanation (free cover ended in 2024, say).
+    plain = [r for r in found if not F.is_window(r) and r["id"].startswith("ap-")]
+    out = [_from_record(r, "dates_lookup") for r in plain]
+    for w in F.windows_for(windows, f"{ctx.question} {' '.join(str(v) for v in ctx.facts.values())}", ctx.as_of):
+        fact = F.window_fact(w, ctx.as_of)
+        e = _from_record(w, "dates_lookup", fact)
+        e.fact, e.note = fact, F.window_note(w, ctx.as_of)
+        out.insert(0, e)
     return out
 
 
@@ -93,7 +112,7 @@ def _lookup(store: str, tool: str) -> Callable[[dict, Context], list[Evidence]]:
 TOOLS = {
     "text_search": text_search_tool,
     "rule_check": rule_check,
-    "dates_lookup": _lookup("dates", "dates_lookup"),
+    "dates_lookup": dates_lookup,
     "number_lookup": _lookup("numbers", "number_lookup"),
     "directory_lookup": _lookup("directory", "directory_lookup"),
     "links_walk": _lookup("links", "links_walk"),
