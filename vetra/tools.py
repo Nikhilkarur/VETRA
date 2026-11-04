@@ -33,6 +33,7 @@ class Evidence:
     fact: str = ""            # written by code and printed as is; the model never sees it
     note: str = ""            # what the model sees instead of an exact record's figures
     detail: str = ""          # a plain line printed with the fact when no model explains it
+    in_language: bool = True  # the fact is in the reply language
 
 
 @dataclass
@@ -46,6 +47,7 @@ class Context:
     topic: str = ""
     keywords: tuple[str, ...] = ()
     question: str = ""        # the user's words, for matching a crop or a scheme by code
+    language: str = "english" # what exact facts are printed in, where the data allows it
     missing: list[str] = field(default_factory=list)  # facts a rule needs, for the agent to ask
 
 
@@ -73,11 +75,12 @@ def rule_check(query: str, ctx: Context) -> list[Evidence]:
     for r in F.names_scheme(found, ctx.question.lower()):
         result = rules.evaluate(r, {**ctx.facts, **rules.facts_in_words(r, ctx.question)})
         if result.outcome is not None:
-            body = F.decided_fact(r, result.outcome)
+            body = F.decided_fact(r, result.outcome, ctx.language)
         else:
-            asked_as = [(r.get("ask_as") or {}).get(m, m) for m in result.missing]
+            names = r.get(f"ask_as_{ctx.language}") or r.get("ask_as") or {}
+            asked_as = [names.get(m, m) for m in result.missing]
             ctx.missing += [m for m in asked_as if m not in ctx.missing]
-            body = F.all_cases_fact(r)
+            body = F.all_cases_fact(r, ctx.language)
         by_body.setdefault(body, []).append(r)
     out = []
     for body, same in by_body.items():  # schemes with the same rates share one line
@@ -87,7 +90,8 @@ def rule_check(query: str, ctx: Context) -> list[Evidence]:
         e = _from_record(same[0], "rule_check", fact)
         e.fact, e.note = fact, " ".join(r.get("note") or r["text"] for r in same)
         e.doc = "; ".join((r.get("source") or {}).get("doc", "") for r in same)
-        e.detail = same[0].get("detail") or ""
+        e.detail = same[0].get(f"detail_{ctx.language}") or same[0].get("detail") or ""
+        e.in_language = all(F.speaks(r, ctx.language) for r in same)
         out.append(e)
     return out
 
@@ -97,7 +101,7 @@ def dates_lookup(query: str, ctx: Context) -> list[Evidence]:
     words = f"{ctx.question} {' '.join(str(v) for v in ctx.facts.values())}"
     out = [_from_record(r, "dates_lookup") for r in found if not F.is_window(r)]
     for w in F.windows_for([r for r in found if F.is_window(r)], words, ctx.as_of):
-        fact = F.window_fact(w, ctx.as_of)
+        fact = F.window_fact(w, ctx.as_of, ctx.language)
         e = _from_record(w, "dates_lookup", fact)
         e.fact, e.note = fact, F.window_note(w, ctx.as_of)
         out.insert(0, e)

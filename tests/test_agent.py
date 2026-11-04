@@ -352,9 +352,22 @@ def test_exact_records_that_answer_everything_need_no_answer_model(kb):
     assert r.trace["calls"] == 1 and "Open now" in r.answer
 
 
-def test_telugu_still_goes_to_the_model_for_exact_facts(kb):
-    r, _ = run(kb, plan(language="telugu"), "తెలుగు వివరణ.")
-    assert r.trace["calls"] == 2 and "తెలుగు వివరణ" in r.answer and "15 December 2026" in r.answer
+def test_telugu_windows_are_printed_in_telugu_with_no_answer_model(kb):
+    r, _ = run(kb, plan(language="telugu"))
+    assert r.trace["calls"] == 1 and "15 డిసెంబర్ 2026" in r.answer and "తెరిచి ఉంది" in r.answer
+
+
+def test_a_rule_without_telugu_goes_to_the_model_in_telugu(kb):
+    r, _ = run(kb, plan(language="telugu", needs=NEED_RULE), "తెలుగు వివరణ.", q="premium rule scheme?")
+    assert r.trace["calls"] == 2 and "తెలుగు వివరణ" in r.answer
+
+
+def test_a_rule_with_telugu_is_printed_in_telugu(tmp_path):
+    rule = {**RULE, "render_telugu": "{percent}% చెల్లించాలి", "ask_as_telugu": {"crop": "పంట"},
+            "cases": [{**c, "label_telugu": "ఒక రకం"} for c in RULE["cases"][:1]]}
+    sorter.file_records([rule], tmp_path)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(language="telugu", needs=NEED_RULE), q="premium rule scheme?")
+    assert r.trace["calls"] == 1 and "ఒక రకం" in r.answer and "5% చెల్లించాలి" in r.answer and "పంట" in r.answer
 
 
 def test_schemes_with_the_same_rates_share_one_line(tmp_path):
@@ -535,8 +548,13 @@ def test_a_declined_question_has_no_label_or_sources():
 
 
 def test_the_readers_language_choice_wins(kb):
-    r, _ = run(kb, plan(), "వివరణ.", reply="telugu")
-    assert r.language == "telugu" and r.trace["calls"] == 2
+    r, _ = run(kb, plan(), reply="telugu")
+    assert r.language == "telugu" and "తెరిచి ఉంది" in r.answer
+
+
+def test_telugu_in_english_letters_goes_to_the_model(kb):
+    r, _ = run(kb, plan(), "Idi open lo undi.", reply="telugu_roman")
+    assert r.trace["calls"] == 2 and "Idi open lo undi" in r.answer
 
 
 # ---------------------------------------------------------------- adding a state

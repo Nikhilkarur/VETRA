@@ -69,7 +69,7 @@ A deadline:
  "source": {"doc": "G.O. name and number", "date": "2026-07-06", "url": "https://official-site.gov.in/order.pdf"}}
 ```
 
-A rule: see `knowledge/agriculture/rules.jsonl`. Which crop falls in which class is data in the rule's `aliases`, so check it against that state's notified crops. Keep `reviewed` false until a person has checked the rule against the order.
+A rule: see `knowledge/agriculture/rules.jsonl`. Which crop falls in which class is data in the rule's `aliases`, so check it against that state's notified crops. Keep `reviewed` false until a person has checked the rule against the order. Add `render_telugu`, `label_telugu`, `detail_telugu` and `ask_as_telugu` to print it in Telugu; without them, the model explains it in Telugu.
 
 ### A new topic or a new type of data
 

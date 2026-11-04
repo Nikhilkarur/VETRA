@@ -163,7 +163,7 @@ def make_plan(question: str, history: list[dict], models: llm.Models, meter: llm
 
 def find(need: Need, plan: Plan, today: str, knowledge: Knowledge, asked: str, text_cache: dict) -> tuple[Found, Context]:
     """Exact stores first. Text only if they have nothing. Says which level answered."""
-    ctx = Context(need.domain, plan.state, today, knowledge, plan.facts, plan.passage, plan.topic, plan.keywords, asked)
+    ctx = Context(need.domain, plan.state, today, knowledge, plan.facts, plan.passage, plan.topic, plan.keywords, asked, plan.language)
     query = f"{need.subject} {plan.standalone}".strip()
     items: list[Evidence] = []
     for tool in DATA_TYPES[need.data_type].exact:
@@ -175,7 +175,7 @@ def find(need: Need, plan: Plan, today: str, knowledge: Knowledge, asked: str, t
         text_cache[need.domain] = TOOLS["text_search"](plan.standalone or need.subject, ctx)
     items = text_cache[need.domain]
     if not checks.on_topic(items, need.subject):  # corrective: once more, on the subject alone
-        retry = Context(need.domain, plan.state, today, knowledge, plan.facts, question=asked)
+        retry = Context(need.domain, plan.state, today, knowledge, plan.facts, question=asked, language=plan.language)
         items = TOOLS["text_search"](need.subject, retry)
         if not checks.on_topic(items, need.subject):
             return Found(need, "none"), ctx
@@ -374,8 +374,9 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
 
     # Exact records answer everything: print them. A model that can't see the figures only
     # adds risk (it told a farmer no deadline was given, right under the printed deadline).
-    # Telugu still goes to the model, because the printed facts are in English for now.
-    if plan.language == "english" and all(f.level in ("exact", "exact_central") for f in found) and checks.has_facts(items):
+    # If a fact can't be printed in the reader's language, the model explains it in that language.
+    if (all(f.level in ("exact", "exact_central") for f in found) and checks.has_facts(items)
+            and plan.language in ("english", "telugu") and all(e.in_language for e in items if e.fact)):
         details = list(dict.fromkeys(e.detail for e in items if e.detail))
         if missing:
             details.append(messages.say("tell_me", plan.language, facts=", ".join(m.replace("_", " ") for m in missing)))
