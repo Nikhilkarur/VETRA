@@ -45,6 +45,20 @@ def names_scheme(records: list[dict], asked: str) -> list[dict]:
     return named or records
 
 
+def on_its_topic(records: list[dict], asked: str) -> list[dict]:
+    """
+    Records about what's being asked. Without this, "how much does Annadatha Sukhibhava pay"
+    shares enough words with the crop insurance premium rule to get that rule as its answer.
+    """
+    return [r for r in records if not r.get("topic_words") or _mentions(r["topic_words"], asked)]
+
+
+def _for_season(records: list[dict], asked: str) -> list[dict]:
+    """The season asked about: "Kharif 2026" exactly if it's named, or else any kharif."""
+    exact = [r for r in records if r.get("for_season") and r["for_season"].lower() in asked]
+    return exact or [r for r in records if r.get("for_season") and r["for_season"].split()[0].lower() in asked.split()] or records
+
+
 def _names_its_crop(window: dict, asked: str) -> bool:
     return _mentions(window.get("applies_to") or [], asked)
 
@@ -66,7 +80,7 @@ def windows_for(records: list[dict], asked: str, as_of: str) -> list[dict]:
     it has passed.
     """
     asked = asked.lower()
-    chosen = names_scheme(records, asked)
+    chosen = _for_season(names_scheme(records, asked), asked)
     known_crop = any(_names_its_crop(w, asked) or _mentions(w.get("except") or [], asked) for w in chosen)
     if known_crop:
         chosen = [w for w in chosen if _covers(w, asked)]

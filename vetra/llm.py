@@ -28,6 +28,7 @@ DEFAULT_ROLES = {
     "compose": ("openai/gpt-oss-120b", "openai/gpt-oss-20b"),
 }
 REST_SECONDS = 600  # a model at its limit isn't tried again for this long
+BUSY_SECONDS = 15   # a model that says it's overloaded is worth trying again soon
 MAX_CALLS = 6       # for one question: the limit the proposal holds to
 MAX_WAIT = 20       # a citizen will wait this long for a per-minute limit to pass
 
@@ -61,6 +62,10 @@ class Reply:
     text: str
     model: str
     tokens: int = 0
+    tokens_in: int = 0
+    tokens_out: int = 0
+    tokens_cached: int = 0    # part of tokens_in, billed lower
+    tokens_thinking: int = 0  # part of tokens_out, hidden from the reply but billed
 
 
 class Provider(Protocol):
@@ -68,8 +73,9 @@ class Provider(Protocol):
 
 
 class OpenAICompatible:
-    def __init__(self, base_url: str, key: str, timeout: float = 120):
+    def __init__(self, base_url: str, key: str, timeout: float = 90, reasoning: dict[str, str] | None = None):
         self.base_url, self.key, self.timeout = base_url.rstrip("/"), key, timeout
+        self.reasoning = reasoning or {}   # model: effort. Hidden thinking is billed as output
 
     def complete(self, model: str, messages: list[dict], json_mode: bool = False) -> Reply:
         import requests
@@ -77,14 +83,22 @@ class OpenAICompatible:
         body: dict = {"model": model, "messages": messages, "temperature": 0.1}
         if json_mode:
             body["response_format"] = {"type": "json_object"}
+        if model in self.reasoning:
+            body["reasoning_effort"] = self.reasoning[model]
         try:
             r = requests.post(f"{self.base_url}/chat/completions", json=body, timeout=self.timeout,
                               headers={"Authorization": f"Bearer {self.key}"})
+        except (requests.Timeout, requests.ConnectionError) as exc:  # the next model may well answer
+            raise RateLimited(model, BUSY_SECONDS) from exc
         except requests.RequestException as exc:
             raise LLMError(f"{model}: {type(exc).__name__}") from exc
         if r.status_code == 429:
             wait = r.headers.get("retry-after", "")
             raise RateLimited(model, float(wait) if wait.replace(".", "", 1).isdigit() else 0)
+        if r.status_code == 503:  # overloaded, which passes quickly
+            raise RateLimited(model, BUSY_SECONDS)
+        if r.status_code == 404:  # retired or not offered to this account, so the next model should run
+            raise RateLimited(model)
         if r.status_code == 413:
             raise RequestTooLarge(model)
         if r.status_code == 400 and "json_validate_failed" in r.text:
@@ -94,7 +108,10 @@ class OpenAICompatible:
         data = r.json()
         # Some models put their reasoning in the reply, between these tags.
         text = re.sub(r"<think>.*?(?:</think>|$)", "", data["choices"][0]["message"].get("content") or "", flags=re.S).strip()
-        return Reply(text, model, (data.get("usage") or {}).get("total_tokens", 0))
+        usage = data.get("usage") or {}
+        return Reply(text, model, usage.get("total_tokens", 0), usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0),
+                     (usage.get("prompt_tokens_details") or {}).get("cached_tokens", 0),
+                     (usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0))
 
 
 def from_env() -> "Models":
@@ -110,7 +127,8 @@ def from_env() -> "Models":
         chosen = os.environ.get(f"LLM_MODEL_{role.upper()}")
         if chosen:
             roles[role] = tuple(m.strip() for m in chosen.split(",") if m.strip())
-    return Models(OpenAICompatible(os.environ.get("LLM_BASE_URL") or GROQ_URL, key), roles)
+    reasoning = dict(p.strip().split(":", 1) for p in (os.environ.get("LLM_REASONING") or "").split(",") if ":" in p)
+    return Models(OpenAICompatible(os.environ.get("LLM_BASE_URL") or GROQ_URL, key, reasoning=reasoning), roles)
 
 
 @dataclass
@@ -132,6 +150,7 @@ class Models:
             except RateLimited as exc:
                 # A per-minute limit passes soon; a daily one is worth skipping for a while.
                 self.resting[model] = time.time() + (exc.retry_after or REST_SECONDS)
+                meter.calls -= 1   # nothing was spent, so a busy provider shouldn't use up the budget
                 last = exc
                 continue
             except BadOutput as exc:
@@ -162,4 +181,5 @@ class Meter:
 
     def record(self, role: str, reply: Reply) -> None:
         self.tokens += reply.tokens
-        self.steps.append({"role": role, "model": reply.model, "tokens": reply.tokens})
+        self.steps.append({"role": role, "model": reply.model, "tokens": reply.tokens, "in": reply.tokens_in, "out": reply.tokens_out,
+                           "cached": reply.tokens_cached, "thinking": reply.tokens_thinking})

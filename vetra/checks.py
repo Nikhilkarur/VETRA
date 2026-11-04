@@ -18,6 +18,15 @@ def _out_of_date(e: Evidence, as_of: str) -> bool:
     return bool(e.valid_until and e.valid_until < as_of) or bool(e.valid_from and e.valid_from > as_of)
 
 
+def _asked_about(e: Evidence, question: str) -> bool:
+    """Does the question name a year this record applied in? Any year from its start to its end counts."""
+    start, end = (e.valid_from or "")[:4], (e.valid_until or "")[:4]
+    if not start and not end:
+        return False
+    return any((not start or start <= year) and (not end or year <= end)
+               for year in re.findall(r"\b(?:19|20)\d{2}\b", question))
+
+
 def in_force(items: list[Evidence], as_of: str, question: str = "") -> list[Evidence]:
     """
     Remove what doesn't apply on as_of, cutting past seasons' rules out of the text.
@@ -32,7 +41,7 @@ def in_force(items: list[Evidence], as_of: str, question: str = "") -> list[Evid
 
     keep = []
     for e in items:
-        if _out_of_date(e, as_of) and (e.valid_until or e.valid_from or "")[:4] not in question:
+        if _out_of_date(e, as_of) and not _asked_about(e, question):
             continue
         if not e.history:  # read for how a rule changed, so it keeps its past seasons
             e.text, e.season = without_past_seasons({"text": e.text, "season": e.season}, question)
@@ -74,6 +83,45 @@ _MONTH = "|".join(m[:3] + m[3:].join(["(?:", ")?"]) for m in _MONTHS)
 _DATE = re.compile(rf"\b\d{{1,2}}(?:st|nd|rd|th)?[ -]+(?:{_MONTH})\b|\b(?:{_MONTH})\s+\d{{1,2}}(?:st|nd|rd|th)?\b"
                    rf"|\b\d{{1,2}}[./-]\d{{1,2}}[./-]\d{{2,4}}\b|\b\d{{4}}-\d{{2}}-\d{{2}}\b", re.I)
 _PERCENT = re.compile(r"\d[\d,]*(?:\.\d+)?\s*(?:%|per ?cent)", re.I)
+
+
+# Right digits, wrong meaning: 3 lakh isn't 3 crore, and per acre isn't per hectare.
+_SCALED = re.compile(r"(\d[\d,]*(?:\.\d+)?)\s*(lakhs?\s+crores?|lakhs?|lacs?|crores?|\u0932\u093e\u0916|\u0915\u0930\u094b\u0921\u093c?)(?![^\W\d_])", re.I)
+_SCALE = {"lak": 1e5, "lac": 1e5, "cro": 1e7, "\u0932\u093e\u0916": 1e5}
+_PER_AREA = re.compile(r"(\d[\d,]*(?:\.\d+)?)(?:\s*/-)?\s*(?:/|per)\s*(acre|hectare|ha)\b", re.I)
+
+
+def _rupees(number: str, unit: str) -> float:
+    value = float(number.replace(",", ""))
+    words = unit.lower().split()
+    if len(words) == 2:
+        return value * 1e12
+    return value * (_SCALE.get(words[0][:3]) or _SCALE.get(words[0]) or 1e7)
+
+
+def _amounts(text: str) -> list[float]:
+    """Every amount the text states: scaled ones worked out, and plain numbers as they are."""
+    scaled = [_rupees(*m.groups()) for m in _SCALED.finditer(text)]
+    plain = [float(n.replace(",", "")) for n in re.findall(r"\d[\d,]*(?:\.\d+)?", _SCALED.sub(" ", text))]
+    return scaled + plain
+
+
+def scale_or_area_wrong(sentence: str, shown: str) -> str:
+    """Why this sentence's amount doesn't match what it was shown, or nothing. Rounding is allowed."""
+    known = _amounts(shown)
+    for m in _SCALED.finditer(sentence):
+        value = _rupees(*m.groups())
+        if not any(abs(value - k) <= 0.005 * value for k in known):
+            return f"'{m.group(0)}' isn't an amount in the evidence. Check the lakh or crore"
+    areas = {}
+    for m in _PER_AREA.finditer(shown):
+        areas.setdefault(m.group(1).replace(",", ""), set()).add(m.group(2).lower().replace("ha", "hectare") if m.group(2).lower() == "ha" else m.group(2).lower())
+    for m in _PER_AREA.finditer(sentence):
+        unit = "hectare" if m.group(2).lower() == "ha" else m.group(2).lower()
+        held = areas.get(m.group(1).replace(",", ""))
+        if held and unit not in held:
+            return f"'{m.group(0)}' is per {sorted(held)[0]} in the evidence, not per {unit}"
+    return ""
 
 
 def about_a_past_year(question: str, as_of: str) -> bool:
@@ -217,6 +265,10 @@ def _flat(text: str) -> str:
     return re.sub(r"\s+", " ", text).replace(",", "")
 
 
+def _flat_keep_commas(text: str) -> str:
+    return re.sub(r"\s+", " ", text)
+
+
 def _has_number(number: str, text: str) -> bool:
     """5 isn't in 1.5, but a year is in the date 28.02.2027."""
     before = r"(?<!\d)" if re.fullmatch(r"(?:19|20)\d\d", number) else r"(?<!\d)(?<!\d\.)"
@@ -226,6 +278,10 @@ def _has_number(number: str, text: str) -> bool:
 def _holder(says: Callable[[str], bool], evidence: list[Evidence]) -> int:
     """The number of the first passage that says it."""
     return next((n for n, e in enumerate(evidence, 1) if says(_shown(e))), 0)
+
+
+# "The amount stated above" only makes sense when code has printed records above the answer.
+_POINTS_UP = re.compile(r"\b(?:rates?|amounts?|dates?|figures?|limits?|records?|windows?)\s+(?:\w+\s+){0,3}above\b|\babove\s+(?:rates?|amounts?|dates?|figures?|limits?)\b", re.I)
 
 
 def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = "", guard_gaps: bool = True) -> list[Fault]:
@@ -259,6 +315,8 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
                 fault(f"cites [E{n}], which doesn't exist")
         if _BACKSTAGE.search(s.text):
             fault("talks about the evidence or the records instead of the rules. Say \"the documents\" or \"the rates above\"")
+        if not has_facts(evidence) and _POINTS_UP.search(s.text):
+            fault("points to figures above, but nothing is printed above this answer. Give the figure from the passage it cites")
         if guard_gaps and has_facts(evidence) and _WITHHELD.search(s.text):
             fault("says something isn't given, but the exact records printed above give it. Refer to them instead")
         for stated in re.findall(r"today[^.\n]{0,20}?(\d{4}-\d{2}-\d{2})", s.text, re.I):
@@ -268,7 +326,8 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
         cited = " ".join(_shown(e) for e in sources) + asked
         flat_cited, cited_dates = _flat(cited), {_date_key(m.group(0)) for m in _DATE.finditer(cited)}
         names = ", ".join(f"[E{n}]" for n in s.cited)
-        for figure in _FIGURE.findall(s.text):
+        # "Rs.3 lakh" is the amount 3,00,000, not the number 3, so the scale check below handles it.
+        for figure in _FIGURE.findall(_SCALED.sub(" ", s.text)):
             number, shown = _digits(figure), figure.strip()
             if not number or _has_number(number, flat_asked):
                 continue
@@ -279,6 +338,14 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
             elif not _has_number(number, flat_cited):
                 fault(f"'{shown}' isn't in {names}, which this sentence cites. Cite the passage it comes from",
                       _holder(lambda t: _has_number(number, _flat(t)), evidence))
+        wrong = scale_or_area_wrong(s.text, _flat_keep_commas(everything))
+        if wrong:
+            fault(wrong)
+        elif _SCALED.search(s.text):
+            if not sources:
+                fault(f"'{_SCALED.search(s.text).group(0)}' has no citation. Cite the passage it comes from")
+            elif scale_or_area_wrong(s.text, _flat_keep_commas(cited)):
+                fault(f"'{_SCALED.search(s.text).group(0)}' isn't in {names}, which this sentence cites. Cite the passage it comes from")
         for m in _DATE.finditer(s.text):
             key = _date_key(m.group(0))
             holder = _holder(lambda t: key in {_date_key(d.group(0)) for d in _DATE.finditer(t)}, evidence)

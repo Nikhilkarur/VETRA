@@ -91,7 +91,7 @@ def look_inside(document: str, query: str, ctx: Context) -> list[Evidence]:
 def rule_check(query: str, ctx: Context) -> list[Evidence]:
     found = ctx.knowledge.find(ctx.domain, "rules", ctx.state, query, top=4)
     by_body: dict[str, list[dict]] = {}
-    for r in F.names_scheme(found, ctx.question.lower()):
+    for r in F.names_scheme(F.on_its_topic(found, ctx.question.lower()), ctx.question.lower()):
         result = rules.evaluate(r, {**ctx.facts, **rules.facts_in_words(r, ctx.question)})
         crop = rules.not_notified(r, ctx.facts, ctx.question)
         if crop:
@@ -119,7 +119,7 @@ def rule_check(query: str, ctx: Context) -> list[Evidence]:
 
 
 def dates_lookup(query: str, ctx: Context) -> list[Evidence]:
-    found = ctx.knowledge.find(ctx.domain, "dates", ctx.state, query, top=12)
+    found = F.on_its_topic(ctx.knowledge.find(ctx.domain, "dates", ctx.state, query, top=12), ctx.question.lower())
     words = f"{ctx.question} {' '.join(str(v) for v in ctx.facts.values())}"
     out = [_from_record(r, "dates_lookup") for r in found if not F.is_window(r)]
     for w in F.windows_for([r for r in found if F.is_window(r)], words, ctx.as_of):

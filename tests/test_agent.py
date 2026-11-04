@@ -15,7 +15,7 @@ from vetra import gaps as gaps_module  # noqa: E402
 from vetra import navigate  # noqa: E402
 from vetra.datatypes import DATA_TYPES  # noqa: E402
 from vetra.domains import DOMAINS  # noqa: E402
-from vetra.tools import Evidence  # noqa: E402
+from vetra.tools import Context, Evidence  # noqa: E402
 
 TODAY = "2026-11-04"
 EXPLORE = navigate.explore  # the real one; most tests skip this step
@@ -58,6 +58,7 @@ class Gaps:
 @pytest.fixture(autouse=True)
 def no_real_index_or_gap_file(monkeypatch):
     """Tests search a stub, and never write to the real gap log."""
+    languages._saved.clear()
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda query, ctx: [])
     monkeypatch.setattr(agent, "GapLog", Gaps)
     monkeypatch.setattr(navigate, "explore", lambda q, subj, dom, items, base, m, meter, tidy, level: (items, navigate.Route()))
@@ -1395,3 +1396,258 @@ def test_a_rewrite_with_no_citations_does_not_replace_a_mostly_good_answer(monke
     first = "Apply online [E1]. Use the portal [E1]. Bring a photo [E1]."
     r = deep_run(monkeypatch, tmp_path, first, '{"unsupported": [3]}', "Apply online, using the portal.", '{"unsupported": []}')
     assert "Use the portal [E1]" in r.answer and "photo" not in r.answer and "couldn't verify" not in r.answer
+
+
+# ------------------------------------------------------------------ searching Indian-language documents
+
+def test_keyword_search_can_read_indian_scripts_whole():
+    assert text_index.words("पीक विमा योजना।") == ["पीक", "विमा", "योजना"]
+    assert text_index.words("పంట బీమా") == ["పంట", "బీమా"]
+    assert text_index.words("فصل بیمہ") == ["فصل", "بیمہ"]
+    assert text_index.words("PMFBY 2026-27 Rs.6000") == ["pmfby", "2026", "27", "rs", "6000"]
+
+
+def test_keyword_search_finds_a_marathi_document_and_english_ranks_as_before():
+    bm25 = text_index._rag()._BM25(["पीक विमा योजना", "crop insurance scheme", "other text"], tokenize=text_index.words)
+    assert bm25.rank("पीक विमा")[0] == 0 and bm25.rank("crop insurance")[0] == 1
+
+
+def test_rti_search_keeps_its_own_tokenizer():
+    R = text_index._rag()
+    assert R._BM25(["crop insurance"]).tokenize is R._tokens
+
+
+def test_every_embedding_model_has_its_own_place_in_the_index():
+    tags = [e.tag for e in text_index.EMBEDDINGS.values()]
+    assert len(tags) == len(set(tags)) and "BAAI/bge-m3" in text_index.EMBEDDINGS
+
+
+# ------------------------------------------------------------------ what the script settles
+
+def test_a_script_with_one_language_settles_it_whatever_the_model_said():
+    assert languages.settle("english", "పంట బీమా ప్రీమియం ఎంత") == "telugu"
+    assert languages.settle("hindi", "ਫ਼ਸਲ ਬੀਮੇ ਦਾ ਪ੍ਰੀਮੀਅਮ") == "punjabi"
+    assert languages.settle("english", "ᱯᱷᱚᱥᱚᱞ ᱵᱤᱢᱟ") == "santali"
+
+
+def test_a_shared_script_keeps_the_models_choice_if_it_fits():
+    assert languages.settle("marathi", "पीक विम्याचा हप्ता") == "marathi"
+    assert languages.settle("assamese", "শস্য বীমাৰ") == "assamese"
+    assert languages.settle("sindhi", "فصل بيمي") == "sindhi"
+
+
+def test_a_shared_script_falls_back_when_the_model_is_plainly_wrong():
+    assert languages.settle("english", "फसल बीमा का प्रीमियम") == "hindi"
+    assert languages.settle("tamil", "ফসল বিমার") == "bengali"
+    assert languages.settle("english", "فصل بیمہ") == "urdu"
+
+
+def test_english_letters_leave_the_model_to_decide():
+    assert languages.settle("hindi", "fasal bima ka premium kitna hai") == "hindi"
+    assert languages.settle("english", "how much is the premium") == "english"
+
+
+def test_a_scheme_name_in_english_letters_does_not_change_the_script():
+    assert languages.settle("english", "PMFBY का प्रीमियम कितना है") == "hindi"
+
+
+def test_a_wrong_language_from_the_planner_is_corrected_in_the_answer(kb):
+    m = models(plan(language="english"))
+    r = agent.answer("పంట బీమా rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
+    assert r.language == "telugu" and "డిసెంబర్" in r.answer
+
+
+def test_a_line_translated_once_costs_nothing_the_second_time():
+    m, meter = models(json.dumps({"lines": ["नमस्ते"]})), llm.Meter()
+    assert languages.translate(["Hello"], "hindi", m, meter) == ["नमस्ते"]
+    assert languages.translate(["Hello"], "hindi", m, meter) == ["नमस्ते"]
+    assert meter.calls == 1
+
+
+def test_only_lines_not_yet_translated_are_sent():
+    m, meter = models(json.dumps({"lines": ["नमस्ते"]}), json.dumps({"lines": ["अलविदा"]})), llm.Meter()
+    languages.translate(["Hello"], "hindi", m, meter)
+    assert languages.translate(["Hello", "Bye"], "hindi", m, meter) == ["नमस्ते", "अलविदा"]
+    assert '["Bye"]' in m.provider.sent[1][1][1]["content"]
+
+
+def test_a_failed_translation_is_not_saved():
+    m = models("not json", json.dumps({"lines": ["नमस्ते"]}))
+    assert languages.translate(["Hello"], "hindi", m, llm.Meter()) == [None]
+    assert languages.translate(["Hello"], "hindi", m, llm.Meter()) == ["नमस्ते"]
+
+
+def test_translations_are_kept_per_language():
+    m = models(json.dumps({"lines": ["नमस्ते"]}), json.dumps({"lines": ["வணக்கம்"]}))
+    languages.translate(["Hello"], "hindi", m, llm.Meter())
+    assert languages.translate(["Hello"], "tamil", m, llm.Meter()) == ["வணக்கம்"]
+
+
+def test_a_plan_missing_its_topic_takes_it_from_its_parts():
+    reply = json.dumps({"language": "kashmiri", "standalone": "premium?", "needs": [{"type": "amount", "subject": "premium", "domain": "agriculture"}]})
+    assert agent.parse_plan(reply).domain == "agriculture"
+    assert agent.parse_plan(json.dumps({"language": "english", "needs": []})) is None
+
+
+# ------------------------------------------------------------------ provider behaviour
+
+class Response:
+    def __init__(self, status=200, text="ok"):
+        self.status_code, self.ok, self.headers, self.text = status, status == 200, {}, text
+
+    def json(self):
+        return {"choices": [{"message": {"content": self.text}}], "usage": {"total_tokens": 5}}
+
+
+def test_a_busy_model_is_passed_over_and_costs_no_budget():
+    m, meter = models(), llm.Meter()
+    m.provider.replies = [llm.RateLimited("c1", llm.BUSY_SECONDS), "written"]
+    assert m.call("compose", [], meter).text == "written" and meter.calls == 1
+
+
+def test_a_busy_or_retired_model_counts_as_unavailable(monkeypatch):
+    import requests
+    for status in (503, 404):
+        monkeypatch.setattr(requests, "post", lambda *a, **k: Response(status))
+        with pytest.raises(llm.RateLimited):
+            llm.OpenAICompatible("http://x", "k").complete("m", [])
+
+
+def test_hidden_thinking_is_set_per_model(monkeypatch):
+    import requests
+    sent = []
+    monkeypatch.setattr(requests, "post", lambda *a, **k: sent.append(k["json"]) or Response())
+    provider = llm.OpenAICompatible("http://x", "k", reasoning={"big": "none"})
+    provider.complete("big", [])
+    provider.complete("small", [])
+    assert sent[0]["reasoning_effort"] == "none" and "reasoning_effort" not in sent[1]
+
+
+def test_the_planner_sees_earlier_questions_but_not_earlier_answers(kb):
+    fake = Fake(plan(domain="other"))
+    m = llm.Models(fake, {"plan": ("p1",), "compose": ("c1",)})
+    agent.answer("and tomato?", history=[{"q": "cashew date in AP", "a": "SECRET passage from a document"}], models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
+    sent = str(fake.sent)
+    assert "cashew date in AP" in sent and "SECRET" not in sent
+
+
+def test_id_numbers_in_earlier_turns_never_reach_a_model(kb):
+    fake = Fake(plan(domain="other"))
+    m = llm.Models(fake, {"plan": ("p1",), "compose": ("c1",)})
+    agent.answer("and tomato?", history=[{"q": "my aadhaar is 1234 5678 9012", "a": "ok"}], models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
+    assert "1234 5678" not in str(fake.sent)
+
+
+def test_a_rule_counts_for_any_year_it_ran_not_only_its_last():
+    old = Evidence("a", "rule_check", "Rate 2%.", "doc", valid_from="2022-04-01", valid_until="2025-03-31")
+    assert checks.in_force([old], "2026-11-05", "what was the rate in 2024") == [old]
+    assert checks.in_force([old], "2026-11-05", "what was the rate in 2020") == []
+    assert checks.in_force([old], "2026-11-05", "what is the rate") == []
+
+
+def test_keyword_search_treats_spellings_of_one_word_as_the_same():
+    assert text_index.words("\u0915\u094d\u200d\u0937\u0947\u0924\u094d\u0930") == text_index.words("\u0915\u094d\u0937\u0947\u0924\u094d\u0930")
+    assert text_index.words("\u0968\u0966\u0966\u0966 rupees") == ["2000", "rupees"]
+    assert text_index.words("\u0c68\u0c66 \u0be8\u0be6") == ["20", "20"]
+    assert text_index.words("\uabc1\uabe4\uabc7")
+    assert text_index.words("\ufe8d\ufe91") == text_index.words("\u0627\u0628")
+
+
+def test_token_details_are_kept_for_cost_checks(monkeypatch):
+    class Response:
+        ok, status_code, text = True, 200, ""
+
+        def json(self):
+            return {"choices": [{"message": {"content": "x"}}], "usage": {
+                "total_tokens": 30, "prompt_tokens": 20, "completion_tokens": 10,
+                "prompt_tokens_details": {"cached_tokens": 5}, "completion_tokens_details": {"reasoning_tokens": 4}}}
+
+    import requests
+    monkeypatch.setattr(requests, "post", lambda *a, **k: Response())
+    reply = llm.OpenAICompatible("http://x", "k").complete("m", [])
+    meter = llm.Meter()
+    meter.record("plan", reply)
+    assert meter.steps[0] == {"role": "plan", "model": "m", "tokens": 30, "in": 20, "out": 10, "cached": 5, "thinking": 4}
+
+
+def test_more_personal_details_are_masked():
+    masked = agent.mask("my pan is ABCDE1234F and mail me at ram.k@example.com please")
+    assert "ABCDE1234F" not in masked and "example.com" not in masked and "please" in masked
+    assert agent.mask("PMFBY 2026-27 pays Rs.5000") == "PMFBY 2026-27 pays Rs.5000"
+
+
+def test_keyword_search_reads_the_rest_of_the_scripts():
+    assert text_index.words("\u0750\u0751")
+    assert text_index.words("\uaae0\uaae1")
+    assert text_index.words("\u0d05\u0d35\u0d7b") == text_index.words("\u0d05\u0d35\u0d28\u0d4d\u200d")
+
+
+def _faults(sentence, passage):
+    return [f.why for f in checks.faults(sentence, [Evidence("a", "text_search", passage, "doc")], TODAY)]
+
+
+def test_the_wrong_scale_is_a_fault_even_with_the_right_digits():
+    assert any("lakh or crore" in w for w in _faults("The limit is Rs.3 crore [E1].", "The limit is Rs.3 lakh."))
+    assert not _faults("The limit is Rs.3 lakh [E1].", "The limit is Rs.3 lakh.")
+    assert not _faults("The limit is Rs.3 lakh [E1].", "The limit is Rs.3,00,000.")
+    assert not _faults("The limit is Rs.3 lakh [E1].", "The limit is \u20b93 lakhs.")
+
+
+def test_a_rounded_large_amount_is_allowed_and_a_different_one_is_not():
+    assert not _faults("Spending is 53.47 lakh crore [E1].", "Total expenditure is 53,47,315 crore.")
+    assert _faults("Spending is 60 lakh crore [E1].", "Total expenditure is 53,47,315 crore.")
+
+
+def test_the_wrong_area_is_a_fault():
+    assert any("per hectare" in w for w in _faults("It pays Rs.5000 per acre [E1].", "It pays Rs.5000 per hectare."))
+    assert not _faults("It pays Rs.5000 per acre [E1].", "It pays Rs.5000 per acre.")
+    assert not _faults("It pays Rs.5000 per hectare [E1].", "It pays Rs.5000/ha.")
+
+
+def _window(season, closes, **more):
+    return {"scheme": "PMFBY", "for_season": season, "opens": "2026-01-01", "closes": closes, **more}
+
+
+def test_a_named_season_gets_that_seasons_dates_even_when_another_is_open():
+    kharif, rabi = _window("Kharif 2026", "2026-08-15"), _window("Rabi 2026-27", "2026-12-31")
+    assert facts.windows_for([kharif, rabi], "last date for kharif 2026", TODAY) == [kharif]
+    assert facts.windows_for([kharif, rabi], "last date for kharif", TODAY) == [kharif]
+    assert facts.windows_for([kharif, rabi], "last date for rabi 2026-27", TODAY) == [rabi]
+    assert facts.windows_for([kharif, rabi], "what is the last date", TODAY) == [rabi]
+
+
+def test_a_record_on_another_topic_is_not_an_answer():
+    rule = {"topic_words": ["insur", "premium"], "text": "Crop insurance"}
+    assert facts.on_its_topic([rule], "how much does annadatha sukhibhava pay a farmer") == []
+    assert facts.on_its_topic([rule], "what premium do i pay") == [rule]
+    assert facts.on_its_topic([{"text": "No list"}], "anything") == [{"text": "No list"}]
+
+
+def test_the_real_rules_stay_off_other_schemes_questions():
+    kb = knowledge.Knowledge()
+    ctx = lambda q: Context("agriculture", "AP", TODAY, kb, question=q)
+    from vetra.tools import TOOLS
+    assert not TOOLS["rule_check"]("farmer family amount per year Annadatha Sukhibhava", ctx("how much does a farmer family get under annadatha sukhibhava"))
+    assert TOOLS["rule_check"]("farmer pays premium paddy rabi crop insurance PMFBY", ctx("what premium for paddy in rabi under pmfby"))
+
+
+def test_a_timeout_moves_on_to_the_next_model(monkeypatch):
+    import requests
+
+    def post(url, json, **k):
+        if json["model"] == "slow":
+            raise requests.Timeout()
+        return Response()
+
+    monkeypatch.setattr(requests, "post", post)
+    m = llm.Models(llm.OpenAICompatible("http://x", "k"), {"compose": ("slow", "quick")})
+    meter = llm.Meter()
+    assert m.call("compose", [], meter).model == "quick" and meter.calls == 1
+
+
+def test_pointing_to_figures_above_needs_something_printed_above():
+    assert any("printed above" in w for w in _faults("It pays the amount stated above each year [E1].", "It pays Rs.6000 a year."))
+    printed = Evidence("a", "rule_check", "x", "doc")
+    printed.fact, printed.note = "Rs.6000 a year.", "A yearly payment."
+    assert not checks.faults("It pays the amount stated above each year [E1].", [printed], TODAY)
+    assert not _faults("See the rules above the district level [E1].", "The rules above the district level apply.")
