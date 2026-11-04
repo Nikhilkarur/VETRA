@@ -9,7 +9,10 @@ Run:  python -m vetra.sorter sort knowledge/inbox/some_order.jsonl
 and files it. A bad record is reported and left out. Filing the same id again replaces it.
 
 "manifest" reads the facts already recorded for each collected document: its date and
-validity go to "dates", its amendments to "links".
+validity go to "documents", its amendments to "links".
+
+A sorted inbox file is removed: the stores hold its records from then on, and two copies
+would drift apart. A file with rejected records stays until it's fixed.
 """
 
 from __future__ import annotations
@@ -60,7 +63,7 @@ def from_manifest(entries: list[dict], domain: str, state: str) -> list[dict]:
         base = {"domain": domain, "jurisdiction": place, "source": source, "status": status,
                 "legal_weight": e.get("doc_type"), "reviewed": False}
         if e.get("date"):
-            out.append({**base, "id": f"doc-{_slug(e['file'])}", "store": "dates", "subject": e["title"],
+            out.append({**base, "id": f"doc-{_slug(e['file'])}", "store": "documents", "subject": e["title"],
                         "date": e["date"], "valid_from": e["date"],
                         "text": f"{e['title']}: issued {e['date']}; in force: {e.get('in_force') or 'unknown'}."})
         for target in e.get("amends") or []:
@@ -95,6 +98,8 @@ def main() -> int:
     print(f"filed {filed}, rejected {len(rejected)}")
     for line in rejected:
         print(f"  {line}")
+    if args.command == "sort" and not rejected:
+        Path(args.path).unlink()
     return 1 if rejected else 0
 
 

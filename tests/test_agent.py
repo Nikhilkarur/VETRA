@@ -8,7 +8,9 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from vetra import agent, checks, facts, jurisdictions, knowledge, llm, rules, sorter, text_search  # noqa: E402
+from vetra import agent, checks, facts, intake, jurisdictions, knowledge, llm, rules, sorter, text_index  # noqa: E402
+from vetra import gaps as gaps_module  # noqa: E402
+from vetra.datatypes import DATA_TYPES  # noqa: E402
 from vetra.domains import DOMAINS  # noqa: E402
 from vetra.tools import Evidence  # noqa: E402
 
@@ -35,8 +37,29 @@ def models(*replies):
 
 def plan(**more):
     return json.dumps({"domain": "agriculture", "state": "Andhra Pradesh", "language": "english",
-                       "standalone": "Do I pay?", "steps": [{"tool": "dates_lookup", "args": {"query": "cut-off rabi"}}],
-                       **more})
+                       "standalone": "Do I pay?", "needs": [{"type": "deadline", "subject": "cut-off rabi"}], **more})
+
+
+NEED_RULE = [{"type": "amount", "subject": "premium rule scheme"}]
+
+
+class Gaps:
+    def __init__(self):
+        self.seen = []
+
+    def report(self, gap):
+        self.seen.append(gap)
+
+
+@pytest.fixture(autouse=True)
+def no_real_index_or_gap_file(monkeypatch):
+    """Tests search a stub, and never write to the real gap log."""
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda query, ctx: [])
+    monkeypatch.setattr(agent, "GapLog", Gaps)
+
+
+def chunk(id_, place, text="Searched text about the scheme."):
+    return Evidence(id_, "text_search", text, f"doc {id_}", jurisdiction=place, status="in_force")
 
 
 RULE = {"id": "r1", "store": "rules", "domain": "agriculture", "jurisdiction": "AP", "text": "Premium rule scheme",
@@ -71,10 +94,10 @@ def test_sorter_refiling_replaces_rather_than_duplicates(tmp_path):
     assert [r["text"] for r in knowledge.Knowledge(tmp_path).records[("agriculture", "dates")]] == ["changed"]
 
 
-def test_manifest_gives_dates_and_links():
+def test_manifest_gives_documents_and_links():
     rows = sorter.from_manifest([{"title": "G.O.34", "file": "go34.pdf", "department": "Agri", "date": "2026-07-06",
                                   "in_force": "yes", "amends": ["G.O.80"], "doc_type": "go"}], "agriculture", "AP")
-    assert {r["store"] for r in rows} == {"dates", "links"} and all(not knowledge.problems(r) for r in rows)
+    assert {r["store"] for r in rows} == {"documents", "links"} and all(not knowledge.problems(r) for r in rows)
 
 
 def test_a_state_sees_its_own_records_and_central_ones_only(kb):
@@ -107,6 +130,14 @@ def test_invented_figures_and_bad_citations_are_caught():
     assert any("today" in p for p in checks.claim_problems("Open today (2024-11-04) [E1].", e, TODAY))
 
 
+def test_a_date_written_in_the_explanation_is_caught_only_when_facts_are_printed():
+    with_fact = [Evidence("a", "t", "x", "G.O.", fact="printed")]
+    plain = [Evidence("a", "t", "closes 15 December", "G.O.")]
+    assert checks.prose_problems("closes 15 December")
+    assert checks.claim_problems("closes 15 December [E1]", with_fact, TODAY)
+    assert not checks.claim_problems("closes 15 December [E1]", plain, TODAY)
+
+
 def test_expired_records_go_unless_the_question_asks_about_that_year():
     old = Evidence("a", "t", "old", "G.O.", valid_until="2025-03-31")
     assert checks.in_force([old], TODAY, "is it free now") == []
@@ -119,75 +150,120 @@ def test_past_season_rule_is_cut_from_text():
     assert "will bear" not in kept.text and "Farmers pay" in kept.text
 
 
-# ---------------------------------------------------------------- the workflow
+# ---------------------------------------------------------------- what data is needed
 
-def test_answers_from_exact_store_with_citations_by_code(kb):
-    m = models(plan(), "You can still enrol before the window closes.")
-    r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+def test_planner_is_offered_every_data_type_and_no_tools():
+    prompt = agent.planner_prompt(TODAY)
+    assert all(name in prompt for name in DATA_TYPES)
+    assert "rule_check" not in prompt and "dates_lookup" not in prompt
+
+
+def test_plan_keeps_known_data_types_and_drops_the_rest():
+    p = agent.parse_plan(plan(needs=[{"type": "send_money", "subject": "x"}, {"type": "form", "subject": "y"}]))
+    assert [n.data_type for n in p.needs] == ["form"] and p.needs[0].domain == "agriculture"
+
+
+def test_each_data_type_reads_a_real_tool():
+    for t in DATA_TYPES.values():
+        assert all(tool in agent.TOOLS for tool in t.exact)
+
+
+def test_a_need_can_belong_to_another_topic():
+    p = agent.parse_plan(plan(needs=[{"type": "amount", "subject": "stamp duty", "domain": "finance"}]))
+    assert p.needs[0].domain == "finance"
+
+
+# ---------------------------------------------------------------- do we have it?
+
+def run(kb, *replies, **kw):
+    gaps = Gaps()
+    r = agent.answer(kw.pop("q", "rabi cut-off?"), models=models(*replies), knowledge=kb, as_of=TODAY, gaps=gaps, **kw)
+    return r, gaps.seen
+
+
+def test_exact_store_answers_without_searching_text(kb, monkeypatch):
+    def fail(query, ctx):
+        raise AssertionError("text search shouldn't run")
+    monkeypatch.setitem(agent.TOOLS, "text_search", fail)
+    r, gaps = run(kb, plan(), "You can still enrol before the window closes.")
     assert r.kind == "answer" and {s["doc"] for s in r.sources} == {"G.O.2"}
     assert "15 December 2026" in r.answer and "Open now" in r.answer and "[E" in r.answer
-    assert r.trace["calls"] == 2 and r.trace["plan"] == ["dates_lookup"]
+    assert r.trace["calls"] == 2 and r.coverage[0]["level"] == "exact" and gaps == []
 
 
-def test_rule_is_consulted_even_if_the_plan_forgot_it_and_all_cases_are_shown(kb):
-    m = models(plan(standalone="premium rule scheme", facts={"crop": "commercial"}), "That is the rate you pay.")
-    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
-    assert any(s["tool"] == "rule_check" for s in r.sources) and r.trace["missing"] == []
-    assert "percent: 5" in r.answer
+def test_no_exact_data_falls_back_to_text_and_records_a_gap(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
+    r, gaps = run(kb, plan(needs=[{"type": "contact", "subject": "crop insurance office"}]), "See the document [E1].")
+    assert r.coverage[0]["level"] == "text"
+    assert [(g.data_type, g.level, g.state) for g in gaps] == [("contact", "text_only", "AP")]
+    assert "Not in our documents" not in r.answer
 
 
-def test_an_undecided_rule_the_plan_did_not_choose_stays_out(kb):
-    m = models(plan(standalone="premium rule scheme rabi cut-off"), "Enrol before it closes.")
-    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
-    assert not any(s["tool"] == "rule_check" for s in r.sources)
+def test_a_procedure_in_text_is_not_a_gap(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
+    r, gaps = run(kb, plan(needs=[{"type": "procedure", "subject": "how to apply"}]), "Apply as described [E1].")
+    assert gaps == [] and r.kind == "answer"
 
 
-def test_a_rule_the_plan_chose_asks_for_its_missing_facts(kb):
-    m = models(plan(steps=[{"tool": "rule_check", "args": {"query": "premium rule scheme"}}]), "Which crop do you grow?")
-    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
-    assert r.trace["missing"] and "Not known yet" in json.dumps(m.provider.sent[1][1])
-    assert "(1) crop is commercial" in r.answer and "(2)" in r.answer
+def test_state_with_only_central_data_answers_and_says_what_is_missing(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "IN")])
+    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Karnataka", needs=[{"type": "procedure", "subject": "PMFBY"}]),
+                  "The central guideline says this [E1].")
+    assert r.kind == "answer" and r.coverage[0]["level"] == "central_text"
+    assert "Karnataka" in r.answer and "Not in our documents" in r.answer
+    assert [(g.state, g.level) for g in gaps] == [("KA", "no_data")]
 
 
-def test_facts_decide_the_rule(kb):
-    m = models(plan(standalone="premium rule scheme", facts={"crop": "commercial"}), "That applies to you.")
-    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY)
-    assert "percent: 5" in r.answer and "percent: 5" not in json.dumps(m.provider.sent[1][1])
+def test_no_state_named_answers_from_central_and_asks_which_state(monkeypatch, tmp_path):
+    seen = {}
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: seen.update(state=c.state) or [chunk("c1", "IN")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, needs=[{"type": "explanation", "subject": "PMFBY"}]), "It covers crops [E1].")
+    assert r.kind == "answer" and seen["state"] is None and "Which state" in r.answer
 
 
-def test_rule_inputs_reach_the_planner(tmp_path):
-    sorter.file_records([{**RULE, "inputs": {"crop": ["food", "commercial"]}}], tmp_path)
-    m = models(json.dumps({"domain": "other"}))
-    agent.answer("premium rule scheme?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY)
-    assert "commercial" in json.dumps(m.provider.sent[0][1])
+def test_nothing_anywhere_says_so_and_records_it(tmp_path):
+    r, gaps = run(knowledge.Knowledge(tmp_path), plan(state="Goa", needs=[{"type": "procedure", "subject": "x"}]))
+    assert r.kind == "not_covered" and "Goa" in r.answer and r.trace["calls"] == 1
+    assert gaps[0].level == "no_data" and gaps[0].state == "GA"
 
 
-def test_any_citation_style_is_understood():
-    for raw in ("x 【E2†L1-L4】", "x [2]", "x [E2]", "x (E2)", "x [E2, E3]"):
-        assert "[E2]" in checks.tidy_citations(raw)
+def test_one_text_search_serves_several_needs(tmp_path, monkeypatch):
+    calls = []
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: calls.append(q) or [chunk("c1", "AP")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "a"}, {"type": "explanation", "subject": "b"}]), "Text [E1].")
+    assert len(calls) == 1 and len(r.sources) == 1
 
 
-def test_vendor_format_failure_moves_to_the_next_model(kb):
-    m = models(llm.BadOutput("p1"), plan(), "Enrol before it closes.")
-    assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY).kind == "answer"
+def test_gap_log_keeps_no_question_text(tmp_path):
+    log = gaps_module.GapLog(tmp_path / "g.jsonl")
+    log.report(gaps_module.Gap("agriculture", "KA", "deadline", "PMFBY", "no_data", TODAY))
+    row = json.loads((tmp_path / "g.jsonl").read_text(encoding="utf-8"))
+    assert set(row) == {"domain", "state", "data_type", "subject", "level", "date"}
 
+
+def test_a_failing_gap_log_never_costs_an_answer(tmp_path):
+    blocker = tmp_path / "file"
+    blocker.write_text("x")
+    gaps_module.GapLog(blocker / "g.jsonl").report(gaps_module.Gap("a", "KA", "form", "x", "no_data", TODAY))
+
+
+# ---------------------------------------------------------------- exact facts
 
 def test_plan_is_made_without_any_document_text(kb):
     m = models(plan(), "Enrol before it closes.")
-    agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
     assert DATE["text"] not in json.dumps(m.provider.sent[0][1])
 
 
 def test_the_model_never_sees_exact_figures(kb):
     m = models(plan(), "Enrol before it closes.")
-    agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
     composer_sent = json.dumps(m.provider.sent[1][1])
     assert "15 December" not in composer_sent and "2026-12-15" not in composer_sent and "EXACT" in composer_sent
 
 
 def test_garbled_figure_in_the_explanation_is_rejected_and_never_shown(kb):
-    m = models(plan(), "Rabi closes 25 December 2026.", "It closes on 25 December.")
-    r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    r, _ = run(kb, plan(), "Rabi closes 25 December 2026.", "It closes on 25 December.")
     assert "25 December" not in r.answer and "15 December 2026" in r.answer
     assert r.trace["first_try_problems"] and r.trace["calls"] == 3
 
@@ -231,37 +307,50 @@ def test_a_window_that_closes_before_it_opens_is_rejected():
     assert any("closes before" in p for p in knowledge.problems({**DATE, "closes": "2026-01-01"}))
 
 
-def test_document_text_cannot_add_tools():
-    p = agent.parse_plan(plan(steps=[{"tool": "send_money", "args": {}}, {"tool": "form_search", "args": {}}]))
-    assert [s.tool for s in p.steps] == ["form_search"]
+def test_facts_decide_the_rule(kb):
+    r, _ = run(kb, plan(needs=NEED_RULE, facts={"crop": "commercial"}), "That applies to you.", q="premium rule scheme?")
+    assert "percent: 5" in r.answer and r.trace["missing"] == []
 
 
-def test_asks_for_the_state_rather_than_guessing(kb):
-    r = agent.answer("rabi cut-off?", models=models(plan(state=None)), knowledge=kb, as_of=TODAY)
-    assert r.kind == "ask" and "state" in r.answer
+def test_missing_facts_show_every_case_and_ask(kb):
+    m = models(plan(needs=NEED_RULE), "Which crop do you grow?")
+    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
+    assert r.trace["missing"] and "Not known yet" in json.dumps(m.provider.sent[1][1])
+    assert "(1) crop is commercial" in r.answer and "(2)" in r.answer
 
 
-def test_state_with_no_data_says_so_honestly(kb):
-    r = agent.answer("what is rabi?", models=models(plan(state="Goa", steps=[{"tool": "text_search", "args": {"query": "x"}}])),
-                     knowledge=knowledge.Knowledge(Path("no-such")), as_of=TODAY)
-    assert r.kind == "not_covered" and "Goa" in r.answer
+def test_rule_inputs_reach_the_planner(tmp_path):
+    sorter.file_records([{**RULE, "inputs": {"crop": ["food", "commercial"]}}], tmp_path)
+    m = models(json.dumps({"domain": "other"}))
+    agent.answer("premium rule scheme?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY, gaps=Gaps())
+    assert "commercial" in json.dumps(m.provider.sent[0][1])
 
+
+def test_any_citation_style_is_understood():
+    for raw in ("x 【E2†L1-L4】", "x [2]", "x [E2]", "x (E2)", "x [E2, E3]"):
+        assert "[E2]" in checks.tidy_citations(raw)
+
+
+# ---------------------------------------------------------------- failure
 
 def test_failed_check_regenerates_then_falls_back_to_the_facts(kb):
-    m = models(plan(), "You pay 9%.", "Still 9%.")
-    r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    r, _ = run(kb, plan(), "You pay 9%.", "Still 9%.")
     assert "9%" not in r.answer and "15 December 2026" in r.answer and r.trace["calls"] == 3
 
 
 def test_rate_limit_moves_to_the_next_model(kb):
     m = models(llm.RateLimited("p1"), plan(), "Enrol before it closes.")
-    assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY).kind == "answer"
+    assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps()).kind == "answer"
     assert "p1" in m.resting
 
 
+def test_vendor_format_failure_moves_to_the_next_model(kb):
+    r, _ = run(kb, llm.BadOutput("p1"), plan(), "Enrol before it closes.")
+    assert r.kind == "answer"
+
+
 def test_compose_failure_still_gives_facts(kb):
-    m = models(plan(), llm.LLMError("down"))
-    r = agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY)
+    r, _ = run(kb, plan(), llm.LLMError("down"))
     assert r.kind == "answer" and "15 December 2026" in r.answer and r.sources
 
 
@@ -276,19 +365,72 @@ def test_budget_is_never_exceeded():
 def test_rti_stays_on_the_old_pipeline(kb, monkeypatch):
     called = {}
     monkeypatch.setattr(agent, "_legacy", lambda q, h, p: called.update(q=q) or agent.Result("legacy", "old", "rti"))
-    r = agent.answer("rti fee", models=models(json.dumps({"domain": "rti", "steps": []})), knowledge=kb, as_of=TODAY)
+    r, _ = run(kb, json.dumps({"domain": "rti"}), q="rti fee")
     assert r.kind == "legacy" and called["q"] == "rti fee"
 
 
 def test_off_topic_is_declined_with_one_call(kb):
-    r = agent.answer("passport?", models=models(json.dumps({"domain": "other"})), knowledge=kb, as_of=TODAY)
+    r, _ = run(kb, json.dumps({"domain": "other"}), q="passport?")
     assert r.kind == "decline" and r.trace["calls"] == 1
 
 
 def test_id_numbers_never_reach_the_model(kb):
     m = models(json.dumps({"domain": "other"}))
-    agent.answer("my aadhaar 1234 5678 9012 is it ok", models=m, knowledge=kb, as_of=TODAY)
+    agent.answer("my aadhaar 1234 5678 9012 is it ok", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
     assert "5678" not in json.dumps(m.provider.sent[0][1])
+
+
+def test_telugu_notes_are_in_telugu(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "IN")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(state=None, language="telugu", needs=[{"type": "procedure", "subject": "x"}]), "తెలుగు [E1].")
+    assert "మీది ఏ రాష్ట్రం" in r.answer
+
+
+# ---------------------------------------------------------------- adding a state
+
+class Chunker:
+    CHUNK_TOKENS, OVERLAP_TOKENS = 50, 5
+
+    @staticmethod
+    def clean(text):
+        return " ".join(text.split())
+
+    @staticmethod
+    def extract_text(path):
+        return path.read_text(encoding="utf-8")
+
+    @staticmethod
+    def chunk_tokens(text, count, size, overlap):
+        return [text]
+
+    @staticmethod
+    def season_of(text, at):
+        return ""
+
+
+def entry(**more):
+    return {"title": "Karnataka order", "file": "a.txt", "source_url": "https://x.gov.in/a", "doc_type": "go",
+            "date": "2026-06-01", "in_force": "yes", **more}
+
+
+def test_intake_chunks_a_new_state_with_its_place_on_every_chunk(tmp_path):
+    (tmp_path / "a.txt").write_text("A long enough state order about crop insurance. " * 5, encoding="utf-8")
+    report = intake.prepare([entry()], tmp_path, "KA", counter=len, chunker=Chunker)
+    assert not report.problems and report.chunks[0]["jurisdiction"] == "KA" and report.chunks[0]["in_force"] == "yes"
+
+
+def test_intake_stops_on_a_bad_manifest_and_reports_scans(tmp_path):
+    (tmp_path / "scan.txt").write_text("x", encoding="utf-8")
+    report = intake.prepare([{"title": "No fields"}, entry(file="missing.txt"), entry(file="scan.txt")], tmp_path, "KA", counter=len, chunker=Chunker)
+    assert len(report.problems) == 2 and any("needs OCR" in w for w in report.warnings)
+
+
+def test_intake_skips_a_file_already_taken(tmp_path):
+    (tmp_path / "a.txt").write_text("Enough text about the crop insurance order here. " * 5, encoding="utf-8")
+    first = intake.prepare([entry()], tmp_path, "KA", counter=len, chunker=Chunker).chunks[0]["id"]
+    digest = first.split("-")[1].split("::")[0]
+    report = intake.prepare([entry()], tmp_path, "KA", {digest}, counter=len, chunker=Chunker)
+    assert report.chunks == [] and "already taken" in report.warnings[0]
 
 
 # ---------------------------------------------------------------- modular by design
@@ -302,6 +444,23 @@ def test_finance_and_agriculture_are_live_domains_and_rti_is_frozen():
     assert not DOMAINS["finance"].legacy and not DOMAINS["agriculture"].legacy and DOMAINS["rti"].legacy
 
 
-def test_search_needs_no_llm_vendor():
-    assert "groq" not in Path(text_search.__file__).read_text(encoding="utf-8").lower()
-    assert "groq" not in Path(agent.__file__).read_text(encoding="utf-8").lower()
+def test_a_state_sees_only_its_own_chunks_and_central_ones(monkeypatch):
+    items = ({"id": "a", "jurisdiction": "AP", "text": "x"}, {"id": "k", "jurisdiction": "KA", "text": "x"},
+             {"id": "c", "jurisdiction": "IN", "text": "x"})
+    monkeypatch.setattr(text_index, "corpus", lambda domain: items)
+    text_index._view.cache_clear()
+    assert {i["id"] for i in text_index._view("t", text_index._places("KA"))[0]} == {"k", "c"}
+    assert {i["id"] for i in text_index._view("t", text_index._places(None))[0]} == {"c"}
+    text_index._view.cache_clear()
+
+
+def test_central_chunks_are_labelled_from_their_department():
+    assert text_index._applies_in({"department": "central"}, "AP") == "IN"
+    assert text_index._applies_in({"department": "Revenue"}, "AP") == "AP"
+    assert text_index._applies_in({"jurisdiction": "KA", "department": "central"}, "AP") == "KA"
+
+
+def test_no_module_names_the_llm_vendor_outside_llm_py():
+    for path in Path(agent.__file__).parent.glob("*.py"):
+        if path.name != "llm.py":
+            assert "groq" not in path.read_text(encoding="utf-8").lower(), path.name

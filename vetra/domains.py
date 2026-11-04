@@ -9,9 +9,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-ALL_TOOLS = ("text_search", "rule_check", "dates_lookup", "number_lookup",
-             "directory_lookup", "links_walk", "form_search")
-
 
 @dataclass(frozen=True)
 class Domain:
@@ -19,9 +16,12 @@ class Domain:
     label: str
     hint: str                       # what it covers, for the planner
     subtopics: tuple[str, ...] = ()
-    tools: tuple[str, ...] = ALL_TOOLS
-    needs_state: bool = True        # rules differ by state, so ask if the state isn't known
     legacy: bool = False            # answered by rag/ unchanged, not by this agent
+    # Text search settings, measured per topic (docs/RETRIEVAL_EXPERIMENTS.md).
+    text_files: tuple[tuple[str, str], ...] = ()  # (chunk file, the state it came from)
+    embed_title: bool = False
+    rerank: str = ""                # cross-encoder over the top results; "" for none
+    abbreviations_from: str = ""    # rag/ domain whose glossary expands the query
 
 
 DOMAINS = {
@@ -33,6 +33,8 @@ DOMAINS = {
                    "professional tax", "property and land tax", "GST and income tax for citizens",
                    "government loans and interest subsidies", "welfare payments and DBT status",
                    "state and union budgets, allocations and spending"),
+        embed_title=True,
+        rerank="cross-encoder/ms-marco-MiniLM-L-6-v2",
     ),
     "agriculture": Domain(
         name="agriculture",
@@ -43,13 +45,16 @@ DOMAINS = {
                    "minimum support prices and procurement", "disaster and crop-loss relief",
                    "seed, fertiliser and pesticide law", "tenant farmers' rights",
                    "farmer pensions", "farm power", "offices and officers"),
+        text_files=(("ingest/chunks_agriculture.json", "AP"),),
+        embed_title=True,
+        rerank="cross-encoder/ms-marco-MiniLM-L-6-v2",
+        abbreviations_from="agriculture",
     ),
     "rti": Domain(
         name="rti",
         label="RTI",
         hint="Using the Right to Information Act to get records from a public body: fees, "
              "time limits, refusals and appeals.",
-        needs_state=False,
         legacy=True,
     ),
 }

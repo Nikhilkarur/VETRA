@@ -1,7 +1,7 @@
 """
 Does the agent's search find what rag/retrieve.py finds? Must match retrieval_eval.py.
 
-Same questions and the same saved LLM outputs, through vetra/text_search.py, so it needs
+Same questions and the same saved LLM outputs, through vetra/text_index.py, so it needs
 no API key. The planner writes these search aids live; here they come from eval/cache/.
 
 Run:  python eval/agent_retrieval_eval.py
@@ -27,7 +27,7 @@ import domains  # noqa: E402
 import query_expansion as QX  # noqa: E402
 import retrieve as R  # noqa: E402
 
-from vetra import text_search  # noqa: E402
+from vetra import text_index  # noqa: E402
 
 
 def squash(text: str) -> str:
@@ -44,8 +44,8 @@ def main() -> int:
             question = domains.expand_abbreviations(item["q"], domains.get("agriculture"))
             passage = R.hypothetical_passage(question, "agriculture") or ""
             aids = QX.rewrites(question, "agriculture") or {}
-            hits = text_search.search(item["q"], "agriculture", "AP", passage, aids.get("topic") or "",
-                                      tuple(aids.get("keywords") or ()))
+            hits = text_index.search(item["q"], "agriculture", "AP", passage, aids.get("topic") or "",
+                                     tuple(aids.get("keywords") or ()))
             context = squash(" ".join(h["text"] for h in hits if not h.get("added_because")))
             ok = all(squash(p) in context for p in item["probes"])
             hit += ok

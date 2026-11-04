@@ -20,7 +20,7 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "knowledge"
-STORES = ("dates", "rules", "numbers", "directory", "links", "forms")  # "text": see text_search.py
+STORES = ("documents", "dates", "rules", "numbers", "directory", "links", "forms")  # "text": see text_index.py
 _WORDS = re.compile(r"[a-z0-9]+")
 _COMMON = frozenset("a an and are at can do for from how i in is it me my of on or the to what when who why with".split())
 
