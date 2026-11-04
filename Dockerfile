@@ -1,4 +1,4 @@
-# AP government assistant (RTI + agriculture) in one container.
+# VETRA (agriculture and finance by the agent, RTI by rag/) in one container.
 #
 #   docker build -t ap-assistant .
 #   docker run --rm --env-file .env -p 8000:8000 ap-assistant      -> http://localhost:8000
@@ -51,6 +51,11 @@ RUN python ingest/build_index.py && python ingest/build_index.py --domain agricu
 COPY --chown=app:app rag/ rag/
 COPY --chown=app:app eval/ eval/
 
+# The agent, and its all-India search index. rag/ supplies the shared search parts.
+COPY --chown=app:app vetra/ vetra/
+COPY --chown=app:app knowledge/ knowledge/
+RUN python -m vetra.text_index build agriculture
+
 # Every model the domains are configured to use must load without the network.
 RUN python -c "import sys; sys.path.insert(0, 'rag'); import domains; \
 from sentence_transformers import CrossEncoder; \
@@ -61,4 +66,4 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=4)"
 
-CMD ["python", "rag/web.py", "--host", "0.0.0.0", "--port", "8000", "--no-browser"]
+CMD ["python", "-m", "vetra.web", "--host", "0.0.0.0", "--port", "8000", "--no-browser"]

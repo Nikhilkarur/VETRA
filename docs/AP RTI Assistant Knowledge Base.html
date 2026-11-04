@@ -1880,8 +1880,26 @@ header.hero { padding: 38px 0 22px; }
 
 <section id="ag-summary">
   <div class="sec-head">
-    <p class="label">Proposal for review · written 3 November 2026 · nothing on this tab is built yet</p>
+    <p class="label">Proposal written 3 November 2026 · first version built 4 November, on branch feat/modular-agent-core</p>
     <h2>From one search pipeline to an agent that checks its evidence</h2>
+  </div>
+  <div class="card" style="margin-bottom:20px;border-color:var(--llm)">
+    <p class="label">Where it stands, 4 November</p>
+    <p class="small" style="margin-top:8px"><strong>Scope changed after this proposal was written:</strong> agriculture and finance in depth for every state, RTI left as it is, documents collected by hand for now, and the LLM vendor made replaceable. How to run it and add data: <code>docs/AGENT.md</code>.</p>
+    <div class="tw" style="margin-top:12px"><table>
+      <thead><tr><th>Part</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Works out what types of data a question needs</strong></td><td>Built. 32 of 33 on labelled questions, written before it first ran <span class="tag m">MEASURED</span></td></tr>
+        <tr><td><strong>Checks whether we have it, for that state</strong></td><td>Built. Exact stores, then text; the state's own plus central documents</td></tr>
+        <tr><td><strong>Records what's missing</strong></td><td>Built. <code>python -m vetra.gaps</code> lists it. The future web collector plugs in here; it isn't built, on purpose</td></tr>
+        <tr><td><strong>Exact facts printed by code</strong></td><td>Built. The model never sees them. Exact questions take 1 LLM call <span class="tag m">MEASURED</span></td></tr>
+        <tr><td><strong>All-India search</strong></td><td>Built. AP still 80/93; 1,056 central chunks serve every state today <span class="tag m">MEASURED</span></td></tr>
+        <tr><td><strong>Off-topic check with a corrective search</strong></td><td>Built, no LLM call. 0 of 84 false alarms; 7 of 8 unheld schemes recognised, tuned on those same sets <span class="tag m">MEASURED</span></td></tr>
+        <tr><td><strong>Adding a state's documents</strong></td><td>Built, no code change: <code>python -m vetra.intake</code></td></tr>
+        <tr><td><strong>Data so far</strong></td><td>AP agriculture and central agriculture only. Finance is ready but empty. 8 dated windows and 2 rules, not yet reviewed by a person</td></tr>
+        <tr><td><strong>Not built yet</strong></td><td>Numbers, directory and forms have readers but no data. Input and output safety classifier. Printed facts in Telugu (they're English in Telugu answers). Automated collection and verification</td></tr>
+      </tbody>
+    </table></div>
   </div>
   <p class="lead"><strong>Recommendation:</strong> build one planning agent over six typed tools, not a team of agents. The language model reads the question, chooses tools and explains the result. Ordinary code decides what is in force, does the arithmetic, checks every figure and attaches every citation.</p>
   <div class="grid3" style="margin-top:20px">

@@ -3,6 +3,8 @@
 *
 !requirements.txt
 !rag/
+!vetra/
+!knowledge/
 !ingest/build_index.py
 !ingest/chunks.json
 !ingest/chunks_agriculture.json

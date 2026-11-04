@@ -1,5 +1,9 @@
 # AP Government Assistant
 
+> **Agriculture and finance for every state now run on the agent in `vetra/`:** see
+> [`docs/AGENT.md`](docs/AGENT.md) for how it works and how to add data. RTI stays on the
+> pipeline below, and the rest of this README describes that pipeline.
+
 **Ask the Andhra Pradesh government a question in your own words, in English or Telugu,
 and get the answer its own documents give, with the document named.**
 
