@@ -1,12 +1,12 @@
 # VETRA (agriculture and finance by the agent, RTI by rag/) in one container.
 #
-#   docker build -t ap-assistant .
-#   docker run --rm --env-file .env -p 8000:8000 ap-assistant      -> http://localhost:8000
+#   docker build -t vetra .
+#   docker run --rm --env-file .env -p 8000:8000 vetra      -> http://localhost:8000
 #
 # or simply:  docker compose up --build
 #
 # The image holds everything that runs locally -- Python packages, the embedding
-# and reranking models, and both search indexes -- so it starts in ~20 s and needs
+# and reranking models, and the search indexes -- so it starts in ~20 s and needs
 # the network only for Groq. The Groq key is never baked in: pass it at run time.
 
 FROM python:3.12-slim
@@ -54,7 +54,7 @@ COPY --chown=app:app eval/ eval/
 # The agent, and its all-India search index. rag/ supplies the shared search parts.
 COPY --chown=app:app vetra/ vetra/
 COPY --chown=app:app knowledge/ knowledge/
-RUN python -m vetra.text_index build agriculture
+RUN python -m vetra.text_index build agriculture && python -m vetra.text_index build finance
 
 # Every model the domains are configured to use must load without the network.
 RUN python -c "import sys; sys.path.insert(0, 'rag'); import domains; \

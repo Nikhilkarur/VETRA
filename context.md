@@ -1,4 +1,6 @@
-# AP RTI Assistant — AP Government RTI Chatbot
+# AP RTI Assistant — AP Government RTI Chatbot
+
+> **Current plan: [docs/MVP_PLAN.md](docs/MVP_PLAN.md).** VETRA now covers agriculture and finance for every state, through the agent in `vetra/`. This file describes the earlier AP assistant, and is kept as its record.
 
 Living project document. **Every change to the project's plan or implementation gets logged here** (see Changelog at the bottom).
 

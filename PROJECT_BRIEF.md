@@ -1,4 +1,6 @@
-# AP Government Assistant — Project Brief
+# AP Government Assistant — Project Brief
+
+> **Current plan: [docs/MVP_PLAN.md](docs/MVP_PLAN.md).** VETRA now covers agriculture and finance for every state, through the agent in `vetra/`. This file describes the earlier AP assistant, and is kept as its record.
 
 One-page summary of where the project stands and where it is going. The full story is
 in [`README.md`](README.md); every decision and number is logged in

@@ -142,6 +142,12 @@ def decided_fact(rule: dict, outcome: dict, language: str = "english") -> str:
     return "; ".join(f"{k.replace('_', ' ')}: {v}" for k, v in outcome.items())
 
 
+def not_notified_fact(rule: dict, crop: str, language: str = "english") -> str:
+    if language == "telugu":
+        return f"{crop} ఈ పథకం కింద నోటిఫై చేసిన పంట కాదు, కాబట్టి ఈ పథకం ప్రీమియం రేటు దీనికి వర్తించదు"
+    return f"{crop} is not a notified crop under this scheme, so its premium rate doesn't apply"
+
+
 def all_cases_fact(rule: dict, language: str = "english") -> str:
     """What a rule says for everyone, when the user's facts don't decide it yet."""
     lines = []

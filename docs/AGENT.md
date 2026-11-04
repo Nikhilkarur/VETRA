@@ -1,6 +1,6 @@
 # The agent (`vetra/`)
 
-Agriculture and finance, for every Indian state, built to scale by adding data rather than code. RTI stays on `rag/` unchanged and is reached through the agent.
+Agriculture and finance, for every Indian state, built to scale by adding data rather than code. RTI stays on `rag/` unchanged and is reached through the agent. The plan and current state are in [MVP_PLAN.md](MVP_PLAN.md).
 
 ## How a question is answered
 
@@ -9,7 +9,7 @@ Agriculture and finance, for every Indian state, built to scale by adding data r
 3. **Is it on topic?** If the results don't mention the subject, one more search runs, and then it counts as missing.
 4. **Is it in force?** Code removes what doesn't apply today. Past seasons' rules are cut unless the question names that year.
 5. **What's missing?** Gaps go to `data/gaps.jsonl`. `python -m vetra.gaps` lists them, most needed first: this is the to-do list for collecting documents.
-6. **Answer.** Exact facts are printed by code, word for word. The model never sees those figures. If exact records answer everything, no answer model runs at all, for English questions. Otherwise it explains the rest, and code checks what it wrote.
+6. **Answer.** Exact facts are printed by code, word for word. The model never sees those figures. If exact records answer everything, no answer model runs at all. Otherwise it explains the rest, and code checks what it wrote.
 
 | Data type | Exact store | Fallback |
 |---|---|---|
@@ -21,6 +21,14 @@ Agriculture and finance, for every Indian state, built to scale by adding data r
 | change_history | links | text |
 | statistic | numbers | text |
 | procedure, explanation | none: text is the right place | |
+
+## Languages
+
+A question can be in any of India's 22 scheduled languages or English, in its own script or typed in English letters (`vetra/languages.py`). The planner turns it into English for searching, and the answer comes back in the person's language.
+
+- **English and Telugu:** exact facts are printed from templates, so no model touches them.
+- **Other languages:** the model translates the facts. Code throws out any translation that changes a number, and prints the English original beside each fact.
+- **RTI:** English and Telugu only, since `rag/` stays as it is.
 
 ## Adding your data
 
@@ -69,7 +77,7 @@ A deadline:
  "source": {"doc": "G.O. name and number", "date": "2026-07-06", "url": "https://official-site.gov.in/order.pdf"}}
 ```
 
-A rule: see `knowledge/agriculture/rules.jsonl`. Which crop falls in which class is data in the rule's `aliases`, so check it against that state's notified crops. Keep `reviewed` false until a person has checked the rule against the order. Add `render_telugu`, `label_telugu`, `detail_telugu` and `ask_as_telugu` to print it in Telugu; without them, the model explains it in Telugu.
+A rule: see `knowledge/agriculture/rules.jsonl`. Which crop falls in which class is data in the rule's `aliases`, so check it against that state's notified crops. List crops the scheme's order doesn't cover in `not_notified`, so nobody is quoted a rate for them. Keep `reviewed` false until a person has checked the rule against the order. Add `render_telugu`, `label_telugu`, `detail_telugu` and `ask_as_telugu` to print it in Telugu; without them, the model explains it in Telugu.
 
 ### A new topic or a new type of data
 
@@ -97,7 +105,7 @@ python -m vetra.text_index build agriculture
 python -m vetra.web
 ```
 
-Or `python -m vetra.agent "your question" --state KA` in a terminal. With Docker, `docker compose up --build`, then http://localhost:8765.
+Or `python -m vetra.agent "your question" --state KA` in a terminal. With Docker, `docker compose up --build`, then http://localhost:8765. Stop any older container on that port first.
 
 ## Checking it
 

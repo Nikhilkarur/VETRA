@@ -9,6 +9,7 @@ import re
 import sys
 from pathlib import Path
 
+from .languages import western_digits
 from .tools import Evidence
 
 def _out_of_date(e: Evidence, as_of: str) -> bool:
@@ -142,6 +143,7 @@ def claim_problems(answer: str, evidence: list[Evidence], as_of: str, question: 
     text it was shown; if it isn't there, the model made it up.
     """
     found = []
+    answer = re.sub(r"[\u00a0\u2009\u202f]", " ", western_digits(answer))
     for n in {int(x) for x in _CITATION.findall(answer)}:
         if not 1 <= n <= len(evidence):
             found.append(f"cites [E{n}], which doesn't exist")
@@ -157,7 +159,7 @@ def claim_problems(answer: str, evidence: list[Evidence], as_of: str, question: 
     allowed = re.sub(r"\s+", " ", shown).replace(",", "")
     for figure in _FIGURE.findall(answer):
         number = _digits(figure)
-        if number and not re.search(rf"(?<![\d.]){re.escape(number)}(?![\d])", allowed):
+        if number and not re.search(rf"(?<!\d)(?<!\d\.){re.escape(number)}(?!\d)", allowed):
             found.append(f"'{figure.strip()}' isn't in the evidence you were given")
     known_dates = {_date_key(m.group(0)) for m in _DATE.finditer(shown)}
     for m in _DATE.finditer(answer):

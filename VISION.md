@@ -4,9 +4,8 @@
 their own language, and get the answer the government's own documents give, with the
 document named.**
 
-This is the long-term vision. What exists today is narrower: an assistant for the Andhra
-Pradesh government, covering the Right to Information Act and agriculture. The
-[README](README.md) describes that working system and how it was measured.
+This is the long-term vision. What's being built now is narrower: agriculture and finance
+for every state. See the [MVP plan](docs/MVP_PLAN.md).
 
 ## The problem
 

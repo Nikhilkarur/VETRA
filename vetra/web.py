@@ -20,7 +20,7 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from . import agent, jurisdictions, llm, text_index
+from . import agent, jurisdictions, languages, llm, text_index
 from .domains import DOMAINS
 from .knowledge import Knowledge
 
@@ -53,6 +53,14 @@ STATE_PICKER = """
   pick.addEventListener("change", () => { try { localStorage.setItem("vetra-state", pick.value); } catch (e) {} });
   label.append(pick);
   row.prepend(label);
+  const saved = (() => { try { return localStorage.getItem("reply"); } catch (e) { return null; } })();
+  Object.entries(%s).forEach(([value, text]) => {
+    if (!reply.querySelector(`option[value="${value}"]`)) reply.add(new Option(text, value));
+  });
+  if (saved) reply.value = saved;
+  const rtl = document.createElement("style");   // Urdu, Kashmiri and Sindhi run right to left
+  rtl.textContent = ".a { unicode-bidi: plaintext; }";
+  document.head.append(rtl);
   const plain = window.fetch;
   window.fetch = (url, options) => {
     if (url === "/ask" && options && options.body) {
@@ -76,7 +84,7 @@ def page_html() -> str:
     options = '<option value="">Not chosen</option>' + "".join(
         f'<option value="{code}">{html.escape(name)}</option>'
         for code, name in sorted(jurisdictions.STATES.items(), key=lambda pair: pair[1]))
-    return page.replace("</body>", STATE_PICKER % json.dumps(options) + "</body>")
+    return page.replace("</body>", STATE_PICKER % (json.dumps(options), json.dumps(languages.NAMES, ensure_ascii=False)) + "</body>")
 
 
 def to_page(r: agent.Result) -> dict:

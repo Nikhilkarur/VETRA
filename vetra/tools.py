@@ -74,7 +74,10 @@ def rule_check(query: str, ctx: Context) -> list[Evidence]:
     by_body: dict[str, list[dict]] = {}
     for r in F.names_scheme(found, ctx.question.lower()):
         result = rules.evaluate(r, {**ctx.facts, **rules.facts_in_words(r, ctx.question)})
-        if result.outcome is not None:
+        crop = rules.not_notified(r, ctx.facts, ctx.question)
+        if crop:
+            body = F.not_notified_fact(r, crop, ctx.language)
+        elif result.outcome is not None:
             body = F.decided_fact(r, result.outcome, ctx.language)
         else:
             names = r.get(f"ask_as_{ctx.language}") or r.get("ask_as") or {}

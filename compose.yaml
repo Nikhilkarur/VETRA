@@ -5,7 +5,7 @@
 services:
   assistant:
     build: .
-    image: ap-assistant
+    image: vetra
     env_file: .env
     ports:
       - "${APP_PORT:-8765}:8000"

@@ -9,7 +9,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from vetra import agent, checks, facts, intake, jurisdictions, knowledge, llm, rules, sorter, text_index, web  # noqa: E402
+from vetra import agent, checks, facts, intake, jurisdictions, knowledge, languages, llm, rules, sorter, text_index, web  # noqa: E402
 from vetra import gaps as gaps_module  # noqa: E402
 from vetra.datatypes import DATA_TYPES  # noqa: E402
 from vetra.domains import DOMAINS  # noqa: E402
@@ -642,3 +642,90 @@ def test_no_module_names_the_llm_vendor_outside_llm_py():
     for path in Path(agent.__file__).parent.glob("*.py"):
         if path.name != "llm.py":
             assert "groq" not in path.read_text(encoding="utf-8").lower(), path.name
+
+
+# ------------------------------------------------------------------ all languages
+
+def test_all_22_scheduled_languages_and_english_are_known():
+    assert len(languages.NAMES) == 23 and {"hindi", "santali", "urdu", "bodo"} <= set(languages.NAMES)
+
+
+def test_a_detected_language_is_kept_and_an_unknown_one_is_english():
+    assert agent.parse_plan(plan(language="tamil")).language == "tamil"
+    assert agent.parse_plan(plan(language="klingon")).language == "english"
+
+
+def test_native_digits_become_western():
+    assert languages.western_digits("१५ ౧౫ 15") == "15 15 15"
+
+
+def test_exact_facts_are_translated_with_the_english_beside_them(tmp_path):
+    sorter.file_records([DATE], tmp_path)
+    english = facts.window_fact(DATE, TODAY)
+    numbers = " ".join(languages._numbers(english))
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(language="hindi"), json.dumps({"lines": [f"अनुवाद {numbers}"]}))
+    assert f"अनुवाद {numbers} (English: " in r.answer and "15 December 2026" in r.answer
+
+
+def test_a_translation_that_changes_a_number_is_thrown_away():
+    m = models(json.dumps({"lines": ["दिसंबर 16"]}))
+    assert languages.translate(["December 15"], "hindi", m, llm.Meter()) == [None]
+
+
+def test_translation_failure_keeps_the_english():
+    m = models("not json")
+    assert languages.translate(["December 15"], "hindi", m, llm.Meter()) == [None]
+
+
+def test_answers_in_native_digits_still_get_the_number_check():
+    items = [chunk("c1", "AP", "The fee is Rs 500.")]
+    assert checks.claim_problems("शुल्क ५०० रुपये है [E1]", items, TODAY) == []
+    assert checks.claim_problems("शुल्क Rs ९०० है [E1]", items, TODAY)
+
+
+def test_the_model_is_told_the_language():
+    assert "Write in tamil" in agent.compose_prompt(TODAY, "tamil", "India")
+
+
+def test_the_page_offers_every_language():
+    assert "हिन्दी" in web.page_html() and "ᱥᱟᱱᱛᱟᱞᱤ" in web.page_html()
+
+
+# ------------------------------------------------------------------ crops a scheme doesn't cover
+
+def test_a_crop_the_scheme_does_not_cover_gets_no_rate(tmp_path):
+    rule = {**RULE, "not_notified": ["cotton"]}
+    sorter.file_records([rule], tmp_path)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=NEED_RULE), q="premium rule scheme for cotton?")
+    assert "cotton is not a notified crop" in r.answer and "5%" not in r.answer
+
+
+def test_the_real_rules_keep_each_schemes_crops_apart():
+    k = knowledge.Knowledge()
+    records = {r["id"]: r for r in k.select("agriculture", "rules", "AP")}
+    pmfby, weather = records["ap-pmfby-premium-rule"], records["ap-rwbcis-premium-rule"]
+    assert "cotton" in pmfby["not_notified"] and "cotton" in weather["aliases"]["crop_class"]
+    assert "paddy" in weather["not_notified"] and "paddy" in pmfby["aliases"]["crop_class"]
+    assert rules.evaluate(weather, {"crop_class": "cashew"}).outcome["farmer_premium_percent_of_sum_insured"] == 5
+
+
+def test_a_figure_written_after_rs_dot_counts_as_in_the_evidence():
+    items = [chunk("c1", "IN", "Benefit of Rs.6000 per year, 1.5 per cent.")]
+    assert checks.claim_problems("You get Rs\u202f6000 [E1]", items, TODAY) == []
+    assert checks.claim_problems("You get Rs 5 [E1]", items, TODAY)
+
+
+def test_a_past_year_question_with_only_exact_records_searches_the_old_orders(monkeypatch, tmp_path):
+    sorter.file_records([RULE], tmp_path)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply: free in Kharif 2024.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "amount", "subject": "how to apply"}]),
+               "It was free [E1].", q="premium rule scheme in 2024?")
+    assert r.kind == "answer" and "free [E1]" in r.answer
+
+
+def test_a_state_with_documents_is_not_told_they_are_missing(tmp_path):
+    doc = {"id": "x", "store": "documents", "domain": "agriculture", "jurisdiction": "AP", "text": "A document",
+           "source": {"doc": "G.O.1"}, "title": "A document"}
+    sorter.file_records([doc], tmp_path)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "contact", "subject": "office"}]))
+    assert r.kind == "not_covered" and "aren't in yet" not in r.answer

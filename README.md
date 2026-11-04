@@ -1,6 +1,7 @@
 # AP Government Assistant
 
 > **Agriculture and finance for every state now run on the agent in `vetra/`:** see
+> [`docs/MVP_PLAN.md`](docs/MVP_PLAN.md) for the plan and where it stands, and
 > [`docs/AGENT.md`](docs/AGENT.md) for how it works and how to add data. RTI stays on the
 > pipeline below, and the rest of this README describes that pipeline.
 

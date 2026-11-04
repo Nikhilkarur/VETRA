@@ -57,6 +57,13 @@ def facts_in_words(rule: dict, words: str) -> dict:
     return found
 
 
+def not_notified(rule: dict, facts: dict, words: str) -> str | None:
+    """A crop the person named that this scheme's order doesn't cover: its rate would mislead them."""
+    said = f"{words} {' '.join(str(v) for v in facts.values())}".lower()
+    text = f" {re.sub(r'[^a-z0-9]+', ' ', said)} "
+    return next((c for c in rule.get("not_notified", ()) if f" {c} " in text), None)
+
+
 def evaluate(rule: dict, facts: dict) -> Result:
     facts = _plain_words(rule, facts)
     missing: list[str] = []
