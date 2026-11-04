@@ -22,6 +22,26 @@ _TEXT = {
         "english": "Not in our documents yet: {place}'s own rules on {subject}. Anything above comes from central government documents, so please also check with your local office.",
         "telugu": "{place} కు సంబంధించిన {subject} నియమాలు ఇంకా మా పత్రాలలో లేవు. పైన ఉన్నది కేంద్ర ప్రభుత్వ పత్రాల నుండి, కాబట్టి దయచేసి మీ స్థానిక కార్యాలయంలో కూడా తెలుసుకోండి.",
     },
+    "records_only_busy": {
+        "english": "These are the exact records only. The full explanation couldn't be written just now, so please try again in a minute.",
+        "telugu": "ఇవి ఖచ్చితమైన రికార్డులు మాత్రమే. పూర్తి వివరణ ఇప్పుడు రాయలేకపోయాము, కాబట్టి దయచేసి ఒక నిమిషం తర్వాత మళ్లీ ప్రయత్నించండి.",
+    },
+    "records_only": {
+        "english": "These are the exact records only. A written explanation couldn't be checked against the documents, so it isn't shown.",
+        "telugu": "ఇవి ఖచ్చితమైన రికార్డులు మాత్రమే. రాసిన వివరణను పత్రాలతో సరిచూడలేకపోయాము, కాబట్టి అది చూపించడం లేదు.",
+    },
+    "records": {
+        "english": "## From the official records",
+        "telugu": "## అధికారిక రికార్డుల నుండి",
+    },
+    "not_found": {
+        "english": "Not found in the documents we hold: {subject}.",
+        "telugu": "మా దగ్గర ఉన్న పత్రాలలో ఇవి దొరకలేదు: {subject}.",
+    },
+    "left_out": {
+        "english": "Some details were left out because they couldn't be checked against the documents.",
+        "telugu": "పత్రాలతో సరిచూడలేకపోయిన కొన్ని వివరాలను వదిలేశాము.",
+    },
     "which_state": {
         "english": "This uses central government rules. Which state are you in? Its own rules may add to these.",
         "telugu": "ఇది కేంద్ర ప్రభుత్వ నియమాల ఆధారంగా ఉంది. మీది ఏ రాష్ట్రం? మీ రాష్ట్ర నియమాలు వీటికి అదనంగా ఉండవచ్చు.",

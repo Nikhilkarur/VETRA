@@ -136,7 +136,7 @@ def _with_amendments(chosen: list[int], ranking: list[int], items: list[dict]) -
 
 
 def search(query: str, domain: str, state: str | None, passage: str = "", topic: str = "",
-           keywords: tuple[str, ...] = (), k: int = 10) -> list[dict]:
+           keywords: tuple[str, ...] = (), k: int = 10, rerank: bool = True) -> list[dict]:
     """The best chunks for a question in this state, best first, then any amending orders."""
     R = _rag()
     places = _places(state)
@@ -160,7 +160,7 @@ def search(query: str, domain: str, state: str | None, passage: str = "", topic:
     if keywords:
         votes.append(bm25.rank(" ".join(keywords)))
     ranking = R._rrf(*votes)
-    if settings.rerank:
+    if settings.rerank and rerank:
         ranking = _reranked(query, ranking, items, settings.rerank)
     chosen = R._top_k(ranking, items, k)
     found = [dict(items[n]) for n in chosen]
@@ -176,6 +176,17 @@ def around(chunk_id: str, domain: str, reach: int = 1) -> list[dict]:
         return []
     near = range(this["chunk_index"] - reach, this["chunk_index"] + reach + 1)
     return [i for i in items if i["id"] != chunk_id and i.get("source") == this.get("source") and i["chunk_index"] in near]
+
+
+def search_within(query: str, domain: str, state: str | None, document: str, k: int = 3) -> list[dict]:
+    """The best passages inside one document, ranked the same way as any search."""
+    R = _rag()
+    places = _places(state)
+    items, bm25, position = _view(domain, places)
+    if not items:
+        return []
+    ranking = R._rrf(_dense(query, domain, places, position), bm25.rank(query))
+    return [dict(items[n]) for n in ranking if items[n].get("source") == document][:k]
 
 
 def _reranked(query: str, ranking: list[int], items: list[dict], model: str, n: int = 30) -> list[int]:

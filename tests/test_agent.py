@@ -9,7 +9,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from vetra import agent, checks, facts, intake, jurisdictions, knowledge, languages, llm, rules, sorter, text_index, web  # noqa: E402
+from vetra import agent, checks, facts, intake, jurisdictions, knowledge, languages, llm, rules, sorter, text_index, tools, verify, web  # noqa: E402
+from vetra import depth as depths  # noqa: E402
 from vetra import gaps as gaps_module  # noqa: E402
 from vetra import navigate  # noqa: E402
 from vetra.datatypes import DATA_TYPES  # noqa: E402
@@ -59,7 +60,7 @@ def no_real_index_or_gap_file(monkeypatch):
     """Tests search a stub, and never write to the real gap log."""
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda query, ctx: [])
     monkeypatch.setattr(agent, "GapLog", Gaps)
-    monkeypatch.setattr(navigate, "explore", lambda q, subj, dom, items, base, m, meter, tidy: (items, navigate.Route()))
+    monkeypatch.setattr(navigate, "explore", lambda q, subj, dom, items, base, m, meter, tidy, level: (items, navigate.Route()))
 
 
 def chunk(id_, place, text="Searched text about the scheme."):
@@ -768,7 +769,7 @@ def test_read_more_brings_the_next_passage(monkeypatch, tmp_path):
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply: see the table below.")])
     monkeypatch.setitem(agent.TOOLS, "read_around", lambda key, c: [chunk("c2", "AP", f"table after {key}: Rs 70.")])
     r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("read_more", of="E1"), ENOUGH, "It is Rs 70 [E2].")
-    assert "Rs 70" in r.answer and r.trace["route"]["moves"][0] == {"action": "read_more", "target": "c1", "found": 1}
+    assert "Rs 70" in r.answer and r.trace["route"]["moves"][0] == {"action": "read_more", "target": "c1", "query": "", "found": 1}
 
 
 def test_navigation_stops_at_its_limit_and_still_answers(monkeypatch, tmp_path):
@@ -776,7 +777,7 @@ def test_navigation_stops_at_its_limit_and_still_answers(monkeypatch, tmp_path):
     n = iter(range(100))
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply here.")])
     r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("search", query="one"), go("search", query="two"), "Apply here [E1].")
-    assert r.trace["route"]["rounds"] == navigate.MAX_ROUNDS and r.kind == "answer"
+    assert r.trace["route"]["rounds"] == depths.STANDARD.rounds and r.kind == "answer"
 
 
 def test_the_same_move_is_not_repeated(monkeypatch, tmp_path):
@@ -827,8 +828,7 @@ def test_bad_moves_are_dropped():
 
 def test_navigation_keeps_calls_back_for_the_answer():
     m, meter = models(ENOUGH), llm.Meter(calls=4)
-    ctx = None
-    items, route = EXPLORE("q", ["s"], ["agriculture"], [], ctx, m, meter, lambda x: x)
+    items, route = EXPLORE("q", ["s"], ["agriculture"], [], None, m, meter, lambda x: x, depths.STANDARD)
     assert route.rounds == 0 and meter.calls == 4
 
 
@@ -845,3 +845,553 @@ def test_translated_details_keep_their_english():
     m = models(json.dumps({"lines": ["5% देता है", "सीमित"]}))
     agent.localise([e], [], "", "hindi", m, llm.Meter())
     assert e.fact == "5% देता है (English: pays 5%)" and e.detail == "सीमित (English: limited if the actuarial rate is lower)"
+
+
+# ------------------------------------------------------------------ how far an answer goes
+
+PARTS = [{"type": "procedure", "subject": "how to apply first"}, {"type": "procedure", "subject": "how to apply second"}]
+
+
+def deep(**more):
+    return plan(depth="deep", needs=PARTS, **more)
+
+
+def test_the_level_comes_from_the_planner_and_defaults_to_standard():
+    assert depths.choose("quick", ["deadline"]) is depths.QUICK and depths.choose("deep", ["amount"]) is depths.DEEP
+    assert depths.choose(None, ["amount"]) is depths.STANDARD and depths.choose("very long", ["amount"]) is depths.STANDARD
+
+
+def test_many_parts_cannot_be_a_short_answer():
+    assert depths.choose("quick", ["amount", "deadline", "form", "contact"]) is depths.DEEP
+
+
+def test_explaining_something_in_several_parts_goes_deep_whatever_the_model_called_it():
+    assert depths.choose("standard", ["explanation", "eligibility", "eligibility"]) is depths.DEEP
+    assert depths.choose("standard", ["eligibility", "amount", "deadline"]) is depths.STANDARD
+
+
+def test_a_chosen_level_beats_the_planner():
+    assert depths.choose("deep", ["amount"] * 6, override="quick") is depths.QUICK
+
+
+def test_the_planner_is_asked_for_the_level_and_it_is_read():
+    assert '"depth"' in agent.planner_prompt(TODAY) and "compare PMFBY" in agent.planner_prompt(TODAY)
+    assert agent.parse_plan(plan(depth="deep")).depth == "deep"
+    assert agent.parse_plan(plan()).depth == ""     # plans saved before levels existed still read
+
+
+def test_each_level_shapes_the_answer_differently():
+    short, long = agent.compose_prompt(TODAY, "english", "India", depths.QUICK), agent.compose_prompt(TODAY, "english", "India", depths.DEEP)
+    assert "one or two sentences" in short and "What changed" not in short
+    assert all(w in long for w in ("research brief", "What changed", "Where the sources differ", "What the documents don't settle"))
+
+
+def test_a_quick_answer_reads_fewer_passages(monkeypatch, tmp_path):
+    sizes = []
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: sizes.append(c.k) or [chunk("c1", "AP", "how to apply here.")])
+    run(knowledge.Knowledge(tmp_path), plan(depth="quick", needs=HOW), "Apply here [E1].")
+    assert sizes == [depths.QUICK.passages]
+
+
+def test_a_deep_answer_searches_each_part_and_the_whole_question(monkeypatch, tmp_path):
+    asked = []
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: asked.append((q, c.topic)) or [chunk(q, "AP", "how to apply here.")])
+    run(knowledge.Knowledge(tmp_path), deep(topic="apply scheme"), "Apply here [E1].", '{"unsupported": []}')
+    assert ("how to apply first", "") in asked and ("how to apply second", "") in asked   # searched alone
+    assert ("Do I pay?", "apply scheme") in asked   # the whole question keeps every search aid
+
+
+def test_a_subject_without_the_schemes_name_gets_it():
+    assert agent._with_topic("who is excluded", "PM-KISAN") == "PM-KISAN who is excluded"
+    assert agent._with_topic("PM-KISAN exclusions", "PM-KISAN") == "PM-KISAN exclusions"
+    assert agent._with_topic("who is excluded", "") == "who is excluded"
+
+
+def test_a_standard_answer_shares_one_search(monkeypatch, tmp_path):
+    asked = []
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: asked.append(q) or [chunk("c1", "AP", "how to apply: first, then second.")])
+    run(knowledge.Knowledge(tmp_path), plan(needs=PARTS), "Apply here [E1].")
+    assert asked == ["Do I pay?"]
+
+
+def test_a_deep_answer_reads_text_alongside_exact_records(monkeypatch, tmp_path):
+    sorter.file_records([RULE], tmp_path)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "premium rule scheme conditions.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="deep", needs=NEED_RULE), "It has conditions [E2].", '{"unsupported": []}', q="premium rule scheme?")
+    assert r.depth == "deep" and "It has conditions" in r.answer and "\n- " in r.answer
+    assert r.trace["calls"] == 3
+
+
+def test_a_deep_answer_goes_looking_even_when_exact_records_answer(kb, monkeypatch):
+    called = []
+    monkeypatch.setattr(navigate, "explore", lambda q, subj, dom, items, base, m, meter, tidy, level: called.append(level) or (items, navigate.Route()))
+    run(kb, plan(depth="deep"), "Explained [E1].", '{"unsupported": []}')
+    assert called == [depths.DEEP]
+
+
+def test_a_deep_question_always_looks_for_what_changed_and_never_reports_it_missing(monkeypatch, tmp_path):
+    asked = []
+
+    def search(q, c):
+        asked.append(q)
+        return [] if "amended" in q else [chunk("c1", "AP", "how to apply: first, then second.")]
+    monkeypatch.setitem(agent.TOOLS, "text_search", search)
+    r, gaps = run(knowledge.Knowledge(tmp_path), deep(topic="the scheme"), "Apply here [E1].", '{"unsupported": []}')
+    assert "the scheme amended" in asked and not gaps and "amended" not in r.answer
+    assert all("amended" not in c["subject"] for c in r.coverage)
+
+
+def test_a_part_with_nothing_is_named_by_code_and_the_writer_is_told(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply here.")] if "apply" in q else [])
+    wanted = [{"type": "procedure", "subject": "how to apply"}, {"type": "procedure", "subject": "Mahila Kisan Yojana"}]
+    m = models(plan(depth="deep", needs=wanted), "Apply here [E1].", '{"unsupported": []}')
+    r = agent.answer("rabi cut-off?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY, gaps=Gaps())
+    assert "Not found in the documents we hold: Mahila Kisan Yojana." in r.answer
+    sent = next(messages[1]["content"] for _, messages in m.provider.sent if "Evidence:" in messages[1]["content"])
+    assert "Parts of the question:\n- how to apply" in sent and "so don't write about them: Mahila Kisan Yojana" in sent
+
+
+def test_a_scheme_we_do_not_hold_gets_no_overview_from_a_neighbour(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("near", "AP", "Something else entirely.")])
+    wanted = [{"type": "explanation", "subject": "Mahila Kisan Yojana"}]
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="deep", topic="Mahila Kisan Yojana", needs=wanted))
+    assert r.kind == "not_covered"
+
+
+def test_shares_take_turns_so_no_part_loses_all_its_evidence():
+    many = [chunk(f"a{n}", "AP") for n in range(10)]
+    few = [chunk("b1", "AP")]
+    found = [agent.Found(agent.Need("procedure", "a"), "text", many), agent.Found(agent.Need("procedure", "b"), "text", few)]
+    kept = [e.key for e in agent.share(found, 3)]
+    assert kept == ["a0", "b1", "a1"]
+
+
+def test_exact_records_always_keep_their_place_in_the_share():
+    fact = Evidence("f", "rule_check", "t", "doc", fact="pays 5%")
+    found = [agent.Found(agent.Need("procedure", "a"), "text", [chunk(f"a{n}", "AP") for n in range(5)]),
+             agent.Found(agent.Need("amount", "b"), "exact", [fact])]
+    assert "f" in [e.key for e in agent.share(found, 2)]
+
+
+def test_a_passage_read_for_history_keeps_its_past_seasons():
+    now = Evidence("a", "text_search", "Farmers pay nothing.", "doc", season="Kharif 2024")
+    then = Evidence("b", "text_search", "Farmers pay nothing.", "doc", season="Kharif 2024", history=True)
+    checks.in_force([now, then], TODAY)
+    assert "left out here" in now.text and then.text == "Farmers pay nothing." and then.season == "Kharif 2024"
+
+
+def test_a_passage_found_by_two_parts_counts_as_history_if_either_read_it_for_that():
+    plain, marked = chunk("c1", "AP"), chunk("c1", "AP")
+    marked.history = True
+    found = [agent.Found(agent.Need("procedure", "a"), "text", [plain]), agent.Found(agent.Need("change_history", "b"), "text", [marked])]
+    assert agent.share(found, 5)[0].history
+
+
+def test_a_change_history_need_marks_its_passages(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply: replaced in 2025.")])
+    m = models(plan(needs=[{"type": "change_history", "subject": "how to apply"}]), "It changed in 2025 [E1].")
+    agent.answer("what changed?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY, gaps=Gaps())
+    sent = m.provider.sent[-1][1][1]["content"]
+    assert "history: may describe earlier seasons" in sent
+
+
+def test_the_writer_sees_each_sources_kind_and_why_it_was_added():
+    e = Evidence("a", "text_search", "Text.", "G.O.34", jurisdiction="AP", kind="government order", relation="amends G.O.80", date="2026-07-06")
+    block = agent.evidence_block([e])
+    assert "government order" in block and "included because it amends G.O.80" in block and "dated 2026-07-06" in block
+
+
+def test_chunks_know_what_kind_of_document_they_came_from(tmp_path):
+    doc = {"id": "x", "store": "documents", "domain": "agriculture", "jurisdiction": "AP", "text": "A", "legal_weight": "go",
+           "source": {"doc": "G.O.34"}}
+    sorter.file_records([doc], tmp_path)
+    k = knowledge.Knowledge(tmp_path)
+    ctx = tools.Context("agriculture", "AP", TODAY, k)
+    hits = [{"id": "c", "text": "t", "source": "G.O.34 [Agri]", "title": "G.O.34", "added_because": "amends G.O.80"},
+            {"id": "d", "text": "t", "source": "Other", "title": "Other"}]
+    first, second = tools._from_chunks(hits, ctx)
+    assert first.kind == "government order" and first.relation == "amends G.O.80" and second.kind == ""
+
+
+def test_documents_without_a_date_are_still_recorded():
+    rows = sorter.from_manifest([{"title": "The Seeds Act, 1966", "file": "seeds.pdf", "doc_type": "act", "department": "central"}], "agriculture", "AP")
+    assert rows[0]["store"] == "documents" and rows[0]["jurisdiction"] == "IN" and "date not recorded" in rows[0]["text"]
+
+
+def test_the_page_shows_the_kind_and_marks_amendments():
+    r = agent.Result("answer", "Text [E1].", "agriculture", sources=[{"n": 1, "doc": "G.O.34", "kind": "government order", "added_because": "amends G.O.80", "tool": "text_search"}])
+    source = web.to_page(r)["sources"][0]
+    assert source["source"] == "G.O.34 · government order" and source["added"] is True
+
+
+def test_every_deep_question_stays_within_its_calls(monkeypatch, tmp_path):
+    n = iter(range(100))
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply here.")])
+    replies = [deep(), *[go("search", query=f"q{i}") for i in range(depths.DEEP.rounds)], "Apply [E1].",
+               '{"unsupported": [1]}', "Apply here [E1].", '{"unsupported": []}', "spare", "spare"]
+    r, _ = run(knowledge.Knowledge(tmp_path), *replies)
+    assert r.trace["calls"] <= depths.DEEP.calls and r.kind == "answer"
+
+
+# ------------------------------------------------------------------ checking sentence by sentence
+
+def said(answer):
+    return [s.text for s in checks.statements(answer)]
+
+
+def test_short_forms_do_not_end_a_sentence():
+    assert said("You get Rs. 6000 under G.O.Ms.No. 34 here. Then apply.") == ["You get Rs. 6000 under G.O.Ms.No. 34 here.", "Then apply."]
+
+
+def test_a_citation_after_the_full_stop_stays_with_its_sentence():
+    found = checks.statements("Pay 2%. [E3] Enrol by July. [E4]")
+    assert [(s.text, s.cited) for s in found] == [("Pay 2%. [E3]", (3,)), ("Enrol by July. [E4]", (4,))]
+
+
+def test_sentences_end_in_any_script():
+    assert len(said("किसान भुगतान करता है। यह स्वैच्छिक है। [E1]")) == 2
+    assert len(said("کسان ادا کرتا ہے۔ یہ اختیاری ہے۔ [E1]")) == 2
+
+
+def test_a_sentence_borrows_the_next_citation_on_its_line_only():
+    found = checks.statements("It pays Rs 6000. It comes in three parts [E1].\nNext line has none.")
+    assert found[0].cited == (1,) and found[1].cited == (1,) and found[2].cited == ()
+
+
+def test_headings_and_list_markers_are_not_statements():
+    assert said("## Who qualifies\n- Small farmers [E1].\n1. Apply online [E2].\n**Note**") == ["Small farmers [E1].", "Apply online [E2]."]
+
+
+def test_a_figure_must_be_in_the_passage_its_sentence_cites():
+    items = [chunk("a", "AP", "The fee is Rs 500."), chunk("b", "AP", "Apply online.")]
+    assert checks.claim_problems("The fee is Rs 500 [E1].", items, TODAY) == []
+    problems = checks.claim_problems("The fee is Rs 500 [E2].", items, TODAY)
+    assert len(problems) == 1 and "isn't in [E2]" in problems[0]
+
+
+def test_a_figure_from_any_cited_passage_will_do():
+    items = [chunk("a", "AP", "The fee is Rs 500."), chunk("b", "AP", "The fee is Rs 700.")]
+    assert checks.claim_problems("One says Rs 500 and one says Rs 700 [E1][E2].", items, TODAY) == []
+
+
+def test_a_figure_with_no_citation_is_a_fault():
+    items = [chunk("a", "AP", "The fee is Rs 500.")]
+    assert "has no citation" in checks.claim_problems("The fee is Rs 500.\nApply online [E1].", items, TODAY)[0]
+
+
+def test_a_figure_the_person_gave_needs_no_citation():
+    items = [chunk("a", "AP", "Apply online.")]
+    assert checks.claim_problems("With your Rs 500 budget, apply online [E1].", items, TODAY, "i have Rs 500") == []
+
+
+def test_a_date_must_be_in_the_passage_its_sentence_cites():
+    items = [chunk("a", "AP", "Closes on 15 December."), chunk("b", "AP", "Apply online.")]
+    assert checks.claim_problems("It closes on 15 December [E1].", items, TODAY) == []
+    assert "isn't in [E2]" in checks.claim_problems("It closes on 15 December [E2].", items, TODAY)[0]
+
+
+def test_rupee_formats_match_each_other():
+    items = [chunk("a", "AP", "The fee is Rs 6,000 a year.")]
+    assert checks.claim_problems("You pay Rs.6000 [E1].", items, TODAY) == []
+    assert checks.claim_problems("You pay ₹6,000 [E1].", items, TODAY) == []
+
+
+def test_the_source_name_and_date_count_as_what_a_passage_says():
+    e = Evidence("a", "text_search", "Rule text.", "PMFBY Guidelines 2023", date="2024-09-04")
+    assert checks.claim_problems("The 2023 guidelines, from 2024, say so [E1].", [e], TODAY) == []
+
+
+def test_a_gap_is_allowed_in_a_long_answer_but_not_a_short_one():
+    items = [Evidence("f", "rule_check", "t", "doc", fact="pays 5%", note="a rate"), chunk("a", "AP", "Apply online.")]
+    text = "The claim process is not specified [E2]."
+    assert checks.faults(text, items, TODAY)
+    assert not checks.faults(text, items, TODAY, guard_gaps=False)
+
+
+def test_a_sentence_can_be_taken_out_cleanly():
+    text = "Short answer [E1].\n\n## Fees\n- Bad one [E2].\n\n## Steps\nGood one [E1]. Bad two [E2]."
+    kept = checks.without(text, ["Bad one [E2].", "Bad two [E2]."])
+    assert kept == "Short answer [E1].\n\n## Steps\nGood one [E1]."
+
+
+def test_a_heading_left_with_nothing_goes_at_the_end_too():
+    assert checks.without("Good [E1].\n\n## Fees\nBad [E2].", ["Bad [E2]."]) == "Good [E1]."
+
+
+def test_one_bad_sentence_is_left_out_not_the_whole_answer(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    bad = "Apply online [E1]. Go to the office [E1]. It costs Rs 900 [E1]."
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), bad, bad)
+    assert "Apply online" in r.answer and "Rs 900" not in r.answer and "left out" in r.answer
+
+
+def test_when_most_of_it_is_wrong_nothing_of_it_is_used(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    bad = "It costs Rs 900 [E1]. It costs Rs 800 [E1]. Apply online [E1]."
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), bad, bad)
+    assert "Apply online" not in r.answer and "couldn't verify" in r.answer
+
+
+def test_a_failed_rewrite_still_leaves_the_first_answer(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    first = "Apply online [E1]. Go there [E1]. It costs Rs 900 [E1]."
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), first, llm.LLMError("down"))
+    assert "Apply online" in r.answer and "Rs 900" not in r.answer and r.trace["rewrite_error"]
+
+
+def test_a_rewrite_with_more_faults_is_not_used(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), "Apply online [E1]. Go there [E1]. It costs Rs 900 [E1].",
+               "It costs Rs 800 [E1]. It costs Rs 700 [E1].")
+    assert "Apply online" in r.answer and "Rs 700" not in r.answer
+
+
+def test_too_much_evidence_is_thinned_fairly_and_the_answer_still_written(monkeypatch, tmp_path):
+    n = iter(range(100))
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply: first, then second.") for _ in range(6)])
+    r, _ = run(knowledge.Knowledge(tmp_path), deep(), llm.RequestTooLarge("too big"), "Apply here [E1].", '{"unsupported": []}')
+    assert "Apply here" in r.answer and 6 <= r.trace["evidence"] < depths.DEEP.evidence
+
+
+# ------------------------------------------------------------------ a second reader, for deep answers
+
+def deep_run(monkeypatch, tmp_path, *replies):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    return run(knowledge.Knowledge(tmp_path), deep(), *replies)[0]
+
+
+def test_a_supported_deep_answer_stands(monkeypatch, tmp_path):
+    r = deep_run(monkeypatch, tmp_path, "Apply online [E1].", '{"unsupported": []}')
+    assert "Apply online" in r.answer and r.trace["verified"] is True and "left out" not in r.answer
+
+
+def test_a_short_answer_gets_no_second_reader(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), "Apply online [E1].")
+    assert r.trace["calls"] == 2 and "verified" not in r.trace
+
+
+def test_an_unsupported_statement_gets_a_rewrite(monkeypatch, tmp_path):
+    r = deep_run(monkeypatch, tmp_path, "Apply online [E1]. Bring a photo [E1].", '{"unsupported": [2]}', "Apply online [E1].", '{"unsupported": []}')
+    assert "photo" not in r.answer and "left out" not in r.answer and r.trace["first_try_problems"]
+
+
+def test_a_rewrite_is_told_which_statement_failed(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    m = models(deep(), "Apply online [E1]. Bring a photo [E1].", '{"unsupported": [2]}', "Apply online [E1].", '{"unsupported": []}')
+    agent.answer("how?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY, gaps=Gaps())
+    rewrite = m.provider.sent[3][1][1]["content"]
+    assert "Bring a photo [E1]." in rewrite and "isn't backed by the passages" in rewrite
+
+
+def test_a_statement_still_unsupported_is_left_out(monkeypatch, tmp_path):
+    text = "Apply online [E1]. Use the portal [E1]. Bring a photo [E1]."
+    r = deep_run(monkeypatch, tmp_path, text, '{"unsupported": [3]}', text, '{"unsupported": [3]}')
+    assert "photo" not in r.answer and "Use the portal" in r.answer and "left out" in r.answer
+
+
+def test_if_the_second_reader_fails_the_answer_stands_and_the_trace_says_so(monkeypatch, tmp_path):
+    r = deep_run(monkeypatch, tmp_path, "Apply online [E1].", llm.LLMError("down"))
+    assert "Apply online" in r.answer and r.trace["verified"] is False
+
+
+def test_nonsense_from_the_second_reader_is_ignored(monkeypatch, tmp_path):
+    r = deep_run(monkeypatch, tmp_path, "Apply online [E1].", "not json")
+    assert "Apply online" in r.answer and r.trace["verified"] is False
+
+
+def test_the_second_reader_sees_only_what_was_cited_and_can_only_name_real_statements():
+    items = [chunk("a", "AP", "First passage."), chunk("b", "AP", "Second passage.")]
+    m, meter = models('{"unsupported": [1, 99, "x"]}'), llm.Meter()
+    doubted, ran = verify.unsupported("It says so [E1].", items, m, meter)
+    sent = m.provider.sent[0][1][1]["content"]
+    assert doubted == ["It says so [E1]."] and ran and "First passage" in sent and "Second passage" not in sent
+
+
+def test_the_second_reader_can_see_exact_facts():
+    fact = Evidence("f", "rule_check", "t", "doc", fact="pays 5%", note="limited if the actuarial rate is lower")
+    m = models('{"unsupported": []}')
+    verify.unsupported("See the rate above [E1].", [fact], m, llm.Meter())
+    sent = m.provider.sent[0][1][1]["content"]
+    assert "pays 5%" in sent and "limited if the actuarial rate is lower" in sent
+
+
+# ------------------------------------------------------------------ looking inside a document
+
+def test_it_can_look_inside_a_document(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply: see Annexure II.")])
+    seen = []
+
+    def inside(document, query, c):
+        seen.append((document, query))
+        return [chunk("c9", "AP", "Annexure II: Rs 70.")]
+    monkeypatch.setitem(agent.TOOLS, "look_inside", inside)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("look_inside", of="E1", query="Annexure II rates"), ENOUGH, "It is Rs 70 [E2].")
+    assert seen == [("doc c1", "Annexure II rates")] and "Rs 70" in r.answer
+
+
+def test_looking_inside_needs_a_real_passage_and_a_query():
+    items = [chunk("c1", "AP"), Evidence("d", "dates_lookup", "t", "doc")]
+    assert navigate.parse(go("look_inside", of="E1"), items)[0] == []
+    assert navigate.parse(go("look_inside", of="E2", query="x"), items)[0] == []
+    assert navigate.parse(go("look_inside", of="E1", query="x"), items)[0][0].target == "doc c1"
+
+
+def test_each_level_limits_how_far_it_looks(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    n = iter(range(100))
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply here.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="quick", needs=HOW), go("search", query="one"), "Apply here [E1].")
+    assert r.trace["route"]["rounds"] == depths.QUICK.rounds
+
+
+def test_moves_are_limited_by_the_level():
+    items = [chunk("c1", "AP")]
+    many = json.dumps({"enough": False, "next": [{"action": "search", "query": f"q{i}"} for i in range(5)]})
+    assert len(navigate.parse(many, items, depths.QUICK.moves)[0]) == 1
+    assert len(navigate.parse(many, items, depths.DEEP.moves)[0]) == 3
+
+
+def test_search_within_stays_inside_the_document(monkeypatch):
+    items = [{"id": "a", "source": "doc one", "text": "x", "jurisdiction": "AP"}, {"id": "b", "source": "doc two", "text": "y", "jurisdiction": "AP"},
+             {"id": "c", "source": "doc one", "text": "z", "jurisdiction": "AP"}]
+
+    class Index:
+        def rank(self, q):
+            return [1, 2, 0]
+
+    class Rag:
+        @staticmethod
+        def _rrf(*votes):
+            return votes[0]
+    monkeypatch.setattr(text_index, "_view", lambda d, p: (items, Index(), {}))
+    monkeypatch.setattr(text_index, "_dense", lambda *a: [1, 2, 0])
+    monkeypatch.setattr(text_index, "_rag", lambda: Rag)
+    assert [i["id"] for i in text_index.search_within("q", "agriculture", "AP", "doc one")] == ["c", "a"]
+
+
+def test_a_wrong_citation_is_corrected_by_code():
+    items = [chunk("a", "AP", "The fee is Rs 500."), chunk("b", "AP", "Apply online.")]
+    fixed = checks.recite("The fee is Rs 500 [E2].", items, TODAY)
+    assert fixed == "The fee is Rs 500 [E2]. [E1]" and checks.claim_problems(fixed, items, TODAY) == []
+
+
+def test_a_missing_citation_is_added_by_code():
+    items = [chunk("a", "AP", "Closes on 15 December 2026.")]
+    fixed = checks.recite("It closes on 15 December.\nApply online [E1].", items, TODAY)
+    assert "It closes on 15 December. [E1]" in fixed and checks.claim_problems(fixed, items, TODAY) == []
+
+
+def test_an_invented_figure_is_not_given_a_source():
+    items = [chunk("a", "AP", "The fee is Rs 500.")]
+    assert checks.recite("The fee is Rs 900 [E1].", items, TODAY) == "The fee is Rs 900 [E1]."
+
+
+def test_a_right_figure_with_a_wrong_citation_costs_no_rewrite(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("a", "AP", "how to apply: fee Rs 500."), chunk("b", "AP", "how to apply online.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), "The fee is Rs 500 [E2].")
+    assert r.trace["calls"] == 2 and "[E1]" in r.answer and "first_try_problems" not in r.trace
+
+
+def test_misread_amounts_are_corrected_when_documents_are_read():
+    module = intake._chunker()
+    assert "Rs.6000/-" in module.clean("benefit of Rs.60001 per annum") and "Rs.20011" in module.clean("cost Rs.20011 here")
+
+
+def test_a_brief_gives_the_printed_records_a_heading(monkeypatch, tmp_path):
+    sorter.file_records([RULE], tmp_path)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "premium rule scheme conditions.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="deep", needs=NEED_RULE), "It has conditions [E2].", '{"unsupported": []}', q="premium rule scheme?")
+    assert r.answer.startswith("## From the official records\n\n- ")
+
+
+def test_a_short_answer_has_no_headings_of_ours(kb):
+    r, _ = run(kb, plan())
+    assert "##" not in r.answer
+
+
+def test_the_page_says_a_brief_takes_longer():
+    assert "up to a minute for a full brief" in web.page_html()
+
+
+def test_the_answer_must_not_talk_about_its_own_prompt():
+    items = [chunk("a", "AP", "Apply online.")]
+    for bad in ("The rates are in the EXACT record [E1].", "The evidence states this [E1].", "The provided excerpts say so [E1]."):
+        assert any("talks about the evidence" in f.why for f in checks.faults(bad, items, TODAY)), bad
+    assert not checks.faults("Bring evidence of land ownership [E1].", items, TODAY)
+    assert not checks.faults("The evidence of ownership is a patta [E1]. It must be exact [E1].", items, TODAY)
+
+
+def test_working_notes_condemn_the_whole_answer_not_one_sentence():
+    items = [chunk("a", "AP", "Apply online.")]
+    for notes in ("Apply online [E1]. Wait, that is another scheme.", "I must not mix them [E1].", "[E1] is about something else.",
+                  "*Correction based on the rules:* apply online [E1].", "The snippet says apply online [E1]."):
+        assert any(f.sentence == "" and "working notes" in f.why for f in checks.faults(notes, items, TODAY)), notes
+
+
+def test_an_answer_of_working_notes_is_never_shown(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply online.")])
+    notes = "Apply online [E1]. Go there [E1]. Wait, that is wrong [E1]."
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), notes, notes)
+    assert "Wait" not in r.answer and "Apply online" not in r.answer and "couldn't verify" in r.answer
+
+
+def test_ordinary_words_are_not_working_notes():
+    items = [chunk("a", "AP", "Apply online.")]
+    for fine in ("If you wait, the window closes [E1].", "This is what I can tell you [E1].", "See the rule in [E1] for this."):
+        assert not any("working notes" in f.why for f in checks.faults(fine, items, TODAY)), fine
+
+
+def test_a_date_after_with_effect_from_stays_in_its_sentence():
+    assert len(said("It was revised \"w.e.f. 1.6.2019\" for all farmers [E1].")) == 1
+
+
+def test_a_models_reasoning_tags_never_reach_the_answer(monkeypatch):
+    class Response:
+        ok, status_code, headers, text = True, 200, {}, ""
+
+        @staticmethod
+        def json():
+            return {"choices": [{"message": {"content": "<think>let me see\nmaybe</think>\nApply online."}}]}
+    import requests
+    monkeypatch.setattr(requests, "post", lambda *a, **k: Response)
+    assert llm.OpenAICompatible("http://x", "k").complete("m", []).text == "Apply online."
+
+
+def test_an_answer_with_a_sentence_cut_still_goes_to_the_second_reader(monkeypatch, tmp_path):
+    text = "Apply online [E1]. Use the portal [E1]. Bring a photo [E1]. It costs Rs 900 [E1]."
+    r = deep_run(monkeypatch, tmp_path, text, text, '{"unsupported": [3]}')
+    assert "Rs 900" not in r.answer and "photo" not in r.answer and "Use the portal" in r.answer
+    assert r.trace["verified"] is True and "left out" in r.answer
+
+
+def test_the_writer_and_the_second_reader_keep_schemes_apart():
+    assert "another scheme's document is not a rule of this one" in agent.compose_prompt(TODAY, "english", "India")
+    assert "different scheme" in verify._PROMPT
+
+
+def test_a_date_broken_up_by_a_scan_still_counts():
+    items = [chunk("a", "IN", "The Scheme was later on revised w.e.f. 1 .6.2019 for all.")]
+    assert checks.claim_problems("It was revised from 1.6.2019 [E1].", items, TODAY) == []
+
+
+def test_a_year_inside_a_written_date_counts_but_part_of_a_decimal_does_not():
+    items = [chunk("a", "AP", "It runs until 28.02.2027, at 1.5 percent.")]
+    assert checks.claim_problems("It runs into 2027 [E1].", items, TODAY) == []
+    assert checks.claim_problems("You pay 5% [E1].", items, TODAY)
+
+
+def test_the_second_reader_sees_each_statements_section():
+    items = [chunk("a", "AP", "First passage.")]
+    m = models('{"unsupported": []}')
+    verify.unsupported("Opening line [E1].\n\n## Who qualifies\nIt covers small farmers [E1].", items, m, llm.Meter())
+    sent = m.provider.sent[0][1][1]["content"]
+    assert "1. [opening] (E1) Opening line" in sent and "2. [Who qualifies] (E1) It covers small farmers" in sent
+
+
+def test_a_rewrite_with_no_citations_does_not_replace_a_mostly_good_answer(monkeypatch, tmp_path):
+    first = "Apply online [E1]. Use the portal [E1]. Bring a photo [E1]."
+    r = deep_run(monkeypatch, tmp_path, first, '{"unsupported": [3]}', "Apply online, using the portal.", '{"unsupported": []}')
+    assert "Use the portal [E1]" in r.answer and "photo" not in r.answer and "couldn't verify" not in r.answer

@@ -1,0 +1,162 @@
+{
+  "_about": "Questions that need a research-style answer, each split by hand into the parts a planner should find. 'any' lists what a passage must contain to answer that part, and 'doc' limits it to the right document. Labels were written from the documents' text, before any search ran on them. A hand-written split is cleaner than a model's, so this measures the search method, not the planner.",
+  "questions": [
+    {"id": "annadatha", "domain": "agriculture", "state": "AP",
+     "q": "What is the Annadatha Sukhibhava scheme in Andhra Pradesh, who gets it, who is left out, how much is paid, and what did it replace?",
+     "topic": "Annadatha Sukhibhava PM Kisan",
+     "passage": "The Annadatha Sukhibhava - PM Kisan scheme provides financial assistance to land owner farmer families and landless tenant farmer families per annum, payable in installments through the destination bank, subject to the exclusion criteria applicable to farmers of higher economic status.",
+     "keywords": ["Annadatha", "Sukhibhava", "tenant", "per annum", "eligibility", "installments"],
+     "parts": [
+       {"type": "explanation", "subject": "Annadatha Sukhibhava scheme objective and benefit", "doc": "Annadatha", "any": ["Rs\\.?\\s*20,?000"]},
+       {"type": "eligibility", "subject": "Annadatha Sukhibhava tenant farmer eligibility", "doc": "Annadatha", "any": ["Tenant", "CCRC"]},
+       {"type": "eligibility", "subject": "Annadatha Sukhibhava who is not eligible, exclusions", "doc": "Annadatha", "any": ["Institutional Land ?holders", "paid Income Tax"]},
+       {"type": "amount", "subject": "Annadatha Sukhibhava number of installments and amounts", "doc": "Annadatha", "any": ["No of Installments"]},
+       {"type": "change_history", "subject": "YSR Rythu Bharosa renamed Annadata Sukhibhava", "any": ["Rythu Bharosa.{0,80}Annadat"]}
+     ]},
+    {"id": "ap-crop-insurance", "domain": "agriculture", "state": "AP",
+     "q": "Explain crop insurance in Andhra Pradesh in detail: what do I pay, who can enrol, which risks are not covered, how are claims settled, and what changed from the free scheme?",
+     "topic": "PMFBY crop insurance Andhra Pradesh",
+     "passage": "Under the Pradhan Mantri Fasal Bima Yojana notified by the State Government, farmers including tenant farmers may enrol voluntarily for notified crops on payment of the farmer's share of premium on the sum insured. Claims are assessed on yield data from Crop Cutting Experiments. Losses arising from war and nuclear risks are excluded.",
+     "keywords": ["PMFBY", "premium", "sum insured", "voluntary", "tenant", "claims", "exclusions", "Crop Cutting"],
+     "parts": [
+       {"type": "amount", "subject": "PMFBY farmer premium rate in Andhra Pradesh", "any": ["premium of 1\\.5%"]},
+       {"type": "eligibility", "subject": "PMFBY who can enrol, tenant farmers, voluntary enrolment", "any": ["share croppers and tenant farmers"]},
+       {"type": "explanation", "subject": "PMFBY risks not covered, general exclusions", "any": ["General Exclusions"]},
+       {"type": "procedure", "subject": "PMFBY claim settlement from crop cutting experiments", "any": ["CLAIM SETTLEMENT", "claims? (?:will|shall) be (?:calculated|settled|assessed)"]},
+       {"type": "change_history", "subject": "free crop insurance Kharif 2024 change to voluntary enrolment", "any": ["Farmers need not pay anything", "transition to voluntary enrol+ment"]},
+       {"type": "deadline", "subject": "PMFBY Rabi 2026-27 enrolment cut-off dates", "any": ["15th December 2026"]}
+     ]},
+    {"id": "pm-kisan", "domain": "agriculture", "state": "KA",
+     "q": "What is PM-KISAN, how much money do farmers get, who is not eligible, how do I register and what can I do if my installment does not come?",
+     "topic": "PM-KISAN",
+     "passage": "Under the Pradhan Mantri Kisan Samman Nidhi scheme, an amount per year is released by the Central Government directly into the bank accounts of landholding farmer families in three equal installments. Institutional land holders and families of higher economic status are excluded. Farmers may register through Common Service Centres and raise grievances with the Help Desk.",
+     "keywords": ["PM-KISAN", "installments", "exclusion", "registration", "Common Service", "grievance", "landholding"],
+     "parts": [
+       {"type": "amount", "subject": "PM-KISAN benefit amount per year", "doc": "PM-KISAN", "any": ["Rs\\.?\\s*6,?000"]},
+       {"type": "eligibility", "subject": "PM-KISAN exclusions, who is not eligible", "doc": "PM-KISAN", "any": ["Institutional Land ?holders"]},
+       {"type": "eligibility", "subject": "PM-KISAN land ownership cut-off date", "any": ["01\\.02\\.2019"]},
+       {"type": "procedure", "subject": "PM-KISAN farmer registration, self-registration, Common Service Centre", "doc": "PM-KISAN", "any": ["self.?registration", "Common Service Cent"]},
+       {"type": "procedure", "subject": "PM-KISAN grievance when an installment is not received", "doc": "PM-KISAN", "any": ["grievance"]},
+       {"type": "change_history", "subject": "PM-KISAN operational guidelines para 8.1 amendment", "doc": "Amendment to para 8\\.1", "any": ["."]}
+     ]},
+    {"id": "compare-insurance", "domain": "agriculture", "state": "AP",
+     "q": "Compare PMFBY and the weather based crop insurance RWBCIS: how losses are measured, what the farmer pays, and what add-on covers exist.",
+     "topic": "PMFBY and RWBCIS crop insurance",
+     "passage": "Unlike PMFBY, which is based on yield indices from Crop Cutting Experiments, RWBCIS uses weather parameters such as rainfall, temperature, wind speed and humidity as a proxy for crop yields. Farmers pay a share of premium on the sum insured. Add-on coverage may be notified by the State.",
+     "keywords": ["PMFBY", "RWBCIS", "weather parameters", "yield", "premium", "add-on"],
+     "parts": [
+       {"type": "explanation", "subject": "PMFBY yield based loss assessment, crop cutting experiments", "any": ["Crop Cutting Experiments"]},
+       {"type": "explanation", "subject": "RWBCIS weather parameters as proxy for crop yield", "any": ["weather parameters"]},
+       {"type": "amount", "subject": "RWBCIS farmer premium rate", "doc": "RWBCIS|Restructured Weather", "any": ["premium of 1\\.5%", "premium of 5%"]},
+       {"type": "amount", "subject": "PMFBY farmer premium rate", "doc": "PMFBY", "any": ["premium of 1\\.5%", "1\\.5% of SI"]},
+       {"type": "explanation", "subject": "RWBCIS add-on coverage", "doc": "Restructured Weather", "any": ["Add-on cover"]}
+     ]},
+    {"id": "kcc", "domain": "agriculture", "state": null,
+     "q": "How does a Kisan Credit Card work? Who can get one, how is the limit worked out, what interest is charged, what is the repayment incentive and how long is it valid?",
+     "topic": "Kisan Credit Card",
+     "passage": "The Kisan Credit Card scheme provides short term credit to owner cultivators, tenant farmers, oral lessees and share croppers. The limit is fixed on the scale of finance for the crop. Short term loans carry interest subvention, and a prompt repayment incentive is allowed to farmers who repay on time. The card is valid for five years.",
+     "keywords": ["Kisan Credit Card", "KCC", "scale of finance", "interest subvention", "prompt repayment incentive", "five years"],
+     "parts": [
+       {"type": "eligibility", "subject": "Kisan Credit Card who can get one, tenant farmers", "any": ["oral lessees"]},
+       {"type": "amount", "subject": "Kisan Credit Card limit, scale of finance", "any": ["Scale of finance for the crop"]},
+       {"type": "amount", "subject": "Kisan Credit Card interest subvention on short term loans", "any": ["interest subvention of 1\\.5%"]},
+       {"type": "amount", "subject": "Kisan Credit Card prompt repayment incentive", "any": ["prompt repayment incentive"]},
+       {"type": "explanation", "subject": "Kisan Credit Card validity period", "doc": "Kisan Credit Card|Interest Subvention", "any": ["five years"]}
+     ]},
+    {"id": "bad-seeds", "domain": "agriculture", "state": "AP",
+     "q": "A seed dealer sold me bad seeds. What does the law say about dealer licences, penalties, and who can inspect or act?",
+     "topic": "seed dealer licence, Seeds Act and Seeds Control Order",
+     "passage": "No person shall carry on the business of a dealer in seeds except under a licence granted under the Seeds (Control) Order. A Seed Inspector may take samples and inspect stocks. Contravention of the Seeds Act is an offence punishable with a fine.",
+     "keywords": ["seed", "dealer", "licence", "Inspector", "penalty", "punishment", "sub-standard"],
+     "parts": [
+       {"type": "eligibility", "subject": "seed dealer licence requirement, Seeds Control Order", "any": ["Dealer to obtain licen"]},
+       {"type": "change_history", "subject": "seed dealer licence validity amendment", "doc": "Seeds \\(Control\\) Amendment", "any": ["."]},
+       {"type": "explanation", "subject": "penalty for selling sub-standard seed, Seeds Act", "doc": "Seeds Act|Seeds \\(Control\\)", "any": ["Penalty", "punishment"]},
+       {"type": "contact", "subject": "Seed Inspector powers", "doc": "Seeds", "any": ["Seed Inspector", "Inspector may"]},
+       {"type": "procedure", "subject": "input inspectors and seed samples in Andhra Pradesh", "doc": "Integrated Agri Labs|Rythu Bharosa Kendralu", "any": ["input inspectors", "Sub-standard samples"]}
+     ]},
+    {"id": "tenant-rights", "domain": "agriculture", "state": "AP",
+     "q": "What rights do tenant farmers have in Andhra Pradesh under the Crop Cultivator Rights rules? How long is the agreement, which benefits can they get, and do they get Annadatha Sukhibhava?",
+     "topic": "Crop Cultivator Rights",
+     "passage": "Under the Andhra Pradesh Crop Cultivator Rights Rules, the land owner and the cultivator execute an agreement for a period of eleven months, countersigned by the Village Revenue Officer. The cultivator is entitled to obtain crop loans, crop insurance, input subsidy and crop damage compensation.",
+     "keywords": ["Crop Cultivator", "CCRC", "eleven months", "tenant", "agreement", "entitled"],
+     "parts": [
+       {"type": "explanation", "subject": "Crop Cultivator Rights agreement period", "any": ["eleven months"]},
+       {"type": "eligibility", "subject": "cultivator entitled to crop insurance, input subsidy and crop loan", "any": ["entitled to obtain Crop Insurance"]},
+       {"type": "procedure", "subject": "how to get a Crop Cultivator Rights Card", "doc": "Crop Cultivator Rights Rules", "any": ["Village Revenue Officer"]},
+       {"type": "eligibility", "subject": "tenant farmers under Annadatha Sukhibhava, CCRC card holders", "doc": "Annadatha", "any": ["Tenant", "CCRC"]}
+     ]},
+    {"id": "flood-relief", "domain": "agriculture", "state": "AP",
+     "q": "My crop was destroyed in a flood in Andhra Pradesh. What input subsidy can I get, at what rates, what is the minimum loss, and how is relief sanctioned?",
+     "topic": "natural calamities input subsidy",
+     "passage": "Input subsidy is provided for crops damaged by more than 33 percent due to a notified natural calamity, at the rates per hectare in the norms of assistance from the SDRF and NDRF. Enumeration of crop damage is taken up and the list of beneficiaries displayed before sanction of relief.",
+     "keywords": ["input subsidy", "SDRF", "per ha", "33", "enumeration", "natural calamity", "flood"],
+     "parts": [
+       {"type": "eligibility", "subject": "input subsidy minimum crop loss 33 percent", "any": ["33\\s*(?:%|o/o)"]},
+       {"type": "amount", "subject": "input subsidy rates per hectare, SDRF norms", "doc": "G\\.O\\.(?:Ms\\.)?No\\.[12] Revenue", "any": ["per ha", "per hectare"]},
+       {"type": "amount", "subject": "enhanced assistance for floods, ex-gratia", "doc": "G\\.O\\.No\\.2 Revenue", "any": ["."]},
+       {"type": "procedure", "subject": "enumeration and sanction of input subsidy", "doc": "Natural Calamities - Norms", "any": ["Enumer"]}
+     ]},
+    {"id": "drip", "domain": "agriculture", "state": "AP",
+     "q": "Explain the subsidy for drip and sprinkler irrigation in Andhra Pradesh, including the central guidelines and what FRA patta holders get.",
+     "topic": "drip irrigation subsidy, APMIP and Per Drop More Crop",
+     "passage": "The Government approves the subsidy pattern for drip and sprinkler irrigation systems under the Andhra Pradesh Micro Irrigation Project. Assistance under Per Drop More Crop is 55 percent for small and marginal farmers and 45 percent for other farmers. FRA patta holders in identified districts receive enhanced subsidy.",
+     "keywords": ["drip", "sprinkler", "subsidy", "APMIP", "Per Drop More Crop", "FRA patta"],
+     "parts": [
+       {"type": "amount", "subject": "APMIP drip irrigation subsidy pattern", "doc": "G\\.O\\.Rt\\.No\\.82", "any": ["."]},
+       {"type": "amount", "subject": "FRA patta holders 100% drip subsidy", "doc": "G\\.O\\.Rt\\.No\\.206", "any": ["."]},
+       {"type": "amount", "subject": "Per Drop More Crop central assistance, small and marginal farmers", "any": ["55% for small and marginal"]}
+     ]},
+    {"id": "pm-kmy", "domain": "agriculture", "state": null,
+     "q": "What is PM Kisan Maan Dhan Yojana? Who can join, how much is the contribution, what pension do I get, and what happens if I exit early?",
+     "topic": "PM Kisan Maan Dhan Yojana",
+     "passage": "The Pradhan Mantri Kisan Maan-Dhan Yojana is a voluntary and contributory pension scheme for small and marginal farmers in the entry age group of 18 to 40 years, providing an assured monthly pension after 60 years. Subscribers make a monthly contribution matched by the Central Government. Co-contributions are not paid in case of premature exit.",
+     "keywords": ["Maan Dhan", "PM-KMY", "pension", "contribution", "18 to 40", "exit"],
+     "parts": [
+       {"type": "eligibility", "subject": "PM-KMY entry age and who can join", "any": ["18 to 40"]},
+       {"type": "amount", "subject": "PM-KMY monthly pension amount", "doc": "Maan", "any": ["pension of Rs\\.? ?3000"]},
+       {"type": "amount", "subject": "PM-KMY monthly contribution by age", "doc": "Maan", "any": ["monthly contribution", "contribution of Rs"]},
+       {"type": "eligibility", "subject": "PM-KMY who is excluded", "doc": "Maan", "any": ["Institutional Land"]},
+       {"type": "explanation", "subject": "PM-KMY premature exit from the scheme", "doc": "Maan", "any": ["pre ?-?mature exit"]}
+     ]},
+    {"id": "apy", "domain": "finance", "state": null,
+     "q": "How does Atal Pension Yojana work? Who can join, what pension do I get, and can income tax payers join?",
+     "topic": "Atal Pension Yojana",
+     "passage": "Atal Pension Yojana is a guaranteed pension scheme for citizens aged 18 to 40 years with a savings bank account. Subscribers receive a fixed monthly pension after the age of 60 depending on their contribution. Income tax payers are not eligible to join.",
+     "keywords": ["Atal Pension", "APY", "pension", "18 to 40", "income tax", "contribution"],
+     "parts": [
+       {"type": "eligibility", "subject": "Atal Pension Yojana entry age", "any": ["18 to 40"]},
+       {"type": "amount", "subject": "Atal Pension Yojana monthly pension amount", "doc": "Atal", "any": ["1,?000.{0,40}5,?000"]},
+       {"type": "eligibility", "subject": "Atal Pension Yojana income tax payers", "any": ["income taxpayers?"]}
+     ]},
+    {"id": "budget", "domain": "finance", "state": null,
+     "q": "What does the Union Budget 2026-27 say about total spending, the fiscal deficit and agriculture?",
+     "topic": "Union Budget 2026-27",
+     "passage": "In the Budget Estimates 2026-27, total expenditure of the Central Government is projected at a stated amount in lakh crore and the fiscal deficit is estimated as a percentage of GDP. Allocations are made for agriculture and farmers' welfare.",
+     "keywords": ["Budget", "2026-27", "total expenditure", "fiscal deficit", "GDP", "agriculture"],
+     "parts": [
+       {"type": "statistic", "subject": "Union Budget 2026-27 total expenditure", "any": ["53\\.47 lakh crore", "53,47,315"]},
+       {"type": "statistic", "subject": "Union Budget 2026-27 fiscal deficit", "any": ["fiscal deficit.{0,40}4\\.3"]},
+       {"type": "explanation", "subject": "Union Budget 2026-27 agriculture and farmers", "doc": "Budget", "any": ["farmers"]}
+     ]},
+    {"id": "paddy", "domain": "agriculture", "state": "AP",
+     "q": "How does paddy procurement work in Andhra Pradesh for Kharif 2025-26? What is the MSP, what quality rules apply, and how are farmers paid?",
+     "topic": "paddy procurement, decentralised procurement",
+     "passage": "Under the decentralised procurement policy for Kharif Marketing Season 2025-26, paddy is procured at the Minimum Support Price per quintal fixed by the Government of India, subject to uniform specifications on moisture content. Payment is credited to the farmers' accounts.",
+     "keywords": ["paddy", "procurement", "Minimum Support Price", "quintal", "moisture", "payment"],
+     "parts": [
+       {"type": "amount", "subject": "paddy minimum support price per quintal", "any": ["Rs\\.?\\s*2,?369"]},
+       {"type": "eligibility", "subject": "paddy procurement quality specifications, moisture", "doc": "G\\.O\\.Ms\\.No\\.23", "any": ["moisture"]},
+       {"type": "procedure", "subject": "payment to farmers for procured paddy", "doc": "G\\.O\\.Ms\\.No\\.23", "any": ["payment"]}
+     ]},
+    {"id": "seed-subsidy", "domain": "agriculture", "state": "AP",
+     "q": "What subsidy do I get on seeds in Andhra Pradesh for 2026-27, how are seeds distributed, and is there a limit on how much I can buy?",
+     "topic": "seed subsidy distribution 2026-27",
+     "passage": "Seeds are distributed on subsidy through Rythu Seva Kendrams at the sale price and subsidy pattern issued by the Commissioner and Director of Agriculture for 2026-27, as per the standard operating procedure for distribution of subsidy seed.",
+     "keywords": ["seed", "subsidy", "sale price", "distribution", "2026-27", "SOP"],
+     "parts": [
+       {"type": "amount", "subject": "subsidy seed sale price and subsidy pattern 2026-27", "doc": "Memo - Seeds", "any": ["subsidy"]},
+       {"type": "procedure", "subject": "distribution of subsidy seed, standard operating procedure", "doc": "G\\.O\\.Rt\\.No\\.538", "any": ["."]}
+     ]}
+  ]
+}

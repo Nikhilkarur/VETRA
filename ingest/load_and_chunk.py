@@ -245,8 +245,15 @@ def agriculture_units(count) -> list[dict]:
     return items
 
 
+# Amounts a scan misread: "/-" came out as "1", so Rs.6000/- read as Rs.60001, ten times too big.
+# Each was read in its sentence or table row. Too risky to fix by pattern, as real amounts can end in 1.
+MISREADS = {"Rs.60001": "Rs.6000/-", "Rs. 60001": "Rs. 6000/-", "Rs.20001": "Rs.2000/-", "Rs.17,0001": "Rs.17,000/-"}
+
+
 def clean(text: str) -> str:
-    """Whitespace only. Extraction artifacts inside words are left alone on purpose."""
+    """Whitespace and known misread amounts. Extraction artifacts inside words are left alone on purpose."""
+    for wrong, right in MISREADS.items():
+        text = text.replace(wrong, right)
     text = text.replace("\xa0", " ")
     text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", text)
     return re.sub(r"\s+", " ", text).strip()

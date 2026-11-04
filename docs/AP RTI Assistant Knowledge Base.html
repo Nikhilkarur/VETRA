@@ -1889,8 +1889,11 @@ header.hero { padding: 38px 0 22px; }
     <div class="tw" style="margin-top:12px"><table>
       <thead><tr><th>Part</th><th>State</th></tr></thead>
       <tbody>
-        <tr><td><strong>Works out what types of data a question needs</strong></td><td>Built. 32 of 33 on labelled questions, written before it first ran <span class="tag m">MEASURED</span></td></tr>
+        <tr><td><strong>Works out what types of data a question needs</strong></td><td>Built. 32 of 33 on labelled questions, written before it first ran <span class="tag m">MEASURED</span>. Its prompt has changed since, so this needs re-measuring</td></tr>
         <tr><td><strong>Checks whether we have it, for that state</strong></td><td>Built. Exact stores, then text; the state's own plus central documents</td></tr>
+        <tr><td><strong>Finds its way to what's missing</strong></td><td>Built. A model judges the evidence, then searches again, reads around a passage or looks inside a document, using read-only moves. Benefit not yet measured</td></tr>
+        <tr><td><strong>Answers as deep as the question needs</strong></td><td>Built. Quick, standard or a research brief. Searching each part reached 55 of 59 parts, against 40 for one search, tuned on those same questions <span class="tag m">MEASURED</span>. Answer quality not yet measured</td></tr>
+        <tr><td><strong>Checks every sentence</strong></td><td>Built. Each figure and date must be in the passage its sentence cites. Code corrects wrong citations, and a second model reads deep answers. What still fails is cut</td></tr>
         <tr><td><strong>Records what's missing</strong></td><td>Built. <code>python -m vetra.gaps</code> lists it. The future web collector plugs in here; it isn't built, on purpose</td></tr>
         <tr><td><strong>Exact facts printed by code</strong></td><td>Built. The model never sees them. Exact questions take 1 LLM call <span class="tag m">MEASURED</span></td></tr>
         <tr><td><strong>All-India search</strong></td><td>Built. AP still 80/93; 1,056 central chunks serve every state today <span class="tag m">MEASURED</span></td></tr>

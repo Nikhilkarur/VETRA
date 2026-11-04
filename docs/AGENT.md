@@ -4,13 +4,13 @@ Agriculture and finance, for every Indian state, built to scale by adding data r
 
 ## How a question is answered
 
-1. **What data does it need?** One LLM call turns the question into a plan: topic, state, language, and the *types of data* needed (`vetra/datatypes.py`). It's made from the user's words alone, before any document is read.
-2. **Do we have it?** Code looks in the exact store for each type, for that state and the central government. If the exact store has nothing, it searches text.
+1. **What data does it need, and how far should the answer go?** One LLM call turns the question into a plan: topic, state, language, how deep to go, and the *types of data* needed (`vetra/datatypes.py`). It's made from the user's words alone, before any document is read.
+2. **Do we have it?** Code looks in the exact store for each type, for that state and the central government. If the exact store has nothing, it searches text. A deep answer reads both, and searches each part on its own.
 3. **Is it on topic?** If the results don't mention the subject, one more search runs, and then it counts as missing.
 4. **Is it in force?** Code removes what doesn't apply today. Past seasons' rules are cut unless the question names that year.
-5. **Is it enough?** A model judges the evidence against the question. If a part is missing, it searches in other words or reads the passages around one it found, up to 2 rounds (`vetra/navigate.py`). Exact records that answer everything skip this step.
+5. **Is it enough?** A model judges the evidence against the question. If a part is missing, it searches in other words, reads the passages around one it found, or looks inside a document (`vetra/navigate.py`). Exact records that answer everything skip this step, except in a deep answer.
 6. **What's missing?** Gaps go to `data/gaps.jsonl`. `python -m vetra.gaps` lists them, most needed first: this is the to-do list for collecting documents.
-7. **Answer.** Exact facts are printed by code, word for word. The model never sees those figures. If exact records answer everything, no answer model runs at all. Otherwise it explains the rest, and code checks what it wrote.
+7. **Answer.** Exact facts are printed by code, word for word. The model never sees those figures. If exact records answer everything, no answer model runs at all, except in a deep answer. Otherwise it explains the rest, and each sentence is checked (see "How an answer is checked").
 
 | Data type | Exact store | Fallback |
 |---|---|---|
@@ -23,14 +23,47 @@ Agriculture and finance, for every Indian state, built to scale by adding data r
 | statistic | numbers | text |
 | procedure, explanation | none: text is the right place | |
 
+## How deep an answer goes
+
+The planner picks a level from the question. Everything that differs between levels is one table in `vetra/depth.py`, so a reader's own preference can override it later (`answer(..., depth="deep")`, or `--depth` on the command line).
+
+| Level | For | Search | Looks further | Second reader | Answer |
+|---|---|---|---|---|---|
+| quick | One fact: a date, an amount, yes or no | One search | 1 round | No | One or two sentences, or the exact records alone |
+| standard | How to do something, or what to do | One search | 2 rounds | No | The answer, then the steps, conditions and exceptions |
+| deep | Understanding a scheme, comparing, how something changed, several linked questions | Each part alone, plus the whole question | 3 rounds | Yes | A research brief with sections |
+
+If the planner calls a question quick or standard but found four or more parts, or three parts including an explanation, it goes deep anyway. The model isn't steady on this choice.
+
+A deep answer differs in these ways:
+
+- **Each part gets its own search.** One search can't reach six different things. On 14 deep questions split into 59 parts, one search reached 40 parts, and searching each part reached 55 (`eval/depth_eval.py`). The settings were tuned on these same questions, so expect somewhat less on new ones.
+- **Evidence is shared fairly.** Parts take turns, so one with many passages can't crowd out another. Exact records always stay.
+- **Text sits beside exact records.** The records give the figures, and the text gives their conditions and exceptions.
+- **It always looks for what changed.** Passages read for this keep their past seasons, marked as history. Elsewhere, past seasons are still cut.
+- **The writer knows what each source is.** Each passage is labelled as an Act, rules, a government order, guidelines, a circular, a manual or a press explainer, with its date, status and why it was included. The brief says which applies when sources differ.
+- **Code names what's missing.** A part with no evidence is listed by code under the answer, and the writer is told not to write about it.
+
+## How an answer is checked
+
+Every sentence is checked, in this order:
+
+1. **Code corrects citations.** If a figure or date is in the evidence but its sentence cites the wrong passage or none, code adds the passage that says it. This costs no LLM call.
+2. **Code finds what can't be true.** A figure or date in no passage, a citation to a passage that doesn't exist, or a wrong "today".
+3. **A second model reads it (deep only).** It sees each statement and only the passages that statement cites, and can only report statement numbers. If it can't run, the answer stands on the code checks, and `trace["verified"]` says so.
+4. **One rewrite.** The writer is told exactly what failed. If the rewrite is worse, the first answer is kept.
+5. **What still fails is cut.** Only the failing sentences come out, and the reader is told some details were left out. If that would remove more than half the answer, the reader gets the exact records or the document names instead.
+
+**Not checked by code:** whether a sentence gets a rule wrong in words. The second reader catches that for deep answers. Quick and standard answers don't have one, to keep them fast and cheap.
+
 ## Finding its way
 
 The judge reads document text, so what it can do is kept small:
 
-- **Moves:** it can only search or read more. Both only read.
+- **Moves:** it can search, read around a passage, or look inside a document. All of them only read.
 - **Fixed by code:** the state and topic. A document can't redirect it to another state.
 - **Same checks:** every new result goes through the in-force and off-topic checks.
-- **Limits:** 2 rounds, 2 moves a round, 16 passages, and 3 of the 6 LLM calls kept back for the answer.
+- **Limits:** set per level in `vetra/depth.py`: rounds, moves a round, passages, total LLM calls, and how many calls are kept back for the answer.
 - **If it fails:** the answer is written from what's already in hand.
 
 Each answer's `trace["route"]` shows the moves it made and anything still missing.
@@ -128,6 +161,8 @@ Or `python -m vetra.agent "your question" --state KA` in a terminal. With Docker
 | `python eval/agent_retrieval_eval.py` | search still matches the measured pipeline | no |
 | `python eval/on_topic_eval.py` | the off-topic check | no |
 | `python eval/needs_eval.py` | the planner picks the right data types (`--live` to re-ask) | saved plans |
+| `python eval/depth_eval.py` | a deep answer's search reaches every part of the question | no |
+| `python eval/depth_eval.py --planner` | the planner picks the right level (`--live` to re-ask) | saved plans |
 | `python eval/agent_answers.py --show` | real answers, known cases | yes |
 
 ## Later: finding data by itself

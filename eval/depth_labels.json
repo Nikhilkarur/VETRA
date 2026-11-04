@@ -1,0 +1,34 @@
+{
+  "_about": "Does the planner choose how far an answer should go? Labels were written before the planner first ran on them. Some are judgement calls, so read the misses rather than chasing the score.",
+  "questions": [
+    {"q": "what is the last date to insure my cashew crop under weather insurance", "depth": "quick"},
+    {"q": "i grow paddy in rabi, how much premium do i pay under PMFBY", "depth": "quick"},
+    {"q": "is onion covered under PMFBY in andhra pradesh", "depth": "quick"},
+    {"q": "what is the msp for wheat this year", "depth": "quick"},
+    {"q": "how much is the fiscal deficit in the union budget 2026-27", "depth": "quick"},
+    {"q": "at what age can i join atal pension yojana", "depth": "quick"},
+    {"q": "పత్తి పంటకు బీమా చివరి తేదీ ఎప్పుడు", "depth": "quick"},
+    {"q": "gehu ka msp kitna hai", "depth": "quick"},
+
+    {"q": "how do i get a kisan credit card", "depth": "standard"},
+    {"q": "seed dealer sold me fake seeds, what can i do", "depth": "standard"},
+    {"q": "i missed the crop insurance deadline, what can i do now", "depth": "standard"},
+    {"q": "how do i apply for pm kisan", "depth": "standard"},
+    {"q": "my pm kisan installment has not come, whom should i contact", "depth": "standard"},
+    {"q": "am i eligible for pm kisan if i am a government employee", "depth": "standard"},
+    {"q": "how do i file a crop insurance claim after a flood", "depth": "standard"},
+    {"q": "పీఎం కిసాన్ కోసం ఎలా దరఖాస్తు చేయాలి", "depth": "standard"},
+
+    {"q": "what is pm kisan and who gets it", "depth": "deep"},
+    {"q": "explain crop insurance in andhra pradesh in detail", "depth": "deep"},
+    {"q": "compare PMFBY and RWBCIS", "depth": "deep"},
+    {"q": "how has crop insurance changed in andhra pradesh since 2024", "depth": "deep"},
+    {"q": "why did andhra pradesh stop free crop insurance", "depth": "deep"},
+    {"q": "what are the rights of tenant farmers in andhra pradesh, and which benefits can they get", "depth": "deep"},
+    {"q": "explain how a kisan credit card works: limit, interest, repayment and insurance", "depth": "deep"},
+    {"q": "what does the union budget 2026-27 mean for farmers", "depth": "deep"},
+    {"q": "how does atal pension yojana work", "depth": "deep"},
+    {"q": "పీఎం కిసాన్ పథకం గురించి పూర్తిగా వివరించండి", "depth": "deep"},
+    {"q": "फसल बीमा योजना के बारे में विस्तार से बताइए", "depth": "deep"}
+  ]
+}

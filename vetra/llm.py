@@ -16,6 +16,7 @@ A vendor that isn't OpenAI-compatible needs one class with this file's complete(
 from __future__ import annotations
 
 import os
+import re
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -91,7 +92,8 @@ class OpenAICompatible:
         if not r.ok:
             raise LLMError(f"{model}: HTTP {r.status_code}: {r.text[:200]}")
         data = r.json()
-        text = (data["choices"][0]["message"].get("content") or "").strip()
+        # Some models put their reasoning in the reply, between these tags.
+        text = re.sub(r"<think>.*?(?:</think>|$)", "", data["choices"][0]["message"].get("content") or "", flags=re.S).strip()
         return Reply(text, model, (data.get("usage") or {}).get("total_tokens", 0))
 
 

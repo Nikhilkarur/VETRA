@@ -21,6 +21,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "knowledge"
 STORES = ("documents", "dates", "rules", "numbers", "directory", "links", "forms")  # "text": see text_index.py
+# What each kind of source is, strongest first. The answer model is told, so it can weigh them.
+KINDS = {"act": "Act of law", "rules": "statutory rules", "notification": "government notification",
+         "go": "government order", "scheme_guideline": "scheme guidelines", "guideline": "guidelines",
+         "circular": "circular", "faq": "official FAQ", "manual": "department manual", "other": "department note",
+         "budget": "budget document", "explainer": "press explainer"}
 _WORDS = re.compile(r"[a-z0-9]+")
 _COMMON = frozenset("a an and are at can do for from how i in is it me my of on or the to what when who why with".split())
 
@@ -55,6 +60,12 @@ class Knowledge:
                 continue
             rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
             self.records[(path.parent.name, path.stem)] = rows
+        self._kinds = {(domain, (r.get("source") or {}).get("doc")): KINDS.get(r.get("legal_weight"), "")
+                       for (domain, store), rows in self.records.items() if store == "documents" for r in rows}
+
+    def kind_of(self, domain: str, title: str) -> str:
+        """What kind of source a document is, if we've recorded it."""
+        return self._kinds.get((domain, title), "")
 
     def select(self, domain: str, store: str, state: str | None) -> list[dict]:
         """Records that apply in this state: its own, and the central government's."""

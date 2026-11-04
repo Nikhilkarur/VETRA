@@ -62,10 +62,10 @@ def from_manifest(entries: list[dict], domain: str, state: str) -> list[dict]:
         status = {"yes": "in_force", "no": "not_in_force"}.get(state_of, "unknown")
         base = {"domain": domain, "jurisdiction": place, "source": source, "status": status,
                 "legal_weight": e.get("doc_type"), "reviewed": False}
-        if e.get("date"):
-            out.append({**base, "id": f"doc-{_slug(e['file'])}", "store": "documents", "subject": e["title"],
-                        "date": e["date"], "valid_from": e["date"],
-                        "text": f"{e['title']}: issued {e['date']}; in force: {e.get('in_force') or 'unknown'}."})
+        dated = {"date": e["date"], "valid_from": e["date"]} if e.get("date") else {}
+        issued = f"issued {e['date']}" if e.get("date") else "date not recorded"
+        out.append({**base, "id": f"doc-{_slug(e['file'])}", "store": "documents", "subject": e["title"], **dated,
+                    "text": f"{e['title']}: {issued}; in force: {e.get('in_force') or 'unknown'}."})
         for target in e.get("amends") or []:
             out.append({**base, "id": f"link-{_slug(e['file'])}-{_slug(target)}", "store": "links",
                         "subject": target, "relation": "amends", "target": target,

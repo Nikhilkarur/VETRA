@@ -26,14 +26,16 @@ from .knowledge import Knowledge
 
 PAGE = Path(__file__).resolve().parent.parent / "rag" / "web.html"
 TITLE = "VETRA: your government, from its own documents"
-BLURB = ("Ask about farm schemes, crop insurance, subsidies and rules anywhere in India, or about the "
-         "Right to Information Act. Every answer comes from official documents. Not legal advice.")
-PLACEHOLDER = "Ask about a farm scheme, crop insurance, or RTI…"
+BLURB = ("Ask about farm schemes, crop insurance, pensions, taxes and budgets anywhere in India, or about the "
+         "Right to Information Act. A simple question gets a short answer, and a bigger one gets a full brief. "
+         "Every answer comes from official documents. Not legal advice.")
+PLACEHOLDER = "Ask about a farm scheme, crop insurance, a pension, or RTI…"
 EXAMPLES = ("what is the last date to insure my cashew crop under weather insurance",
             "i grow paddy in rabi, how much premium do i pay under PMFBY",
-            "what is pm kisan and how much money do farmers get",
+            "explain crop insurance in andhra pradesh in detail",
+            "what is pm kisan and who gets it",
             "how do i get a kisan credit card",
-            "seed dealer sold me fake seeds, what can i do",
+            "how does atal pension yojana work",
             "how much is the rti fee")
 PIPELINE = threading.Lock()  # one question at a time: shared rate limits and search models
 
@@ -81,6 +83,7 @@ def page_html() -> str:
         page = page.replace("{{" + key + "}}", html.escape(value))
     chips = "\n".join(f'        <button class="chip" type="button">{html.escape(q)}</button>' for q in EXAMPLES)
     page = page.replace("{{CHIPS}}", chips).replace("python rag/web.py", "python -m vetra.web")
+    page = page.replace("Takes 3–6 seconds.", "Takes a few seconds, or up to a minute for a full brief.")
     options = '<option value="">Not chosen</option>' + "".join(
         f'<option value="{code}">{html.escape(name)}</option>'
         for code, name in sorted(jurisdictions.STATES.items(), key=lambda pair: pair[1]))
@@ -95,7 +98,8 @@ def to_page(r: agent.Result) -> dict:
             "reply_language": r.language, "answer": _CITATION.sub(r"[\1]", r.answer),
             "standalone": "", "passage": None, "model": steps[-1]["model"] if steps else "no model",
             "search_s": r.trace.get("seconds", 0), "answer_s": 0, "coverage": r.coverage,
-            "sources": [{"n": s["n"], "source": s["doc"], "added": False, "text": s.get("text", ""), "url": s.get("url")}
+            "sources": [{"n": s["n"], "source": s["doc"] + (f" · {s['kind']}" if s.get("kind") else ""),
+                         "added": bool(s.get("added_because")), "text": s.get("text", ""), "url": s.get("url")}
                         for s in r.sources]}
 
 
