@@ -1,0 +1,734 @@
+{
+ "cashew-date/plain": {
+  "answer": "I cannot provide the specific last date to insure cashew under the Weather Based Crop Insurance Scheme (WBCIS) in Andhra Pradesh for the Rabi 2026-27 season. \n\nInsurance deadlines, notification periods, and implementation details for crop insurance schemes are periodically updated by the Ministry of Agriculture and Farmers Welfare in coordination with the Government of Andhra Pradesh and designated insurance companies. Because these dates can vary by district and are typically announced closer to the sowing and enrollment season, I recommend checking the official **Pradhan Mantri Fasal Bima Yojana (PMFBY) portal** (pmfby.gov.in), the **Andhra Pradesh Agriculture Department website**, or contacting your local agricultural office or cooperative bank for the most accurate and up-to-date cutoff dates.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 212
+ },
+ "tomato-date/plain": {
+  "answer": "I do not have access to real-time or currently active notification data for the Rabi 2026-27 season regarding the Restructured Weather Based Crop Insurance Scheme (RWBCIS) in Andhra Pradesh. \n\nBecause crop insurance cut-off dates and notifications are issued seasonally by the Department of Agriculture, Government of Andhra Pradesh, and the Ministry of Agriculture & Farmers Welfare, you will need to check the official sources for the exact deadline.\n\nTo find the correct last date:\n1. Visit the **Pradhan Mantri Fasal Bima Yojana (PMFBY) portal** (pmfby.gov.in).\n2. Check the **Andhra Pradesh State Agriculture Department** website.\n3. Contact your local agricultural officer (Mandal Agricultural Officer) or your nearest empaneled bank/Common Service Center (CSC) handling crop insurance.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 230
+ },
+ "tomato-date/vetra": {
+  "answer": "- RWBCIS, Rabi 2026-27, enrolment for tomato: 1 October 2026 to 15 December 2026. Open now, closes in 40 days. [E1]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1556,
+  "calls": 1,
+  "seconds": 3.1,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.35 (2026)"
+  ]
+ },
+ "rice-date/plain": {
+  "answer": "I do not have access to real-time data or specific notifications issued for the Rabi 2026–27 season under the Pradhan Mantri Fasal Bima Yojana (PMFBY) in Andhra Pradesh. \n\nTo find the exact cutoff date for enrolling rice, please check:\n1. The official **National Crop Insurance Portal** (pmfby.gov.in).\n2. Announcements made by the **Department of Agriculture, Government of Andhra Pradesh**.\n3. Your local bank branch, Primary Agricultural Cooperative Society (PACS), or common service center (CSC) handling crop insurance in your district.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 180
+ },
+ "rice-date/vetra": {
+  "answer": "- PMFBY, Rabi 2026-27, enrolment for rice: 1 October 2026 to 31 December 2026. Open now, closes in 56 days. [E1]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1534,
+  "calls": 1,
+  "seconds": 2.5,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.34 (2026)"
+  ]
+ },
+ "rice-kharif-date/plain": {
+  "answer": "I cannot provide the last date to enrol rice under the Pradhan Mantri Fasal Bima Yojana (PMFBY) for Kharif 2026 in Andhra Pradesh because official enrolment deadlines for that season have not been announced or reached yet as of my current knowledge cutoff in 2026. \n\nTypically, the cutoff dates for Kharif season enrolment under PMFBY are announced by the state government closer to the start of the season (usually around July/August). To find the exact dates, please check the official National Crop Insurance Portal (ncip.gov.in) or contact the Andhra Pradesh Department of Agriculture.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 181
+ },
+ "weather-kharif-date/plain": {
+  "answer": "I cannot provide the enrollment deadline for the Restructured Weather Based Crop Insurance Scheme (RWBCIS) in Andhra Pradesh for Kharif 2026, as information specific to crop insurance notifications and cutoff dates for that season is not available in my current records. \n\nGenerally, enrollment deadlines for crop insurance schemes like RWBCIS are notified by the State Government of Andhra Pradesh in coordination with insurance companies and the central guidelines ahead of the season. For the most accurate and up-to-date information, please check the official portal of the Agriculture Department of Andhra Pradesh or contact your local district agriculture office / primary agricultural credit societies (PACS).",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 179
+ },
+ "free-insurance/plain": {
+  "answer": "I do not have access to real-time information or updates regarding specific state government schemes for 2026. Therefore, I cannot confirm whether the crop insurance scheme remains completely free for farmers in Andhra Pradesh this year. \n\nTo get the most accurate and up-to-date information, please check the official website of the **Andhra Pradesh Department of Agriculture** or contact your local Rythu Bharosa Kendra (RBK) / agriculture officer.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 136
+ },
+ "annadatha-amount/plain": {
+  "answer": "Under the **Annadatha Sukhibhava** scheme in Andhra Pradesh, eligible farmer families receive **₹20,000 per year**. \n\nThis financial assistance is a combination of the central government's **PM-KISAN** scheme (Pradhan Mantri Kisan Samman Nidhi), which provides ₹6,000 annually, and the state government's top-up of ₹14,000, bringing the total annual support to ₹20,000 per farmer family.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 154
+ },
+ "cotton-pmfby/plain": {
+  "answer": "In Andhra Pradesh, cotton is notified under the **Pradhan Mantri Fasal Bima Yojana (PMFBY)**, which is the yield-based crop insurance scheme, rather than the Weather Based Crop Insurance Scheme (RWBCIS). \n\nUnder the implementation framework in the state, cotton is treated as a commercial/horticultural or major field crop covered for yield-based losses (such as prevented sowing, standing crop damage from sowing to harvesting, and post-harvest losses) based on Crop Cutting Experiments (CCEs).",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 156
+ },
+ "paddy-rabi-premium/plain": {
+  "answer": "Under the Pradhan Mantri Fasal Bima Yojana (PMFBY), the standard uniform farmer premium for all food crops and oilseeds—including paddy—is **2% of the sum insured** (or the actuarial rate, whichever is less) for the Kharif season, and **1.5%** for the Rabi season. \n\nTherefore, for **paddy in the Rabi season in Andhra Pradesh**, a farmer pays **1.5%** of the total sum insured as their share of the premium. The remaining balance of the actuarial premium is subsidized equally by the Central and State Governments.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 170
+ },
+ "go-extension/plain": {
+  "answer": "I cannot answer this question because it requires specific, up-to-date state-level government order (GO) numbers and local notifications regarding the Pradhan Mantri Fasal Bima Yojana (PMFBY) extension for 2026-27 in Andhra Pradesh, which are not currently available in my static knowledge base or real-time search capabilities. \n\nTo find the exact Government Order (GO) number, I recommend checking the official **Andhra Pradesh e-Gazette**, the **Commissioner and Director of Agriculture, Government of AP** website, or the **I&PR Department of Andhra Pradesh** portal, where such policy extensions are officially published.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 182
+ },
+ "go-extension/vetra": {
+  "answer": "Andhra Pradesh extended the Pradhan Mantri Fasal Bima Yojana (PMFBY) to the 2026-27 season through G.O.Ms.No.34 Agri&Coop (Agri.V) dated 06.07.2026 [E1]. This order applies to voluntary enrolment for Kharif 2026 and Rabi 2026-27, and it amends or replaces the earlier G.O.Ms.No.80 from 2024 [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 3440,
+  "calls": 3,
+  "seconds": 6.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.34 Agri&Coop (Agri.V) Dt.06.07.2026 - PMFBY - Extension of notification to 2026-27 (Kharif 2026, Rabi 2026-27) on voluntary enrolment"
+  ]
+ },
+ "fra-drip/plain": {
+  "answer": "In Andhra Pradesh, the subsidy for drip irrigation systems provided to **Forest Rights Act (FRA) patta holders** (as well as Scheduled Caste and Scheduled Tribe farmers) in identified/selected districts is generally structured to provide maximum financial support to make micro-irrigation affordable. \n\nHere are the key details regarding the subsidy structure under the Andhra Pradesh Micro Irrigation Project (APMIP) / YSR Free/Subsidized Drip Irrigation scheme:\n\n### 1. Subsidy Percentage\n* **For Small and Marginal Farmers (including ST/SC and FRA patta holders):** The government typically provides a **100% subsidy** (fully free) for drip and sprinkler irrigation systems up to a specified land limit (usually up to 5 acres). \n* **For Other Farmers:** The subsidy ranges from 70% to 90% depending on the landholding size.\n\nBecause FRA patta holders are recognized as vulnerable tribal/forest-dwelling traditional communities, they fall under the highest tier of financial assistance, meaning the system is usually installed **free of cost** to the beneficiary, subject to scheme guidelines and verification of their patta.\n\n### 2. Identified Districts\nThe micro-irrigation and enhanced tribal welfare subsidies heavily focus on districts with significant Scheduled Tribe populations and forest cover in Andhra Pradesh. These traditionally include:\n* Alluri Sitharama Raju (ASR) district\n* Parvathipuram Manyam\n* Vizianagaram\n* Visakhapatnam\n* Srikakulam\n* East Godavari (agency areas)\n* West Godavari (agency areas)\n* Kurnool, Nandyal, Prakasam, and parts of Rayalaseema (for drought-prone/arid region specific micro-irrigation drives).\n\n### 3. Eligibility Criteria for FRA Patta Holders\nTo avail of the subsidy, the applicant generally needs to provide:\n* A valid **FRA Patta (Forest Rights Act Title Deed)** recognizing their land rights.\n* Aadhaar card linked with mobile.\n* Land documents / Adangal / 1B (as applicable to forest titles).\n* Bank passbook (though the subsidy goes directly to the empanelled manufacturer/vendor, proper KYC is required).\n* Water source availability certificate (borewell, open well, or nearby water body).\n\n### How to Apply\n1. **Online Portal:** Applications are usually processed through the **APMIP (Andhra Pradesh Micro Irrigation Project)** portal or via the **Navaratnalu-Pedalandariki Illu / Rythu Bharosa Kendram (RBK)** system.\n2. **Offline/Village Level:** Farmers can approach their local **Agriculture Extension Officer (AEO)** or visit the nearest **Rythu Bharosa Kendra (RBK)** in their village to register their names and submit their FRA patta copies. \n\n*Note: Specific district allocations and scheme names can occasionally be updated by the Department of Agriculture and Cooperation, AP. It is recommended to verify the current status directly at your local RBK or the District Project Director, APMIP.*",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 687
+ },
+ "input-subsidy-loss/plain": {
+  "answer": "As of the current State Disaster Response Fund (SDRF) and National Disaster Response Fund (NDRF) guidelines adopted by Andhra Pradesh, the minimum crop loss required to be eligible for an input subsidy due to natural calamities (such as floods, cyclones, drought, etc.) is **33%**. \n\nHere are the key details regarding the input subsidy structure in Andhra Pradesh:\n\n* **Threshold:** Farmers suffering crop damage of **33% and above** are eligible for relief and input subsidies.\n* **Calculation:** The assessment of the crop loss is jointly conducted by the Department of Agriculture, Horticulture, and Revenue departments (often through village-level functionaries like Village Agriculture Assistants/Rythu Bharosa Kendram staff and Village Revenue Officers).\n* **Crop Types:** This threshold applies to agricultural crops, horticultural crops, and perennial crops, though the specific financial assistance per hectare varies depending on the type of crop (rainfed, irrigated, or perennial) and whether the calamity occurred during the Kharif or Rabi season.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 253
+ },
+ "paddy-msp/plain": {
+  "answer": "For the Kharif Marketing Season (KMS) 2025–26, the Minimum Support Price (MSP) for **common paddy** is set at **₹2,350 per quintal**. \n\n*(Note: For Grade 'A' paddy, the MSP for the same season is set at ₹2,375 per quintal.)*",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 127
+ },
+ "paddy-msp/vetra": {
+  "answer": "The minimum support price for common paddy in the Kharif Marketing Season 2025-26 is Rs.2,369/- per quintal [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6386,
+  "calls": 3,
+  "seconds": 12.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy for Kharif Marketing Season 2025-26 [Consumer Affairs, Food & Civil Supplies department, 2025-10-22]"
+  ]
+ },
+ "tenant-agreement/plain": {
+  "answer": "Under the Andhra Pradesh Crop Cultivator Rights Rules, 2019 (framed under the Andhra Pradesh Crop Cultivator Rights Act, 2019), a **Crop Cultivator Agreement** (which is registered to issue a *CROP Cultivator Rights Card* or *CCRC*) is valid for **one agricultural year (11 months)**. \n\nBecause agricultural leasing in the state is seasonal and tied to specific crop cycles (such as Kharif and Rabi), the agreement and the rights granted under the CCRC must be renewed annually between the land owner and the cultivator.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 170
+ },
+ "tenant-agreement/vetra": {
+  "answer": "A crop cultivator agreement under Andhra Pradesh's Crop Cultivator Rights Rules lasts for a maximum period of eleven months in a crop year [E2][E4]. \n\nThe agreement is executed through a Crop Cultivator Rights Card (CCRC) between the land owner and the cultivator, and agreements among family members are not allowed [E1][E4].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5903,
+  "calls": 3,
+  "seconds": 7.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]"
+  ]
+ },
+ "seed-licence/plain": {
+  "answer": "Under the Seeds (Control) Order, 1983, the validity period of a seed dealer's license was amended in **2019** (via the Seeds (Control) Amendment Order, 2019). \n\nFollowing that amendment, a seed dealer's license is valid for **five years** from the date of its issue, provided it is not suspended or cancelled earlier, and subject to timely renewal as per the prescribed rules. \n\n*(Note: Prior to the 2019 amendment, the standard validity period for a seed license was generally three years in most jurisdictions).*",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 180
+ },
+ "seed-licence/vetra": {
+  "answer": "Based on central government rules, a seed dealer's licence is valid for five years [E1].\n\nNot in our documents yet: Andhra Pradesh's own rules on Seeds Control Order 2019 dealer licence validity. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6207,
+  "calls": 3,
+  "seconds": 8.4,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Seeds (Control) Amendment Order, 2019 - dealer licence validity five years [central government, 2019-08-22]"
+  ]
+ },
+ "pm-kisan/plain": {
+  "answer": "Under the PM-KISAN (Pradhan Mantri Kisan Samman Nidhi) scheme, eligible farmer families receive **₹6,000 per year**. \n\nThis financial assistance is distributed in **three equal installments of ₹2,000 each**, directly transferred into the bank accounts of the beneficiaries every four months (typically in the periods of April–July, August–November, and December–March).",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 127
+ },
+ "pm-kisan/vetra": {
+  "answer": "The PM-KISAN scheme provides an eligible farmer family Rs.6000/- per year, payable in three equal installments of Rs.2000/- each every four months [E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6639,
+  "calls": 3,
+  "seconds": 13.7,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "PM-KISAN - Revised FAQ [central government]"
+  ]
+ },
+ "pm-kmy/plain": {
+  "answer": "Under the **Pradhan Mantri Kisan Maan-Dhan Yojana (PM-KMY)**, eligible small and marginal farmers receive a guaranteed monthly pension of **₹3,000** upon reaching the age of 60 years. \n\nHere are a few key details about the scheme:\n* **Voluntary and Contributory:** It is a pension scheme based on voluntary contributions. Farmers aged 18 to 40 years need to make a monthly contribution ranging between **₹55 to ₹200** (depending on their entry age) until they reach the age of 60.\n* **Matching Contribution:** The Central Government contributes an equal amount to the pension fund as the farmer's monthly contribution.\n* **Family Pension:** In the event of the farmer's death while receiving the pension, the spouse is entitled to receive 50% of the pension as a family pension (applicable only to the spouse).",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 235
+ },
+ "pm-kmy/vetra": {
+  "answer": "The Pradhan Mantri Kisan Maan-Dhan Yojana provides an assured monthly pension of Rs. 3000/- to eligible small and marginal farmers upon reaching the age of 60 years, relying on central government rules [E1]. \n\nTo take part, members make a voluntary monthly contribution ranging between Rs.55 to Rs.200 per month depending on their entry age, and the Central Government contributes an equal matching amount [E1][E3][E4][E5]. Farmers falling within the exclusion criteria, such as those covered by certain other statutory social security schemes or higher economic status categories, are not eligible for the benefits [E1][E6].\n\nThis uses central government rules. Which state are you in? Its own rules may add to these.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6056,
+  "calls": 3,
+  "seconds": 13.7,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]",
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]",
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]",
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]",
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]"
+  ]
+ },
+ "kcc-subvention/plain": {
+  "answer": "For the financial year 2025–26, the Government of India continues to provide an upfront interest subvention on short-term crop loans up to ₹3 lakh through the Kisan Credit Card (KCC) scheme to ensure farmers have access to affordable credit. \n\nThe standard interest subvention rate is **2% per annum** for banks, which effectively reduces the borrowing cost for the farmer to **7% per annum**. \n\nAdditionally, to incentivize timely repayment, the government offers an **Additional Prompt Repayment Incentive (PRI) of 3% per annum**. Farmers who repay their loans on time effectively enjoy a reduced interest rate of **4% per annum**.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 190
+ },
+ "kcc-limit/plain": {
+  "answer": "Under the Interest Subvention Scheme for short-term crop loans through the Kisan Credit Card (KCC), the concessional interest rate applies to loans up to **₹3 lakh** per farmer. \n\nHere is how the structure generally works:\n* **Base Interest Rate:** Short-term crop loans are provided by banks at a benchmark rate of 9%.\n* **Interest Subvention:** The Government of India provides a 2% interest subvention per annum to banks for loans up to ₹3 lakh, effectively reducing the interest rate to **7%** for the farmer.\n* **Prompt Repayment Incentive:** Farmers who repay their short-term crop loans promptly and on time receive an additional 3% prompt repayment incentive, further lowering the effective interest rate to **4%** per annum.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 209
+ },
+ "kcc-limit/vetra": {
+  "answer": "Under the central government's Modified Interest Subvention Scheme, interest subvention on short-term loans through the Kisan Credit Card applies up to an overall limit of ₹ 3 lakh per annum [E1].\n\nThis uses central government rules. Which state are you in? Its own rules may add to these.\nSome details were left out because they couldn't be checked against the documents.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 8824,
+  "calls": 4,
+  "seconds": 17.1,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": [
+   "'2.00 lakh' isn't an amount in the evidence. Check the lakh or crore"
+  ],
+  "sources": [
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation for FY 2025-26 (DA&FW letter dt 16.06.2025) [central government, 2025-06-16]"
+  ]
+ },
+ "fiscal-deficit/plain": {
+  "answer": "I cannot answer your question because the Union Budget for the financial year 2026-27 has not yet been presented or finalized as of my current knowledge cutoff in January 2025, and I do not have real-time data access for events occurring after that date. Typically, the Union Budget is presented on February 1st of each year.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 123
+ },
+ "fiscal-deficit/vetra": {
+  "answer": "The fiscal deficit estimate in India's Union Budget 2026-27 is 4.3 percent of GDP, according to central government rules [E1]. This target is part of the new fiscal prudence path of debt consolidation, with the fiscal deficit also estimated at 4.4 percent of GDP in the Revised Estimates for 2025-26 [E1].\n\nThis uses central government rules. Which state are you in? Its own rules may add to these.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6500,
+  "calls": 3,
+  "seconds": 17.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Summary of Union Budget 2026-27 (PIB) [central government, 2026-02-01]"
+  ]
+ },
+ "budget-total/plain": {
+  "answer": "I do not have access to the Union Budget 2026-27 figures, as my knowledge is limited to events up to January 2025 and I do not have real-time internet access to retrieve current government financial data. \n\nTo find the total expenditure for the Union Budget 2026-27, please check the official website of the Ministry of Finance, Government of India (indiabudget.gov.in).",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 142
+ },
+ "budget-total/vetra": {
+  "answer": "The total expenditure in India's Union Budget 2026-27 is projected to be ₹53,47,315 crore [E2]. This central government budget figure shows a growth of 7.7 per cent over the previous revised estimates [E1].\n\nThis uses central government rules. Which state are you in? Its own rules may add to these.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6570,
+  "calls": 3,
+  "seconds": 16.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Summary of Union Budget 2026-27 (PIB) [central government, 2026-02-01]",
+   "Union Budget 2026-27: Budget at a Glance [central government, 2026-02-01]"
+  ]
+ },
+ "apy-age/plain": {
+  "answer": "The entry age for the Atal Pension Yojana (APY) is **18 years to 40 years**. \n\nKey details regarding the age eligibility include:\n* **Minimum age:** 18 completed years\n* **Maximum age:** 40 years and 364 days (before turning 41)\n* **Minimum contribution period:** 20 years (since the pension payout begins at the age of 60). Therefore, a person joining at age 40 will contribute for 20 years, while someone joining at age 18 will contribute for 42 years.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 162
+ },
+ "apy-age/vetra": {
+  "answer": "The entry age for the Atal Pension Yojana is 18 to 40 years [E1]. Under this central government scheme, income taxpayers are not eligible to join [E1].\n\nThis uses central government rules. Which state are you in? Its own rules may add to these.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5772,
+  "calls": 3,
+  "seconds": 5.7,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Atal Pension Yojana: Securing Retirement for India's Unorganised Sector (PIB, May 2025) [central government, 2025-05-08]"
+  ]
+ },
+ "wb-krishak/plain": {
+  "answer": "Under the **Krishak Bandhu** scheme in West Bengal, financial assistance is not calculated purely on a per-acre basis, but rather based on land ownership categories, with a minimum and maximum cap. \n\nThe current payment structure for farmers is as follows:\n\n* **Farmers with 1 acre or more of cultivable land:** They receive **₹10,000 per year** (distributed in two equal installments of ₹5,000 each for the Rabi and Kharif seasons).\n* **Farmers with less than 1 acre of land (down to a minimum of 0.25 acres):** They receive financial assistance on a **pro-rata basis**, with a **minimum of ₹4,000 per year** (₹2,000 per installment).\n\nTherefore, if a farmer owns 1 acre or more, they get the full ₹10,000 annually. For landholdings below 1 acre, the amount is scaled down proportionally, subject to the ₹4,000 annual minimum floor.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 264
+ },
+ "wb-krishak/vetra": {
+  "answer": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:\n- Pradhan Mantri Fasal Bima Yojana: Affordable Crop Insurance for Every Farmer (PIB, August 2026) [central government, 2026-08-29] [E1]\n- Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central government, 2018-07-04] [E2]\n- PM-KISAN - Revised FAQ [central government] [E5]\n- Operational Guidelines of Per Drop More Crop 2025 (PMKSY micro irrigation) [central government, 2025] [E6]\n\nNot in our documents yet: West Bengal's own rules on Krishak Bandhu financial assistance per acre per year. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 11108,
+  "calls": 4,
+  "seconds": 9.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": [
+   "cites nothing"
+  ],
+  "sources": [
+   "Pradhan Mantri Fasal Bima Yojana: Affordable Crop Insurance for Every Farmer (PIB, August 2026) [central government, 2026-08-29]",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central government, 2018-07-04]",
+   "PM-KISAN - Revised FAQ [central government]",
+   "Operational Guidelines of Per Drop More Crop 2025 (PMKSY micro irrigation) [central government, 2025]"
+  ]
+ },
+ "ts-rythu/plain": {
+  "answer": "As of the current rules under the Rythu Bharosa scheme (formerly known as Rythu Bandhu) in Telangana, the financial assistance is generally provided at the rate of **₹12,000 per acre per year** for farmers. \n\n*Note: The scheme historically provided ₹10,000 per acre per year (split into two seasons at ₹5,000 each), but the state government has been in the process of implementing upward revisions as part of its poll promises and budgetary allocations. Please check with the local agricultural extension officer (AEO) or the official Telangana government portal for the exact disbursement structure for the current crop season.*",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 178
+ },
+ "ts-rythu/vetra": {
+  "answer": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:\n- Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central government, 2018-07-04] [E1]\n- Operational Guidelines of Per Drop More Crop 2025 (PMKSY micro irrigation) [central government, 2025] [E2]\n- PM-KISAN - Revised FAQ [central government] [E4]\n\nNot in our documents yet: Telangana's own rules on Rythu Bharosa financial assistance per acre per year. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 9471,
+  "calls": 4,
+  "seconds": 9.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": [
+   "cites nothing"
+  ],
+  "sources": [
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central government, 2018-07-04]",
+   "Operational Guidelines of Per Drop More Crop 2025 (PMKSY micro irrigation) [central government, 2025]",
+   "PM-KISAN - Revised FAQ [central government]"
+  ]
+ },
+ "mp-kisan/plain": {
+  "answer": "Under the **Mukhyamantri Kisan Kalyan Yojana** in Madhya Pradesh, eligible farmers receive **₹6,000 per year**. \n\nThis amount is paid in equal installments of **₹2,000 each** over three installments. \n\nThis scheme acts as a top-up to the central government's **PM-KISAN** scheme (which also provides ₹6,000 annually), meaning eligible farmers in Madhya Pradesh effectively receive a combined total of **₹12,000 per year**.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 153
+ },
+ "mp-kisan/vetra": {
+  "answer": "The documents I have don't cover this. Documents for Madhya Pradesh aren't in yet.",
+  "kind": "not_covered",
+  "depth": "quick",
+  "tokens": 1761,
+  "calls": 2,
+  "seconds": 8.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": []
+ },
+ "mh-namo/plain": {
+  "answer": "Under the **Namo Shetkari Mahasanman Nidhi** scheme in Maharashtra, eligible farmer families receive **₹6,000 per year**. \n\nThis financial assistance is paid in equal installments of **₹2,000 every four months** (totaling three installments per year). \n\n*Note: This scheme was launched by the Maharashtra government to complement the central government's PM-KISAN scheme, which also provides ₹6,000 annually. Combined, eligible farmers in Maharashtra receive a total of ₹12,000 per year.*",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 165
+ },
+ "mh-namo/vetra": {
+  "answer": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:\n- Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme - Operational Guidelines (revised as on 29.03.2020) [central government, 2020-03-29] [E1]\n- Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government] [E2]\n- PM-KISAN - Revised FAQ [central government] [E4]\n- Amendment to para 8.1 of Operational Guidelines of PM-KISAN Scheme [central government] [E7]\n\nNot in our documents yet: Maharashtra's own rules on Namo Shetkari Mahasanman Nidhi annual payment amount. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 9899,
+  "calls": 4,
+  "seconds": 9.1,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": [
+   "cites nothing"
+  ],
+  "sources": [
+   "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme - Operational Guidelines (revised as on 29.03.2020) [central government, 2020-03-29]",
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]",
+   "PM-KISAN - Revised FAQ [central government]",
+   "Amendment to para 8.1 of Operational Guidelines of PM-KISAN Scheme [central government]"
+  ]
+ },
+ "ka-date/plain": {
+  "answer": "I cannot provide the exact last date to enroll paddy under the Pradhan Mantri Fasal Bima Yojana (PMFBY) in Karnataka for the Rabi 2026-27 season, as specific cutoff dates for crop insurance enrollments are typically notified by the state government or district agriculture departments closer to the active sowing and operational season (usually published via state gazette notifications or district-level notices a few weeks prior to the closing date). \n\nTo find the exact and officially confirmed deadline, I recommend checking:\n1. The official **National Crop Insurance Portal (NCIP)** (pmfby.gov.in).\n2. The **Karnataka Agriculture Department** portal or your local district agriculture office / Raitha Samparka Kendra.\n3. Local cooperative banks or designated insurance intermediaries operating in your district for the Rabi season.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 224
+ },
+ "ka-date/vetra": {
+  "answer": "The documents do not state the exact last date to enrol paddy under PMFBY in Karnataka for the Rabi 2026-27 season [E2]. \n\nUnder the central scheme guidelines, the cut-off date for enrolment is determined by the last date notified by the State or Union Territory and digitized on the National Crop Insurance Portal (NCIP) [E2][E8].\n\nNot in our documents yet: Karnataka's own rules on PMFBY enrollment deadline for Rabi 2026-27. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7184,
+  "calls": 3,
+  "seconds": 7.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]"
+  ]
+ },
+ "tn-stamp/plain": {
+  "answer": "As of **2026**, the exact stamp duty rate for a sale deed of immovable property in Tamil Nadu is **7%** of the market value (or the agreed consideration value, whichever is higher). \n\nIn addition to the stamp duty, you also need to factor in the registration fee and other charges, which bring the total government fee breakdown for a sale deed in Tamil Nadu to:\n\n*   **Stamp Duty:** 7%\n*   **Registration Fee:** 2%\n*   **Total Government Charges:** **9%** of the property's market value.\n\n*Note: Property market values are determined based on the Guideline Value set by the Revenue Department (Registration Department) of Tamil Nadu. It is always advisable to check the latest guideline value for your specific survey number on the official Tamil Nadu TNREGINET portal before executing the sale deed.*",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 228
+ },
+ "tn-stamp/vetra": {
+  "answer": "The documents I have don't cover this. Documents for Tamil Nadu aren't in yet.",
+  "kind": "not_covered",
+  "depth": "quick",
+  "tokens": 1852,
+  "calls": 2,
+  "seconds": 6.3,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": []
+ },
+ "up-go/plain": {
+  "answer": "I cannot answer this question as it pertains to events and government orders in the year 2026, which is beyond my current data scope and knowledge cutoff.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 84
+ },
+ "up-go/vetra": {
+  "answer": "The documents do not state which Uttar Pradesh government order notified PMFBY for Kharif 2026 or give its number [E1], [E2], [E3], [E4], [E5], [E6], [E7], [E8], [E9], [E10].\n\nNot in our documents yet: Uttar Pradesh's own rules on Pradhan Mantri Fasal Bima Yojana notification order number for Kharif 2026 in Uttar Pradesh. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 11551,
+  "calls": 4,
+  "seconds": 10.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana: Affordable Crop Insurance for Every Farmer (PIB, August 2026) [central government, 2026-08-29]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana: Affordable Crop Insurance for Every Farmer (PIB, August 2026) [central government, 2026-08-29]",
+   "Pradhan Mantri Fasal Bima Yojana: Affordable Crop Insurance for Every Farmer (PIB, August 2026) [central government, 2026-08-29]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]"
+  ]
+ },
+ "fake-goa/plain": {
+  "answer": "I do not have access to real-time information or specific updates regarding the \"Mukhyamantri Krishi Suraksha Bonus 2026\" in Goa. Because my knowledge is limited to data available up to January 2025 and I cannot search the live internet for policies enacted or revised in 2026, I am unable to confirm the current payout amount for this scheme. \n\nFor the most accurate and up-to-date information, please check the official website of the Goa Department of Agriculture or contact your local agricultural office or Zonal Agricultural Officer (ZAO).",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 172
+ },
+ "fake-goa/vetra": {
+  "answer": "The documents I have don't cover this. Documents for Goa aren't in yet.",
+  "kind": "not_covered",
+  "depth": "quick",
+  "tokens": 1836,
+  "calls": 2,
+  "seconds": 7.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": []
+ },
+ "fake-sikkim/plain": {
+  "answer": "As of my knowledge cutoff in January 2025, there is no official central or Sikkim state government scheme specifically named the **\"Himalayan Kisan Samman Pension Scheme\"** operating in Sikkim in 2026. \n\nHowever, your query likely refers to a combination or confusion of a few existing major welfare and pension schemes available to farmers and elderly citizens in Sikkim:\n\n1. **PM-KISAN (Pradhan Mantri Kisan Samman Nidhi):** This is a central government scheme providing income support of ₹6,000 per year to landholding farmer families. Sikkim’s farmers are eligible for this, and the state government has previously supplemented this through the * मुख्यमंत्री किसान सशक्तिकरण योजना* (Chief Minister's Kisan Sashaktikaran Nidhi) to provide additional financial assistance.\n2. **Sikkim Old Age Pension / Chief Minister's Special Pension:** The Government of Sikkim runs various social security pension schemes for elderly citizens, widows, and persons with disabilities residing in the state. \n\n### General Eligibility for Farmer and Pension Schemes in Sikkim:\nIf you are looking for agricultural financial support or state pensions in Sikkim, the typical eligibility criteria include:\n* **Residency:** Must be a bonafide resident/permanent citizen of Sikkim.\n* **For Farmer Schemes (like PM-KISAN/State supplements):** Must own cultivable land in Sikkim. \n* **For Pension Schemes:** Age criteria apply (usually 60+ years for old-age pensions), and the applicant should not be a recipient of other government pensions or institutional salaries.\n\n*Recommendation:* Because new state-specific sub-schemes or localized names often get introduced, please verify directly with the **Department of Agriculture, Government of Sikkim**, or your nearest **Gram Panchayat Unit (GPU) / Block Administrative Centre (BAC)** for any newly launched 2026 notifications carrying this specific title.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 443
+ },
+ "fake-sikkim/vetra": {
+  "answer": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:\n- Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme - Operational Guidelines (revised as on 29.03.2020) [central government, 2020-03-29] [E1]\n- Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government] [E2]\n- Amendment to para 8.1 of Operational Guidelines of PM-KISAN Scheme [central government] [E7]\n- PM-KISAN - Revised FAQ [central government] [E10]\n\nNot in our documents yet: Sikkim's own rules on Himalayan Kisan Samman Pension Scheme 2026. Anything above comes from central government documents, so please also check with your local office.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 11544,
+  "calls": 4,
+  "seconds": 8.4,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": [
+   "cites nothing"
+  ],
+  "sources": [
+   "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme - Operational Guidelines (revised as on 29.03.2020) [central government, 2020-03-29]",
+   "Pradhan Mantri Kisan Maan Dhan Yojana (PM-KMY) - Operational Guidelines [central government]",
+   "Amendment to para 8.1 of Operational Guidelines of PM-KISAN Scheme [central government]",
+   "PM-KISAN - Revised FAQ [central government]"
+  ]
+ },
+ "fake-mizoram/plain": {
+  "answer": "I cannot answer this question as there is no official Indian government scheme or announcement known as the \"Mizoram Annadata Vikas Bonus 2026\" in the public domain as of November 2026. \n\nIf this is a newly introduced state welfare scheme, a localized initiative, or a typographical error in the scheme's name, I recommend checking the official Mizoram state government portal (mizoram.gov.in) or the relevant state agriculture/farmer welfare department website for the most accurate and up-to-date information.",
+  "model": "gemini-3.5-flash-lite",
+  "tokens": 161
+ },
+ "fake-mizoram/vetra": {
+  "answer": "The documents I have don't cover this. Documents for Mizoram aren't in yet.",
+  "kind": "not_covered",
+  "depth": "quick",
+  "tokens": 1805,
+  "calls": 2,
+  "seconds": 7.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": []
+ },
+ "cashew-date/vetra": {
+  "answer": "- RWBCIS, Rabi 2026-27, enrolment for cashew: 1 October 2026 to 15 November 2026. Open now, closes in 10 days. [E1]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1557,
+  "calls": 1,
+  "seconds": 1.7,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.35 (2026)"
+  ]
+ },
+ "rice-kharif-date/vetra": {
+  "answer": "- PMFBY, Kharif 2026, enrolment for rice: 1 April 2026 to 15 August 2026. Closed. [E1]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1546,
+  "calls": 1,
+  "seconds": 1.6,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.34 (2026)"
+  ]
+ },
+ "weather-kharif-date/vetra": {
+  "answer": "- RWBCIS, Kharif 2026, enrolment for all notified crops: 1 April 2026 to 15 July 2026. Closed. [E1]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1557,
+  "calls": 1,
+  "seconds": 1.6,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.35 (2026)"
+  ]
+ },
+ "free-insurance/vetra": {
+  "answer": "- PMFBY and RWBCIS (weather based): (1) Commercial or horticulture crops, either season: the farmer pays 5% of the sum insured. (2) Foodgrain or oilseed crops, Rabi season: the farmer pays 1.5% of the sum insured. (3) Foodgrain or oilseed crops, Kharif season: the farmer pays 2% of the sum insured. [E1]\n\nFrom Rabi 2024-25 onwards, extended to 2026-27 on the same terms. Enrolment is voluntary. The farmer's share is limited further if the actuarial rate is lower.\nFor your exact figure, tell me your crop, season.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1534,
+  "calls": 1,
+  "seconds": 1.8,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.80 (2024), extended by G.O.Ms.No.34 (2026); G.O.Ms.No.81 (2024) and G.O.Ms.No.98 (2024, mango), extended by G.O.Ms.No.35 (2026)"
+  ]
+ },
+ "annadatha-amount/vetra": {
+  "answer": "A farmer family receives financial assistance of Rs.20,000/- per year under the Annadatha Sukhibhava scheme in Andhra Pradesh [E1]. \n\nEligible landholder farmer families and ROFR land cultivators receive this total amount split across three installments, which includes Rs.6,000/- per year provided by the Central Government under PM-KISAN and Rs.14,000/- from the State budget [E2][E3][E7]. Eligible landless tenant cultivators also receive Rs.20,000/- per year entirely from the State budget [E2][E7].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7871,
+  "calls": 3,
+  "seconds": 27.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]"
+  ]
+ },
+ "cotton-pmfby/vetra": {
+  "answer": "The documents do not state whether cotton is notified under the yield based PMFBY or the weather based RWBCIS. To find out if a specific crop like cotton is covered, you would need to check the detailed crop and area notifications annexed to the scheme documents [E3][E5].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 13979,
+  "calls": 4,
+  "seconds": 8.4,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.80 Agri&Coop (Agri.V) Dt.04.09.2024 - PMFBY (Yield Based) 2024-25 & 2025-26 - free cover Kharif 2024 on e-panta, voluntary enrolment after - notified crops and areas [Agriculture & Cooperation department, 2024-09-04]",
+   "G.O.Ms.No.81 Agri&Coop Dt.04.09.2024 - Restructured Weather Based Crop Insurance Scheme (RWBCIS) 2024-25 & 2025-26 [Agriculture & Cooperation department, 2024-09-04]"
+  ]
+ },
+ "paddy-rabi-premium/vetra": {
+  "answer": "- PMFBY: the farmer pays 1.5% of the sum insured. [E1]\n\nFrom Rabi 2024-25 onwards, extended to 2026-27 on the same terms. Enrolment is voluntary. The farmer's share is limited further if the actuarial rate is lower.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1474,
+  "calls": 1,
+  "seconds": 1.6,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Ms.No.80 (2024), extended by G.O.Ms.No.34 (2026)"
+  ]
+ },
+ "fra-drip/vetra": {
+  "answer": "Forest Rights Act (FRA) patta holders in the eight identified districts of Andhra Pradesh receive a 100% subsidy for drip irrigation systems under the Per Drop More Crop (PDMC) scheme [E1][E2].\n\n* **Identified Districts:** Alluri Sitharamaraju, Eluru, Parvathipuram Manyam, Nandyal, Palnadu, Prakasam, Srikakulam, and Vizianagaram [E2].\n* **Implementation:** The subsidy is provided for the implementation of the Dhatri Aaba Janjatiya Gram Utkarsh Abhiyan on a saturation mode [E2]. \n* **Farmer Contribution:** Because the subsidy covers 100% of the cost, eligible FRA patta holders in these districts have no required farmer contribution for drip irrigation under this program [E1][E2][E13].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 11672,
+  "calls": 3,
+  "seconds": 6.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "G.O.Rt.No.206 Agri&Coop (H&S) Dt.18.03.2026 - Extension of 100% drip / 90% sprinkler subsidy under PDMC to FRA patta holders in 8 districts [Agriculture & Cooperation (Horticulture & Sericulture) department, 2026-03-18]",
+   "G.O.Rt.No.206 Agri&Coop (H&S) Dt.18.03.2026 - Extension of 100% drip / 90% sprinkler subsidy under PDMC to FRA patta holders in 8 districts [Agriculture & Cooperation (Horticulture & Sericulture) department, 2026-03-18]",
+   "G.O.Rt.No.82 Agri&Coop (H&S) Dt.17.02.2025 - APMIP - Subsidy pattern for drip and sprinkler irrigation [Agriculture & Cooperation (Horticulture & Sericulture) department, 2025-02-17]"
+  ]
+ },
+ "input-subsidy-loss/vetra": {
+  "answer": "Farmers in Andhra Pradesh are eligible for input subsidy when crop loss is 33% and above [E1][E2][E4]. \n\nAssistance is provided for crops damaged due to notified natural calamities such as cyclones, droughts, floods, hailstorms, fire, landslides, avalanches, cloudbursts, pest attacks, frost and cold waves, earthquakes, tsunamis, and thunderbolts [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7620,
+  "calls": 3,
+  "seconds": 5.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Natural Calamities - Norms adopted for sanction and release of input subsidy (department note, English) [Agriculture & Cooperation department]",
+   "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+   "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]"
+  ]
+ },
+ "kcc-subvention/vetra": {
+  "answer": "Under the central government's Modified Interest Subvention Scheme for 2025-26, the upfront interest subvention rate on short-term Kisan Credit Card loans up to 3 lakh is 1.5% per annum [E1].\n\nThis uses central government rules. Which state are you in? Its own rules may add to these.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 8824,
+  "calls": 4,
+  "seconds": 33.1,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation for FY 2025-26 (DA&FW letter dt 16.06.2025) [central government, 2025-06-16]"
+  ]
+ }
+}

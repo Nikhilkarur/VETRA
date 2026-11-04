@@ -1,0 +1,40 @@
+{
+  "_about": "Is VETRA better than asking a model directly? Same questions to plain Gemini, Gemini with Google Search, and VETRA. Written before any of them ran. 'held': VETRA has the document, and 'any' comes from it. 'other_state': VETRA doesn't hold it, so a direct model should win; answers come from official pages and secondary sources seen during research, so they're less certain. 'gap': real questions VETRA holds no state document for, where no expected answer was checked. 'invented': schemes made up for this test, where the right response is to say it can't be found. The names were chosen not to match anything known, but that can't be proved.",
+  "questions": [
+    {"id": "cashew-date", "group": "held", "state": "AP", "q": "What is the last date to insure cashew under weather based crop insurance in Andhra Pradesh for Rabi 2026-27?", "any": ["15(th)?\\s*(of\\s*)?Nov", "Nov\\w*\\s*15", "15[./-]11"]},
+    {"id": "tomato-date", "group": "held", "state": "AP", "q": "What is the last date to insure tomato under RWBCIS in Andhra Pradesh for Rabi 2026-27?", "any": ["15(th)?\\s*(of\\s*)?Dec", "Dec\\w*\\s*15", "15[./-]12"]},
+    {"id": "rice-date", "group": "held", "state": "AP", "q": "What is the last date to enrol rice under PMFBY in Andhra Pradesh for Rabi 2026-27?", "any": ["31(st)?\\s*(of\\s*)?Dec", "Dec\\w*\\s*31", "31[./-]12"]},
+    {"id": "rice-kharif-date", "group": "held", "state": "AP", "q": "What was the last date to enrol rice under PMFBY in Andhra Pradesh for Kharif 2026?", "any": ["15(th)?\\s*(of\\s*)?Aug", "Aug\\w*\\s*15", "15[./-]0?8"]},
+    {"id": "weather-kharif-date", "group": "held", "state": "AP", "q": "What was the last date to enrol under RWBCIS in Andhra Pradesh for Kharif 2026?", "any": ["15(th)?\\s*(of\\s*)?Jul", "Jul\\w*\\s*15", "15[./-]0?7"]},
+    {"id": "free-insurance", "group": "held", "state": "AP", "q": "Is crop insurance still free for farmers in Andhra Pradesh in 2026?", "any": ["(?i)no longer free", "(?i)not free", "(?i)voluntar", "(?i)farmer'?s? (share|pays?)"]},
+    {"id": "annadatha-amount", "group": "held", "state": "AP", "q": "How much does a farmer family get per year under Annadatha Sukhibhava in Andhra Pradesh?", "any": ["20,?000"]},
+    {"id": "cotton-pmfby", "group": "held", "state": "AP", "q": "In Andhra Pradesh, is cotton notified under the yield based PMFBY or under the weather based RWBCIS?", "any": ["(?i)(cotton.{0,80}(RWBCIS|weather))|((RWBCIS|weather).{0,80}cotton)"]},
+    {"id": "paddy-rabi-premium", "group": "held", "state": "AP", "q": "What premium does a farmer pay for paddy in Rabi under PMFBY in Andhra Pradesh?", "any": ["1\\.5\\s*(%|per ?cent)"]},
+    {"id": "go-extension", "group": "held", "state": "AP", "q": "Which Andhra Pradesh government order extended PMFBY to 2026-27?", "any": ["(?i)Ms\\.?\\s*No\\.?\\s*34"]},
+    {"id": "fra-drip", "group": "held", "state": "AP", "q": "What drip irrigation subsidy do FRA patta holders get in Andhra Pradesh in the identified districts?", "any": ["100\\s*(%|per ?cent)"]},
+    {"id": "input-subsidy-loss", "group": "held", "state": "AP", "q": "What is the minimum crop loss needed for input subsidy after a natural calamity in Andhra Pradesh?", "any": ["33\\s*(%|per ?cent|o/o)"]},
+    {"id": "paddy-msp", "group": "held", "state": "AP", "q": "What is the minimum support price for common paddy in Kharif Marketing Season 2025-26?", "any": ["2,?369"]},
+    {"id": "tenant-agreement", "group": "held", "state": "AP", "q": "How long does a crop cultivator agreement last under Andhra Pradesh's Crop Cultivator Rights Rules?", "any": ["(?i)eleven\\s*months", "11\\s*months"]},
+    {"id": "seed-licence", "group": "held", "state": "AP", "q": "After the 2019 amendment to the Seeds (Control) Order, how long is a seed dealer's licence valid?", "any": ["(?i)five\\s*years", "5\\s*years"]},
+    {"id": "pm-kisan", "group": "held", "state": "AP", "q": "How much money does PM-KISAN give a farmer family per year?", "any": ["6,?000"]},
+    {"id": "pm-kmy", "group": "held", "state": null, "q": "What monthly pension does PM Kisan Maan Dhan Yojana pay?", "any": ["3,?000"]},
+    {"id": "kcc-subvention", "group": "held", "state": null, "q": "What is the upfront interest subvention rate on Kisan Credit Card short term loans in 2025-26?", "any": ["1\\.5\\s*(%|per ?cent)"]},
+    {"id": "kcc-limit", "group": "held", "state": null, "q": "Up to what loan amount does the interest subvention on Kisan Credit Card short term loans apply?", "any": ["(?i)3\\s*lakh", "3,?00,?000"]},
+    {"id": "fiscal-deficit", "group": "held", "state": null, "q": "What is the fiscal deficit estimate in India's Union Budget 2026-27?", "any": ["4\\.3\\s*(%|per ?cent)"]},
+    {"id": "budget-total", "group": "held", "state": null, "q": "What is the total expenditure in India's Union Budget 2026-27?", "any": ["53[.,]47", "53,?47,?315"]},
+    {"id": "apy-age", "group": "held", "state": null, "q": "What is the entry age for Atal Pension Yojana?", "any": ["18.{0,12}40"]},
+
+    {"id": "wb-krishak", "group": "other_state", "state": "WB", "q": "How much does Krishak Bandhu pay per acre per year in West Bengal?", "any": ["10,?000"]},
+    {"id": "ts-rythu", "group": "other_state", "state": "TS", "q": "How much does Rythu Bharosa pay per acre per year in Telangana?", "any": ["12,?000"]},
+    {"id": "mp-kisan", "group": "other_state", "state": "MP", "q": "How much does Mukhyamantri Kisan Kalyan Yojana pay per year in Madhya Pradesh?", "any": ["6,?000"]},
+    {"id": "mh-namo", "group": "other_state", "state": "MH", "q": "How much does Namo Shetkari Mahasanman Nidhi pay per year in Maharashtra?", "any": ["6,?000"]},
+
+    {"id": "ka-date", "group": "gap", "state": "KA", "q": "What is the exact last date to enrol paddy under PMFBY in Karnataka for Rabi 2026-27?"},
+    {"id": "tn-stamp", "group": "gap", "state": "TN", "q": "What is the exact stamp duty rate on a sale deed in Tamil Nadu in 2026?"},
+    {"id": "up-go", "group": "gap", "state": "UP", "q": "Which Uttar Pradesh government order notified PMFBY for Kharif 2026, and what is its number?"},
+
+    {"id": "fake-goa", "group": "invented", "state": "GA", "q": "How much does the Mukhyamantri Krishi Suraksha Bonus 2026 pay farmers in Goa?"},
+    {"id": "fake-sikkim", "group": "invented", "state": "SK", "q": "What is the eligibility for the Himalayan Kisan Samman Pension Scheme 2026 in Sikkim?"},
+    {"id": "fake-mizoram", "group": "invented", "state": "MZ", "q": "What is the last date to apply for the Mizoram Annadata Vikas Bonus 2026?"}
+  ]
+}
