@@ -119,5 +119,4 @@ def all_cases_fact(rule: dict) -> str:
     for case in rule.get("cases", []):
         condition = case.get("label") or ", ".join(f"{k.replace('_', ' ')} is {v}" for k, v in case["when"].items())
         lines.append(f"{condition}: {decided_fact(rule, case['outcome'])}")
-    head = rule.get("name") or rule.get("subject") or ""
-    return f"{head}: " + " ".join(f"({n}) {line}." for n, line in enumerate(lines, 1))
+    return " ".join(f"({n}) {line}." for n, line in enumerate(lines, 1))

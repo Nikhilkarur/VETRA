@@ -32,6 +32,7 @@ class Evidence:
     reviewed: bool = False
     fact: str = ""            # written by code and printed as is; the model never sees it
     note: str = ""            # what the model sees instead of an exact record's figures
+    detail: str = ""          # a plain line printed with the fact when no model explains it
 
 
 @dataclass
@@ -68,16 +69,25 @@ def text_search(query: str, ctx: Context) -> list[Evidence]:
 
 def rule_check(query: str, ctx: Context) -> list[Evidence]:
     found = ctx.knowledge.find(ctx.domain, "rules", ctx.state, query, top=4)
-    out = []
+    by_body: dict[str, list[dict]] = {}
     for r in F.names_scheme(found, ctx.question.lower()):
-        result = rules.evaluate(r, ctx.facts)
+        result = rules.evaluate(r, {**ctx.facts, **rules.facts_in_words(r, ctx.question)})
         if result.outcome is not None:
-            fact = f"{r.get('name', '')}: {F.decided_fact(r, result.outcome)}.".strip(": ")
+            body = F.decided_fact(r, result.outcome)
         else:
-            ctx.missing += [m for m in result.missing if m not in ctx.missing]
-            fact = F.all_cases_fact(r)
-        e = _from_record(r, "rule_check", fact)
-        e.fact, e.note = fact, r.get("note") or r["text"]
+            asked_as = [(r.get("ask_as") or {}).get(m, m) for m in result.missing]
+            ctx.missing += [m for m in asked_as if m not in ctx.missing]
+            body = F.all_cases_fact(r)
+        by_body.setdefault(body, []).append(r)
+    out = []
+    for body, same in by_body.items():  # schemes with the same rates share one line
+        names = " and ".join(r.get("name", "") for r in same if r.get("name"))
+        fact = f"{names}: {body}" if names else body
+        fact += "" if fact.endswith(".") else "."
+        e = _from_record(same[0], "rule_check", fact)
+        e.fact, e.note = fact, " ".join(r.get("note") or r["text"] for r in same)
+        e.doc = "; ".join((r.get("source") or {}).get("doc", "") for r in same)
+        e.detail = same[0].get("detail") or ""
         out.append(e)
     return out
 

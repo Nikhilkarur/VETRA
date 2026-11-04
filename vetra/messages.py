@@ -19,16 +19,24 @@ _TEXT = {
         "telugu": "{place} పత్రాలు ఇంకా చేర్చబడలేదు.",
     },
     "gap": {
-        "english": "Not in our documents yet: {place}'s own {type} for {subject}. Please check with your local office.",
-        "telugu": "{place} కు సంబంధించిన {subject} ({type}) వివరాలు ఇంకా మా పత్రాలలో లేవు. దయచేసి మీ స్థానిక కార్యాలయంలో తెలుసుకోండి.",
+        "english": "Not in our documents yet: {place}'s own rules on {subject}. Anything above comes from central government documents, so please also check with your local office.",
+        "telugu": "{place} కు సంబంధించిన {subject} నియమాలు ఇంకా మా పత్రాలలో లేవు. పైన ఉన్నది కేంద్ర ప్రభుత్వ పత్రాల నుండి, కాబట్టి దయచేసి మీ స్థానిక కార్యాలయంలో కూడా తెలుసుకోండి.",
     },
     "which_state": {
         "english": "This uses central government rules. Which state are you in? Its own rules may add to these.",
         "telugu": "ఇది కేంద్ర ప్రభుత్వ నియమాల ఆధారంగా ఉంది. మీది ఏ రాష్ట్రం? మీ రాష్ట్ర నియమాలు వీటికి అదనంగా ఉండవచ్చు.",
     },
+    "tell_me": {
+        "english": "For your exact figure, tell me your {facts}.",
+        "telugu": "మీకు సరైన వివరం చెప్పడానికి, మీ {facts} చెప్పండి.",
+    },
+    "busy_facts": {
+        "english": "The assistant is busy right now. Please try again in a minute. These documents look most relevant:",
+        "telugu": "ప్రస్తుతం సహాయకుడు బిజీగా ఉన్నారు. దయచేసి ఒక నిమిషం తర్వాత మళ్లీ ప్రయత్నించండి. ఈ పత్రాలు సంబంధితంగా కనిపిస్తున్నాయి:",
+    },
     "unverified": {
-        "english": "I couldn't verify a written answer, so here is what the documents say:",
-        "telugu": "రాసిన సమాధానాన్ని ధృవీకరించలేకపోయాను, కాబట్టి పత్రాలలో ఉన్నది ఇదే:",
+        "english": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:",
+        "telugu": "రాసిన సమాధానాన్ని ధృవీకరించలేకపోయాను, కాబట్టి ఊహించి చెప్పను. ఈ పత్రాలు సంబంధితంగా కనిపిస్తున్నాయి:",
     },
 }
 

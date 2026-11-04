@@ -73,6 +73,10 @@ _DATE = re.compile(rf"\b\d{{1,2}}(?:st|nd|rd|th)?[ -]+(?:{_MONTH})\b|\b(?:{_MONT
 _PERCENT = re.compile(r"\d[\d,]*(?:\.\d+)?\s*(?:%|per ?cent)", re.I)
 
 
+def about_a_past_year(question: str, as_of: str) -> bool:
+    return any(int(y) < int(as_of[:4]) for y in re.findall(r"\b(?:19|20)\d{2}\b", question))
+
+
 def has_facts(evidence: list[Evidence]) -> bool:
     return any(e.fact for e in evidence)
 
@@ -82,31 +86,58 @@ def fact_lines(evidence: list[Evidence]) -> str:
     return "\n".join(f"- {e.fact} [E{n}]" for n, e in enumerate(evidence, 1) if e.fact)
 
 
-def prose_problems(prose: str) -> list[str]:
-    """Exact figures belong to the printed block. In the explanation they can only be garbled."""
-    found = [f"states the date '{m.group(0)}'; dates are printed above" for m in _DATE.finditer(prose)]
-    found += [f"states '{m.group(0)}'; percentages are printed above" for m in _PERCENT.finditer(prose)]
-    return found
+_WITHHELD = re.compile(r"\b(?:not (?:specified|provided|given|stated|mentioned|listed|available)|does(?:n't| not) (?:specify|give|state|provide|mention|list)"
+                       r"|cannot be determined|can't be determined|no (?:specific|exact) (?:date|deadline|amount|rate)"
+                       r"|no \w+(?: \w+)? (?:is|are) (?:specified|given|provided|stated|listed))\b", re.I)
+
+
+def _date_key(text: str) -> tuple[int, int] | None:
+    """(day, month) from any way orders write a date, so 15th July and 15.07.2026 match."""
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", text)
+    if m:
+        return int(m.group(3)), int(m.group(2))
+    m = re.match(r"(\d{1,2})[./-](\d{1,2})[./-]\d{2,4}", text)
+    if m:
+        return int(m.group(1)), int(m.group(2))
+    day = re.search(r"\d{1,2}", text)
+    month = re.search(r"[a-z]{3}", re.sub(r"\d+(?:st|nd|rd|th)?", "", text.lower()))
+    if day and month and month.group(0) in _MONTH_NUMBER:
+        return int(day.group(0)), _MONTH_NUMBER[month.group(0)]
+    return None
+
+
+_MONTH_NUMBER = {m[:3]: n for n, m in enumerate(_MONTHS, 1)}
 
 
 def claim_problems(answer: str, evidence: list[Evidence], as_of: str, question: str = "") -> list[str]:
-    """Citations that point nowhere, and figures found in no evidence. Empty means it passed."""
+    """
+    What the model can't honestly have written. Empty means it passed.
+
+    Exact records' figures are hidden from it, so any figure it writes must come from the
+    text it was shown; if it isn't there, the model made it up.
+    """
     found = []
     for n in {int(x) for x in _CITATION.findall(answer)}:
         if not 1 <= n <= len(evidence):
             found.append(f"cites [E{n}], which doesn't exist")
     if evidence and not has_facts(evidence) and not _CITATION.search(answer):
         found.append("cites nothing")
-    if has_facts(evidence):
-        found += prose_problems(answer)
+    if has_facts(evidence) and _WITHHELD.search(answer):
+        # Text can truly lack something, but only say so when nothing exact covers the question.
+        found.append("says something isn't given, but the exact records printed above give it. Refer to them instead")
     for stated in re.findall(r"today[^.\n]{0,20}?(\d{4}-\d{2}-\d{2})", answer, re.I):
         if stated != as_of:
             found.append(f"gives today as {stated}; today is {as_of}")
-    allowed = re.sub(r"\s+", " ", " ".join(e.text + " " + e.doc for e in evidence) + f" {as_of} {question}").replace(",", "")
+    shown = " ".join((e.note if e.fact else e.text) + " " + e.doc for e in evidence) + f" {as_of} {question}"
+    allowed = re.sub(r"\s+", " ", shown).replace(",", "")
     for figure in _FIGURE.findall(answer):
         number = _digits(figure)
         if number and not re.search(rf"(?<![\d.]){re.escape(number)}(?![\d])", allowed):
-            found.append(f"'{figure.strip()}' isn't in the evidence")
+            found.append(f"'{figure.strip()}' isn't in the evidence you were given")
+    known_dates = {_date_key(m.group(0)) for m in _DATE.finditer(shown)}
+    for m in _DATE.finditer(answer):
+        if _date_key(m.group(0)) not in known_dates:
+            found.append(f"the date '{m.group(0)}' isn't in the evidence you were given")
     return found
 
 

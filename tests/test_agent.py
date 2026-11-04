@@ -2,6 +2,7 @@
 
 import json
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -130,12 +131,34 @@ def test_invented_figures_and_bad_citations_are_caught():
     assert any("today" in p for p in checks.claim_problems("Open today (2024-11-04) [E1].", e, TODAY))
 
 
-def test_a_date_written_in_the_explanation_is_caught_only_when_facts_are_printed():
-    with_fact = [Evidence("a", "t", "x", "G.O.", fact="printed")]
-    plain = [Evidence("a", "t", "closes 15 December", "G.O.")]
-    assert checks.prose_problems("closes 15 December")
-    assert checks.claim_problems("closes 15 December [E1]", with_fact, TODAY)
-    assert not checks.claim_problems("closes 15 December [E1]", plain, TODAY)
+def test_a_date_the_model_was_never_shown_is_caught_in_any_format():
+    hidden = [Evidence("a", "t", "closes 15 December", "G.O.", fact="closes 15 December", note="a window")]
+    shown = [Evidence("a", "t", "the cut-off is 15th July, 2026 for all", "G.O.")]
+    assert checks.claim_problems("closes 15 December [E1]", hidden, TODAY)
+    assert checks.claim_problems("closes 16 July [E1]", shown, TODAY)
+    for same in ("15 July 2026", "15th July", "July 15", "15.07.2026"):
+        assert not checks.claim_problems(f"closes {same} [E1]", shown, TODAY), same
+
+
+def test_claiming_a_printed_fact_is_missing_is_rejected():
+    hidden = [Evidence("a", "t", "x", "G.O.", fact="closes 15 December", note="a window")]
+    assert checks.claim_problems("The deadline is not specified.", hidden, TODAY)
+    plain = [Evidence("a", "t", "x", "G.O.")]
+    assert not checks.claim_problems("The deadline is not specified [E1].", plain, TODAY)
+
+
+def test_a_past_year_question_gets_history_not_todays_rates(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "It was free in 2024.")])
+    r, _ = run(kb, plan(needs=[{"type": "deadline", "subject": "cut-off rabi"}, {"type": "procedure", "subject": "x"}]),
+               "It was free in 2024 [E1].", q="was the rabi cut-off free in 2024?")
+    assert "Open now" not in r.answer and "free in 2024" in r.answer
+
+
+def test_the_users_words_settle_a_rules_facts_without_the_planner():
+    rule = {"inputs": {"crop_class": ["food", "commercial"], "season": ["rabi", "kharif"]},
+            "aliases": {"crop_class": {"paddy": "food"}}}
+    assert rules.facts_in_words(rule, "i grow Paddy in rabi") == {"crop_class": "food", "season": "rabi"}
+    assert rules.facts_in_words(rule, "how much is it") == {}
 
 
 def test_expired_records_go_unless_the_question_asks_about_that_year():
@@ -185,10 +208,10 @@ def test_exact_store_answers_without_searching_text(kb, monkeypatch):
     def fail(query, ctx):
         raise AssertionError("text search shouldn't run")
     monkeypatch.setitem(agent.TOOLS, "text_search", fail)
-    r, gaps = run(kb, plan(), "You can still enrol before the window closes.")
+    r, gaps = run(kb, plan())
     assert r.kind == "answer" and {s["doc"] for s in r.sources} == {"G.O.2"}
     assert "15 December 2026" in r.answer and "Open now" in r.answer and "[E" in r.answer
-    assert r.trace["calls"] == 2 and r.coverage[0]["level"] == "exact" and gaps == []
+    assert r.trace["calls"] == 1 and r.coverage[0]["level"] == "exact" and gaps == []
 
 
 def test_no_exact_data_falls_back_to_text_and_records_a_gap(kb, monkeypatch):
@@ -250,22 +273,54 @@ def test_a_failing_gap_log_never_costs_an_answer(tmp_path):
 # ---------------------------------------------------------------- exact facts
 
 def test_plan_is_made_without_any_document_text(kb):
-    m = models(plan(), "Enrol before it closes.")
+    m = models(plan())
     agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
     assert DATE["text"] not in json.dumps(m.provider.sent[0][1])
 
 
-def test_the_model_never_sees_exact_figures(kb):
-    m = models(plan(), "Enrol before it closes.")
+MIXED = [{"type": "deadline", "subject": "cut-off rabi"}, {"type": "procedure", "subject": "how to apply"}]
+
+
+def test_the_model_never_sees_exact_figures(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
+    m = models(plan(needs=MIXED), "Enrol before it closes [E1].")
     agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
     composer_sent = json.dumps(m.provider.sent[1][1])
     assert "15 December" not in composer_sent and "2026-12-15" not in composer_sent and "EXACT" in composer_sent
 
 
-def test_garbled_figure_in_the_explanation_is_rejected_and_never_shown(kb):
-    r, _ = run(kb, plan(), "Rabi closes 25 December 2026.", "It closes on 25 December.")
+def test_garbled_figure_in_the_explanation_is_rejected_and_never_shown(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
+    r, _ = run(kb, plan(needs=MIXED), "Rabi closes 25 December 2026 [E1].", "It closes on 25 December [E1].")
     assert "25 December" not in r.answer and "15 December 2026" in r.answer
     assert r.trace["first_try_problems"] and r.trace["calls"] == 3
+
+
+def test_exact_records_that_answer_everything_need_no_answer_model(kb):
+    r, _ = run(kb, plan())
+    assert r.trace["calls"] == 1 and "Open now" in r.answer
+
+
+def test_telugu_still_goes_to_the_model_for_exact_facts(kb):
+    r, _ = run(kb, plan(language="telugu"), "తెలుగు వివరణ.")
+    assert r.trace["calls"] == 2 and "తెలుగు వివరణ" in r.answer and "15 December 2026" in r.answer
+
+
+def test_schemes_with_the_same_rates_share_one_line(tmp_path):
+    other = {**RULE, "id": "r2", "name": "RWBCIS"}
+    sorter.file_records([{**RULE, "name": "PMFBY"}, other], tmp_path)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=NEED_RULE), q="premium rule scheme?")
+    assert r.answer.count("[E") == 1 and "PMFBY and RWBCIS" in r.answer and r.trace["calls"] == 1
+
+
+def test_a_short_rate_limit_is_waited_out_once(monkeypatch):
+    slept = []
+    monkeypatch.setattr(llm.time, "sleep", slept.append)
+    m = llm.Models(Fake(llm.RateLimited("a", retry_after=3), "fine"), {"plan": ("a",)})
+    assert m.call("plan", [], llm.Meter()).text == "fine" and slept == [3]
+    m = llm.Models(Fake(llm.RateLimited("a", retry_after=90)), {"plan": ("a",)})
+    with pytest.raises(llm.RateLimited):
+        m.call("plan", [], llm.Meter())
 
 
 def test_rice_gets_its_own_deadline_not_the_general_one():
@@ -308,14 +363,13 @@ def test_a_window_that_closes_before_it_opens_is_rejected():
 
 
 def test_facts_decide_the_rule(kb):
-    r, _ = run(kb, plan(needs=NEED_RULE, facts={"crop": "commercial"}), "That applies to you.", q="premium rule scheme?")
+    r, _ = run(kb, plan(needs=NEED_RULE, facts={"crop": "commercial"}), q="premium rule scheme?")
     assert "percent: 5" in r.answer and r.trace["missing"] == []
 
 
 def test_missing_facts_show_every_case_and_ask(kb):
-    m = models(plan(needs=NEED_RULE), "Which crop do you grow?")
-    r = agent.answer("premium rule scheme?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
-    assert r.trace["missing"] and "Not known yet" in json.dumps(m.provider.sent[1][1])
+    r, _ = run(kb, plan(needs=NEED_RULE), q="premium rule scheme?")
+    assert r.trace["missing"] == ["crop"] and "tell me your crop" in r.answer
     assert "(1) crop is commercial" in r.answer and "(2)" in r.answer
 
 
@@ -333,24 +387,48 @@ def test_any_citation_style_is_understood():
 
 # ---------------------------------------------------------------- failure
 
-def test_failed_check_regenerates_then_falls_back_to_the_facts(kb):
-    r, _ = run(kb, plan(), "You pay 9%.", "Still 9%.")
+def test_failed_check_regenerates_then_falls_back_to_the_facts(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
+    r, _ = run(kb, plan(needs=MIXED), "You pay 9% [E1].", "Still 9% [E1].")
     assert "9%" not in r.answer and "15 December 2026" in r.answer and r.trace["calls"] == 3
 
 
 def test_rate_limit_moves_to_the_next_model(kb):
-    m = models(llm.RateLimited("p1"), plan(), "Enrol before it closes.")
+    m = models(llm.RateLimited("p1"), plan())
     assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps()).kind == "answer"
     assert "p1" in m.resting
 
 
 def test_vendor_format_failure_moves_to_the_next_model(kb):
-    r, _ = run(kb, llm.BadOutput("p1"), plan(), "Enrol before it closes.")
+    r, _ = run(kb, llm.BadOutput("p1"), plan())
     assert r.kind == "answer"
 
 
-def test_compose_failure_still_gives_facts(kb):
-    r, _ = run(kb, plan(), llm.LLMError("down"))
+def test_vendor_json_failure_retries_without_json_mode(kb):
+    m = models(llm.BadOutput("p1"), plan())
+    seen = []
+    complete = m.provider.complete
+    m.provider.complete = lambda model, msgs, json_mode=False: seen.append(json_mode) or complete(model, msgs, json_mode)
+    assert agent.answer("rabi cut-off?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps()).kind == "answer"
+    assert seen[:2] == [True, False]
+
+
+def test_a_short_rate_limit_rests_only_that_long():
+    m = models(llm.RateLimited("p1", retry_after=5), "fine")
+    m.call("plan", [], llm.Meter())
+    assert m.resting["p1"] - time.time() < 10
+
+
+def test_without_an_explanation_no_raw_document_text_is_shown(tmp_path, monkeypatch):
+    raw = "The P.S. to the Hon'ble Minister for Food and Civil Supplies"
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", raw)])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "x"}]), llm.LLMError("down"))
+    assert raw not in r.answer and "doc c1" in r.answer and "try again" in r.answer
+
+
+def test_compose_failure_still_gives_facts(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP")])
+    r, _ = run(kb, plan(needs=MIXED), llm.LLMError("down"))
     assert r.kind == "answer" and "15 December 2026" in r.answer and r.sources
 
 
@@ -458,6 +536,13 @@ def test_central_chunks_are_labelled_from_their_department():
     assert text_index._applies_in({"department": "central"}, "AP") == "IN"
     assert text_index._applies_in({"department": "Revenue"}, "AP") == "AP"
     assert text_index._applies_in({"jurisdiction": "KA", "department": "central"}, "AP") == "KA"
+
+
+def test_past_year_history_goes_to_the_model_even_with_exact_data(kb, monkeypatch):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "free in 2024")])
+    m = models(plan(needs=MIXED), "It was free in 2024 [E1].")
+    r = agent.answer("was it free in 2024?", models=m, knowledge=kb, as_of=TODAY, gaps=Gaps())
+    assert "free in 2024" in r.answer and "Open now" not in r.answer
 
 
 def test_no_module_names_the_llm_vendor_outside_llm_py():

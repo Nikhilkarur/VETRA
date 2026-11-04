@@ -17,6 +17,7 @@ as missing, so the agent can ask rather than guess.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 
 
@@ -40,6 +41,20 @@ def _holds(test, value) -> bool:
 def _plain_words(rule: dict, facts: dict) -> dict:
     aliases = rule.get("aliases") or {}
     return {k: (aliases.get(k) or {}).get(str(v).strip().lower(), v) for k, v in facts.items()}
+
+
+def facts_in_words(rule: dict, words: str) -> dict:
+    """Facts the user's own words settle, by the rule's values and aliases. No model needed."""
+    text = f" {re.sub(r'[^a-z0-9]+', ' ', words.lower())} "
+    found = {}
+    for key, values in (rule.get("inputs") or {}).items():
+        for value in values:
+            if f" {str(value).replace('_', ' ').lower()} " in text:
+                found[key] = value
+        for word, value in (rule.get("aliases") or {}).get(key, {}).items():
+            if f" {word.lower()} " in text:
+                found[key] = value
+    return found
 
 
 def evaluate(rule: dict, facts: dict) -> Result:

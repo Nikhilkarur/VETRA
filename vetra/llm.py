@@ -28,6 +28,7 @@ DEFAULT_ROLES = {
 }
 REST_SECONDS = 600  # a model at its limit isn't tried again for this long
 MAX_CALLS = 6       # for one question: the limit the proposal holds to
+MAX_WAIT = 20       # a citizen will wait this long for a per-minute limit to pass
 
 
 class LLMError(RuntimeError):
@@ -36,6 +37,10 @@ class LLMError(RuntimeError):
 
 class RateLimited(LLMError):
     """This model is at its limit; another model may not be."""
+
+    def __init__(self, model: str, retry_after: float = 0):
+        super().__init__(model)
+        self.retry_after = retry_after
 
 
 class RequestTooLarge(LLMError):
@@ -77,7 +82,8 @@ class OpenAICompatible:
         except requests.RequestException as exc:
             raise LLMError(f"{model}: {type(exc).__name__}") from exc
         if r.status_code == 429:
-            raise RateLimited(model)
+            wait = r.headers.get("retry-after", "")
+            raise RateLimited(model, float(wait) if wait.replace(".", "", 1).isdigit() else 0)
         if r.status_code == 413:
             raise RequestTooLarge(model)
         if r.status_code == 400 and "json_validate_failed" in r.text:
@@ -112,7 +118,8 @@ class Models:
     roles: dict[str, tuple[str, ...]]
     resting: dict[str, float] = field(default_factory=dict)
 
-    def call(self, role: str, messages: list[dict], meter: "Meter", json_mode: bool = False) -> Reply:
+    def call(self, role: str, messages: list[dict], meter: "Meter", json_mode: bool = False,
+             waited: bool = False) -> Reply:
         models = self.roles[role]
         ready = [m for m in models if self.resting.get(m, 0) <= time.time()] or list(models)
         last: LLMError | None = None
@@ -121,14 +128,20 @@ class Models:
             try:
                 reply = self.provider.complete(model, messages, json_mode)
             except RateLimited as exc:
-                self.resting[model] = time.time() + REST_SECONDS
+                # A per-minute limit passes soon; a daily one is worth skipping for a while.
+                self.resting[model] = time.time() + (exc.retry_after or REST_SECONDS)
                 last = exc
                 continue
             except BadOutput as exc:
                 last = exc
+                if json_mode:  # the reply is parsed anyway; only the vendor's own check failed
+                    return self.call(role, messages, meter, json_mode=False)
                 continue
             meter.record(role, reply)
             return reply
+        if isinstance(last, RateLimited) and not waited and 0 < last.retry_after <= MAX_WAIT:
+            time.sleep(last.retry_after)
+            return self.call(role, messages, meter, json_mode, waited=True)
         raise last or LLMError(f"no model for {role}")
 
 
