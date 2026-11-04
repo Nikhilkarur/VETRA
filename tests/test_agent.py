@@ -11,11 +11,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from vetra import agent, checks, facts, intake, jurisdictions, knowledge, languages, llm, rules, sorter, text_index, web  # noqa: E402
 from vetra import gaps as gaps_module  # noqa: E402
+from vetra import navigate  # noqa: E402
 from vetra.datatypes import DATA_TYPES  # noqa: E402
 from vetra.domains import DOMAINS  # noqa: E402
 from vetra.tools import Evidence  # noqa: E402
 
 TODAY = "2026-11-04"
+EXPLORE = navigate.explore  # the real one; most tests skip this step
 
 
 class Fake:
@@ -57,6 +59,7 @@ def no_real_index_or_gap_file(monkeypatch):
     """Tests search a stub, and never write to the real gap log."""
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda query, ctx: [])
     monkeypatch.setattr(agent, "GapLog", Gaps)
+    monkeypatch.setattr(navigate, "explore", lambda q, subj, dom, items, base, m, meter, tidy: (items, navigate.Route()))
 
 
 def chunk(id_, place, text="Searched text about the scheme."):
@@ -729,3 +732,116 @@ def test_a_state_with_documents_is_not_told_they_are_missing(tmp_path):
     sorter.file_records([doc], tmp_path)
     r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "contact", "subject": "office"}]))
     assert r.kind == "not_covered" and "aren't in yet" not in r.answer
+
+
+# ------------------------------------------------------------------ navigation
+
+ENOUGH = json.dumps({"enough": True})
+HOW = [{"type": "procedure", "subject": "how to apply"}]
+
+
+def go(action, **more):
+    return json.dumps({"enough": False, "missing": "the fee", "next": [{"action": action, **more}]})
+
+
+def test_enough_evidence_stops_after_one_judgement(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply here.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), ENOUGH, "Apply here [E1].")
+    assert r.trace["calls"] == 3 and r.trace["route"]["rounds"] == 1 and not r.trace["route"]["moves"]
+
+
+def test_a_missing_part_gets_a_second_search_and_is_used(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    asked = []
+
+    def search(q, c):
+        asked.append(q)
+        return [chunk("fee", "AP", "how to apply: the fee is Rs 50.")] if "fee" in q else [chunk("c1", "AP", "how to apply here.")]
+    monkeypatch.setitem(agent.TOOLS, "text_search", search)
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("search", query="application fee"), ENOUGH, "The fee is Rs 50 [E2].")
+    assert "application fee" in asked and "Rs 50" in r.answer and r.trace["route"]["moves"][0]["found"] == 1
+
+
+def test_read_more_brings_the_next_passage(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply: see the table below.")])
+    monkeypatch.setitem(agent.TOOLS, "read_around", lambda key, c: [chunk("c2", "AP", f"table after {key}: Rs 70.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("read_more", of="E1"), ENOUGH, "It is Rs 70 [E2].")
+    assert "Rs 70" in r.answer and r.trace["route"]["moves"][0] == {"action": "read_more", "target": "c1", "found": 1}
+
+
+def test_navigation_stops_at_its_limit_and_still_answers(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    n = iter(range(100))
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply here.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("search", query="one"), go("search", query="two"), "Apply here [E1].")
+    assert r.trace["route"]["rounds"] == navigate.MAX_ROUNDS and r.kind == "answer"
+
+
+def test_the_same_move_is_not_repeated(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    n = iter(range(100))
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply here.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), go("search", query="one"), go("search", query="one"), "Apply here [E1].")
+    assert len(r.trace["route"]["moves"]) == 1
+
+
+def test_a_failed_judgement_still_answers_from_what_it_has(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply here.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=HOW), llm.LLMError("down"), "Apply here [E1].")
+    assert "Apply here" in r.answer
+
+
+def test_off_topic_results_from_a_new_search_are_not_used(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("other", "AP", "Something else entirely.")] if q == "wrong" else [])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(needs=[{"type": "procedure", "subject": "Mahila Kisan Yojana"}]), go("search", query="wrong"), ENOUGH)
+    assert r.kind == "not_covered"
+
+
+def test_exact_records_that_answer_everything_skip_navigation(kb, monkeypatch):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    r, _ = run(kb, plan())
+    assert r.trace["calls"] == 1 and r.trace["route"]["rounds"] == 0
+
+
+def test_the_judge_never_sees_exact_figures():
+    e = Evidence("d", "dates_lookup", "text", "doc", fact="closes 15 December 2026", note="a window exists")
+    assert "15 December" not in navigate._show([e]) and "a window exists" in navigate._show([e])
+
+
+def test_bad_moves_are_dropped():
+    items = [chunk("c1", "AP"), Evidence("d", "dates_lookup", "t", "doc")]
+    assert navigate.parse("nonsense", items) == ([], "")
+    moves, _ = navigate.parse(go("read_more", of="E9"), items)
+    assert moves == []
+    moves, _ = navigate.parse(go("read_more", of="E2"), items)   # not a document passage
+    assert moves == []
+    moves, _ = navigate.parse(go("delete", query="x"), items)
+    assert moves == []
+    moves, _ = navigate.parse(go("search", query=" ".join(["w"] * 40)), items)
+    assert len(moves[0].target.split()) == 12
+
+
+def test_navigation_keeps_calls_back_for_the_answer():
+    m, meter = models(ENOUGH), llm.Meter(calls=4)
+    ctx = None
+    items, route = EXPLORE("q", ["s"], ["agriculture"], [], ctx, m, meter, lambda x: x)
+    assert route.rounds == 0 and meter.calls == 4
+
+
+def test_read_around_finds_the_neighbours_in_the_same_document(monkeypatch):
+    chunks = tuple({"id": f"x::{i}", "source": "doc", "chunk_index": i, "text": str(i)} for i in range(5))
+    other = ({"id": "y::2", "source": "other", "chunk_index": 2, "text": "z"},)
+    monkeypatch.setattr(text_index, "corpus", lambda domain: chunks + other)
+    assert [c["id"] for c in text_index.around("x::2", "agriculture")] == ["x::1", "x::3"]
+    assert text_index.around("nope", "agriculture") == []
+
+
+def test_translated_details_keep_their_english():
+    e = Evidence("d", "rule_check", "t", "doc", fact="pays 5%", detail="limited if the actuarial rate is lower")
+    m = models(json.dumps({"lines": ["5% देता है", "सीमित"]}))
+    agent.localise([e], [], "", "hindi", m, llm.Meter())
+    assert e.fact == "5% देता है (English: pays 5%)" and e.detail == "सीमित (English: limited if the actuarial rate is lower)"

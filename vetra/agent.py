@@ -24,7 +24,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 
-from . import checks, jurisdictions, languages, llm, messages
+from . import checks, jurisdictions, languages, llm, messages, navigate
 from .datatypes import DATA_TYPES
 from .domains import DOMAINS
 from .gaps import Gap, GapHandler, GapLog
@@ -277,7 +277,10 @@ def facts_only(items: list[Evidence], language: str, reason: str = "unverified")
 
 def localise(items: list[Evidence], notes: list[str], asking: str, language: str,
              models: llm.Models, meter: llm.Meter) -> tuple[list[str], str]:
-    """Code's own words, in a language it has no templates for. Facts keep their English beside them."""
+    """
+    Code's own words, in a language it has no templates for. Facts and their details keep the
+    English beside them: a check can catch a changed number, but not a mistranslated term.
+    """
     facts = [e for e in items if e.fact]
     details = [e for e in facts if e.detail]
     lines = [e.fact for e in facts] + [e.detail for e in details] + notes + ([asking] if asking else [])
@@ -287,7 +290,7 @@ def localise(items: list[Evidence], notes: list[str], asking: str, language: str
         if new:
             e.fact = f"{new} (English: {e.fact})"
     for e, new in zip(details, done[len(facts):]):
-        e.detail = new or e.detail
+        e.detail = f"{new} (English: {e.detail})" if new else e.detail
     start = len(facts) + len(details)
     rest = [new or old for old, new in zip(lines[start:], done[start:])]
     return (rest[:-1], rest[-1]) if asking else (rest, "")
@@ -381,11 +384,28 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
         if not gathered:   # so the old orders' own text has to
             found = [find(need, plan, today, knowledge, asked, text_cache, text_only=True)[0] for need in needs]
             gathered = list({e.key: e for f in found for e in f.items}.values())
-    items = checks.order(checks.in_force(gathered, today, asked))
+
+    def tidy(evidence: list[Evidence]) -> list[Evidence]:
+        return checks.order(checks.in_force(evidence, today, asked))
+
+    items = tidy(gathered)
+    # Exact records that answer everything need no more looking. Anything else gets judged.
+    route = navigate.Route()
+    if not (checks.has_facts(items) and all(f.level in ("exact", "exact_central") for f in found)):
+        first = {e.key for e in items}
+        base = Context(plan.domain, plan.state, today, knowledge, plan.facts, question=asked, language=plan.language)
+        items, route = navigate.explore(plan.standalone or question, [f.need.subject for f in found],
+                                        list(dict.fromkeys(f.need.domain for f in found)), items, base, models, meter, tidy)
+        added = [e for e in items if e.key not in first]
+        for f in found:  # a need the first look missed, answered by looking further, isn't a gap
+            if f.level == "none" and added and checks.on_topic(added, f.need.subject):
+                local = any(e.jurisdiction == plan.state for e in added)
+                f.level, f.items = ("text" if local else "central_text"), added
     tell = record_gaps(found, plan, today, gaps)
     coverage = [{"type": f.need.data_type, "subject": f.need.subject, "level": f.level} for f in found]
     trace = {"needs": [(f.need.data_type, f.level) for f in found], "state": plan.state,
-             "evidence": len(items), "missing": missing}
+             "evidence": len(items), "missing": missing,
+             "route": {"rounds": route.rounds, "moves": route.moves, "still_missing": route.missing}}
 
     def finish(text: str, **more) -> Result:
         return done(Result("answer", text, plan.domain, plan.state, plan.language,

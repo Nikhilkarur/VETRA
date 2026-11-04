@@ -168,6 +168,16 @@ def search(query: str, domain: str, state: str | None, passage: str = "", topic:
     return found
 
 
+def around(chunk_id: str, domain: str, reach: int = 1) -> list[dict]:
+    """The passages just before and after this one in its document, for a state that can see it."""
+    items = corpus(domain)
+    this = next((i for i in items if i["id"] == chunk_id), None)
+    if this is None:
+        return []
+    near = range(this["chunk_index"] - reach, this["chunk_index"] + reach + 1)
+    return [i for i in items if i["id"] != chunk_id and i.get("source") == this.get("source") and i["chunk_index"] in near]
+
+
 def _reranked(query: str, ranking: list[int], items: list[dict], model: str, n: int = 30) -> list[int]:
     """A cross-encoder over the top n, fused with the search order rather than replacing it."""
     R = _rag()

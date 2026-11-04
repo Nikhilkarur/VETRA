@@ -8,8 +8,9 @@ Agriculture and finance, for every Indian state, built to scale by adding data r
 2. **Do we have it?** Code looks in the exact store for each type, for that state and the central government. If the exact store has nothing, it searches text.
 3. **Is it on topic?** If the results don't mention the subject, one more search runs, and then it counts as missing.
 4. **Is it in force?** Code removes what doesn't apply today. Past seasons' rules are cut unless the question names that year.
-5. **What's missing?** Gaps go to `data/gaps.jsonl`. `python -m vetra.gaps` lists them, most needed first: this is the to-do list for collecting documents.
-6. **Answer.** Exact facts are printed by code, word for word. The model never sees those figures. If exact records answer everything, no answer model runs at all. Otherwise it explains the rest, and code checks what it wrote.
+5. **Is it enough?** A model judges the evidence against the question. If a part is missing, it searches in other words or reads the passages around one it found, up to 2 rounds (`vetra/navigate.py`). Exact records that answer everything skip this step.
+6. **What's missing?** Gaps go to `data/gaps.jsonl`. `python -m vetra.gaps` lists them, most needed first: this is the to-do list for collecting documents.
+7. **Answer.** Exact facts are printed by code, word for word. The model never sees those figures. If exact records answer everything, no answer model runs at all. Otherwise it explains the rest, and code checks what it wrote.
 
 | Data type | Exact store | Fallback |
 |---|---|---|
@@ -21,6 +22,18 @@ Agriculture and finance, for every Indian state, built to scale by adding data r
 | change_history | links | text |
 | statistic | numbers | text |
 | procedure, explanation | none: text is the right place | |
+
+## Finding its way
+
+The judge reads document text, so what it can do is kept small:
+
+- **Moves:** it can only search or read more. Both only read.
+- **Fixed by code:** the state and topic. A document can't redirect it to another state.
+- **Same checks:** every new result goes through the in-force and off-topic checks.
+- **Limits:** 2 rounds, 2 moves a round, 16 passages, and 3 of the 6 LLM calls kept back for the answer.
+- **If it fails:** the answer is written from what's already in hand.
+
+Each answer's `trace["route"]` shows the moves it made and anything still missing.
 
 ## Languages
 

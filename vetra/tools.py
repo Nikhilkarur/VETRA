@@ -60,13 +60,21 @@ def _from_record(r: dict, tool: str, text: str | None = None) -> Evidence:
                     reviewed=bool(r.get("reviewed")))
 
 
-def text_search(query: str, ctx: Context) -> list[Evidence]:
-    hits = text_index.search(query, ctx.domain, ctx.state, ctx.passage, ctx.topic, ctx.keywords)
+def _from_chunks(hits: list[dict]) -> list[Evidence]:
     status = {"yes": "in_force", "no": "not_in_force"}
     return [Evidence(key=h["id"], tool="text_search", text=h["text"], doc=h.get("source", ""),
                      url=h.get("source_url"), jurisdiction=h.get("jurisdiction", ""), date=h.get("date") or None,
                      status=status.get(h.get("in_force"), "unknown"), season=h.get("season") or "")
             for h in hits]
+
+
+def text_search(query: str, ctx: Context) -> list[Evidence]:
+    return _from_chunks(text_index.search(query, ctx.domain, ctx.state, ctx.passage, ctx.topic, ctx.keywords))
+
+
+def read_around(chunk_id: str, ctx: Context) -> list[Evidence]:
+    """More of a document already found: the passages either side of this one."""
+    return _from_chunks(text_index.around(chunk_id, ctx.domain))
 
 
 def rule_check(query: str, ctx: Context) -> list[Evidence]:
@@ -119,6 +127,7 @@ def _lookup(store: str, tool: str) -> Callable[[str, Context], list[Evidence]]:
 
 TOOLS = {
     "text_search": text_search,
+    "read_around": read_around,
     "rule_check": rule_check,
     "dates_lookup": dates_lookup,
     "number_lookup": _lookup("numbers", "number_lookup"),

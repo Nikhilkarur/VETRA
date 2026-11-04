@@ -19,9 +19,9 @@ Each phase ends with its tests passing, its documentation updated, and its own c
 | # | Phase | Done when | State |
 |---|---|---|---|
 | 0 | **Foundation:** one clean repo, a working Docker image, accurate docs | Tests pass, the image answers a question, and the docs match the code | Done |
-| 1 | **Navigation:** the engine judges what it has and goes after what's missing | It can reach an answer that takes more than one step, within a fixed limit, and stops when it has enough | Next |
+| 1 | **Navigation:** the engine judges what it has and goes after what's missing | It can reach an answer that takes more than one step, within a fixed limit, and stops when it has enough | Built. Measuring it needs a new API key |
 | 2 | **Depth:** research-style answers | Answers cover conditions, exceptions, changes over time and disagreements between sources, and short questions still get short answers | Not started |
-| 3 | **Languages:** all 22 scheduled languages and English | Live checks per language, and documents written in Indian languages can be searched | Code built, not live-tested |
+| 3 | **Languages:** all 22 scheduled languages and English | Live checks per language, and documents written in Indian languages can be searched | Code built. Hindi and Tamil tried live on exact facts |
 | 4 | **Data:** agriculture and finance for every state | Each state has its main schemes, and its key deadlines and rates are exact records | Started |
 | 5 | **Quality and release:** measured on real questions, ready to use | Question sets per topic, a final LLM provider, a safety check, and a person's review of the rules | Not started |
 
@@ -36,6 +36,14 @@ A working API key without the free tier's limits is needed to measure Phases 1 t
 - **Tests:** `python -m pytest tests -q`.
 - **Older folder:** `Desktop\ap-rti-assistant` is an older copy, and its container uses port 8765, the same port as `docker compose up` here. Stop that container first.
 
+### Phase 1: Navigation (built, not measured)
+
+- After the first look, a model judges whether the evidence answers every part of the question. If not, it searches in other words or reads the passages around one it found, for up to 2 rounds. See `vetra/navigate.py` and "Finding its way" in [AGENT.md](AGENT.md).
+- Every path is covered by tests with a fake model.
+- **First live try (4 questions needing searched text):** the judge stopped when it had enough, and on the multi-part PM-KISAN question it read further and named what was still missing. None of these reached a written answer, because the answer model hit Groq's rate limit each time.
+- **Not known yet:** how much this improves answers. It costs one more LLM call per searched question, so it needs the new API key to measure.
+- **To finish the phase:** a set of questions that take more than one step, run with this step on and off.
+
 ### Phase 3: Languages (code built)
 
 - Questions can come in any of the 22 scheduled languages or English, in the language's own script or typed in English letters.
@@ -43,7 +51,7 @@ A working API key without the free tier's limits is needed to measure Phases 1 t
 - **Known limits:**
   - The search model reads English, so documents written in Indian languages aren't found reliably.
   - RTI replies in English or Telugu only.
-  - Some translations have not been read by a speaker of that language.
+  - Translations can get terms wrong, and only numbers are checked by code. In a live test, "actuarial rate" came out in Hindi as a word meaning "enacted rate". That's why the English is printed beside each fact, and a speaker of each language should check before release.
   - Santali's Ol Chiki script needs a font that many phones lack.
 
 ### Phase 4: Data (started)
