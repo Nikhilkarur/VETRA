@@ -1,10 +1,10 @@
 {
- "last_report": "2026-11-05T18:34",
- "state": "At risk",
- "headline": "Andhra Pradesh and Tamil Nadu are <strong>not done</strong>. The 6 November target is at risk: most aspects haven't been tested with a real question, and Andhra Pradesh finance is thin. Today's first hand-marked test scored 157 of 179, before the fixes. New documents are being added to search now, and the aspect questions run after that.",
+ "last_report": "2026-11-05T18:56",
+ "state": "In progress",
+ "headline": "Working through Andhra Pradesh and Tamil Nadu, in logical order and with no fixed date. They are <strong>not done</strong>: most aspects haven't been tested with a real question, and Andhra Pradesh finance is thin. Today's first hand-marked test scored 157 of 179, before the fixes. New documents are going into search on the PC, and the aspect questions start right after.",
  "usage": {
-  "five_hour": 31,
-  "weekly": 10,
+  "five_hour": 38,
+  "weekly": 11,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
  "decisions": [
@@ -80,6 +80,11 @@
    "time": "05 Nov 18:34",
    "state": "At risk",
    "text": "Monitoring station set up on this page, with the architecture, diagrams and techniques updated. Today: first hand-marked test, 157 of 179 good, marked by me before the fixes. Added 36 exact rates across Andhra Pradesh deeds, vehicle tax and relief, Tamil Nadu vehicle tax and Chennai profession tax, all unreviewed. Engine: 3 checks added, 231 code tests pass. Listed 18,441 Andhra Pradesh orders and about 3,300 official PDFs. Andhra Pradesh and Tamil Nadu aren't done."
+  },
+  {
+   "time": "05 Nov 18:56",
+   "state": "In progress",
+   "text": "You removed the fixed date, so work goes in logical order: collect, ask, read, fix, then the next state. Checked this page against the code and corrected it: tests are 231, exact records and scan reading are shown, and stale document lists are gone. The older Version 1 tabs are kept as history and weren't checked."
   }
  ]
 }

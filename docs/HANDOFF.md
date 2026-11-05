@@ -48,7 +48,7 @@ API keys stay on free tiers for now, until the owner sorts out paid ones. A ques
 
 **Research:** `reports/VETRA engine techniques 2026.md` is the ranked list of what to adopt. Engine gaps are in `docs/ARCHITECTURE_RESEARCH.md`.
 
-## Finish AP and TN (owner's deadline: 6 November 2026)
+## Finish AP and TN (no fixed date: logical order and proper reports)
 
 All aspects of agriculture and finance. Tools: `tools/coverage_grid.py` (gaps by aspect), `tools/crawl_pdfs.py` (PDFs on official sites, list in `eval/cache/hand/pdfs.jsonl`), `tools/goir.py` (AP orders by department, list in `eval/cache/hand/gos.jsonl`), `tools/fetch_docs.py` (batch download), `eval/aspect_questions.py` (one question per aspect, answers in `eval/cache/aspects/`).
 

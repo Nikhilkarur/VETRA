@@ -200,7 +200,7 @@ def build() -> str:
     last = datetime.fromisoformat(s["last_report"])
     due = last + timedelta(hours=4)
     late = now > due + timedelta(minutes=45)
-    tone = {"On track": "good", "At risk": "warn", "Blocked": "bad", "Paused": "warn"}.get(s["state"], "warn")
+    tone = {"On track": "good", "In progress": "good", "At risk": "warn", "Blocked": "bad", "Paused": "warn"}.get(s["state"], "warn")
     log = "".join(f'<div class="card st-log"><p class="label">{esc(e["time"])} · {esc(e["state"])}</p><p>{e["text"]}</p></div>' for e in reversed(s["log"]))
     return f"""
 <section id="st-now">
