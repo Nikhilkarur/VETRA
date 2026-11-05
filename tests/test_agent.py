@@ -1794,6 +1794,19 @@ def test_order_links_read_what_an_order_ends():
     assert "in_force" not in entries[1]
 
 
+def test_records_narrow_to_what_is_asked():
+    from vetra import facts
+    family = {"id": "f", "applies_to": ["gift", "daughter"]}
+    deed = {"id": "d", "applies_to": ["gift"]}
+    sale = {"id": "s", "applies_to": ["buy"]}
+    plain = {"id": "p"}
+    ids = lambda rs: [r["id"] for r in rs]
+    assert ids(facts.narrowed([family, deed, sale, plain], "gift land to my daughter")) == ["f", "p"]
+    assert ids(facts.narrowed([family, deed, sale, plain], "cost of a gift deed")) == ["f", "d", "p"]
+    assert ids(facts.narrowed([family, deed, sale, plain], "what are the charges")) == ["f", "d", "s", "p"]
+    assert facts.narrowed([], "anything") == []
+
+
 def test_topic_words_start_a_word():
     from vetra import facts
     assert not facts._mentions(["hen"], "where and when do i complain")

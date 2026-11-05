@@ -56,6 +56,18 @@ def on_its_topic(records: list[dict], asked: str) -> list[dict]:
     return [r for r in records if not r.get("topic_words") or _mentions(r["topic_words"], asked)]
 
 
+def narrowed(records: list[dict], asked: str) -> list[dict]:
+    """
+    Of records that say what they apply to, those matching the question most: a gift to a daughter
+    gets the family settlement rate, not every deed. A question naming none of them gets them all.
+    Records with no applies_to always stay; dated windows have their own rule in windows_for.
+    """
+    def hits(r: dict) -> int:
+        return sum(_mentions([w], asked) for w in r.get("applies_to") or [])
+    best = max((hits(r) for r in records), default=0)
+    return records if not best else [r for r in records if not r.get("applies_to") or hits(r) == best]
+
+
 def _for_season(records: list[dict], asked: str) -> list[dict]:
     """The season asked about: "Kharif 2026" exactly if it's named, or else any kharif."""
     exact = [r for r in records if r.get("for_season") and r["for_season"].lower() in asked]

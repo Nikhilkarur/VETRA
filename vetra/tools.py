@@ -135,8 +135,9 @@ def dates_lookup(query: str, ctx: Context) -> list[Evidence]:
 
 def _lookup(store: str, tool: str) -> Callable[[str, Context], list[Evidence]]:
     def run(query: str, ctx: Context) -> list[Evidence]:
-        found = F.on_its_topic(ctx.knowledge.find(ctx.domain, store, ctx.state, query), ctx.question.lower())
-        return [_from_record(r, tool) for r in found]
+        asked = ctx.question.lower()
+        found = F.on_its_topic(ctx.knowledge.find(ctx.domain, store, ctx.state, query), asked)
+        return [_from_record(r, tool) for r in F.narrowed(found, asked)]
     return run
 
 
