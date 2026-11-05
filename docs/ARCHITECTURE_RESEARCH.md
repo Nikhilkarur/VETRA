@@ -88,6 +88,14 @@ The agent's design stands. These gaps come from reading the code and trying sear
 
 **No data pipeline or auto-update:** documents are found and added by hand with `vetra.intake`, and gaps go to a log. Neither is in the MVP. To keep the later version easy, each document should now record when it was fetched and a fingerprint of the file, so a future job can tell when an official copy changes.
 
+## Third research round (5 November 2026)
+
+Read from abstracts and search summaries only, not full papers, so the numbers are the authors' own and unchecked.
+
+- **Treat a rule's dates as a hard filter, not a ranking hint.** This is the strongest match to a problem we've measured: Tamil Nadu's 2022 relief order came above G.O. 579. A study of German statutes names outdated rules as a main failure and reaches this conclusion ([Asking For An Old Friend](https://arxiv.org/html/2605.23497)). [TimelyRAG](https://arxiv.org/pdf/2609.11572) dates each clause rather than each document and reports 19.1% better Hit@10 on amended rules. Plan: do this with step 5 of the handoff, starting with a "replaced by" field on orders. Test first on the Tamil Nadu relief orders.
+- **A sufficiency checklist before writing.** [L-MARS](https://arxiv.org/pdf/2509.00761) checks factual support, jurisdiction match, date and contradictions, then searches again up to a set limit. This is a sharper version of candidate 18 in the techniques report. It may fix answers that stop at one source, such as the heavy-rain question that used only crop insurance and missed G.O. 579. Test on the aspect questions, because each extra check uses free-tier calls.
+- **Search and check as one loop.** [FAIR-RAG](https://ar5iv.arxiv.org/html/2510.22344) and [LegalGraphRAG](https://preview.aclanthology.org/ingest-acl/2026.acl-long.1738/) only write from evidence that has been checked. Our engine is already close to this. No change unless results show a need.
+
 ## How far to trust this
 
 - **Different data:** none of these numbers come from Indian government documents, and vendors measured some of them on their own systems. Each idea has to beat this project's own scores before replacing anything.

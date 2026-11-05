@@ -15,6 +15,8 @@ Alongside that, improve the engine where results show a real need: fix a measure
 
 The owner decides: RAM, local models, paid Gemini and the lawyer. Don't wait for these.
 
+API keys stay on free tiers for now, until the owner sorts out paid ones. A question averages about 3 calls, so spread large runs across the daily reset and let Groq take over.
+
 ## Rules
 
 - **Use the owner's weekly limits carefully:** do long work with PC scripts and API keys, not by reading long output. Keep command output short, don't re-read what's known, and don't spawn agents unless asked.
@@ -43,6 +45,16 @@ The owner decides: RAM, local models, paid Gemini and the lawyer. Don't wait for
 - When it's FINISHED, read the marking sheet `eval/cache/gold/first.csv` in that folder, mark each answer by hand, then run `--score first` there. These are the first honest quality numbers.
 
 **Research:** `reports/VETRA engine techniques 2026.md` is the ranked list of what to adopt. Engine gaps are in `docs/ARCHITECTURE_RESEARCH.md`.
+
+## Finish AP and TN (owner's deadline: 6 November 2026)
+
+All aspects of agriculture and finance. Tools: `tools/coverage_grid.py` (gaps by aspect), `tools/crawl_pdfs.py` (PDFs on official sites, list in `eval/cache/hand/pdfs.jsonl`), `tools/goir.py` (AP orders by department, list in `eval/cache/hand/gos.jsonl`), `tools/fetch_docs.py` (batch download), `eval/aspect_questions.py` (one question per aspect, answers in `eval/cache/aspects/`).
+
+1. Pick scheme orders and guidelines from the two lists, fetch them, and build each topic and state, one build at a time.
+2. Run `eval/aspect_questions.py first AP TN` and read every answer with `--show`.
+3. Each wrong or empty answer is a gap or a bug: collect the document, add the exact rate after reading it, or fix the engine with a test.
+4. Re-run the aspects that changed and read them again. Say what's still unanswered.
+5. Mark the baseline by hand when it's FINISHED.
 
 ## Next steps, in order
 
