@@ -235,6 +235,36 @@ _MONEY = re.compile(r"(?:\bRs\.?|₹|\brupees\b)\s*\d", re.I)
 _SHOWS_EXAMPLE = re.compile(r"\b(?:example|illustration|e\.g\.|for instance)", re.I)
 
 
+_PLAIN_WORDS = frozenset("""a about after all also am an and any are as ask at be been before being but by can could did do does
+for from get gets give given gives go got had has have how i if in into is it its me much many must my need no not of on one or our
+own should so some than that the their them then there these they this to under up us was we were what when where which who whom
+why will with would you your per much long soon andhra pradesh tamil nadu india indian government govt state scheme schemes rule
+rules tell please now current today pay paid pays farmer farmers year years days day date last""".split())
+
+
+def _stem(word: str) -> str:
+    return word[:5]
+
+
+def records_answer(question: str, records: list[Evidence]) -> str:
+    """
+    Do exact records speak to what's asked? A record found by its topic can be about something else:
+    "what service charge do banks get under PMFBY" found the farmer's premium, and printed it as the answer.
+    yes: print them. partial: keep them and read the text as well. no: they're about something else.
+    """
+    if not question.isascii():   # needs a translated question; another language can't be compared by word
+        return "yes"
+    asked = {w for w in re.findall(r"[a-z]{3,}", question.lower()) if w not in _PLAIN_WORDS}
+    if len(asked) < 2:
+        return "yes"
+    held = " ".join(f"{e.text} {e.fact} {e.note} {e.detail} {e.doc}" for e in records).lower()
+    stems = {_stem(w) for w in re.findall(r"[a-z]{3,}", held)}
+    missing = [w for w in asked if _stem(w) not in stems]
+    if len(missing) < 2:
+        return "yes"
+    return "partial" if len(missing) * 2 <= len(asked) else "no"
+
+
 def _sentences(line: str) -> list[str]:
     """A line's sentences. Short forms like "Rs. 6000" and "No. 34" don't end one."""
     out: list[str] = []
