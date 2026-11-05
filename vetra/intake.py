@@ -4,10 +4,11 @@ Add hand-collected documents for any state. No code changes, no LLM.
     1. Put the files in documents/<domain>/<STATE>/ (PDF or .txt). Use IN for central documents.
     2. List them in documents/<domain>/<STATE>/manifest.json. "template" writes a starter.
        "order" and "amends_orders" link an order's chunks to those it amends; both are optional.
+       "read_as_scan": true reads every page by OCR, for fonts that swap letters but look fine.
     3. python -m vetra.intake build agriculture KA
 
 This chunks each file, files its validity and amendments, and updates the search index.
-A file with no text (a scan) is reported, not skipped silently.
+Scans and garbled pages are read by vetra/scans.py, which marks figures it can't confirm.
 
     python -m vetra.intake template agriculture KA
     python -m vetra.intake check agriculture KA      # build without changing anything
@@ -25,7 +26,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from . import jurisdictions, sorter, text_index
+from . import jurisdictions, scans, sorter, text_index
 from .domains import DOMAINS
 from .knowledge import ROOT as KNOWLEDGE
 from .knowledge import Knowledge
@@ -80,14 +81,23 @@ def prepare(entries: list[dict], folder: Path, state: str, known_hashes: set[str
             report.warnings.append(f"{name}: no date, so it can't be checked for validity")
         if not e.get("in_force"):
             report.warnings.append(f"{name}: in_force not set; it will be treated as unknown")
-        report.chunks += _chunks_for(e, path, state, digest, counter, chunker or _chunker())
+        reading = None
+        if path.suffix.lower() == ".pdf":
+            try:
+                reading = scans.read(path, state, digest, force=bool(e.get("read_as_scan")))
+            except FileNotFoundError as exc:
+                report.warnings.append(f"{name}: {exc}; its good pages were kept")
+            if reading:
+                report.warnings.append(f"{name}: {reading.read_as_scan} of {reading.pages} pages read as a scan, "
+                                       f"{reading.unclear} figures marked unclear")
+        report.chunks += _chunks_for(e, path, state, digest, counter, chunker or _chunker(), reading)
         if not any(c["file"] == e["file"] for c in report.chunks):
             report.warnings.append(f"{name}: no text found (a scan?); needs OCR, not added")
     return report
 
 
-def _chunks_for(e: dict, path: Path, state: str, digest: str, counter, chunker) -> list[dict]:
-    text = chunker.clean(chunker.extract_text(path))
+def _chunks_for(e: dict, path: Path, state: str, digest: str, counter, chunker, reading=None) -> list[dict]:
+    text = chunker.clean(reading.text if reading else chunker.extract_text(path))
     if len(text) < 100:
         return []
     count = counter or _token_counter(chunker)
@@ -104,7 +114,7 @@ def _chunks_for(e: dict, path: Path, state: str, digest: str, counter, chunker) 
                     "amends": ",".join(e.get("amends_orders") or []),
                     "in_force": (e.get("in_force") or "unknown").split()[0].strip(",;-").lower(),
                     "date": e.get("date") or "", "source_url": e["source_url"], "file": e["file"],
-                    "chunk_index": i, "chunk_count": len(pieces)})
+                    "chunk_index": i, "chunk_count": len(pieces), "read_by": "scan" if reading else "text"})
     return out
 
 

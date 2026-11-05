@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
+from .knowledge import UNOFFICIAL
 from .languages import western_digits
 from .tools import Evidence
 
@@ -58,7 +59,8 @@ def order(items: list[Evidence]) -> list[Evidence]:
             unique.append(e)
     rank = {"rule_check": 0, "dates_lookup": 1, "number_lookup": 1, "directory_lookup": 1,
             "links_walk": 2, "form_search": 2, "text_search": 3}
-    return sorted(unique, key=lambda e: (rank.get(e.tool, 3), e.status == "not_in_force"))
+    # A summary comes after the documents it summarises, so it's the first to go when evidence is cut.
+    return sorted(unique, key=lambda e: (rank.get(e.tool, 3), e.status == "not_in_force", e.kind in UNOFFICIAL))
 
 
 _CITATION = re.compile(r"\[E(\d+)\]")
@@ -151,6 +153,11 @@ def on_topic(items: list[Evidence], subject: str) -> bool:
         return True
     found = stems(set(_WORD.findall(" ".join(f"{e.doc} {e.text}" for e in items).lower())))
     return len(wanted & found) * 2 > len(wanted)
+
+
+def only_summaries(evidence: list[Evidence]) -> bool:
+    """Is everything here a summary, with no official document behind it?"""
+    return bool(evidence) and all(e.kind in UNOFFICIAL for e in evidence)
 
 
 def has_facts(evidence: list[Evidence]) -> bool:
@@ -315,6 +322,8 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
                 fault(f"cites [E{n}], which doesn't exist")
         if _BACKSTAGE.search(s.text):
             fault("talks about the evidence or the records instead of the rules. Say \"the documents\" or \"the rates above\"")
+        if "[unclear" in s.text:
+            fault("repeats a figure the scan couldn't confirm. Say the figure couldn't be read clearly, and to check the document")
         if not has_facts(evidence) and _POINTS_UP.search(s.text):
             fault("points to figures above, but nothing is printed above this answer. Give the figure from the passage it cites")
         if guard_gaps and has_facts(evidence) and _WITHHELD.search(s.text):

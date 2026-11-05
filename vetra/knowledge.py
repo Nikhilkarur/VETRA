@@ -25,7 +25,9 @@ STORES = ("documents", "dates", "rules", "numbers", "directory", "links", "forms
 KINDS = {"act": "Act of law", "rules": "statutory rules", "notification": "government notification",
          "go": "government order", "scheme_guideline": "scheme guidelines", "guideline": "guidelines",
          "circular": "circular", "faq": "official FAQ", "manual": "department manual", "other": "department note",
-         "budget": "budget document", "explainer": "press explainer"}
+         "budget": "budget document", "explainer": "press explainer",
+         "analysis": "independent analysis, not an official document"}
+UNOFFICIAL = {KINDS["analysis"], KINDS["explainer"]}  # summaries of official documents, not the documents
 _WORDS = re.compile(r"[a-z0-9]+")
 _COMMON = frozenset("a an and are at can do for from how i in is it me my of on or the to what when who why with".split())
 

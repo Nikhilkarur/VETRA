@@ -1651,3 +1651,100 @@ def test_pointing_to_figures_above_needs_something_printed_above():
     printed.fact, printed.note = "Rs.6000 a year.", "A yearly payment."
     assert not checks.faults("It pays the amount stated above each year [E1].", [printed], TODAY)
     assert not _faults("See the rules above the district level [E1].", "The rules above the district level apply.")
+
+
+def test_the_hand_read_test_file_is_sound_and_its_sums_are_right():
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "eval"))
+    import gold_test
+
+    items = gold_test.questions()
+    assert len(items) >= 150 and len({i["id"] for i in items}) == len(items)
+    for i in items:
+        assert i["q"] and i["expected"] and bool(i["quote"]) != (i["group"] in ("gap", "invented")), i["id"]
+    assert gold_test._exact_paired(0, 0) == 1.0
+    assert round(gold_test._exact_paired(1, 6), 3) == 0.125
+    assert gold_test._exact_paired(0, 6) < 0.05
+    assert gold_test._wilson(0, 0) == (0, 0) and gold_test._wilson(80, 93) == (78, 92)
+
+
+def test_garbled_fonts_and_empty_pages_are_caught_and_good_pages_pass():
+    from vetra import scans
+
+    assert scans.page_problem("") == "no text"
+    assert scans.page_problem("\u0bc6\u0b9a.\u0bc6\u0bb5.\u0b8e\u00d9-06 \u0ba8\u0bbe\u00e3- \u00d9\u00e3\u00d9\u00e3 " * 4) == "garbled"
+    assert scans.page_problem("(cid:12)(cid:13)(cid:14) some words here to be long enough for this page check " * 2) == "garbled"
+    assert not scans.page_problem("The premium is 5% of the sum insured for commercial crops in the Rabi season.")
+    assert not scans.page_problem("\u0c2a\u0c02\u0c1f \u0c28\u0c37\u0c4d\u0c1f\u0c02 \u0c15\u0c28\u0c40\u0c38\u0c02 33 \u0c36\u0c3e\u0c24\u0c02 " * 3)
+    assert not scans.page_problem("Caf\u00e9 is one accented word in a long English sentence about crop loans and insurance today.")
+
+
+def test_a_figure_two_reads_disagree_on_becomes_unclear():
+    from vetra import scans
+
+    text, unclear = scans.agree("Pay Rs.6,000 by 31.12.2026 in 3 parts", "Pay Rs.6000 by 31/12/2026 in 3 parts")
+    assert text == "Pay Rs.6,000 by 31.12.2026 in 3 parts" and unclear == 0
+    text, unclear = scans.agree("Pay Rs.60001 by 31.12.2026", "Pay Rs.6000 by 31.12.2026")
+    assert text == "Pay Rs.[unclear figure] by 31.12.2026" and unclear == 1
+
+
+def test_a_scan_is_labelled_and_its_unclear_figures_cant_be_repeated():
+    e = Evidence("a", "text_search", "Pay [unclear figure] now.", "doc", scanned=True)
+    assert "read from a scan" in agent.evidence_block([e])
+    assert any("couldn't confirm" in f.why for f in checks.faults("Pay [unclear figure] now [E1].", [e], TODAY))
+
+
+def test_summaries_come_last_and_are_named_when_nothing_else_is_held():
+    summary = Evidence("a", "text_search", "x", "PRS", kind=knowledge.KINDS["analysis"])
+    order_ = Evidence("b", "text_search", "y", "G.O.", kind=knowledge.KINDS["go"])
+    assert checks.order([summary, order_]) == [order_, summary]
+    assert not checks.only_summaries([summary, order_]) and checks.only_summaries([summary]) and not checks.only_summaries([])
+
+
+def test_scan_figures_end_up_in_digits_the_checks_can_read():
+    from vetra import scans
+
+    text, unclear = scans.agree("२०२० रु.", "2020 रु.")
+    assert text.startswith("2020") and unclear == 0
+
+
+def test_tamil_nadu_stamp_rates_come_from_the_exact_records_and_stay_on_topic():
+    kb = knowledge.Knowledge()
+    from vetra.tools import TOOLS
+    ctx = lambda q: Context("finance", "TN", TODAY, kb, question=q)
+    found = TOOLS["number_lookup"]("stamp duty registration fee sale deed Tamil Nadu", ctx("what is the stamp duty on a sale deed"))
+    assert found and any("Sale: stamp duty 7% of market value; registration fee 2% of market value" in e.text for e in found)
+    assert not TOOLS["number_lookup"]("budget fiscal deficit Tamil Nadu registration", ctx("what is the fiscal deficit in the budget"))
+    assert all(not knowledge.problems(r) for r in kb.records[("finance", "numbers")])
+
+
+def test_a_groq_model_is_the_backup_when_the_main_service_is_out():
+    class Service:
+        def __init__(self, fails=False):
+            self.fails, self.asked = fails, []
+
+        def complete(self, model, messages, json_mode=False):
+            self.asked.append(model)
+            if self.fails:
+                raise llm.RateLimited(model)
+            return llm.Reply("ok", model, 1)
+
+    main, groq = Service(fails=True), Service()
+    models = llm.Models(llm.Backup(main, groq), {"plan": ("gemini", "groq:gpt-oss")})
+    meter = llm.Meter()
+    reply = models.call("plan", [], meter)
+    assert reply.model == "groq:gpt-oss" and groq.asked == ["gpt-oss"] and main.asked == ["gemini"] and meter.calls == 1
+
+
+def test_without_a_groq_key_no_backup_is_tried(monkeypatch):
+    monkeypatch.setenv("LLM_API_KEY", "k")
+    monkeypatch.delenv("GROQ_API_KEY", raising=False)
+    monkeypatch.setenv("LLM_MODEL_PLAN", "gemini,groq:gpt-oss")
+    monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: None)
+    assert llm.from_env().roles["plan"] == ("gemini",)
+
+
+def test_exact_rates_are_printed_when_no_model_can_write():
+    rate = Evidence("a", "number_lookup", "Tamil Nadu. Input subsidy: Rs.8,500 per hectare.", "G.O. 579")
+    text = agent.facts_only([rate], "english", "busy")
+    assert "Rs.8,500 per hectare" in text and "[E1]" in text and "busy" not in text.lower()
+    assert "busy" in agent.facts_only([Evidence("b", "text_search", "words", "doc")], "english", "busy").lower()

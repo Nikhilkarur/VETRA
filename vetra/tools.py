@@ -37,6 +37,7 @@ class Evidence:
     kind: str = ""            # what kind of source: an Act, a government order, a press explainer
     relation: str = ""        # why it was added: "amends G.O.Ms.No.80"
     history: bool = False     # read for how a rule changed, so its past seasons stay in
+    scanned: bool = False     # some of the document was read from a scan, so unclear figures are marked
 
 
 @dataclass
@@ -70,7 +71,8 @@ def _from_chunks(hits: list[dict], ctx: Context) -> list[Evidence]:
     return [Evidence(key=h["id"], tool="text_search", text=h["text"], doc=h.get("source", ""),
                      url=h.get("source_url"), jurisdiction=h.get("jurisdiction", ""), date=h.get("date") or None,
                      status=status.get(h.get("in_force"), "unknown"), season=h.get("season") or "",
-                     kind=ctx.knowledge.kind_of(ctx.domain, h.get("title", "")), relation=h.get("added_because", ""))
+                     kind=ctx.knowledge.kind_of(ctx.domain, h.get("title", "")), relation=h.get("added_because", ""),
+                     scanned=h.get("read_by") == "scan")
             for h in hits]
 
 
@@ -132,7 +134,8 @@ def dates_lookup(query: str, ctx: Context) -> list[Evidence]:
 
 def _lookup(store: str, tool: str) -> Callable[[str, Context], list[Evidence]]:
     def run(query: str, ctx: Context) -> list[Evidence]:
-        return [_from_record(r, tool) for r in ctx.knowledge.find(ctx.domain, store, ctx.state, query)]
+        found = F.on_its_topic(ctx.knowledge.find(ctx.domain, store, ctx.state, query), ctx.question.lower())
+        return [_from_record(r, tool) for r in found]
     return run
 
 

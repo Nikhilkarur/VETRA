@@ -22,3 +22,5 @@ documents/
 
 data/chroma_eval*/
 data/eval_marathi_chunks.json
+
+data/tessdata/

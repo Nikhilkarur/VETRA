@@ -14,6 +14,10 @@ _TEXT = {
         "english": "The documents I have don't cover this.",
         "telugu": "నా దగ్గర ఉన్న పత్రాలలో దీని గురించి సమాచారం లేదు.",
     },
+    "only_summaries": {
+        "english": "This comes from an independent summary, not an official document, so please check it with the department.",
+        "telugu": "ఇది అధికారిక పత్రం కాదు, స్వతంత్ర సారాంశం ఆధారంగా ఉంది. దయచేసి శాఖతో సరిచూసుకోండి.",
+    },
     "no_state_data": {
         "english": "Documents for {place} aren't in yet.",
         "telugu": "{place} పత్రాలు ఇంకా చేర్చబడలేదు.",

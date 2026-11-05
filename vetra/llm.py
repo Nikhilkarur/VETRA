@@ -23,6 +23,7 @@ from pathlib import Path
 from typing import Protocol
 
 GROQ_URL = "https://api.groq.com/openai/v1"
+GROQ_PREFIX = "groq:"
 DEFAULT_ROLES = {
     "plan": ("openai/gpt-oss-20b", "qwen/qwen3.8-27b"),
     "compose": ("openai/gpt-oss-120b", "openai/gpt-oss-20b"),
@@ -114,6 +115,20 @@ class OpenAICompatible:
                      (usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0))
 
 
+class Backup:
+    """A second service for when the main one is out: "groq:model" in a role's list goes to Groq."""
+
+    def __init__(self, main: Provider, groq: Provider | None):
+        self.main, self.groq = main, groq
+
+    def complete(self, model: str, messages: list[dict], json_mode: bool = False) -> Reply:
+        if not model.startswith(GROQ_PREFIX):
+            return self.main.complete(model, messages, json_mode)
+        reply = self.groq.complete(model[len(GROQ_PREFIX):], messages, json_mode)
+        reply.model = model
+        return reply
+
+
 def from_env() -> "Models":
     """The configured models. Reads .env at the project root."""
     from dotenv import load_dotenv
@@ -128,7 +143,11 @@ def from_env() -> "Models":
         if chosen:
             roles[role] = tuple(m.strip() for m in chosen.split(",") if m.strip())
     reasoning = dict(p.strip().split(":", 1) for p in (os.environ.get("LLM_REASONING") or "").split(",") if ":" in p)
-    return Models(OpenAICompatible(os.environ.get("LLM_BASE_URL") or GROQ_URL, key, reasoning=reasoning), roles)
+    groq_key = os.environ.get("GROQ_API_KEY")
+    if not groq_key:  # no backup without its key
+        roles = {r: tuple(m for m in ms if not m.startswith(GROQ_PREFIX)) for r, ms in roles.items()}
+    main = OpenAICompatible(os.environ.get("LLM_BASE_URL") or GROQ_URL, key, reasoning=reasoning)
+    return Models(Backup(main, OpenAICompatible(GROQ_URL, groq_key) if groq_key else None), roles)
 
 
 @dataclass
