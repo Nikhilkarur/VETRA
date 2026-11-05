@@ -745,22 +745,23 @@ body[data-ver="old"] nav.tabs button[role="tab"][aria-selected="true"] { border-
 <section id="pl-next">
   <div class="sec-head">
     <h2>What happens next, in order</h2>
-    <p>Steps 1 to 3 and 5 need no API key.</p>
+    <p>All 36 states and UTs stay in: deep for Andhra Pradesh, Tamil Nadu, Maharashtra and Karnataka, partial for the rest. Documents are collected by hand, and progress is in <code>docs/STATE_COVERAGE.md</code>.</p>
   </div>
   <div class="tw"><table>
     <thead><tr><th>#</th><th>Step</th><th>Needs</th></tr></thead>
     <tbody>
-      <tr><td class="num">1</td><td><strong>Build a hand-read test of 150 to 200 questions,</strong> counting right answers, wrong answers and refusals, by state and language</td><td>Your reading time</td></tr>
-      <tr><td class="num">2</td><td><strong>Give every rule start and end dates,</strong> and have the planner name the date the question means</td><td>Reading the orders</td></tr>
-      <tr><td class="num">3</td><td><strong>Rebuild Docker</strong> with the new search model. Expect about 40 minutes or more</td><td>You, with Docker open</td></tr>
-      <tr><td class="num">4</td><td><strong>Compare models by reading answers:</strong> 3.8 Flash mostly timed out or was refused, so most tests were written by 3.5 Flash-Lite. Thinking on the second reader too</td><td>Paid or quieter API</td></tr>
-      <tr><td class="num">5</td><td><strong>Phase 4, reading PDFs:</strong> read scans with Gemini and compare every number with Tesseract, starting with 150 to 200 labelled pages</td><td>API key</td></tr>
-      <tr><td class="num">6</td><td><strong>Phase 4, chunks:</strong> a fixed line naming state, scheme and order on each chunk, split at numbered paragraphs, in one rebuild. Then test Gemini embeddings before the documents grow</td><td>About 39 minutes a rebuild</td></tr>
-      <tr><td class="num">7</td><td><strong>Phase 4, data:</strong> documents and exact records, state by state, biggest schemes first</td><td>Your documents and time</td></tr>
-      <tr><td class="num">8</td><td><strong>Phase 5, release:</strong> question sets per topic, final provider, safety check, a person's review, and showing how each answer searched</td><td>New API key, reviewers</td></tr>
+      <tr><td class="num">1</td><td><strong>Finish and mark the 179-question test,</strong> scored by group and language</td><td>Your sample check</td></tr>
+      <tr><td class="num">2</td><td><strong>Fix what it exposes,</strong> then re-run and compare</td><td>Nothing</td></tr>
+      <tr><td class="num">3</td><td><strong>Check Docker</strong> with the new search model</td><td>Keep the build running</td></tr>
+      <tr><td class="num">4</td><td><strong>Load PRS budgets</strong> for 31 states and UTs</td><td>Nothing</td></tr>
+      <tr><td class="num">5</td><td><strong>Scan reading:</strong> Gemini reads, Tesseract checks every number, tested on 150-200 labelled pages</td><td>Paid Gemini if free limits block it</td></tr>
+      <tr><td class="num">6</td><td><strong>Deep states:</strong> Tamil Nadu, Maharashtra, Karnataka, plus Andhra Pradesh finance</td><td>Browser downloads for blocked sites</td></tr>
+      <tr><td class="num">7</td><td><strong>Partial states:</strong> crop insurance, main farmer scheme and taxes, with gaps logged</td><td>Same</td></tr>
+      <tr><td class="num">8</td><td><strong>Dates on rules,</strong> then chunk changes in one rebuild, and a try of Gemini embeddings</td><td>Nothing</td></tr>
+      <tr><td class="num">9</td><td><strong>Release:</strong> safety rules, official-looking wording fixed, spend limits, planted-document test, fresh final test, a person's review</td><td>Lawyer, reviewer, paid Gemini</td></tr>
     </tbody>
   </table></div>
-  <p class="small muted" style="margin-top:12px"><strong>After the MVP:</strong> automated data engineering, auto-update from the internet, depth chosen per user, and several agents in parallel if the open-web search justifies them.</p>
+  <p class="small muted" style="margin-top:12px"><strong>After the MVP:</strong> automated data engineering, auto-update from the internet, depth chosen per user, and deep coverage for more states.</p>
 </section>
 
 <section id="pl-research">

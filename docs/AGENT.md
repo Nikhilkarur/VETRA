@@ -171,6 +171,8 @@ Or `python -m vetra.agent "your question" --state KA` in a terminal. With Docker
 | `python eval/depth_eval.py --planner` | the planner picks the right level (`--live` to re-ask) | saved plans |
 | `python eval/agent_answers.py --show` | real answers, known cases | yes |
 
+**The hand-read test:** `eval/gold_test.py` runs about 180 questions and writes a sheet for a person to mark right, wrong, right refusal or needless refusal, then totals them by group and language and says whether two runs really differ. Use this before changing search, prompts or models. Text-match scores hid real bugs.
+
 ## Later: finding data by itself
 
 When data is missing, `gaps.py` hands the gap to a handler. Today that's a log. An agent that searches the internet and sends what it finds through data engineering plugs in as another handler (`GapHandler`), and the rest of the system doesn't change. Automated collection isn't built, on purpose: for now documents are collected by hand.

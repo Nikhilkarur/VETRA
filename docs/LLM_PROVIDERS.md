@@ -83,6 +83,18 @@ A real setup would plan and judge on a cheap model and write on a stronger one, 
 - **Running our tests:** 20 deep questions at 80,000 tokens each come to about ₹31 on Sarvam, so the ₹100 credit covers it.
 - **A real month on Sarvam:** assume half quick, 35% standard and 15% deep questions, which averages about ₹0.32 a question. That's about ₹960 a month at 100 questions a day, or about ₹9,600 at 1,000 a day.
 
+## A free backup when Gemini runs out
+
+Gemini's free tier allows 500 requests a day per model, as hit on 5 November 2026. Adding `groq:` before a model name in `LLM_MODEL_PLAN` or `LLM_MODEL_COMPOSE` sends it to Groq using `GROQ_API_KEY`, so the engine moves on to it when the earlier models fail:
+
+```
+LLM_MODEL_PLAN=gemini-3.5-flash-lite,gemini-3.1-flash-lite,groq:openai/gpt-oss-20b
+LLM_MODEL_COMPOSE=gemini-3.8-flash,gemini-3.6-flash,gemini-3.5-flash-lite,groq:openai/gpt-oss-120b
+```
+
+- **Limit:** `gpt-oss-120b` reported 1,000 requests a day and 8,000 tokens a minute on the free tier, which is too small for large deep answers. The engine's existing handling for a request that's too large applies.
+- **Measuring:** different models give different quality, so compare test runs only when they used the same models. The trace records each call's model.
+
 ## One model for everything, or a mix
 
 The engine can use a cheap model for planning and judging, and a stronger one for writing and checking. Using one model for every step costs this much. The same assumptions apply, and the mix assumes about 35% of tokens go to the cheap model, which is my estimate.

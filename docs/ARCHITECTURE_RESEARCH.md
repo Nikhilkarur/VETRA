@@ -68,6 +68,26 @@ The full ranked report is `reports/VETRA engine techniques 2026.md`, with notes 
 - **Search from the reasoning (IRCoT):** weakened. It scored 0.181 against plain search's 0.270 in one harsh test on a small model.
 - **Iterative search can hurt honesty:** one study found correct refusals falling from 56.4% to 46.4% with iteration. Our judge loop should be measured for this.
 
+## What covering every aspect needs (5 November 2026)
+
+The agent's design stands. These gaps come from reading the code and trying searches on the larger document set, and none has been built yet. Fixing them in this order matters most for finishing Andhra Pradesh and Tamil Nadu.
+
+| # | Gap | What happens today | Change | Size |
+|---|---|---|---|---|
+| 1 | Scans aren't read | **Built** in `vetra/scans.py` with Tesseract | Compare with Gemini when available, and measure accuracy on tables | Small |
+| 2 | Damaged text passes as text | **Built** for visible garbling. Fonts that swap letters but look fine still need `read_as_scan` set by hand | Find a cheap automatic check | Small |
+| 3 | Source strength isn't ranked | **Built:** the writer follows stronger sources, summaries come last, and summary-only answers say so | Measure on the hand-read test | Small |
+| 4 | Exact rates have nowhere to go | **Started:** Tamil Nadu and Andhra Pradesh records are in the `numbers` store | Keep adding, read by hand | Medium |
+| 5 | "Not held" is too coarse | **Partly wrong:** on checking, the code only says a state's documents aren't in when none are held. But it can't yet name the topic that's missing | Keep a topic-by-state coverage table | Small |
+| 6 | Documents without a date | **No change needed for now:** a document with no date simply isn't filtered, and policy notes carry their year in the title. Don't put a year-only value in the date field, because the date filter would read "2026-27" as later than today | Revisit with dates on rules | None |
+| 7 | Topics the planner may not know | **Done:** the hints now list dairy, fisheries, savings schemes, banking and more. Live planner tests still need re-running | Re-run planner tests | Small |
+| 8 | Local rules vary inside a state | Chennai's profession tax is treated as Tamil Nadu's | Let a document name its city or district, and answers say so | Medium |
+| 9 | Long descriptive documents | One policy note is over 500,000 characters, and may crowd out short orders | Measure first, on the state's own test questions | Unknown |
+
+**Scale is fine for now.** The index is about 130 MB, documents can be added one at a time without rebuilding, and searches took about 3-8 seconds while other work was running. One first search took 51 seconds, probably loading models. Re-measure when all four deep states are in.
+
+**No data pipeline or auto-update:** documents are found and added by hand with `vetra.intake`, and gaps go to a log. Neither is in the MVP. To keep the later version easy, each document should now record when it was fetched and a fingerprint of the file, so a future job can tell when an official copy changes.
+
 ## How far to trust this
 
 - **Different data:** none of these numbers come from Indian government documents, and vendors measured some of them on their own systems. Each idea has to beat this project's own scores before replacing anything.

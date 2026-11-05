@@ -24,7 +24,7 @@ Each phase ends with its tests passing, its documentation updated, and its own c
 | 1 | **Navigation:** the engine judges what it has and goes after what's missing | It can reach an answer that takes more than one step, within a fixed limit, and stops when it has enough | Built. Measuring it needs a new API key |
 | 2 | **Depth:** research-style answers | Answers cover conditions, exceptions, changes over time and disagreements between sources, and short questions still get short answers | Built. Search measured; answer quality needs a new API key |
 | 3 | **Languages:** all 22 scheduled languages and English | Live checks per language, and documents written in Indian languages can be searched | Built and measured. Search model switched to E5-base. Documents in Indian languages still need OCR and a person's check |
-| 4 | **Data:** agriculture and finance for every state | Each state has its main schemes, its key deadlines and rates are exact records, PDFs are read properly including tables and scans, and chunks carry context from their document | Started |
+| 4 | **Data:** agriculture and finance for every state: deep for Andhra Pradesh, Tamil Nadu, Maharashtra and Karnataka, partial elsewhere | Every state has its checklist items held or logged as gaps, the deep states' deadlines and rates are exact records, and scans are read reliably | Started. Andhra Pradesh agriculture and central schemes held; PRS budgets downloaded for 31 states and UTs |
 | 5 | **Quality and release:** measured on real questions, ready to use | Question sets per topic, a final LLM provider, a safety check, and a person's review of the rules | Not started |
 
 Live tests now run on Gemini's free tier. Its models are often busy, so writing often falls back to a cheaper model.
@@ -120,6 +120,30 @@ After these fixes, the same PM-KISAN question gave a clean, correct answer at th
 - **Gemini with Google Search couldn't be tested:** the free tier refused it, so Claude Haiku filled that arm.
 
 **What to do next, ranked with evidence:** [the research report](../reports/VETRA%20engine%20techniques%202026.md). The first three are a hand-read test of 150 to 200 questions, start and end dates on rules, and reading figures from scans reliably.
+
+### The plan from here (5 November 2026)
+
+**Scope:** all 36 states and union territories, for agriculture and finance, in three parts: first Andhra Pradesh and Tamil Nadu at the deepest level, then Maharashtra and Karnataka, then every other state at medium level. The engine keeps improving alongside, wherever results show a real need. Automated data engineering stays out of the MVP, so documents are collected by hand. The checklist and progress are in [STATE_COVERAGE.md](STATE_COVERAGE.md).
+
+| Step | Work | Done when | Needs you? |
+|---|---|---|---|
+| 1 | **Baseline:** finish the 179-question test and mark every answer | Scores by group and language, with every wrong answer listed | Your sample check |
+| 2 | **Fix what the baseline exposes,** then re-run and compare | Wrong answers explained and fixed, and the comparison shows whether it really helped | No |
+| 3 | **Check Docker** with the new search model | The rebuilt image answers the cashew question correctly | Keep the build running |
+| 4 | **Load PRS budgets** for 31 states and UTs | Each state's budget questions find its own document | No |
+| 5 | **Scan reading:** Gemini reads, Tesseract checks every number, disagreements go to a third read | Tested on 150-200 pages with figures labelled by hand, including Marathi and Tamil | Paid Gemini if free limits block it |
+| 6 | **Deep states:** the full checklist for Tamil Nadu, then Maharashtra, then Karnataka, and finance for Andhra Pradesh | Every checklist item held or logged as not found, with exact dates and rates read by hand. Each state gets its own test questions | Browser downloads for sites blocked here |
+| 7 | **Partial states:** crop insurance and the main farmer scheme, then stamp duty, vehicle tax and professional tax | At least the budget plus what can be found, with gaps logged. Biggest farming states first | Same |
+| 8 | **Dates on rules:** start and end dates, and the question's date used in the filter | New date tests pass, and replaced orders stop answering current questions | No |
+| 9 | **Chunks:** a fixed line naming state, scheme and order, and splits at numbered paragraphs, in one rebuild. Also try Gemini embeddings | Scores don't fall on the baseline. Rebuilds stay practical as documents grow | No |
+| 10 | **Release gates:** safety rules, wording that doesn't imply an official service, spend limits and a planted-document test | All pass | A lawyer's view on data protection and SEBI |
+| 11 | **Final measure:** fresh questions per deep state, models compared by reading answers, and a person's review of the rules | Results published in this plan | A reviewer, and paid Gemini |
+
+**The order, and why:** the baseline comes first so later changes can be proved. Scan reading comes before state collection because many state orders are scans. Tamil Nadu goes first among the new deep states because a likely order is already downloaded, and Karnataka last because its stamp duty sites don't open from here.
+
+**Rules for collecting:** official sources first; a trusted summary only if labelled; blogs and insurers' pages never count; anything not found is logged as a gap. Every exact date or rate is read by hand before it goes into the exact stores. Rebuilding the index takes a while, so documents go in by batch, never during a test.
+
+**Time:** many sessions of work. There's no honest total until Tamil Nadu is done, which will show how long one deep state really takes.
 
 ### Phase 4: Data (started)
 
