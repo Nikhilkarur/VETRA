@@ -1748,3 +1748,12 @@ def test_exact_rates_are_printed_when_no_model_can_write():
     text = agent.facts_only([rate], "english", "busy")
     assert "Rs.8,500 per hectare" in text and "[E1]" in text and "busy" not in text.lower()
     assert "busy" in agent.facts_only([Evidence("b", "text_search", "words", "doc")], "english", "busy").lower()
+
+
+def test_made_up_worked_example_is_refused():
+    items = [Evidence("a", "t", "Prevented sowing pays 25% of the sum insured. Distress relief is Rs.20,000.", "G.O.")]
+    bad = "For example, on a sum insured of Rs.20,000 per hectare, the benefit is 25% [E1]."
+    assert any("worked example" in f.why for f in checks.faults(bad, items, TODAY))
+    assert not checks.faults("Prevented sowing pays 25% of the sum insured [E1].", items, TODAY)
+    shown = [Evidence("a", "t", "Example: on a sum insured of Rs.20,000 the benefit is 25%.", "G.O.")]
+    assert not checks.faults(bad, shown, TODAY)

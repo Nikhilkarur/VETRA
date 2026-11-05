@@ -230,6 +230,11 @@ _THINKING = re.compile(r"\bI (?:must|will|should|need to)\b|(?:^|[\s*])Wait,|\bC
                        r"|\bvisible text\b|\[E\d+\] (?:is|lists|says|does|mentions)\b", re.M)
 
 
+_OWN_EXAMPLE = re.compile(r"\b(?:for example|for instance|e\.g\.|suppose|say you)", re.I)
+_MONEY = re.compile(r"(?:\bRs\.?|₹|\brupees\b)\s*\d", re.I)
+_SHOWS_EXAMPLE = re.compile(r"\b(?:example|illustration|e\.g\.|for instance)", re.I)
+
+
 def _sentences(line: str) -> list[str]:
     """A line's sentences. Short forms like "Rs. 6000" and "No. 34" don't end one."""
     out: list[str] = []
@@ -347,6 +352,9 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
             elif not _has_number(number, flat_cited):
                 fault(f"'{shown}' isn't in {names}, which this sentence cites. Cite the passage it comes from",
                       _holder(lambda t: _has_number(number, _flat(t)), evidence))
+        # A worked example the model made up can borrow a real figure from a passage about something else.
+        if _OWN_EXAMPLE.search(s.text) and _MONEY.search(s.text) and not _SHOWS_EXAMPLE.search(cited):
+            fault("is a worked example that the passages it cites don't give. Don't make up examples; state the rule")
         wrong = scale_or_area_wrong(s.text, _flat_keep_commas(everything))
         if wrong:
             fault(wrong)
