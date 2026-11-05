@@ -1,9 +1,9 @@
 {
- "last_report": "2026-11-05T21:59",
+ "last_report": "2026-11-05T22:02",
  "state": "In progress",
- "headline": "Run was stalled on free limits; fixed and moving again",
+ "headline": "Test run paused; data work first",
  "usage": {
-  "five_hour": 11,
+  "five_hour": 12,
   "weekly": 13,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
@@ -15,14 +15,16 @@
   "<strong>Spot-check my marks if you can.</strong> I marked the 179 answers myself, and read native-language answers only to about 520 characters."
  ],
  "next": [
-  "PC asks the remaining aspect questions for Andhra Pradesh and Tamil Nadu, now on gemini-3.1-flash-lite, the one Gemini model with free limit left. Groq is the backup once its daily tokens return.",
-  "Read every answer by hand and mark it on the grid above.",
+  "Test run paused at 56 of 136 by the lead's call: it would take 3 hours or more on free limits. Data and engine work come first; the rest of the questions are asked later, when stronger models have limit.",
+  "Mark the answers already saved when next reading them. 80 questions are still unanswered, so those aspects are untested, not passed.",
+  "Enter more rates from documents already held, then chase the open data gaps below.",
   "For each wrong or empty answer: find the document, enter the exact rate after reading it, or fix the engine with a test.",
   "Open data gaps to chase next: Andhra Pradesh land records and tenancy, solar pumps, electricity duty rate, guideline values, tax arrears, state loans. Tamil Nadu crop insurance dates, electricity tax, women's registration concession and the paddy incentive, from official copies.",
   "Dates on rules, starting with a \"replaced by\" field on orders.",
   "Then Maharashtra and Karnataka."
  ],
  "issues": [
+  "<strong>New records aren't proven through full answers.</strong> 8 Andhra Pradesh records were added from the orders (pensions, fishing ban, poultry). Code finds them for sample questions, but no full answer has been asked since. An old age question also gets all 4 pension records, so narrowing is still needed. The pension order doesn't give age or eligibility rules.",
   "<strong>The run stalled for about an hour tonight and I missed it.</strong> Groq's free daily tokens for the writing model ran out (195,070 of 200,000), and the stronger Gemini models were also at their limits. Only 1 new answer came in, and each failed question wasted about 20 minutes. Now the run stops after 3 misses in a row, and this page shows a stall after 45 minutes.",
   "<strong>New answers come from a weaker model.</strong> Each new answer now records which model wrote it. Answers from gemini-3.1-flash-lite must be read by hand and may need asking again on a stronger model. The fisheries answer still leaves out the amount, because that rate isn't in the exact records yet.",
   "<strong>Andhra Pradesh finance is thin:</strong> 288 passages before today's documents are built in, and nothing yet on electricity duty, guideline values, tax arrears or women's concessions.",
@@ -92,6 +94,11 @@
    "time": "05 Nov 21:59",
    "state": "In progress",
    "text": "The aspect run stalled for about an hour because the free model limits ran out. It now uses gemini-3.1-flash-lite and stops itself after 3 misses in a row."
+  },
+  {
+   "time": "05 Nov 22:02",
+   "state": "In progress",
+   "text": "The test run is paused at 56 of 136 because it was too slow on free limits. 8 Andhra Pradesh records added from official orders: pensions, fishing ban relief and poultry. Next: more rates from documents already held, then the open data gaps."
   }
  ]
 }
