@@ -111,7 +111,7 @@ def _chunks_for(e: dict, path: Path, state: str, digest: str, counter, chunker, 
                     "department": e.get("department") or "", "jurisdiction": state,
                     "season": chunker.season_of(text, at) if at >= 0 else "",
                     "order": e.get("order") or "", "order_label": e.get("order") or "",
-                    "amends": ",".join(e.get("amends_orders") or []),
+                    "amends": ",".join(e.get("amends_orders") or []), "replaced_by": e.get("replaced_by") or "",
                     "in_force": (e.get("in_force") or "unknown").split()[0].strip(",;-").lower(),
                     "date": e.get("date") or "", "source_url": e["source_url"], "file": e["file"],
                     "chunk_index": i, "chunk_count": len(pieces), "read_by": "scan" if reading else "text"})

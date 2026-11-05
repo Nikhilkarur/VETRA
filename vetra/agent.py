@@ -361,6 +361,8 @@ def evidence_block(items: list[Evidence]) -> str:
             blocks.append(f"[E{n}] EXACT, printed above your text | {e.doc} | {where}\n{e.note}")
             continue
         label = f"[E{n}] {e.doc} | {e.kind or e.tool} | {where} | status: {e.status}"
+        if e.replaced_by:
+            label += f" | replaced by {e.replaced_by}"
         if e.date:
             label += f" | dated {e.date}"
         if e.relation:

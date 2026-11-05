@@ -26,6 +26,7 @@ class Evidence:
     url: str | None = None
     date: str | None = None
     status: str = "unknown"   # in_force, not_in_force, unknown
+    replaced_by: str = ""     # the later order that ended this one
     valid_from: str | None = None
     valid_until: str | None = None
     season: str = ""          # the one-season rule list this text opens in, if any
@@ -70,7 +71,7 @@ def _from_chunks(hits: list[dict], ctx: Context) -> list[Evidence]:
     status = {"yes": "in_force", "no": "not_in_force"}
     return [Evidence(key=h["id"], tool="text_search", text=h["text"], doc=h.get("source", ""),
                      url=h.get("source_url"), jurisdiction=h.get("jurisdiction", ""), date=h.get("date") or None,
-                     status=status.get(h.get("in_force"), "unknown"), season=h.get("season") or "",
+                     status=status.get(h.get("in_force"), "unknown"), replaced_by=h.get("replaced_by") or "", season=h.get("season") or "",
                      kind=ctx.knowledge.kind_of(ctx.domain, h.get("title", "")), relation=h.get("added_because", ""),
                      scanned=h.get("read_by") == "scan")
             for h in hits]

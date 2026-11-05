@@ -1773,6 +1773,27 @@ def test_uncited_steps_are_refused():
     assert not checks.faults("Relief is paid for crop loss of 33% and above [E1].", items, TODAY)
 
 
+def test_order_links_read_what_an_order_ends():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("order_links", Path(__file__).resolve().parent.parent / "tools" / "order_links.py")
+    ol = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(ol)
+    assert ol.own_order("Andhra Pradesh G.O.MS-12 dated 25/04/2025: relief", "") == "Ms.12/2025"
+    assert ol.own_order("x", "G.O.Ms.No.43 Dated: 13.06.2024 Read") == "Ms.43/2024"
+    # a bare reference ends nothing
+    assert ol.links("Read the following: 1. G.O.Ms.No.32, dated 01.11.2019. 2. Letter.", "Ms.12/2025") == []
+    ended = ol.links("In supersession of G.O.Ms.No.258, Revenue Department, dated 29.06.2017, Government order", "Ms.5/2025")
+    assert [(f["target"], f["relation"]) for f in ended] == [("Ms.258/2017", "ends")]
+    changed = ol.links("To amend G.O.Ms.No.95, Revenue Department, dated 19.02.2018", "Ms.5/2025")
+    assert [(f["target"], f["relation"]) for f in changed] == [("Ms.95/2018", "amends")]
+    entries = [{"file": "a", "title": "G.O.Ms.No.1 dated 01.01.2020: old", "date": "2020-01-01"},
+               {"file": "b", "title": "G.O.Ms.No.2 dated 01.01.2024: new", "date": "2024-01-01"}]
+    texts = {"a": "Nothing.", "b": "G.O.Ms.No.1, dated 01.01.2020 is hereby cancelled."}
+    ol.apply(entries, lambda e: ("", texts[e["file"]]))
+    assert entries[0]["in_force"] == "no" and entries[0]["replaced_by"] == "Ms.2/2024"
+    assert "in_force" not in entries[1]
+
+
 def test_topic_words_start_a_word():
     from vetra import facts
     assert not facts._mentions(["hen"], "where and when do i complain")
