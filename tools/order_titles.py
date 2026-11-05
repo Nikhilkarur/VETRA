@@ -59,7 +59,7 @@ def main() -> None:
             if subject and NOT_POLICY.search(subject):
                 dropped += 1
                 continue
-            if subject:
+            if subject and subject[:40] not in e["title"]:
                 e["title"] = f"{e['title']}: {subject[:170]}"
                 named += 1
             when = DATED.search(first)

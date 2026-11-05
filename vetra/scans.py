@@ -113,7 +113,14 @@ def read(path: Path, state: str, digest: str, force: bool = False) -> Reading | 
     unclear = 0
     for n in bad:
         if str(n) not in done:
-            done[str(n)] = _read_page(document[n], languages)
+            try:
+                done[str(n)] = _read_page(document[n], languages)
+            except Exception:
+                # Tesseract can crash on one page (seen on a Tamil Nadu order); keep the rest of
+                # the file and the build going, leave the page out, and don't save it, so the next
+                # build tries it again.
+                layer[n] = ""
+                continue
             CACHE.mkdir(parents=True, exist_ok=True)
             saved.write_text(json.dumps(done, ensure_ascii=False), encoding="utf-8")
         layer[n] = done[str(n)][0]

@@ -1812,3 +1812,31 @@ def test_topic_words_start_a_word():
     assert not facts._mentions(["hen"], "where and when do i complain")
     assert facts._mentions(["seed"], "subsidy on seeds")
     assert facts._mentions(["మామిడి"], "మామిడి పంట")
+
+
+def test_a_page_tesseract_cannot_read_does_not_stop_the_file(tmp_path, monkeypatch):
+    import fitz
+    from vetra import scans
+    pdf = tmp_path / "order.pdf"
+    doc = fitz.open()
+    for _ in range(2):
+        page = doc.new_page()
+        pix = fitz.Pixmap(fitz.csRGB, fitz.IRect(0, 0, 20, 20), False)
+        page.insert_image(fitz.Rect(10, 10, 200, 200), pixmap=pix)
+    doc.save(pdf)
+    fake = tmp_path / "tesseract.exe"
+    fake.write_text("")
+    monkeypatch.setattr(scans, "TESSERACT", str(fake))
+    monkeypatch.setattr(scans, "CACHE", tmp_path / "scans")
+    calls = []
+
+    def read_page(page, languages):
+        calls.append(page.number)
+        if page.number == 0:
+            raise RuntimeError("tesseract crashed")
+        return "The premium is 2% of the sum insured.", 0
+    monkeypatch.setattr(scans, "_read_page", read_page)
+    reading = scans.read(pdf, "TN", "abc123")
+    assert "premium is 2%" in reading.text and calls == [0, 1]
+    saved = __import__("json").loads((tmp_path / "scans" / "abc123.json").read_text(encoding="utf-8"))
+    assert list(saved) == ["1"]  # the failed page is tried again next build
