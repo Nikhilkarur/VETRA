@@ -230,6 +230,8 @@ _THINKING = re.compile(r"\bI (?:must|will|should|need to)\b|(?:^|[\s*])Wait,|\bC
                        r"|\bvisible text\b|\[E\d+\] (?:is|lists|says|does|mentions)\b", re.M)
 
 
+_ACTION = re.compile(r"\b(?:obtain|submit|file|apply|gather|collect|bring|attach|visit|contact|go to|approach|register|fill|"
+                     r"must|need to|have to|required|certificate|documents?|proof|receipt)\b", re.I)
 _OWN_EXAMPLE = re.compile(r"\b(?:for example|for instance|e\.g\.|suppose|say you)", re.I)
 _MONEY = re.compile(r"(?:\bRs\.?|₹|\brupees\b)\s*\d", re.I)
 _SHOWS_EXAMPLE = re.compile(r"\b(?:example|illustration|e\.g\.|for instance)", re.I)
@@ -351,6 +353,9 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
         for n in dict.fromkeys(s.cited):
             if not 1 <= n <= len(evidence):
                 fault(f"cites [E{n}], which doesn't exist")
+        # Uncited steps are how a writer invents procedure: "obtain a loss certificate", "gather land documents".
+        if evidence and not s.cited and len(s.text.split()) >= 6 and _ACTION.search(s.text):
+            fault("gives a step or requirement with no citation. Cite the passage that says it, or remove it")
         if _BACKSTAGE.search(s.text):
             fault("talks about the evidence or the records instead of the rules. Say \"the documents\" or \"the rates above\"")
         if "[unclear" in s.text:

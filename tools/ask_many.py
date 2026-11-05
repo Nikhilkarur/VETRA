@@ -15,7 +15,7 @@ models = llm.from_env()
 saved = []
 for q in questions:
     r = agent.answer(q, state=state, models=models, as_of="2026-11-05")
-    saved.append({"q": q, "kind": r.kind, "depth": r.depth, "answer": r.answer})
+    saved.append({"q": q, "kind": r.kind, "depth": r.depth, "answer": r.answer, "models": r.trace.get("models")})
     text = re.sub(r"\s+", " ", re.sub(r"\[E\d+\]", "", r.answer))
-    print(f"## {q[:80]} [{r.kind}/{r.depth}] {text[:430]}", flush=True)
+    print(f"## {q[:80]} [{r.kind}/{r.depth}, {r.trace.get("models")}] {text[:430]}", flush=True)
     Path(out).write_text(json.dumps(saved, ensure_ascii=False, indent=1), encoding="utf-8")

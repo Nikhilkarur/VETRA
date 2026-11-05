@@ -1764,3 +1764,10 @@ def test_records_about_something_else_dont_settle_it():
     assert not checks.records_answer("What service charge do banks get for enrolling people under PMFBY?", premium)
     assert checks.records_answer("What is the farmer premium under PMFBY for Kharif foodgrain?", premium)
     assert checks.records_answer("మామిడి పంటకు ప్రీమియం ఎంత?", premium)
+
+
+def test_uncited_steps_are_refused():
+    items = [Evidence("a", "t", "Relief is paid for crop loss of 33% and above.", "G.O.")]
+    bad = "Relief is paid for crop loss of 33% and above [E1].\n\n2. Obtain a loss certificate from the District Collector after a field inspection."
+    assert any("no citation" in f.why for f in checks.faults(bad, items, TODAY))
+    assert not checks.faults("Relief is paid for crop loss of 33% and above [E1].", items, TODAY)
