@@ -5,10 +5,13 @@
  "usage": {
   "five_hour": 31,
   "weekly": 10,
-  "weekly_rule": "Stops at 18% until you confirm the line"
+  "weekly_rule": "Up to 18% a day. Today stops at 27%",
+  "day": {
+   "date": "2026-11-05",
+   "start": 9
+  }
  },
  "decisions": [
-  "<strong>Weekly limit line: did you mean 18 to 20% in total this week, or per day?</strong> Until you say, work stops at 18% in total, and it's at 10% now. If you meant per day, tell me and I'll allow that.",
   "<strong>Start a fresh session when convenient.</strong> This one has grown large, so each step costs more of your limits. A new session reading the handoff would cost far less. Scheduled checks would need setting up again in it, which it can do itself.",
   "<strong>Keep the app open and the PC awake.</strong> Scheduled reports only run while this session is open, and PC jobs stop if the PC sleeps.",
   "<strong>A person should check the rates.</strong> All exact records are marked unreviewed. First: Andhra Pradesh's enhanced relief. The order says \"over and above SDRF norms\", and I recorded paddy's Rs.25,000 as the total paid, not as added to Rs.17,000.",
@@ -30,7 +33,8 @@
   "<strong>Groq answers need watching.</strong> One backup answer invented steps. Code now refuses uncited steps, but only one re-test has run.",
   "<strong>Press-only figures aren't entered.</strong> Paddy MSP Rs.2,441 for 2026-27 and Tamil Nadu's incentive are reported by the press. Official copies are needed first.",
   "<strong>No full re-run since the fixes,</strong> so the 157 of 179 doesn't show their effect yet.",
-  "<strong>No Nvidia GPU on this PC.</strong> It has Intel Arc graphics, 16 GB of RAM and a CPU-only PyTorch, so builds and local models run on the CPU for now."
+  "<strong>No Nvidia GPU on this PC.</strong> It has Intel Arc graphics, 16 GB of RAM and a CPU-only PyTorch, so builds and local models run on the CPU for now.",
+  "<strong>The weekly limit can run out early.</strong> At 18% a day from 10% now, it reaches 100% in about 5 days, around 10 November, before the reset on 12 November. Work would then stop until the reset."
  ],
  "workers": [
   [
