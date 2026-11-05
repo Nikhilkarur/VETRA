@@ -29,6 +29,7 @@ ANSWERS = ROOT / "eval" / "cache" / "aspects" / "first.json"
 BASELINE = ROOT.parent / "VETRA-baseline" / "eval" / "cache" / "gold" / "first.csv"
 QUEUE = ROOT / "eval" / "cache" / "hand" / "queue.log"
 BEGIN, END = "<!--STATION:BEGIN-->", "<!--STATION:END-->"
+CODE_BEGIN, CODE_END = "<!--CODE:BEGIN-->", "<!--CODE:END-->"
 DEEP = {"AP": "Andhra Pradesh", "TN": "Tamil Nadu", "MH": "Maharashtra", "KA": "Karnataka"}
 OTHERS = {"AR": "Arunachal Pradesh", "AS": "Assam", "BR": "Bihar", "CG": "Chhattisgarh", "GA": "Goa", "GJ": "Gujarat", "HR": "Haryana",
           "HP": "Himachal Pradesh", "JH": "Jharkhand", "KL": "Kerala", "MP": "Madhya Pradesh", "MN": "Manipur", "ML": "Meghalaya",
@@ -263,7 +264,12 @@ def build() -> str:
 def draw() -> None:
     page = PAGE.read_text(encoding="utf-8")
     a, b = page.index(BEGIN) + len(BEGIN), page.index(END)
-    PAGE.write_text(page[:a] + build() + page[b:], encoding="utf-8")
+    page = page[:a] + build() + page[b:]
+    sys.path.insert(0, str(ROOT / "tools"))
+    import code_guide
+
+    a, b = page.index(CODE_BEGIN) + len(CODE_BEGIN), page.index(CODE_END)
+    PAGE.write_text(page[:a] + code_guide.build() + page[b:], encoding="utf-8")
 
 
 def main() -> int:
