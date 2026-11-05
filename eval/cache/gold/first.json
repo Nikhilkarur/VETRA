@@ -1,0 +1,1199 @@
+{
+ "ap_agriculture-01": {
+  "answer": "To get the Annadatha Sukhibhava scheme in Andhra Pradesh, a landholder farmer family must collectively own a minimum of 10 cents of cultivable land [E1][E3].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7498,
+  "calls": 3,
+  "seconds": 237.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.6-flash"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   },
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-02": {
+  "answer": "You can reach out to toll-free number 155251 to raise a grievance regarding the Annadatha Sukhibhava scheme [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6285,
+  "calls": 3,
+  "seconds": 36.7,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-03": {
+  "answer": "Under the Annadatha Sukhibhava scheme, the financial assistance provided exclusively from the Andhra Pradesh state budget is Rs. 14,000/- per year for landholder farmer families, ROFR land cultivators, and eligible landless cultivators [E2][E5].\n\nTo receive this assistance, you must meet the following conditions and follow these steps:\n* **Landholders:** Must collectively own cultivable land with a minimum of 10 cents, or cultivate ROFR lands [E5]. \n* **Landless Cultivators:** Must not own any agricultural, horticultural, or sericultural land themselves, must have taken land on lease outside of their family, and must hold CCRC cards with crop booking in e-Panta [E4][E5][E7]. \n* **Lease Extent:** The minimum leased area must be at least 1 acre for agriculture, horticulture, and sericulture crops; 0.5 acres for vegetables, flowers, and fodder crops; and 0.1 acres for betel vine [E4].\n* **Mandatory Verification:** e-KYC is mandatory for all validated beneficiaries [E7]. \n* **Exclusions:** Higher-income groups—such as institutional landholders, constitutional post holders, higher-level government employees and retirees with pensions of Rs. 10,000/- or more, income tax payers, registered professionals (like doctors, lawyers, and engineers), and owners of non-agricultural converted land—are excluded [E11].\n* **Grievances:** For complaints or issues, citizens can reach out to the toll-free number 155251 [E3].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 10620,
+  "calls": 3,
+  "seconds": 61.7,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   },
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   },
+   {
+    "n": 4,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   },
+   {
+    "n": 5,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   },
+   {
+    "n": 7,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   },
+   {
+    "n": 11,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-04": {
+  "answer": "For the Annadatha Sukhibhava scheme, the agricultural year starts on the 1st day of June and ends on the 31st day of May of the next year [E3].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6245,
+  "calls": 3,
+  "seconds": 30.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme - Operational Guidelines [Agriculture & Cooperation department, 2025-08-01]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-05": {
+  "answer": "The village secretariat should hand over the signed Crop Cultivator Rights Card to both the land owner and the cultivator within 3 days from the date of receipt of the filled card [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5827,
+  "calls": 3,
+  "seconds": 43.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=441556&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-06": {
+  "answer": "No, family members are not allowed to make an agreement in the form of a Crop Cultivator Rights Card with each other [E1].\n\n* **Prohibition:** Agreements in the form of a Crop Cultivator Rights Card within family members are not allowed [E1].\n* **General Agreement Rules:** For eligible parties, either the land owner or the cultivator can get unfilled preprinted Crop Cultivator Rights Cards from the respective Village Secretariat at any time during the crop year [E1]. \n* **Duration:** These agreements are for a maximum period of 11 months [E1].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 11264,
+  "calls": 3,
+  "seconds": 32.8,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=441556&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-07": {
+  "answer": "The Village Revenue Officer in the Village Secretariat countersigns the Crop Cultivator Rights Card after verifying the village revenue records [E4].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7363,
+  "calls": 3,
+  "seconds": 52.1,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 4,
+    "doc": "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=441556&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-08": {
+  "answer": "A copy of the Form-II register of crop cultivator agreements must be submitted to the concerned Tahsildar’s Office, and copies must also be sent to all public financial institutions operating within the Mandal and the agricultural officer of the Mandal [E1]. \n\n* **Filing and Distribution:** The register is maintained by the respective functional authority in the Village Secretariat for every crop year [E1]. \n* **Recipients:** \n  * The concerned Tahsildar’s Office [E1].\n  * All concerned public financial institutions operating within the Mandal [E1].\n  * The agricultural officer of the Mandal [E1].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 8425,
+  "calls": 3,
+  "seconds": 30.7,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=441556&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-09": {
+  "answer": "Benefits provided to crop cultivators are recorded in a register in Form-III maintained in the concerned Village Secretariat [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5631,
+  "calls": 3,
+  "seconds": 36.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [Revenue department, 2019-09-23]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=441556&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-10": {
+  "answer": "In Andhra Pradesh, subsidy seed is distributed to actual cultivating farmers limiting to 2 ha or the actual area sown, whichever is less [E1]. \n\nTo receive the subsidy seed through online distribution at Rythu Seva Kendralu (RSKs), the in-charge identifies the eligible farmer by authenticating through the D-Krishi App using Aadhaar biometry, face recognition, or an OTP sent to an Aadhaar-seeded mobile number [E1][E3]. Green manure and contingency crops are supplied to eligible farmers in addition to this quantity limitation [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6361,
+  "calls": 3,
+  "seconds": 29.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Memo - Seeds - Distribution of seeds on subsidy 2026-27 - sale price, subsidy pattern and number of bags of groundnut seed (Kharif 2026) [Agriculture & Cooperation department, 2026-05-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/b595a73d-2984-4884-9d1b-8863c472d7cc"
+   },
+   {
+    "n": 3,
+    "doc": "G.O.Rt.No.538 Agri&Coop Dt.04.07.2025 - Seeds - SOP for distribution of subsidy seed through D-Krishi application - modifications [Agriculture & Cooperation department, 2025-07-04]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=554977&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-11": {
+  "answer": "Under the Rodent Control Programme in Andhra Pradesh, eligible farmers receive a 100% subsidy for the distribution of the rodenticide chemical Bromadiolone (0.25% CB) distributed on a free of cost basis [E1][E2]. This scheme is available to paddy growing farmers [E1][E2].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 8805,
+  "calls": 3,
+  "seconds": 23.6,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26) [Agriculture & Cooperation department, 2025-12-18]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d6c6861b-6c82-4707-bc2b-7dc122ccfa6f"
+   },
+   {
+    "n": 2,
+    "doc": "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26) [Agriculture & Cooperation department, 2025-12-18]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d6c6861b-6c82-4707-bc2b-7dc122ccfa6f"
+   }
+  ]
+ },
+ "ap_agriculture-12": {
+  "answer": "The Rodent Control Programme was implemented in 13 districts during 2025-26 [E1][E2]. These districts are East Godavari, Kakinada, Konaseema, West Godavari, Eluru, Krishna, NTR, Guntur, Palnadu, Bapatla, Tirupati (or Tirupathi), Nandyal, and SPSR Nellore [E1][E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6158,
+  "calls": 3,
+  "seconds": 43.7,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26) [Agriculture & Cooperation department, 2025-12-18]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d6c6861b-6c82-4707-bc2b-7dc122ccfa6f"
+   },
+   {
+    "n": 2,
+    "doc": "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26) [Agriculture & Cooperation department, 2025-12-18]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d6c6861b-6c82-4707-bc2b-7dc122ccfa6f"
+   }
+  ]
+ },
+ "ap_agriculture-13": {
+  "answer": "- RWBCIS (weather based): the farmer pays 5% of the sum insured. [E1]\n\nFrom Rabi 2024-25 onwards, extended to 2026-27 on the same terms. Enrolment is voluntary. The farmer's share is limited further if the actuarial rate is lower.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1503,
+  "calls": 1,
+  "seconds": 3.0,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.81 (2024) and G.O.Ms.No.98 (2024, mango), extended by G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478687&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-14": {
+  "answer": "To be eligible for insurance in the Rabi 2025-26 season, a mango orchard must have been planted up to 30th September 2020 [E3].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6575,
+  "calls": 3,
+  "seconds": 32.6,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.98 Agri&Coop Dt.18.12.2024 - RWBCIS for Mango crop 2024-25 & 2025-26 (voluntary enrolment) [Agriculture & Cooperation department, 2024-12-18]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=522795&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-15": {
+  "answer": "- RWBCIS, Rabi 2026-27, enrolment for tomato: 1 October 2026 to 15 December 2026. Open now, closes in 40 days. [E1]\n- RWBCIS, Rabi 2026-27, enrolment for cashew: 1 October 2026 to 15 November 2026. Open now, closes in 10 days. [E2]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1460,
+  "calls": 1,
+  "seconds": 3.5,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=579985&fileType=E"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=579985&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-16": {
+  "answer": "- PMFBY, Rabi 2026-27, enrolment for rice: 1 October 2026 to 31 December 2026. Open now, closes in 56 days. [E1]\n- PMFBY, Rabi 2026-27, enrolment for notified crops except rice: 1 October 2026 to 15 December 2026. Open now, closes in 40 days. [E2]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1521,
+  "calls": 1,
+  "seconds": 3.0,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.34 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=579980&fileType=E"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.34 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=579980&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-17": {
+  "answer": "- PMFBY: (1) Commercial or horticulture crops, either season: the farmer pays 5% of the sum insured. (2) Foodgrain or oilseed crops, Rabi season: the farmer pays 1.5% of the sum insured. (3) Foodgrain or oilseed crops, Kharif season: the farmer pays 2% of the sum insured. [E1]\n\nFrom Rabi 2024-25 onwards, extended to 2026-27 on the same terms. Enrolment is voluntary. The farmer's share is limited further if the actuarial rate is lower.\nFor your exact figure, tell me your crop, season.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1507,
+  "calls": 1,
+  "seconds": 8.6,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.80 (2024), extended by G.O.Ms.No.34 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478685&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-18": {
+  "answer": "Under Andhra Pradesh's Pradhan Mantri Fasal Bima Yojana (PMFBY) order, the threshold yield is calculated by taking the historical average yield of the best five years out of the last seven years for a notified crop in an insurance unit, and then multiplying that average by the applicable indemnity level [E5][E11][E18][E19].\n\n## Threshold yield calculation\nRelying on the state's implementation of the central scheme rules, the threshold yield for a crop in a notified insurance unit is calculated using the formula: the sum of the best 5-year yield multiplied by the notified indemnity level, divided by 5 [E3][E18]. Alternatively, it is equal to the average yield multiplied by the indemnity level [E5][E11][E19]. Once included in the notification issued by the State or Union Territory, the threshold yield must not be changed at a later stage under any circumstances during the season, year, or contract period [E5][E18]. For multi-year contracts, subsequent years follow either a fixed threshold yield (where the initial yield remains constant) or a laddered threshold yield (which adjusts based on the immediately preceding 7-year district-level average growth rate in yield, if positive) [E12][E18]. These rules are central guidelines applied through state implementation [E2][E3].\n\n## Average yield and moving average calculation\nThe average yield of a notified crop in an insurance unit is determined by taking the average yield of the best five years out of the last seven years [E5][E11][E18][E19]. This historical calculation uses the past seven years of crop yield data for that specific season and insurance unit [E18][E19]. These rules are central guidelines adopted in the state's implementation [E2][E3].\n\n## Indemnity level application\nThe scheme provides for the adoption of three levels of indemnity: 70%, 80%, and 90% [E10]. The State Government, in consultation with the State Level Coordination Committee on Crop Insurance (SLCCCI), finalizes these indemnity levels for notified crops at the district level, and they must be provided in the tender document [E5][E10]. The indemnity level prescribed for the district-crop combination remains the same during the entire contract period [E5]. In the case of newly formed districts created by reorganizing portions of more than one existing district, a weighted average indemnity level is calculated by considering the last season's insured area of each notified crop as a weight, rounded off to the nearest indemnity level defined under the operational guidelines [E5]. These rules are central operational guidelines applied by the state [E2][E3].",
+  "kind": "answer",
+  "depth": "deep",
+  "tokens": 20778,
+  "calls": 4,
+  "seconds": 40.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 2,
+    "doc": "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+    "url": "https://pmfby.amnex.co.in/pmfby/pdf/operational_guidelines_pmfby.pdf"
+   },
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.80 Agri&Coop (Agri.V) Dt.04.09.2024 - PMFBY (Yield Based) 2024-25 & 2025-26 - free cover Kharif 2024 on e-panta, voluntary enrolment after - notified crops and areas [Agriculture & Cooperation department, 2024-09-04]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478685&fileType=E"
+   },
+   {
+    "n": 5,
+    "doc": "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+    "url": "https://pmfby.amnex.co.in/pmfby/pdf/operational_guidelines_pmfby.pdf"
+   },
+   {
+    "n": 10,
+    "doc": "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+    "url": "https://pmfby.amnex.co.in/pmfby/pdf/operational_guidelines_pmfby.pdf"
+   },
+   {
+    "n": 11,
+    "doc": "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+    "url": "https://pmfby.amnex.co.in/pmfby/pdf/operational_guidelines_pmfby.pdf"
+   },
+   {
+    "n": 12,
+    "doc": "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+    "url": "https://pmfby.amnex.co.in/pmfby/pdf/operational_guidelines_pmfby.pdf"
+   },
+   {
+    "n": 18,
+    "doc": "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kharif 2023) [central government, 2023]",
+    "url": "https://pmfby.amnex.co.in/pmfby/pdf/operational_guidelines_pmfby.pdf"
+   },
+   {
+    "n": 19,
+    "doc": "G.O.Ms.No.80 Agri&Coop (Agri.V) Dt.04.09.2024 - PMFBY (Yield Based) 2024-25 & 2025-26 - free cover Kharif 2024 on e-panta, voluntary enrolment after - notified crops and areas [Agriculture & Cooperation department, 2024-09-04]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478685&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-19": {
+  "answer": "- PMFBY: the farmer pays 5% of the sum insured. [E1]\n- RWBCIS (weather based): chilli is not a notified crop under this scheme, so its premium rate doesn't apply. [E2]\n\nFrom Rabi 2024-25 onwards, extended to 2026-27 on the same terms. Enrolment is voluntary. The farmer's share is limited further if the actuarial rate is lower.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1577,
+  "calls": 1,
+  "seconds": 4.2,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.80 (2024), extended by G.O.Ms.No.34 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478685&fileType=E"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.81 (2024) and G.O.Ms.No.98 (2024, mango), extended by G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478687&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-20": {
+  "answer": "- RWBCIS (weather based): the farmer pays 5% of the sum insured. [E1]\n\nFrom Rabi 2024-25 onwards, extended to 2026-27 on the same terms. Enrolment is voluntary. The farmer's share is limited further if the actuarial rate is lower.",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1521,
+  "calls": 1,
+  "seconds": 2.8,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.81 (2024) and G.O.Ms.No.98 (2024, mango), extended by G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478687&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-21": {
+  "answer": "- RWBCIS, Rabi 2026-27, enrolment for tomato: 1 October 2026 to 15 December 2026. Open now, closes in 40 days. [E1]\n- RWBCIS, Rabi 2026-27, enrolment for cashew: 1 October 2026 to 15 November 2026. Open now, closes in 10 days. [E2]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 1460,
+  "calls": 1,
+  "seconds": 2.7,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=579985&fileType=E"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.35 (2026)",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=579985&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-22": {
+  "answer": "In Andhra Pradesh, Kharif 2024 e-panta data was to be transmitted to the Government of India for porting on the National Crop Insurance Portal before October 31, 2024 [E4].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6727,
+  "calls": 3,
+  "seconds": 17.4,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 4,
+    "doc": "G.O.Ms.No.80 Agri&Coop (Agri.V) Dt.04.09.2024 - PMFBY (Yield Based) 2024-25 & 2025-26 - free cover Kharif 2024 on e-panta, voluntary enrolment after - notified crops and areas [Agriculture & Cooperation department, 2024-09-04]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478685&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-23": {
+  "answer": "Rice can be procured with a moisture content up to a maximum limit of 15% with value cut [E5]. There is no value cut up to 14%, and between 14% to 15% moisture, the value cut is applied at the rate of full value [E5].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7420,
+  "calls": 3,
+  "seconds": 16.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 5,
+    "doc": "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy for Kharif Marketing Season 2025-26 [Consumer Affairs, Food & Civil Supplies department, 2025-10-22]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=561899&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-24": {
+  "answer": "Rice millers must blend fortified rice kernels with custom milled rice in a 1:100 ratio [E1]. The blending ratio may vary from a range of 0.90 to 1.20% by weight subject to satisfying the prescribed micronutrient level as per the Certificate of Analysis of the fortified rice kernels [E3].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6708,
+  "calls": 3,
+  "seconds": 63.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy for Kharif Marketing Season 2025-26 [Consumer Affairs, Food & Civil Supplies department, 2025-10-22]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=561899&fileType=E"
+   },
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy for Kharif Marketing Season 2025-26 [Consumer Affairs, Food & Civil Supplies department, 2025-10-22]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=561899&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-25": {
+  "answer": "Based on the documents, custom milled rice delivered by the miller may contain up to 25% broken rice [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6280,
+  "calls": 3,
+  "seconds": 14.2,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy for Kharif Marketing Season 2025-26 [Consumer Affairs, Food & Civil Supplies department, 2025-10-22]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=561899&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-26": {
+  "answer": "APSCSCL reimburses Rs.500/- against every MT for reduction of brokens from 25% to 15% [E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 10776,
+  "calls": 4,
+  "seconds": 65.1,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy for Kharif Marketing Season 2025-26 [Consumer Affairs, Food & Civil Supplies department, 2025-10-22]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=561899&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-27": {
+  "answer": "Cotton farmers are identified in Andhra Pradesh based on Aadhaar-based e-Panta booking data of the Agriculture department [E1].\n\nTo complete the process and sell cotton:\n* The Commissioner of Agriculture ensures field-level officers and Village Agriculture Assistants (VAAs) at Rythu Seva Kendralu (RSKs) properly identify cotton farmers through Aadhaar-based e-Panta registration and verification [E2].\n* Farmers must show a photocopy of their Aadhaar card and a photocopy of their Pattadhar Pass Book at the RSK for slot booking and sale [E4].\n* The Commissioner of Civil Supplies shares farmer ration card details for identifying family members [E4].\n* Farmers use the KappasKissan App or the Cotton procurement module of the Cotton Corporation of India (CCI) to book slots and schedule their sales, supported by VAAs who assist with the app and share quality standards and MSP rates [E2].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 8830,
+  "calls": 3,
+  "seconds": 26.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.46 Agricultural Marketing Dt.08.09.2026 - Cotton MSP operations - procurement by CCI - Standard Operating Procedure [Agricultural Marketing department, 2026-09-08]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=585081&fileType=E"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.46 Agricultural Marketing Dt.08.09.2026 - Cotton MSP operations - procurement by CCI - Standard Operating Procedure [Agricultural Marketing department, 2026-09-08]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=585081&fileType=E"
+   },
+   {
+    "n": 4,
+    "doc": "G.O.Ms.No.46 Agricultural Marketing Dt.08.09.2026 - Cotton MSP operations - procurement by CCI - Standard Operating Procedure [Agricultural Marketing department, 2026-09-08]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=585081&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-28": {
+  "answer": "Under the YSR Sunna Vaddi Panta Runalu (now called Vaddi Leni Runalu) scheme, farmers could receive interest-free crop loans up to Rs.1.00 Lakh [E1][E6]. To qualify, you must repay the loan within the stipulated time of a maximum of one year [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6812,
+  "calls": 3,
+  "seconds": 21.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Rt.No.464 Agri&Coop Dt.30.06.2020 - Operational Guidelines for YSR Sunna Vaddi Panta Runalu (interest-free crop loans) from Kharif 2019-20 [Agriculture & Cooperation department, 2020-06-30]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=457627&fileType=E"
+   },
+   {
+    "n": 6,
+    "doc": "G.O.Ms.No.79 Agri&Coop (Agri.II) Dt.02.09.2024 - Change of name of Schemes/Programmes (e-Crop -> e-Panta, YSR Rythu Bharosa-PM Kisan -> Annadata Sukhibhava, Sunna Vaddi -> Vaddi Leni Runalu, Free Crop Insurance -> PMFBY, RBK -> Rythu Seva Kendram, ...) [Agriculture & Cooperation department, 2024-09-02]",
+    "url": "https://goir.ap.gov.in/dgo.ashx?gid=478514&fileType=E"
+   }
+  ]
+ },
+ "ap_agriculture-29": {
+  "answer": "Orders placed through a Rythu Bharosa Kendra are delivered to the village within 48 to 72 hours, or as otherwise indicated when the order is placed [E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7142,
+  "calls": 3,
+  "seconds": 22.3,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.37 Agri&Coop (Agri.II) Dt.04.02.2020 - Establishment of Rythu Bharosa Kendralu (RBKs) in the State [Agriculture & Cooperation department, 2020-02-04]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/1e305ba1-6674-4dea-953d-448ea6b95a89"
+   }
+  ]
+ },
+ "ap_agriculture-30": {
+  "answer": "The input subsidy for crops in assured irrigated areas after a natural calamity is Rs.17,000/- per hectare, subject to a minimum assistance of not less than Rs.2,000/- per farmer and restricted to sown areas [E9]. Relief is provided when crop loss is 33% and above [E9].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7751,
+  "calls": 3,
+  "seconds": 54.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 9,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   }
+  ]
+ },
+ "ap_agriculture-31": {
+  "answer": "Under the disaster relief norms in Andhra Pradesh, the minimum input subsidy a farmer receives per calamity is Rs.1,000/- per farmer in rainfed areas [E3] and Rs.2,000/- per farmer in assured irrigated areas [E3][E8], provided the crop loss is 33% and above [E3] and no other assistance or subsidy has been availed of or is eligible under any other Government Scheme [E3].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7007,
+  "calls": 3,
+  "seconds": 17.9,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 3,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   },
+   {
+    "n": 8,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   }
+  ]
+ },
+ "ap_agriculture-32": {
+  "answer": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:\n- G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14] [E1]\n- Natural Calamities - Norms adopted for sanction and release of input subsidy (department note, English) [Agriculture & Cooperation department] [E2]\n- Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025] [E5]\n- G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State [Revenue (Disaster Management) department, 2025-01-07] [E7]",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 11759,
+  "calls": 4,
+  "seconds": 69.7,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": [
+   "'Rs.2,500' isn't in the evidence you were given"
+  ],
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   },
+   {
+    "n": 2,
+    "doc": "Natural Calamities - Norms adopted for sanction and release of input subsidy (department note, English) [Agriculture & Cooperation department]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/23d7e2e1-96bb-4cfa-86e5-750d30a5aa9b"
+   },
+   {
+    "n": 5,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   },
+   {
+    "n": 7,
+    "doc": "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State [Revenue (Disaster Management) department, 2025-01-07]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/7c822e1b-00e4-49ad-a5a7-6b3b89268dbc"
+   }
+  ]
+ },
+ "ap_agriculture-33": {
+  "answer": "The financial assistance given per hectare to remove sand or silt from agricultural land is Rs.18,000/- per hectare for each item, according to the documents [E1]. This assistance applies to small and marginal farmers with land holdings up to 2 hectares where the thickness of the sand or silt deposit is more than 3\", subject to certification by the competent authority of the State Government [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 8681,
+  "calls": 3,
+  "seconds": 46.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   }
+  ]
+ },
+ "ap_agriculture-34": {
+  "answer": "The financial relief for poultry lost due to a natural calamity in Andhra Pradesh is Poultry @ Rs.100/- per bird subject to a ceiling of an assistance of Rs.10,000/- per beneficiary household [E1].\n\n* The death of the poultry birds must be on account of a natural calamity [E1].\n* Relief under these norms is not available if assistance is provided from any other Government Scheme, such as a separate Department of Animal Husbandry scheme for compensating poultry owners for losses due to Avian Influenza or other diseases [E1].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 11914,
+  "calls": 3,
+  "seconds": 27.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   }
+  ]
+ },
+ "ap_agriculture-35": {
+  "answer": "I can only answer from official documents on: Finance, Agriculture, RTI.",
+  "kind": "decline",
+  "depth": "standard",
+  "tokens": 1347,
+  "calls": 1,
+  "seconds": 2.8,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": []
+ },
+ "ap_agriculture-36": {
+  "answer": "For repairing a partly damaged fishing net, the assistance provided is Rs.3,000/- [E1][E2][E8].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 8028,
+  "calls": 3,
+  "seconds": 21.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   },
+   {
+    "n": 8,
+    "doc": "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State [Revenue (Disaster Management) department, 2025-01-07]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/7c822e1b-00e4-49ad-a5a7-6b3b89268dbc"
+   }
+  ]
+ },
+ "ap_agriculture-37": {
+  "answer": "The documents I have don't cover this. Documents for Andhra Pradesh aren't in yet.",
+  "kind": "not_covered",
+  "depth": "quick",
+  "tokens": 1831,
+  "calls": 2,
+  "seconds": 32.4,
+  "models": [
+   "gemini-3.1-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": []
+ },
+ "ap_agriculture-38": {
+  "answer": "Gratuitous relief can be provided for a default period of up to 30 days, and this period can be extended depending on the situation [E1].\n\nTo act on this, the following conditions, limits, and rules apply:\n- **Extensions:** The default 30-day period may be extended up to 60 days in the first instance if required, and subsequently up to 90 days in the case of drought or a pest attack [E1]. \n- **Discretionary Extensions:** Depending on the ground situation, the State Executive Committee (SEC) can extend the time period beyond these prescribed limits [E1].\n- **Assessment and Limits:** The period for providing relief is based on the assessment of the SEC and the Central Team (in the case of NDRF) [E1]. Expenditure on this account must not exceed 30% of the State Disaster Response Fund (SDRF) allocation under the Response & Relief window for the year, except in the case of drought, where expenditure cannot exceed 50% of that window's allocation [E1][E2].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 12449,
+  "calls": 3,
+  "seconds": 19.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   },
+   {
+    "n": 2,
+    "doc": "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/969d1f2c-0f25-4947-b183-3e27bf89421f"
+   }
+  ]
+ },
+ "ap_agriculture-39": {
+  "answer": "The enhanced ex-gratia amount per deceased person for the August-September 2024 floods in Andhra Pradesh was raised from Rs.4.00 lakhs to Rs.5.00 lakhs [E1][E3].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 9078,
+  "calls": 3,
+  "seconds": 33.4,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State [Revenue (Disaster Management) department, 2025-01-07]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/7c822e1b-00e4-49ad-a5a7-6b3b89268dbc"
+   },
+   {
+    "n": 3,
+    "doc": "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State [Revenue (Disaster Management) department, 2025-01-07]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/7c822e1b-00e4-49ad-a5a7-6b3b89268dbc"
+   }
+  ]
+ },
+ "ap_agriculture-40": {
+  "answer": "Under the Mission for Integrated Development of Horticulture (MIDH) in Andhra Pradesh, a small nursery must produce a minimum of 50,000 plants per hectare per year [E1], while a large nursery must produce a minimum of 1,00,000 plants per hectare per year [E4], both consisting of mandated perennial fruit plants, tree spices, aromatic plants, plantation crops, perennial flowers, and other specified plants duly certified for quality [E1][E4].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5755,
+  "calls": 3,
+  "seconds": 17.3,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   },
+   {
+    "n": 4,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   }
+  ]
+ },
+ "ap_agriculture-41": {
+  "answer": "A firm has 60 days from the date administrative sanction proceedings are issued to complete the construction of a polyhouse [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5699,
+  "calls": 3,
+  "seconds": 18.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   }
+  ]
+ },
+ "ap_agriculture-42": {
+  "answer": "One beneficiary can get up to 3 walk-in tunnel units under the Mission for Integrated Development of Horticulture (MIDH) [E7]. Each unit must not exceed 800 square metres [E7].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7475,
+  "calls": 3,
+  "seconds": 34.7,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 7,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   }
+  ]
+ },
+ "ap_agriculture-43": {
+  "answer": "Mango rejuvenation should be taken up in June [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6026,
+  "calls": 3,
+  "seconds": 23.3,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   }
+  ]
+ },
+ "ap_agriculture-44": {
+  "answer": "The maximum area allowed for a beneficiary to receive financial assistance for loose flower cultivation is up to 1 Ha [E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6273,
+  "calls": 3,
+  "seconds": 27.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 2,
+    "doc": "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025 (Department of Horticulture, AP) [Horticulture department, 2025]",
+    "url": "https://horticulture.ap.gov.in/assets/pdfs/MIDH%20-%20Guidelines%202025-26.pdf"
+   }
+  ]
+ },
+ "ap_agriculture-45": {
+  "answer": "The financial assistance for cluster demonstrations under pulses in Andhra Pradesh is Rs.9000/- per ha [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7317,
+  "calls": 3,
+  "seconds": 19.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Food and Nutrition Security (formerly NFSM) and NMEO-Oilseeds - scheme notes [Agriculture & Cooperation department]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/9a234565-348a-4120-9452-359f2a23e143"
+   }
+  ]
+ },
+ "ap_agriculture-46": {
+  "answer": "Under the Food and Nutrition Security and NMEO-Oilseeds scheme in Andhra Pradesh, the cotton scheme provides an incentive of Rs.10,000/- for high density planting systems [E1]. \n\nHere are the details regarding this and related cluster demonstration incentives for cotton under the scheme:\n* **High Density Planting System:** Rs.10,000/- [E1]\n* **Intensive Cultivation Management (ICM) & Intercropping Cotton:** Rs.8,000/- [E1]\n* **Activity type:** These incentives are part of the cluster demonstrations planned in a 20-hectare area to transfer technology on best management practices and latest production technologies to the farming community at the Rythu Bharosa Kendra (RBK) level [E1].",
+  "kind": "answer",
+  "depth": "standard",
+  "tokens": 19506,
+  "calls": 4,
+  "seconds": 53.0,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Food and Nutrition Security (formerly NFSM) and NMEO-Oilseeds - scheme notes [Agriculture & Cooperation department]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/9a234565-348a-4120-9452-359f2a23e143"
+   }
+  ]
+ },
+ "ap_agriculture-47": {
+  "answer": "Under the food and nutrition security scheme in Andhra Pradesh, the subsidy for bio-fertilizers is Rs.300/ha. or 50% of the cost, whichever is less [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6643,
+  "calls": 3,
+  "seconds": 20.5,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Food and Nutrition Security (formerly NFSM) and NMEO-Oilseeds - scheme notes [Agriculture & Cooperation department]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/9a234565-348a-4120-9452-359f2a23e143"
+   }
+  ]
+ },
+ "ap_agriculture-48": {
+  "answer": "Farmers are allowed to apply for the required implement within 15 days from a specific date after the targets are frozen [E2]. The application window ends at midnight on the 15th day [E1][E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 6019,
+  "calls": 3,
+  "seconds": 30.8,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Farm Mechanisation (SMAM) - implementation and farmer registration guide (eseed.ap.gov.in/FM) [Agriculture & Cooperation department, 2026-04-30]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/948c3a6d-63bf-4ddc-92dd-ce908fee6c47"
+   },
+   {
+    "n": 2,
+    "doc": "Farm Mechanisation (SMAM) - implementation and farmer registration guide (eseed.ap.gov.in/FM) [Agriculture & Cooperation department, 2026-04-30]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/948c3a6d-63bf-4ddc-92dd-ce908fee6c47"
+   }
+  ]
+ },
+ "ap_agriculture-49": {
+  "answer": "Self-propelled farm machinery or equipment costing more than Rs 1 lakh, such as tractors and power tillers, must be attached with a telematics kit [E1].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 5907,
+  "calls": 3,
+  "seconds": 33.1,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 1,
+    "doc": "Farm Mechanisation (SMAM) - implementation and farmer registration guide (eseed.ap.gov.in/FM) [Agriculture & Cooperation department, 2026-04-30]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/948c3a6d-63bf-4ddc-92dd-ce908fee6c47"
+   }
+  ]
+ },
+ "ap_agriculture-50": {
+  "answer": "A total of 147 constituency agricultural labs were proposed to be established in Andhra Pradesh [E2].",
+  "kind": "answer",
+  "depth": "quick",
+  "tokens": 7433,
+  "calls": 3,
+  "seconds": 21.2,
+  "models": [
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite",
+   "gemini-3.5-flash-lite"
+  ],
+  "problems": null,
+  "sources": [
+   {
+    "n": 2,
+    "doc": "Note on Integrated Agri Labs [Agriculture & Cooperation department]",
+    "url": "https://agriculture.ap.gov.in/staging/api/comm/files/download/d86f5dc8-c7d1-463c-a344-f1ec8653368c"
+   }
+  ]
+ }
+}
