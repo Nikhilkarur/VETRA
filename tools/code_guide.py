@@ -89,7 +89,7 @@ def whole_flow() -> str:
     b += turn(r1)
     b += row(r2, [("Depth", ["Quick, standard or deep.", "Sets every limit below"], CODE, "depths.choose()"),
                   ("List the parts", ["Deep always adds", "how the rule changed"], CODE, "needs_for()"),
-                  ("First look", ["For each part: exact records,", "then text. See picture 2"], CODE, "gather(), find()"),
+                  ("First look", ["Exact records, by topic then", "applies_to; then text. Picture 2"], CODE, "gather(), facts.narrowed()"),
                   ("Do records settle it?", ["If not, read the text too,", "and keep the records"], NEW, "records_answer()"),
                   ("Past year asked?", ["Today's records dropped,", "old orders read instead"], CODE, "about_a_past_year()")])
     b += turn(r2)
