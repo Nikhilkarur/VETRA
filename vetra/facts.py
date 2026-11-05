@@ -16,6 +16,8 @@ A deadline record is a window:
 
 from __future__ import annotations
 
+import re
+
 from datetime import date
 
 _MONTHS_TE = ("జనవరి", "ఫిబ్రవరి", "మార్చి", "ఏప్రిల్", "మే", "జూన్", "జూలై", "ఆగస్టు", "సెప్టెంబర్", "అక్టోబర్", "నవంబర్", "డిసెంబర్")
@@ -36,7 +38,8 @@ def is_open(record: dict, as_of: str) -> bool:
 
 
 def _mentions(words: list[str], text: str) -> bool:
-    return any(w.lower() in text for w in words)
+    """Each word must start a word in the text: "hen" mustn't match "when", though "seed" matches "seeds"."""
+    return any(re.search(rf"(?<!\w){re.escape(w.lower())}", text) for w in words)
 
 
 def names_scheme(records: list[dict], asked: str) -> list[dict]:

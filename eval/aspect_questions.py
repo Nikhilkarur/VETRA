@@ -103,14 +103,14 @@ def run(name: str, states: list[str]) -> None:
             for attempt in range(4):
                 try:
                     r = agent.answer(question, state=state, models=models, as_of=TODAY)
-                    if r.kind == "failed":
-                        raise RuntimeError(r.trace.get("error"))
+                    if r.kind == "failed" or r.trace.get("error") or "busy" in r.answer[:60].lower():
+                        raise RuntimeError(r.trace.get("error") or "busy")
                     saved[key] = {"q": question, "kind": r.kind, "depth": r.depth, "answer": r.answer,
                                   "sources": [str(s.get("title") or s.get("doc") or "")[:90] for s in r.sources]}
                     break
                 except Exception as e:  # a limit or a network drop: wait and try again, then move on
                     print(key, type(e).__name__, str(e)[:80], flush=True)
-                    time.sleep(60 * (attempt + 1))
+                    time.sleep(120 * (attempt + 1))
             path.write_text(json.dumps(saved, ensure_ascii=False, indent=1), encoding="utf-8")
             print(key, saved.get(key, {}).get("kind", "MISSED"), flush=True)
 

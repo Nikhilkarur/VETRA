@@ -1771,3 +1771,10 @@ def test_uncited_steps_are_refused():
     bad = "Relief is paid for crop loss of 33% and above [E1].\n\n2. Obtain a loss certificate from the District Collector after a field inspection."
     assert any("no citation" in f.why for f in checks.faults(bad, items, TODAY))
     assert not checks.faults("Relief is paid for crop loss of 33% and above [E1].", items, TODAY)
+
+
+def test_topic_words_start_a_word():
+    from vetra import facts
+    assert not facts._mentions(["hen"], "where and when do i complain")
+    assert facts._mentions(["seed"], "subsidy on seeds")
+    assert facts._mentions(["మామిడి"], "మామిడి పంట")
