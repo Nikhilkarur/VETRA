@@ -21,7 +21,20 @@ DATED = re.compile(r"Dated\s*[:.]?\s*[^\d]{0,30}(\d{1,2})[./-](\d{1,2})[./-](\d{
 def abstract(text: str) -> str:
     flat = re.sub(r"\s+", " ", text)
     m = ABSTRACT.search(flat)
-    return m.group(1).strip(" -–") if m else ""
+    if m:
+        return m.group(1).strip(" -–")
+    # OCR often loses the heading that ends an abstract; stop at "Orders" instead
+    m = re.search(r"ABSTRACT\s*[»:\-]?\s*(.{20,300}?)\s*[-—–]*\s*Orders?\b", flat)
+    return m.group(1).strip(" -–—") if m else ""
+
+
+def scanned_first_page(pdf: Path) -> str:
+    """A scan's first page as the build's OCR read it (documents/.scans), or nothing if not read yet."""
+    import hashlib
+    saved = ROOT / "documents" / ".scans" / f"{hashlib.sha256(pdf.read_bytes()).hexdigest()[:12]}.json"
+    if not saved.exists():
+        return ""
+    return (json.loads(saved.read_text(encoding="utf-8")).get("0") or [""])[0]
 
 
 def main() -> None:
@@ -40,6 +53,8 @@ def main() -> None:
                 first = pypdf.PdfReader(str(path.parent / e["file"])).pages[0].extract_text() or ""
             except Exception:
                 first = ""
+            if len(first.strip()) < 40:
+                first = scanned_first_page(path.parent / e["file"])
             subject = abstract(first)
             if subject and NOT_POLICY.search(subject):
                 dropped += 1
