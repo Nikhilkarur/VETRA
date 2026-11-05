@@ -189,10 +189,10 @@ def intake() -> str:
     chunk = _const("ingest/load_and_chunk.py", "CHUNK_TOKENS")
     overlap = _const("ingest/load_and_chunk.py", "OVERLAP_TOKENS")
     r1, r2 = 14, 140
-    b = row(r1, [("Find", ["Crawl sites, list orders,", "browser, web search"], STORE, "crawl_pdfs, goir"),
-                 ("Choose", ["Claude picks from the lists,", "official sources first"], LLM),
+    b = row(r1, [("Find", ["Crawl official sites,", "list every order"], STORE, "crawl_pdfs, goir"),
+                 ("Choose", ["Subject words per aspect,", "routine orders dropped"], CODE, "pick_docs, pick_tn_orders"),
                  ("Download", ["Failed links logged", "and skipped"], CODE, "fetch_docs.py"),
-                 ("Manifest", ["Title, source, type, date,", "amends which order"], STORE, "manifest.json"),
+                 ("Order links", ["Own number, what it amends", "or ends; replaced_by"], CODE, "order_links.py"),
                  ("Check", ["Fields present, duplicates", "by file hash"], CODE, "intake.prepare()")])
     b += turn(r1)
     b += row(r2, [("Read each page", ["Good text kept. Scans go to", "Tesseract, read twice"], CODE, "scans.read()"),
@@ -200,16 +200,16 @@ def intake() -> str:
                   ("Chunk", [f"Sentences, about {chunk} tokens,", f"{overlap} overlap"], CODE, "chunk_tokens()"),
                   ("Embed", ["E5-base, on the CPU", "of this PC"], CODE, "text_index.build"),
                   ("Text index", ["Chroma + JSON,", "one per topic"], STORE, "knowledge/*/text")])
-    b += box(10, 264, "Exact records", ["Rates and dates read by Claude,", "live source checked first"], LLM, "knowledge/inbox")
+    b += box(10, 264, "Exact records", ["rate_lines.py pulls rate lines;", "Claude reads and enters them"], LLM, "rate_lines.py")
     b += box(212, 264, "Sorter", ["Rejects anything with", "no source or place"], CODE, "sorter.py")
     b += line([(196, 303), (212, 303)])
     b += box(414, 264, "Exact stores", ["Dates, rules, numbers,", "links, documents"], STORE, "knowledge/*/*.jsonl")
     b += line([(398, 303), (414, 303)])
-    b += box(616, 264, "Aspect questions", ["One per aspect and state.", "Every answer read by hand"], LLM, "aspect_questions.py")
+    b += box(616, 264, "Aspect questions", ["Paused until AP and TN data", "is complete. No free models"], LLM, "aspect_questions.py")
     b += line([(600, 303), (616, 303)])
     b += box(818, 264, "Station", ["Held, right, wrong:", "reported to you"], STORE, "station.py")
     b += line([(802, 303), (818, 303)])
-    b += line([(709, 342), (709, 366), (103, 366), (103, 342)], "wrong or empty: find the document, enter the rate, or fix the engine", True, "--bad", at=(240, 362))
+    b += line([(709, 342), (709, 366), (103, 366), (103, 342)], "after AP and TN are complete: test once, then fill what's missing", True, "--bad", at=(240, 362))
     return svg(1014, 374, b, "How data gets in, and how it's tested")
 
 

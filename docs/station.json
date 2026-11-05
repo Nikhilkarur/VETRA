@@ -1,29 +1,28 @@
 {
- "last_report": "2026-11-05T22:06",
+ "last_report": "2026-11-05T22:22",
  "state": "In progress",
- "headline": "Data work: 16 new exact records tonight",
+ "headline": "Data and architecture only, non-stop: 50 new records, 250 documents queued",
  "usage": {
-  "five_hour": 13,
-  "weekly": 13,
+  "five_hour": 20,
+  "weekly": 14,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
  "decisions": [
-  "<strong>Weekly limit:</strong> work stops at 18% in total, as you asked, and I'll write a report here when it does. It restarts only when you say continue.",
+  "<strong>Your rule from tonight, being followed:</strong> no free models, no answer testing and no fixes made around test scores until Andhra Pradesh and Tamil Nadu are complete. You also said to leave the limits and keep running, so I've lifted the 18% weekly stop line. Tell me if you meant only the free model limits.",
   "<strong>Start a fresh session when convenient.</strong> This one has grown large, so each step costs more of your limits. A new session reading the handoff would cost far less. Scheduled checks would need setting up again in it, which it can do itself.",
   "<strong>Keep the app open and the PC awake.</strong> Scheduled reports only run while this session is open, and PC jobs stop if the PC sleeps.",
   "<strong>A person should check the rates.</strong> All exact records are marked unreviewed. First: Andhra Pradesh's enhanced relief. The order says \"over and above SDRF norms\", and I recorded paddy's Rs.25,000 as the total paid, not as added to Rs.17,000.",
   "<strong>Spot-check my marks if you can.</strong> I marked the 179 answers myself, and read native-language answers only to about 520 characters."
  ],
  "next": [
-  "Test run paused at 56 of 136 by the lead's call: it would take 3 hours or more on free limits. Data and engine work come first; the rest of the questions are asked later, when stronger models have limit.",
-  "Mark the answers already saved when next reading them. 80 questions are still unanswered, so those aspects are untested, not passed.",
-  "Enter more rates from documents already held, then chase the open data gaps below.",
-  "For each wrong or empty answer: find the document, enter the exact rate after reading it, or fix the engine with a test.",
-  "Open data gaps to chase next: Andhra Pradesh land records and tenancy, solar pumps, electricity duty rate, guideline values, tax arrears, state loans. Tamil Nadu crop insurance dates, electricity tax, women's registration concession and the paddy incentive, from official copies.",
-  "Dates on rules, starting with a \"replaced by\" field on orders.",
-  "Then Maharashtra and Karnataka."
+  "PC runs two data queues with no language model: 136 Andhra Pradesh orders picked by subject, Tamil Nadu picks, and 115 Tamil Nadu agriculture orders found by file name. Then it reads what each order replaces, builds search and pulls rate lines.",
+  "I read those rate lines and enter exact records from each order.",
+  "Open data gaps: Andhra Pradesh guideline values, electricity duty rate, wildlife damage, used-vehicle rates. Tamil Nadu crop insurance dates, notified electricity tax rate, women's registration concession, other local bodies' property tax.",
+  "Architecture: narrow records to what the question asks, so a gift question leads with the gift rate instead of printing every deed.",
+  "After Andhra Pradesh and Tamil Nadu are complete: one full test of every question, then Maharashtra and Karnataka."
  ],
  "issues": [
+  "<strong>Nothing entered tonight has been through a full answer.</strong> That's your decision and it's fine, but the Andhra Pradesh and Tamil Nadu counts on this page mean \"held\", not \"tested\". Many new records come from policy notes and budget speeches, so a person should check them against the orders behind them. Some budget items are announcements with no order held yet, and the records say so.",
   "<strong>New records aren't proven through full answers.</strong> 8 Andhra Pradesh records were added from the orders (pensions, fishing ban, poultry). Code finds them for sample questions, but no full answer has been asked since. An old age question also gets all 4 pension records, so narrowing is still needed. The pension order doesn't give age or eligibility rules.",
   "<strong>Still open from tonight's reading:</strong> Tamil Nadu's notified electricity tax rate (the Act gives only 5% to 10%). Tamil Nadu's arrears settlement Act 24 of 2023 isn't entered, because its application window may have closed and I don't hold the latest date. Policy-note rates should be confirmed against the orders behind them.",
   "<strong>The run stalled for about an hour tonight and I missed it.</strong> Groq's free daily tokens for the writing model ran out (195,070 of 200,000), and the stronger Gemini models were also at their limits. Only 1 new answer came in, and each failed question wasted about 20 minutes. Now the run stops after 3 misses in a row, and this page shows a stall after 45 minutes.",
@@ -32,8 +31,6 @@
   "<strong>Failed downloads:</strong> the Andhra Pradesh Socio Economic Survey, the power tariff note, Gender Budget and some horticulture files. Other routes still to try.",
   "<strong>Tamil Nadu's horticulture site is slow,</strong> about 7 minutes a file, so 15 orders are downloading separately and go in a later build.",
   "<strong>Two sites have certificate problems:</strong> apagrisnet.gov.in and ctd.tn.gov.in. I don't bypass those checks, so other sources are needed.",
-  "<strong>Groq answers need watching.</strong> One backup answer invented steps. Code now refuses uncited steps, but only one re-test has run.",
-  "<strong>Press-only figures aren't entered.</strong> Paddy MSP Rs.2,441 for 2026-27 and Tamil Nadu's incentive are reported by the press. Official copies are needed first.",
   "<strong>No full re-run since the fixes,</strong> so the 157 of 179 doesn't show their effect yet.",
   "<strong>No Nvidia GPU on this PC.</strong> It has Intel Arc graphics, 16 GB of RAM and a CPU-only PyTorch, so builds and local models run on the CPU for now."
  ],
@@ -45,23 +42,13 @@
   ],
   [
    "Claude (manager)",
-   "Plans, chooses documents, reads answers, checks rates, fixes the engine, reports",
-   "5-hour limit stops at 95%. Weekly line as in \"Needs you\""
+   "Plans, reads rate lines and enters records, designs the engine, reports",
+   "No stop line on weekly usage for now, on your instruction"
   ],
   [
    "PC scripts",
-   "Crawling, downloads, order listing, search builds, the work queue",
+   "Crawling, picking documents, downloads, order links, rate lines, search builds",
    "PC must be awake"
-  ],
-  [
-   "Gemini, free",
-   "Plans, writes and checks answers",
-   "500 requests a day per model"
-  ],
-  [
-   "Groq, free",
-   "Backup when Gemini is out",
-   "Free limits. Answers need watching"
   ],
   [
    "Tesseract",
@@ -74,9 +61,9 @@
    "A big build takes many minutes"
   ],
   [
-   "Ollama",
-   "qwen2.5:3b, phi3:mini, llama3.1. Not used yet; to test on sorting order titles",
-   "CPU only, speed unknown"
+   "Gemini and Groq, free",
+   "Not used until the final test, on your instruction",
+   "Answers can't be asked until then"
   ]
  ],
  "team_diagram": "<div class=\"st-diagram\"><svg viewBox=\"0 0 970 318\" role=\"img\" aria-label=\"The owner leads, Claude manages, and PC scripts and API keys do the long work\" font-family=\"var(--f-body)\"><rect x=\"370\" y=\"10\" width=\"240\" height=\"58\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--answer)\" stroke-width=\"1.6\"/><text x=\"490.0\" y=\"30\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">You: project lead</text><text x=\"490.0\" y=\"47\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Decide, read this page, raise issues</text><rect x=\"370\" y=\"112\" width=\"240\" height=\"58\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--llm)\" stroke-width=\"1.6\"/><text x=\"490.0\" y=\"132\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">Claude: manager</text><text x=\"490.0\" y=\"149\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Plans, reads answers, checks rates, reports</text><line x1=\"490\" y1=\"68\" x2=\"490\" y2=\"112\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/><text x=\"496.0\" y=\"86.0\" font-size=\"10.5\" fill=\"var(--muted)\">priorities</text><path d=\"M610 130 C700 110 700 60 610 40\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"1.5\" stroke-dasharray=\"5 4\" marker-end=\"url(#st-arrow)\"/><text x=\"690\" y=\"88\" font-size=\"10.5\" fill=\"var(--muted)\">report every 4 hours, on this page</text><rect x=\"10\" y=\"232\" width=\"150\" height=\"74\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--ingest)\" stroke-width=\"1.6\"/><text x=\"85.0\" y=\"252\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">PC scripts</text><text x=\"85.0\" y=\"269\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Crawl, download,</text><text x=\"85.0\" y=\"283\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">build, work queue</text><line x1=\"490\" y1=\"170\" x2=\"85\" y2=\"232\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/><rect x=\"170\" y=\"232\" width=\"150\" height=\"74\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--llm)\" stroke-width=\"1.6\"/><text x=\"245.0\" y=\"252\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">Gemini (free)</text><text x=\"245.0\" y=\"269\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Plans, writes and</text><text x=\"245.0\" y=\"283\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">checks answers</text><line x1=\"490\" y1=\"170\" x2=\"245\" y2=\"232\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/><rect x=\"330\" y=\"232\" width=\"150\" height=\"74\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--llm)\" stroke-width=\"1.6\"/><text x=\"405.0\" y=\"252\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">Groq (free)</text><text x=\"405.0\" y=\"269\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Backup when</text><text x=\"405.0\" y=\"283\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Gemini is out</text><line x1=\"490\" y1=\"170\" x2=\"405\" y2=\"232\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/><rect x=\"490\" y=\"232\" width=\"150\" height=\"74\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--search)\" stroke-width=\"1.6\"/><text x=\"565.0\" y=\"252\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">Tesseract</text><text x=\"565.0\" y=\"269\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Reads scans</text><text x=\"565.0\" y=\"283\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">on the PC</text><line x1=\"490\" y1=\"170\" x2=\"565\" y2=\"232\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/><rect x=\"650\" y=\"232\" width=\"150\" height=\"74\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--search)\" stroke-width=\"1.6\"/><text x=\"725.0\" y=\"252\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">E5 search model</text><text x=\"725.0\" y=\"269\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">Finds passages,</text><text x=\"725.0\" y=\"283\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">on the CPU</text><line x1=\"490\" y1=\"170\" x2=\"725\" y2=\"232\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/><rect x=\"810\" y=\"232\" width=\"150\" height=\"74\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--hair-2)\" stroke-width=\"1.6\"/><text x=\"885.0\" y=\"252\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"600\" fill=\"var(--ink)\">Ollama (not used yet)</text><text x=\"885.0\" y=\"269\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">3 small models,</text><text x=\"885.0\" y=\"283\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--ink-2)\">to test on sorting</text><line x1=\"490\" y1=\"170\" x2=\"885\" y2=\"232\" stroke=\"var(--muted)\" stroke-width=\"1.5\" marker-end=\"url(#st-arrow)\"/></svg></div>",
@@ -105,6 +92,11 @@
    "time": "05 Nov 22:06",
    "state": "In progress",
    "text": "8 more records from documents already held: Tamil Nadu pensions, fishing relief and electricity tax range; Andhra Pradesh rooftop solar for BC consumers and the closed property tax waiver. Test run stays paused. None of these has been through a full answer yet."
+  },
+  {
+   "time": "05 Nov 22:22",
+   "state": "In progress",
+   "text": "On your rule, no free models and no testing. 50 exact records entered tonight, including Tamil Nadu's official paddy incentive and crop loan waiver. PC is downloading picked orders with no model. New: each order's number and what it replaces is read automatically and carried through to the answer."
   }
  ]
 }
