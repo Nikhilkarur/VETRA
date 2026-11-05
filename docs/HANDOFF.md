@@ -82,4 +82,8 @@ All aspects of agriculture and finance. Tools: `tools/coverage_grid.py` (gaps by
 
 ## Set up at the start
 
-Scheduled checks stop when a session ends. Turn them back on with CronCreate every 2 hours, using a prompt like: "VETRA work check. Call get_usage. If the 5-hour or weekly limit is at or above 95%, say you're paused until the reset. Otherwise do one focused step from docs/HANDOFF.md, keep output short, save progress in docs/STATE_COVERAGE.md, and report in two or three plain lines."
+**The owner's most important rule:** the owner is the project lead and Claude is the manager. Report every 4 hours, give or take 45 minutes, on the first tab of `docs/AP RTI Assistant Knowledge Base.html`, not in chat. Run `python tools/station.py report --state "On track" --text "..." --five-hour N --weekly N`. Written parts are in `docs/station.json`, and counts come from the files. Give long work to PC scripts (`tools/work_queue.sh`), API keys and local tools.
+
+**Usage:** pause at 95% of the 5-hour limit. Weekly limit: treat 18% in total as the line until the owner says otherwise. The reset is Thursday 12 November.
+
+Scheduled checks stop when a session ends. Turn them back on with CronCreate every 2 hours: call get_usage and apply the lines above; do one focused step from "Finish AP and TN"; write a report if the last was 3.5 hours or more ago.
