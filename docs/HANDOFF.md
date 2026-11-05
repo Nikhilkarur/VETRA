@@ -84,6 +84,6 @@ All aspects of agriculture and finance. Tools: `tools/coverage_grid.py` (gaps by
 
 **The owner's most important rule:** the owner is the project lead and Claude is the manager. Report every 4 hours, give or take 45 minutes, on the first tab of `docs/AP RTI Assistant Knowledge Base.html`, not in chat. Run `python tools/station.py report --state "On track" --text "..." --five-hour N --weekly N`. Written parts are in `docs/station.json`, and counts come from the files. Give long work to PC scripts (`tools/work_queue.sh`), API keys and local tools.
 
-**Usage:** pause at 95% of the 5-hour limit. Weekly limit: up to 18% of it per calendar day, confirmed by the owner on 5 November. `usage.day` in `docs/station.json` holds the day's starting figure; set it at the first check of each new day. Pause when the weekly figure is 18 or more above it. The reset is Thursday 12 November.
+**Usage:** pause at 95% of the 5-hour limit. Weekly limit: the owner said on 5 November to stop at 18 to 20% in total. Pause at 18% and wait until they say continue. The reset is Thursday 12 November.
 
 Scheduled checks stop when a session ends. Turn them back on with CronCreate every 2 hours: call get_usage and apply the lines above; do one focused step from "Finish AP and TN"; write a report if the last was 3.5 hours or more ago.
