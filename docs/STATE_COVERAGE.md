@@ -68,8 +68,8 @@ Use the first one available, and label it in the manifest, because answers show 
 
 | State or UT | Depth | A1 | A2 | A3 | A4 | F1 | F2 | F3 | F4 |
 |---|---|---|---|---|---|---|---|---|---|
-| Andhra Pradesh | Deep | ✅ | ✅ | ✅ | ✅ | 📥 | ⬜ | ⬜ | ⬜ |
-| Tamil Nadu | Deep | 📥 partial | 📥 partial | 📥 partial | 📥 partial | 📥 | 📥 partial | 📥 | ⬜ |
+| Andhra Pradesh | Deep | ✅ | ✅ | ✅ | ✅ | 📥 | ✅ | ✅ | ✅ partial |
+| Tamil Nadu | Deep | 📥 partial | 📥 partial | 📥 partial | 📥 partial | 📥 | 📥 partial | ✅ | ✅ Chennai only |
 | Maharashtra | Deep | ⬜ | ⬜ | ⬜ | ⬜ | 📥 | ⬜ | ⬜ | ⬜ |
 | Karnataka | Deep | ⬜ | ⬜ | ⬜ | ⬜ | 📥 | ⬜ | ⬜ | ⬜ |
 | Odisha | Partial | ⬜ | ✅ | ⬜ | ✅ | 📥 | ⬜ | ⬜ | ⬜ |
@@ -87,19 +87,19 @@ Himachal Pradesh's A1 is only the central ministry's letter on its site, not the
 **Tamil Nadu**
 - **Crop insurance:** the policy note confirms the scheme and the Rs.648.55 crore outlay, but gives no cut-off dates. The 2026-27 notification is still needed.
 - **Stamp duty:** done from the official Duty and Fees page: 7% stamp duty and 2% registration fee on a sale. The page is undated, so the 2023 gazette change and any later one should be compared with it. It has about 180 rows; only the main table is saved so far. Eighteen rates are now exact records in knowledge/finance/numbers.jsonl, marked not yet reviewed by a person.
-- **Vehicle tax:** the act is held, but the 2023 rate change needs checking against it.
-- **Profession tax:** Chennai's slabs are known only from private summaries, and other local bodies are open.
+- **Vehicle tax:** new-vehicle life tax is in as exact records from the 2023 bill's gazette copy: motor cycles 10% and 12%, other vehicles 12%, 13%, 18%, 20%. Press reports say it took effect on 9 November 2023. The enacted copy, old-vehicle rates and any change after 2023 aren't checked.
+- **Profession tax:** Chennai's slabs are exact records from the Corporation's press release of 4 August 2026 (Rs.180, 425, 930, 1,025, 1,250 half-yearly). Other local bodies are open.
 
-- **Other department notes, 2026-27:** agriculture, disaster relief, fisheries, dairy, cooperation, food, water resources, energy, rural development, MSME, social welfare, stamps, commercial taxes, finance, pensions, municipal and transport are held. Animal husbandry's page showed no links, so it's still needed. These notes describe schemes, so their rates still have to be read by hand before becoming exact records.
+- **Other department notes, 2026-27:** agriculture, disaster relief, fisheries, dairy, cooperation, food, water resources, energy, rural development, MSME, social welfare, stamps, commercial taxes, finance, pensions, municipal and transport are held. Animal husbandry's note was found by guessing the name (`ah_e_pn_2026_27.pdf`); the first downloads timed out, so check it's complete before building. These notes describe schemes, so their rates still have to be read by hand before becoming exact records.
 
 - **Relief rates:** G.O.(Ms).No.579 of 2023 is held, with its input subsidy rates as exact records. It was read from a scan, with 6 figures marked unclear across the order, so it needs a person's check. A special order may set a higher figure for a particular disaster, such as Rs.20,000 per hectare reported for Cyclone Ditwah.
 
 **Andhra Pradesh**
-- **Vehicle tax:** aptransport.org publishes life tax only as old gazette images from 2010, printed for the undivided state. Don't treat them as current. A current official source is still needed. Held: the act without rate schedules, the 2025 bill and the 2026 Road Safety Cess bill. The 2026 bill's Tenth Schedule rates and whether each bill passed still need checking, so they're marked unknown.
-- **Stamp duty:** sale deed settled by the state's live calculator on 5 November 2026: 5% stamp duty, 1.5% transfer duty, 1% registration fee, Rs.500 user charges. This agrees with CAG. The IGRS PDFs still show 4% and 0.5%, so don't trust them on these rates. Gift, settlement, release, partition and lease should be checked on the calculator too.
+- **Vehicle tax:** aptransport.org's life tax pages show the 2010 rates, so don't use them. Current rates are exact records from L.A. Bill 23 of 2021 (a scan, read by eye): motor cycles 9% and 12%, cars 13%, 14%, 17%, 18%. The date it took effect isn't held. The bill says the rates were last revised in 2010. Road Safety Cess is 10% of life tax from 13 January 2026 (Ordinance 1 of 2026, Tenth Schedule). The press reports the replacing bill passed; no official copy of the act yet. Used-vehicle rates aren't entered.
+- **Stamp duty:** sale deed settled by the state's live calculator on 5 November 2026: 5% stamp duty, 1.5% transfer duty, 1% registration fee, Rs.500 user charges. This agrees with CAG. The IGRS PDFs still show 4% and 0.5%, so don't trust them on these rates. Gift, settlement, release, partition, exchange, mortgage, sale agreement, development agreement and will were read from the calculator on 5 November 2026 and are exact records. A first fast sweep gave stale results, so only rows re-read slowly at three values were saved. **Still open:** lease (the calculator shows 0 for it, so it needs more input than the form asks) and power of attorney (the readings didn't agree).
 - **Profession tax:** salary slabs are exact records, read from the text of Act 12 of 2013 on a legal site, not yet an official copy: nil up to Rs.15,000, Rs.150 to Rs.20,000, Rs.200 above. The 2020 amendment's first page shows no rate change, but it should be read in full. Other classes of taxpayer aren't entered yet.
 - **Budgets:** Budget Speech, Budget in Brief, Outcome Budget and agriculture estimates are held. The separate agriculture budget speech isn't found yet.
-- **Agriculture:** existing orders haven't been checked for newer ones.
+- **Agriculture:** existing orders haven't been checked for newer ones. The separate agriculture budget (Rs.53,752 crore per press) speech file isn't on apfinance's budget page; Volume-III-11 has the department's estimates. apagrisnet.gov.in has an expired security certificate, so it wasn't used.
 
 ## Only your browser can download
 

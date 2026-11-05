@@ -46,7 +46,7 @@ The owner decides: RAM, local models, paid Gemini and the lawyer. Don't wait for
 
 ## Next steps, in order
 
-1. Check the groundnut answer: it told a farmer to "gather documents" such as land-holding proof. Find out if G.O. 579 says so. Then consider a second reader on standard answers.
+1. Groundnut answers, read on 5 November: G.O. 579 asks farmers for no papers, and four new wordings didn't repeat the "gather documents" advice. They showed three other faults. One made up a sum insured of Rs.20,000 for groundnut (now refused by a check). One gave a range up to the perennial rate, Rs.22,500, for an annual crop. A heavy-rain question was answered only from crop insurance and missed G.O. 579. Decide on a second reader for standard answers from the baseline's hand marks.
 2. **Andhra Pradesh:** gift, settlement, release, partition and lease rates on the calculator (`registration.ap.gov.in/igrs/DutyFeeCalculator/Property`, public, with no personal details). Current vehicle life tax rates and the 2026 Road Safety Cess rates. Other profession tax classes. The separate agriculture budget speech. Department sites for fisheries, animal husbandry, horticulture, seeds, natural farming and markets, linked from `agriculture.ap.gov.in`.
 3. **Tamil Nadu:** crop insurance cut-off dates and the 2026-27 notification. Vehicle tax rates after the 2023 change. Profession tax slabs, starting with Chennai's official notice. The animal husbandry note. The rest of the `tnreginet` fee table. Exact rates from the dairy, fisheries, cooperation and food notes.
 4. Write test questions for the new Andhra Pradesh and Tamil Nadu documents, including finance, and measure them.
@@ -60,6 +60,9 @@ The owner decides: RAM, local models, paid Gemini and the lawyer. Don't wait for
 - **Andhra Pradesh:** `registration.ap.gov.in/igrs/` has the fee table and calculator. Budget files are on `apfinance.gov.in`.
 - **Bills:** PRS hosts official gazette copies, at `prsindia.org/files/bills_acts/bills_states/<state>/<year>/Bill<n>of<year><XX>.pdf`.
 - **CAG:** `cag.gov.in` worked when `saiindia.gov.in` refused the connection.
+- **Tesseract** isn't on the PATH. Use `vetra.scans.TESSERACT` or `C:\Program Files\Tesseract-OCR	esseract.exe`.
+- **PRS bill pages:** `prsindia.org/bills/states/<slug>` has the real PDF link when the guessed name fails.
+- **To read one answer by hand:** `python tools/ask.py STATE "question"`.
 - **Scans:** some fonts swap letters but look fine, as in Maharashtra's order. Set `"read_as_scan": true` in the manifest. Reading takes about 10 seconds a page.
 - **Gemini's free limit:** 500 requests a day per model, resetting around 1:30 pm India time, which is my estimate.
 
