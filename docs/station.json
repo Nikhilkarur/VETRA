@@ -1,9 +1,9 @@
 {
- "last_report": "2026-11-05T22:02",
+ "last_report": "2026-11-05T22:06",
  "state": "In progress",
- "headline": "Test run paused; data work first",
+ "headline": "Data work: 16 new exact records tonight",
  "usage": {
-  "five_hour": 12,
+  "five_hour": 13,
   "weekly": 13,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
@@ -25,6 +25,7 @@
  ],
  "issues": [
   "<strong>New records aren't proven through full answers.</strong> 8 Andhra Pradesh records were added from the orders (pensions, fishing ban, poultry). Code finds them for sample questions, but no full answer has been asked since. An old age question also gets all 4 pension records, so narrowing is still needed. The pension order doesn't give age or eligibility rules.",
+  "<strong>Still open from tonight's reading:</strong> Tamil Nadu's notified electricity tax rate (the Act gives only 5% to 10%). Tamil Nadu's arrears settlement Act 24 of 2023 isn't entered, because its application window may have closed and I don't hold the latest date. Policy-note rates should be confirmed against the orders behind them.",
   "<strong>The run stalled for about an hour tonight and I missed it.</strong> Groq's free daily tokens for the writing model ran out (195,070 of 200,000), and the stronger Gemini models were also at their limits. Only 1 new answer came in, and each failed question wasted about 20 minutes. Now the run stops after 3 misses in a row, and this page shows a stall after 45 minutes.",
   "<strong>New answers come from a weaker model.</strong> Each new answer now records which model wrote it. Answers from gemini-3.1-flash-lite must be read by hand and may need asking again on a stronger model. The fisheries answer still leaves out the amount, because that rate isn't in the exact records yet.",
   "<strong>Andhra Pradesh finance is thin:</strong> 288 passages before today's documents are built in, and nothing yet on electricity duty, guideline values, tax arrears or women's concessions.",
@@ -99,6 +100,11 @@
    "time": "05 Nov 22:02",
    "state": "In progress",
    "text": "The test run is paused at 56 of 136 because it was too slow on free limits. 8 Andhra Pradesh records added from official orders: pensions, fishing ban relief and poultry. Next: more rates from documents already held, then the open data gaps."
+  },
+  {
+   "time": "05 Nov 22:06",
+   "state": "In progress",
+   "text": "8 more records from documents already held: Tamil Nadu pensions, fishing relief and electricity tax range; Andhra Pradesh rooftop solar for BC consumers and the closed property tax waiver. Test run stays paused. None of these has been through a full answer yet."
   }
  ]
 }
