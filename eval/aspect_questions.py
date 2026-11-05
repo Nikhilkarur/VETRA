@@ -13,6 +13,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 TODAY = "2026-11-05"
 RUNS = ROOT / "eval" / "cache" / "aspects"
+MAX_MISSED = 3
 
 QUESTIONS = {
     "income support": "How much money does the state give farmers each year as income support, and when is it paid?",
@@ -94,25 +95,31 @@ def run(name: str, states: list[str]) -> None:
     path = RUNS / f"{name}.json"
     saved = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     models = llm.from_env()
+    missed = 0
     for state in states:
         for aspect, q in QUESTIONS.items():
             key = f"{state}|{aspect}"
             if key in saved:
                 continue
             question = f"{q} I am in {PLACES.get(state, state)}."
-            for attempt in range(4):
+            for attempt in range(2):
                 try:
                     r = agent.answer(question, state=state, models=models, as_of=TODAY)
                     if r.kind == "failed" or r.trace.get("error") or "busy" in r.answer[:60].lower():
                         raise RuntimeError(r.trace.get("error") or "busy")
                     saved[key] = {"q": question, "kind": r.kind, "depth": r.depth, "answer": r.answer,
+                                  "models": sorted({s["model"] for s in r.trace.get("steps", [])}),
                                   "sources": [str(s.get("title") or s.get("doc") or "")[:90] for s in r.sources]}
                     break
                 except Exception as e:  # a limit or a network drop: wait and try again, then move on
                     print(key, type(e).__name__, str(e)[:80], flush=True)
-                    time.sleep(120 * (attempt + 1))
+                    time.sleep(60)
             path.write_text(json.dumps(saved, ensure_ascii=False, indent=1), encoding="utf-8")
             print(key, saved.get(key, {}).get("kind", "MISSED"), flush=True)
+            missed = 0 if key in saved else missed + 1
+            if missed >= MAX_MISSED:  # every model is out: stop now, rather than spend hours failing
+                print(f"STOPPED after {missed} questions in a row with no answer", flush=True)
+                sys.exit(3)
 
 
 def show(name: str, match: str, width: int) -> None:

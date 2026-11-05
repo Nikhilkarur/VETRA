@@ -16,6 +16,7 @@ import importlib.util
 import json
 import re
 import subprocess
+import time
 import sys
 from collections import Counter
 from datetime import datetime, timedelta
@@ -28,6 +29,7 @@ MARKS = ROOT / "eval" / "aspect_marks.json"
 ANSWERS = ROOT / "eval" / "cache" / "aspects" / "first.json"
 BASELINE = ROOT.parent / "VETRA-baseline" / "eval" / "cache" / "gold" / "first.csv"
 QUEUE = ROOT / "eval" / "cache" / "hand" / "queue.log"
+STALL_MINUTES = 45
 BEGIN, END = "<!--STATION:BEGIN-->", "<!--STATION:END-->"
 CODE_BEGIN, CODE_END = "<!--CODE:BEGIN-->", "<!--CODE:END-->"
 DEEP = {"AP": "Andhra Pradesh", "TN": "Tamil Nadu", "MH": "Maharashtra", "KA": "Karnataka"}
@@ -181,7 +183,12 @@ def running() -> str:
     queue = QUEUE.read_text(encoding="utf-8").splitlines()[-6:] if QUEUE.exists() else []
     shown = "".join(f"<li>{esc(j)}</li>" for j in jobs) or "<li>Nothing is running at this moment</li>"
     log = "".join(f"<li><code>{esc(q[:110])}</code></li>" for q in queue)
-    return f'<ul class="small">{shown}</ul>' + (f'<details><summary>Latest work queue lines</summary><ul class="small">{log}</ul></details>' if log else "")
+    stall = ""
+    if any("aspect" in j for j in jobs) and ANSWERS.exists():
+        idle = (time.time() - ANSWERS.stat().st_mtime) / 60
+        if idle > STALL_MINUTES:
+            stall = f'<p class="small"><strong>Stalled: no new answer for {idle:.0f} minutes.</strong></p>'
+    return stall + f'<ul class="small">{shown}</ul>' + (f'<details><summary>Latest work queue lines</summary><ul class="small">{log}</ul></details>' if log else "")
 
 
 def commits() -> str:

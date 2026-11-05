@@ -12,7 +12,7 @@ sys.path.insert(0,'eval')
 from aspect_questions import QUESTIONS
 s=json.load(open('eval/cache/aspects/$name.json',encoding='utf8'))
 print(sum(f'{st}|{a}' not in s for st in '$*'.split() for a in QUESTIONS))")
-  echo "$(date '+%d %b %H:%M') still missing $missing" >> eval/cache/hand/queue.log
+  echo "$(date '+%d %b %H:%M') NO MODEL LEFT or stopped: still missing $missing, trying again in 30 min" >> eval/cache/hand/queue.log
   [ "$missing" = "0" ] && break
   sleep 1800
 done
