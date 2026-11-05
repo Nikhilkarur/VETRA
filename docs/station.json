@@ -3,8 +3,8 @@
  "state": "In progress",
  "headline": "Data and architecture only, non-stop: 50 new records, 250 documents queued",
  "usage": {
-  "five_hour": 20,
-  "weekly": 14,
+  "five_hour": 11,
+  "weekly": 17,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
  "decisions": [
@@ -15,11 +15,9 @@
   "<strong>Spot-check my marks if you can.</strong> I marked the 179 answers myself, and read native-language answers only to about 520 characters."
  ],
  "next": [
-  "PC runs two data queues with no language model: 136 Andhra Pradesh orders picked by subject, Tamil Nadu picks, and 115 Tamil Nadu agriculture orders found by file name. Then it reads what each order replaces, builds search and pulls rate lines.",
-  "I read those rate lines and enter exact records from each order.",
-  "Open data gaps: Andhra Pradesh guideline values, electricity duty rate, wildlife damage, used-vehicle rates. Tamil Nadu crop insurance dates, notified electricity tax rate, women's registration concession, other local bodies' property tax.",
-  "Architecture: narrow records to what the question asks, so a gift question leads with the gift rate instead of printing every deed.",
-  "After Andhra Pradesh and Tamil Nadu are complete: one full test of every question, then Maharashtra and Karnataka."
+  "PC is reading 88 scanned Tamil Nadu agriculture orders by OCR (about 36 done at 00:55), then builds Tamil Nadu finance and Andhra Pradesh search again. After that I name those orders from their OCR and read them for rates.",
+  "Done since the last report, all untested: Andhra Pradesh horticulture subsidies (polyhouse, shade net, mulching, farm pond, nets, new orchards, mushroom, pack house), paddy procurement rules for KMS 2026-27, electricity duty range (from a Bill), free LPG cylinders and the piped gas subsidy, pension eligibility. Tamil Nadu: state pension eligibility, the Uzhavar Pathukappu farm worker scheme, ration shop entitlement, unemployment aid, machinery hire charges. Relief records now narrow by crop and loss. Drip repeat removed.",
+  "Still missing: Tamil Nadu women's 1% registration fee cut (only press reports; the official stamps policy note does not mention it), Andhra Pradesh electricity duty rate per category, Andhra Pradesh ration entitlement, Tamil Nadu Rabi 2026-27 insurance dates (scanned file, queued for OCR later)."
  ],
  "issues": [
   "<strong>Nothing entered tonight has been through a full answer.</strong> That's your decision and it's fine, but the Andhra Pradesh and Tamil Nadu counts on this page mean \"held\", not \"tested\". Many new records come from policy notes and budget speeches, so a person should check them against the orders behind them. Some budget items are announcements with no order held yet, and the records say so.",
