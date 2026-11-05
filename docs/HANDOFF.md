@@ -42,6 +42,8 @@ API keys stay on free tiers for now, until the owner sorts out paid ones. A ques
 
 - To check: `tail -3` the log.
 - If it isn't running and isn't FINISHED, restart it: `nohup bash tools/baseline_loop.sh /c/Users/nkk77/Desktop/VETRA-baseline &`.
+- **Result, 5 November 2026:** 157 of 179 good (82-92%), 15 wrong, 7 needless refusals, marked by Claude, not by the owner or a second person. Native-language answers were read only to about 520 characters. The groups: AP agriculture 39/51, central agriculture 30/33, finance 22/23, casual 10/10, languages 21/22, other states 9/9, dated 6/9, gaps 13/14, invented schemes 7/8.
+- **What it found:** exact records printed when they didn't answer the question (5 of the 15 wrong; fixed, 4 confirmed by re-asking and the fifth hit "busy"); AP's enhanced relief rates, which were missing (fixed with records); a made-up worked example and uncited steps such as "obtain a loss certificate" (now refused by code). Questions where the expected answer is out of date: ap_agriculture-30, -36, casual-02 and indian_language-05. Update those in `eval/gold_questions.json` before the next baseline. No full re-run since the fixes, so 157/179 is before them.
 - When it's FINISHED, read the marking sheet `eval/cache/gold/first.csv` in that folder, mark each answer by hand, then run `--score first` there. These are the first honest quality numbers.
 
 **Research:** `reports/VETRA engine techniques 2026.md` is the ranked list of what to adopt. Engine gaps are in `docs/ARCHITECTURE_RESEARCH.md`.
