@@ -231,13 +231,13 @@ def find(need: Need, plan: Plan, level: Depth, today: str, knowledge: Knowledge,
     for tool in () if text_only else DATA_TYPES[need.data_type].exact:
         exact += TOOLS[tool](query, ctx)
     local_exact = any(e.jurisdiction == plan.state for e in exact)
-    fit = checks.records_answer(plan.standalone or asked, exact) if exact and not level.each_part else "yes"
-    if exact and not level.each_part and fit == "yes":
+    settled = checks.records_answer(plan.standalone or asked, exact)
+    if exact and not level.each_part and settled:
         return Found(need, "exact" if local_exact else "exact_central", exact), ctx
     text = _read_text(need, plan, level, today, knowledge, asked, searched)
-    if fit != "yes" and text:   # the records don't settle it, so the text has to be read and explained
+    if exact and text and not level.each_part:   # not settled: keep the records, and explain from the text too
         local = any(e.jurisdiction == plan.state for e in text)
-        return Found(need, "text" if local else "central_text", (exact if fit == "partial" else []) + text), ctx
+        return Found(need, "text" if local else "central_text", exact + text), ctx
     if need.data_type == "change_history":
         for e in text:
             e.history = True

@@ -246,23 +246,19 @@ def _stem(word: str) -> str:
     return word[:5]
 
 
-def records_answer(question: str, records: list[Evidence]) -> str:
+def records_answer(question: str, records: list[Evidence]) -> bool:
     """
-    Do exact records speak to what's asked? A record found by its topic can be about something else:
+    Do exact records settle what's asked? A record found by its topic can be about something else:
     "what service charge do banks get under PMFBY" found the farmer's premium, and printed it as the answer.
-    yes: print them. partial: keep them and read the text as well. no: they're about something else.
+    If not, the text gets read and explained too. The records stay, because casual wording can miss a
+    record that's still right: "floods spoiled my paddy" shares few words with the relief rate for paddy.
     """
     if not question.isascii():   # needs a translated question; another language can't be compared by word
-        return "yes"
+        return True
     asked = {w for w in re.findall(r"[a-z]{3,}", question.lower()) if w not in _PLAIN_WORDS}
-    if len(asked) < 2:
-        return "yes"
     held = " ".join(f"{e.text} {e.fact} {e.note} {e.detail} {e.doc}" for e in records).lower()
     stems = {_stem(w) for w in re.findall(r"[a-z]{3,}", held)}
-    missing = [w for w in asked if _stem(w) not in stems]
-    if len(missing) < 2:
-        return "yes"
-    return "partial" if len(missing) * 2 <= len(asked) else "no"
+    return sum(_stem(w) not in stems for w in asked) < 2
 
 
 def _sentences(line: str) -> list[str]:

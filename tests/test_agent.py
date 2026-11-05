@@ -1759,10 +1759,8 @@ def test_made_up_worked_example_is_refused():
     assert not checks.faults(bad, shown, TODAY)
 
 
-def test_records_about_something_else_arent_the_answer():
+def test_records_about_something_else_dont_settle_it():
     premium = [Evidence("a", "rule_check", "", "PMFBY order", fact="PMFBY: the farmer pays 2% of the sum insured for Kharif foodgrain crops.")]
-    assert checks.records_answer("What service charge do banks get for enrolling people under PMFBY?", premium) == "no"
-    assert checks.records_answer("What is the farmer premium under PMFBY for Kharif foodgrain?", premium) == "yes"
-    assert checks.records_answer("మామిడి పంటకు ప్రీమియం ఎంత?", premium) == "yes"
-    gift = [Evidence("b", "number_lookup", "", "calculator", fact="Gift settlement in favour of a family member: stamp duty 2%, registration fee Rs.5,000.")]
-    assert checks.records_answer("Stamp duty and registration fee to gift my house to my son in Andhra Pradesh", gift) == "partial"
+    assert not checks.records_answer("What service charge do banks get for enrolling people under PMFBY?", premium)
+    assert checks.records_answer("What is the farmer premium under PMFBY for Kharif foodgrain?", premium)
+    assert checks.records_answer("మామిడి పంటకు ప్రీమియం ఎంత?", premium)
