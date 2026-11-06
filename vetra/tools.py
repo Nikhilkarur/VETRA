@@ -64,7 +64,8 @@ def _from_record(r: dict, tool: str, text: str | None = None) -> Evidence:
                     jurisdiction=r["jurisdiction"], url=s.get("url"), date=s.get("date"),
                     status=r.get("status", "unknown"), valid_from=r.get("valid_from"),
                     valid_until=r.get("valid_until"), season=r.get("season", ""),
-                    reviewed=bool(r.get("reviewed")), kind=KINDS.get(r.get("legal_weight"), ""))
+                    reviewed=bool(r.get("reviewed")), kind=KINDS.get(r.get("legal_weight"), ""),
+                    scanned=r.get("read_by") == "scan")  # a record typed from an OCR read carries the same flag as a scanned page
 
 
 def _from_chunks(hits: list[dict], ctx: Context) -> list[Evidence]:

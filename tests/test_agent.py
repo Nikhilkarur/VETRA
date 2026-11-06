@@ -1840,3 +1840,10 @@ def test_a_page_tesseract_cannot_read_does_not_stop_the_file(tmp_path, monkeypat
     assert "premium is 2%" in reading.text and calls == [0, 1]
     saved = __import__("json").loads((tmp_path / "scans" / "abc123.json").read_text(encoding="utf-8"))
     assert list(saved) == ["1"]  # the failed page is tried again next build
+
+
+def test_a_record_read_from_a_scan_is_flagged():
+    from vetra.tools import _from_record
+    r = {"id": "x", "text": "t", "jurisdiction": "TN", "source": {"doc": "d"}}
+    assert not _from_record(r, "lookup_numbers").scanned
+    assert _from_record(dict(r, read_by="scan"), "lookup_numbers").scanned

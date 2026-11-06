@@ -25,10 +25,23 @@ def used(topic: str) -> set:
     return urls
 
 
+def scanned(path: Path) -> dict:
+    """Pages of a scan as the build's OCR read them (documents/.scans), keyed by page index."""
+    import hashlib
+    saved = ROOT / "documents" / ".scans" / f"{hashlib.sha256(path.read_bytes()).hexdigest()[:12]}.json"
+    return json.loads(saved.read_text(encoding="utf-8")) if saved.exists() else {}
+
+
 def lines(path: Path):
+    ocr = None
     for number, page in enumerate(pypdf.PdfReader(str(path)).pages, 1):
         text = re.sub(r"\s+", " ", page.extract_text() or "")
+        if len(text.strip()) < 40:
+            ocr = scanned(path) if ocr is None else ocr
+            text = re.sub(r"\s+", " ", (ocr.get(str(number - 1)) or [""])[0])
         for sentence in re.split(r"(?<=[.;:])\s+(?=[A-Z0-9(])", text):
+            if "[unclear figure]" in sentence:  # a figure the two OCR reads disagree on is not a rate
+                continue
             if MONEY.search(sentence) and ASK.search(sentence) and not BUDGET.search(sentence) and 30 < len(sentence) < 420:
                 yield number, sentence
 
