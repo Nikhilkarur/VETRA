@@ -450,5 +450,6 @@ def citations(answer: str, evidence: list[Evidence]) -> list[dict]:
     return [{"n": n, "doc": evidence[n - 1].doc, "url": evidence[n - 1].url, "date": evidence[n - 1].date,
              "status": evidence[n - 1].status, "tool": evidence[n - 1].tool, "kind": evidence[n - 1].kind,
              "added_because": evidence[n - 1].relation, "reviewed": evidence[n - 1].reviewed,
+             "scanned": evidence[n - 1].scanned,
              "text": evidence[n - 1].fact or evidence[n - 1].text}
             for n in used if 1 <= n <= len(evidence)]

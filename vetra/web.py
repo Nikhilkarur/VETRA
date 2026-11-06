@@ -1,6 +1,7 @@
 """
-The web page for the agent. It serves rag/web.html, so there's one page to maintain, and
-adds a state selector. RTI questions still reach rag/ through the agent.
+The web page for the agent: vetra/web.html, a plain chat page whose one difference from a
+general chatbot is that every answer shows the official documents it cites, as numbered
+markers in the text and source cards beneath it. RTI questions still reach rag/ through the agent.
 
 Run:  python -m vetra.web                  http://127.0.0.1:8000
       python -m vetra.web --port 8080 --no-browser
@@ -22,9 +23,9 @@ from pathlib import Path
 
 from . import agent, jurisdictions, languages, llm, text_index
 from .domains import DOMAINS
-from .knowledge import Knowledge
+from .knowledge import UNOFFICIAL, Knowledge
 
-PAGE = Path(__file__).resolve().parent.parent / "rag" / "web.html"
+PAGE = Path(__file__).resolve().parent / "web.html"
 TITLE = "VETRA: your government, from its own documents"
 BLURB = ("Ask about farm schemes, crop insurance, pensions, taxes and budgets anywhere in India, or about the "
          "Right to Information Act. A simple question gets a short answer, and a bigger one gets a full brief. "
@@ -39,55 +40,24 @@ EXAMPLES = ("what is the last date to insure my cashew crop under weather insura
             "how much is the rti fee")
 PIPELINE = threading.Lock()  # one question at a time: shared rate limits and search models
 
-# The page knows nothing of states, and RTI's page stays as it is, so the selector is added
-# here, and the state joins the page's own request.
-STATE_PICKER = """
-<script>
-(function () {
-  const reply = document.getElementById("reply");
-  const row = reply.parentElement;
-  const label = document.createElement("label");
-  label.textContent = "State ";
-  const pick = document.createElement("select");
-  pick.id = "state";
-  pick.innerHTML = %s;
-  try { pick.value = localStorage.getItem("vetra-state") || ""; } catch (e) {}
-  pick.addEventListener("change", () => { try { localStorage.setItem("vetra-state", pick.value); } catch (e) {} });
-  label.append(pick);
-  row.prepend(label);
-  const saved = (() => { try { return localStorage.getItem("reply"); } catch (e) { return null; } })();
-  Object.entries(%s).forEach(([value, text]) => {
-    if (!reply.querySelector(`option[value="${value}"]`)) reply.add(new Option(text, value));
-  });
-  if (saved) reply.value = saved;
-  const rtl = document.createElement("style");   // Urdu, Kashmiri and Sindhi run right to left
-  rtl.textContent = ".a { unicode-bidi: plaintext; }";
-  document.head.append(rtl);
-  const plain = window.fetch;
-  window.fetch = (url, options) => {
-    if (url === "/ask" && options && options.body) {
-      options = {...options, body: JSON.stringify({...JSON.parse(options.body), state: pick.value})};
-    }
-    return plain(url, options);
-  };
-})();
-</script>
-"""
-
 _CITATION = re.compile(r"\[E(\d+)\]")
 
 
 def page_html() -> str:
     page = PAGE.read_text(encoding="utf-8")
-    for key, value in {"PAGE_TITLE": "VETRA", "TITLE": TITLE, "BLURB": BLURB, "PLACEHOLDER": PLACEHOLDER}.items():
-        page = page.replace("{{" + key + "}}", html.escape(value))
-    chips = "\n".join(f'        <button class="chip" type="button">{html.escape(q)}</button>' for q in EXAMPLES)
-    page = page.replace("{{CHIPS}}", chips).replace("python rag/web.py", "python -m vetra.web")
-    page = page.replace("Takes 3–6 seconds.", "Takes a few seconds, or up to a minute for a full brief.")
-    options = '<option value="">Not chosen</option>' + "".join(
+    states = '<option value="">All India</option>' + "".join(
         f'<option value="{code}">{html.escape(name)}</option>'
         for code, name in sorted(jurisdictions.STATES.items(), key=lambda pair: pair[1]))
-    return page.replace("</body>", STATE_PICKER % (json.dumps(options), json.dumps(languages.NAMES, ensure_ascii=False)) + "</body>")
+    replies = '<option value="auto">Same language as the question</option>' + "".join(
+        f'<option value="{code}">{html.escape(name)}</option>' for code, name in languages.NAMES.items())
+    starters = "".join(f'<button class="starter" type="button">{html.escape(q)}</button>' for q in EXAMPLES[:4])
+    return (page.replace("{{STATE_OPTIONS}}", states).replace("{{REPLY_OPTIONS}}", replies)
+            .replace("{{STARTERS}}", starters))
+
+
+def _host(url: str | None) -> str:
+    match = re.match(r"https?://(?:www\.)?([^/:]+)", url or "")
+    return match.group(1) if match else ""
 
 
 def to_page(r: agent.Result) -> dict:
@@ -98,8 +68,11 @@ def to_page(r: agent.Result) -> dict:
             "reply_language": r.language, "answer": _CITATION.sub(r"[\1]", r.answer),
             "standalone": "", "passage": None, "model": steps[-1]["model"] if steps else "no model",
             "search_s": r.trace.get("seconds", 0), "answer_s": 0, "coverage": r.coverage,
-            "sources": [{"n": s["n"], "source": s["doc"] + (f" · {s['kind']}" if s.get("kind") else ""),
-                         "added": bool(s.get("added_because")), "text": s.get("text", ""), "url": s.get("url")}
+            "sources": [{"n": s["n"], "doc": s["doc"], "source": s["doc"] + (f" · {s['kind']}" if s.get("kind") else ""),
+                         "url": s.get("url"), "host": _host(s.get("url")), "date": s.get("date"),
+                         "status": s.get("status"), "kind": s.get("kind") or "", "scanned": bool(s.get("scanned")),
+                         "unofficial": s.get("kind") in UNOFFICIAL, "reviewed": bool(s.get("reviewed")),
+                         "added": bool(s.get("added_because")), "text": s.get("text", "")}
                         for s in r.sources]}
 
 

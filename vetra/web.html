@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VETRA</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --soft: #f6f6f4;
+    --line: #e7e6e2;
+    --ink: #1c1c1a;
+    --ink-2: #5b5a55;
+    --ink-3: #908e87;
+    --accent: #1d5c4f;
+    --accent-soft: #e8f1ee;
+    --warn: #9a4b10;
+    --warn-soft: #fbf0e4;
+    --bad: #a3321f;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, select, textarea { font: inherit; color: inherit; }
+
+  /* Top bar: name on the left, the two choices that change answers on the right. */
+  .bar {
+    position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+  }
+  .brand { font-weight: 650; letter-spacing: -0.01em; margin-right: auto; }
+  .pick {
+    appearance: none; border: 1px solid var(--line); background: var(--bg); border-radius: 999px;
+    padding: 6px 30px 6px 12px; font-size: 14px; color: var(--ink-2); cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+    background-position: calc(100% - 15px) 52%, calc(100% - 10px) 52%; background-size: 5px 5px; background-repeat: no-repeat;
+  }
+  .icon {
+    border: 0; background: none; padding: 6px 10px; border-radius: 999px; cursor: pointer; color: var(--ink-2); font-size: 14px;
+  }
+  .icon:hover, .pick:hover { background-color: var(--soft); }
+
+  main { max-width: 740px; margin: 0 auto; padding: 0 20px 180px; }
+
+  /* Empty state: one line of what it is, the box, a few starters. */
+  .hello { min-height: calc(100vh - 260px); display: grid; align-content: center; justify-items: center; text-align: center; }
+  .hello h1 { margin: 0 0 6px; font-size: 30px; font-weight: 650; letter-spacing: -0.02em; }
+  .hello > p { margin: 0 0 22px; color: var(--ink-2); max-width: 46ch; }
+  #slot { width: 100%; max-width: 680px; }
+  .starters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; max-width: 640px; }
+  .starter {
+    border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 7px 14px;
+    font-size: 14px; color: var(--ink-2); cursor: pointer; text-align: left;
+  }
+  .starter:hover { background: var(--soft); color: var(--ink); }
+
+  /* Conversation */
+  .turn { padding: 18px 0 8px; }
+  .you { display: flex; justify-content: flex-end; margin-bottom: 14px; }
+  .you p { margin: 0; background: var(--soft); border-radius: 18px; padding: 10px 16px; max-width: 80%; white-space: pre-wrap; }
+  .answer { min-width: 0; overflow-wrap: break-word; }
+  .answer p { margin: 0 0 12px; }
+  .answer h3 { font-size: 16px; margin: 18px 0 6px; }
+  .answer ul, .answer ol { margin: 0 0 12px; padding-left: 22px; }
+  .answer li { margin: 3px 0; }
+  .answer li.sub { margin-left: 18px; list-style: circle; }
+  .answer hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }
+  .answer code { background: var(--soft); border-radius: 5px; padding: 1px 5px; font-size: 14px; }
+  .tw { overflow-x: auto; margin: 0 0 12px; }
+  .tw table { border-collapse: collapse; font-size: 14px; min-width: 100%; }
+  .tw th, .tw td { border-bottom: 1px solid var(--line); padding: 7px 10px; text-align: left; vertical-align: top; }
+  .tw th { font-weight: 600; color: var(--ink-2); }
+  .thinking { color: var(--ink-3); display: flex; align-items: center; gap: 10px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .25; transform: scale(.8); } }
+  .error { color: var(--bad); }
+
+  /* Citation markers: small numbered pills inside the sentence they support. */
+  .cite {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px;
+    margin: 0 1px; border-radius: 9px; background: var(--accent-soft); color: var(--accent);
+    font-size: 11px; font-weight: 650; line-height: 1; text-decoration: none; vertical-align: 2px; cursor: pointer;
+  }
+  .cite:hover, .cite.on { background: var(--accent); color: #fff; }
+
+  /* Sources: always visible under the answer, one card per cited document. */
+  .sources { margin: 14px 0 4px; }
+  .sources-head { font-size: 13px; color: var(--ink-3); margin: 0 0 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+  .card {
+    text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 12px;
+    cursor: pointer; display: grid; gap: 4px; align-content: start; min-width: 0;
+  }
+  .card:hover, .card.on { border-color: var(--accent); background: #fbfdfc; }
+  .card .top { display: flex; gap: 8px; align-items: baseline; }
+  .card .num { font-size: 12px; font-weight: 650; color: var(--accent); }
+  .card .title { font-size: 13.5px; line-height: 1.4; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .card .meta { font-size: 12px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 4px 8px; }
+  .tag { font-size: 11px; border-radius: 6px; padding: 1px 6px; background: var(--soft); color: var(--ink-2); }
+  .tag.warn { background: var(--warn-soft); color: var(--warn); }
+
+  /* The quoted passage behind a citation, opened from a marker or a card. */
+  .quote {
+    margin: 10px 0 0; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--soft);
+    font-size: 14px; display: none; scroll-margin-bottom: 170px;
+  }
+  .quote.open { display: block; }
+  .quote .qhead { display: flex; gap: 10px; align-items: baseline; margin-bottom: 6px; }
+  .quote .qhead b { font-weight: 600; }
+  .quote .qtext { white-space: pre-wrap; color: var(--ink-2); max-height: 260px; overflow: auto; }
+  .quote a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .quote a:hover { text-decoration: underline; }
+  .close { margin-left: auto; border: 0; background: none; color: var(--ink-3); cursor: pointer; }
+  .note { font-size: 12px; color: var(--ink-3); margin: 10px 0 0; }
+
+  /* Composer: one rounded box, docked to the bottom once a conversation starts. */
+  .composer-wrap { position: fixed; left: 0; right: 0; bottom: 0; background: linear-gradient(transparent, var(--bg) 30%); padding: 24px 20px 14px; }
+  .composer-wrap.centered { position: static; background: none; padding: 0; width: 100%; max-width: 680px; }
+  .composer {
+    max-width: 740px; margin: 0 auto; display: flex; align-items: flex-end; gap: 8px;
+    border: 1px solid var(--line); border-radius: 26px; padding: 8px 8px 8px 18px; background: var(--bg);
+    box-shadow: 0 2px 14px rgba(0,0,0,.05);
+  }
+  .composer:focus-within { border-color: #c9c8c2; }
+  textarea { flex: 1; border: 0; outline: 0; resize: none; background: none; padding: 8px 0; max-height: 200px; line-height: 1.5; overflow-y: hidden; }
+  .send {
+    width: 38px; height: 38px; flex: none; border: 0; border-radius: 50%; background: var(--ink); color: #fff; cursor: pointer;
+    display: grid; place-items: center;
+  }
+  .send:disabled { background: #d6d5d0; cursor: default; }
+  .fine { text-align: center; font-size: 12px; color: var(--ink-3); margin: 8px 0 0; }
+
+  @media (max-width: 600px) {
+    .bar { padding: 10px 12px; gap: 6px; }
+    .pick { font-size: 13px; padding: 5px 24px 5px 10px; max-width: 30vw; text-overflow: ellipsis; }
+    .icon { padding: 6px 6px; }
+    .hello h1 { font-size: 24px; }
+    .you p { max-width: 92%; }
+  }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="brand">VETRA</span>
+  <select id="state" class="pick" aria-label="Your state">{{STATE_OPTIONS}}</select>
+  <select id="reply" class="pick" aria-label="Answer language">{{REPLY_OPTIONS}}</select>
+  <button id="new" class="icon" type="button" title="New conversation">New</button>
+</div>
+
+<main id="main">
+  <section class="hello" id="hello">
+    <h1>Ask your government's own documents</h1>
+    <p>Farm schemes, crop insurance, pensions, taxes and fees. Every answer shows the official order or notice it comes from.</p>
+    <div id="slot"></div>
+    <div class="starters">{{STARTERS}}</div>
+  </section>
+  <div id="thread"></div>
+</main>
+
+<div class="composer-wrap centered" id="composer-wrap">
+  <form class="composer" id="ask">
+    <textarea id="q" rows="1" placeholder="Ask anything about schemes, rates or rules…" aria-label="Your question"></textarea>
+    <button class="send" type="submit" aria-label="Ask">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3.5 7.5M8 3l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </form>
+  <p class="fine">Answers come only from official documents. Check the source before acting. Not legal advice.</p>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const form = $("ask"), input = $("q"), send = form.querySelector(".send");
+const thread = $("thread"), hello = $("hello"), wrap = $("composer-wrap");
+const statePick = $("state"), replyPick = $("reply");
+let history = [], busy = false, turns = 0;
+
+// Before the first question the box sits in the middle of the page; after it, at the bottom.
+$("slot").append(wrap);
+if (window.innerWidth < 600) input.placeholder = "Ask a question…";
+function dock() { if (wrap.classList.contains("centered")) { wrap.classList.remove("centered"); document.body.append(wrap); hello.remove(); } }
+
+for (const [pick, key] of [[statePick, "vetra-state"], [replyPick, "vetra-reply"]]) {
+  try { const v = localStorage.getItem(key); if (v !== null) pick.value = v; } catch (e) {}
+  pick.addEventListener("change", () => { try { localStorage.setItem(key, pick.value); } catch (e) {} });
+}
+
+input.addEventListener("input", grow);
+input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+function grow() {
+  input.style.height = "auto";
+  input.style.height = Math.min(input.scrollHeight, 200) + "px";
+  input.style.overflowY = input.scrollHeight > 200 ? "auto" : "hidden";
+}
+form.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value.trim()); });
+document.querySelectorAll(".starter").forEach((b) => b.addEventListener("click", () => ask(b.textContent)));
+$("new").addEventListener("click", () => { if (!busy) location.reload(); });
+
+async function ask(question) {
+  if (!question || busy) return;
+  busy = true; send.disabled = true; dock();
+  const turn = ++turns;
+  const article = el("article", "turn");
+  const you = el("div", "you"); you.append(el("p", "", question));
+  const answer = el("div", "answer");
+  answer.innerHTML = '<div class="thinking"><span class="dot"></span><span>Reading the documents…</span></div>';
+  article.append(you, answer);
+  thread.append(article);
+  you.scrollIntoView({ behavior: "smooth", block: "start" });
+  input.value = ""; grow();
+  const slow = setTimeout(() => {
+    const t = answer.querySelector(".thinking span:last-child");
+    if (t) t.textContent = "Still reading. A short answer takes a few seconds, up to a minute for a full brief.";
+  }, 8000);
+  try {
+    const res = await fetch("/ask", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, history: history.slice(-3), state: statePick.value, reply: replyPick.value }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `Something went wrong (${res.status}).`);
+    show(article, answer, data, turn);
+    if ((data.sources || []).length) history.push({ q: question, a: data.answer });
+  } catch (err) {
+    answer.innerHTML = "";
+    answer.append(el("p", "error", /fetch/i.test(err.message) ? "Can't reach VETRA. Is the server running?" : err.message));
+  } finally {
+    clearTimeout(slow);
+    busy = false; send.disabled = false; input.focus();
+  }
+}
+
+// The answer, its citation markers, and the sources they point to.
+function show(article, answer, data, turn) {
+  const sources = data.sources || [];
+  const byN = Object.fromEntries(sources.map((s) => [String(s.n), s]));
+  answer.innerHTML = md(data.answer || "", turn, byN);
+  if (!sources.length) {
+    article.append(el("p", "note", "No official document was cited for this answer."));
+    return;
+  }
+  const box = el("div", "sources");
+  box.append(el("p", "sources-head", sources.length === 1 ? "1 source" : `${sources.length} sources`));
+  const cards = el("div", "cards");
+  const quote = el("div", "quote");
+  for (const s of sources) cards.append(card(s, turn, () => open(s)));
+  box.append(cards, quote);
+  article.append(box);
+
+  function open(s) {
+    const same = quote.classList.contains("open") && quote.dataset.n === String(s.n);
+    article.querySelectorAll(".card.on, .cite.on").forEach((x) => x.classList.remove("on"));
+    if (same) { quote.classList.remove("open"); return; }
+    quote.dataset.n = String(s.n);
+    quote.innerHTML = "";
+    const head = el("div", "qhead");
+    head.append(el("b", "", `[${s.n}] ${s.doc}`));
+    const close = el("button", "close", "Close"); close.type = "button";
+    close.addEventListener("click", () => { quote.classList.remove("open"); article.querySelectorAll(".on").forEach((x) => x.classList.remove("on")); });
+    head.append(close);
+    quote.append(head, el("div", "qtext", s.text || "No passage kept for this source."));
+    const foot = el("p", "note");
+    foot.textContent = details(s).join(" · ");
+    if (s.url) { foot.append(document.createTextNode(foot.textContent ? " · " : "")); const a = el("a", "", "Open the official document ↗"); a.href = s.url; a.target = "_blank"; a.rel = "noopener"; foot.append(a); }
+    quote.append(foot);
+    quote.classList.add("open");
+    article.querySelectorAll(`[data-n="${s.n}"]`).forEach((x) => x.classList.add("on"));
+    quote.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  answer.querySelectorAll(".cite").forEach((c) => c.addEventListener("click", (e) => {
+    e.preventDefault(); const s = byN[c.dataset.n]; if (s) open(s);
+  }));
+}
+
+function card(s, turn, onClick) {
+  const b = el("button", "card"); b.type = "button"; b.dataset.n = String(s.n);
+  const top = el("div", "top");
+  top.append(el("span", "num", String(s.n)), el("span", "title", s.doc || "Source"));
+  const meta = el("div", "meta");
+  if (s.host) meta.append(el("span", "", s.host));
+  if (s.date) meta.append(el("span", "", nice(s.date)));
+  if (s.kind) meta.append(el("span", "tag", s.kind));
+  if (s.status === "not_in_force") meta.append(el("span", "tag warn", "No longer in force"));
+  if (s.scanned) meta.append(el("span", "tag warn", "Read from a scan"));
+  if (s.unofficial) meta.append(el("span", "tag warn", "Not an official document"));
+  b.append(top, meta);
+  b.addEventListener("click", onClick);
+  return b;
+}
+
+function nice(d) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || "");
+  if (!m) return d || "";
+  return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function details(s) {
+  const out = [];
+  if (s.kind) out.push(s.kind[0].toUpperCase() + s.kind.slice(1));
+  if (s.date) out.push(nice(s.date));
+  if (s.status === "not_in_force") out.push("no longer in force");
+  if (s.scanned) out.push("read from a scanned copy, so check the figures");
+  return out;
+}
+
+function el(tag, cls = "", text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;
+  return n;
+}
+
+// ---- small markdown renderer: enough for the agent's answers ----
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function inline(s, turn, byN) {
+  return s
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\*)/g, "$1<em>$2</em>")
+    .replace(/\[(\d{1,2})(?:\s*\(([^)\]]*)\))?\]/g, (m, n) =>
+      byN[n] ? `<a class="cite" href="#" data-n="${n}" title="${esc(byN[n].doc || "")}">${n}</a>` : m);
+}
+function md(source, turn, byN) {
+  const lines = esc(source.replace(/\r/g, "")).split("\n");
+  let html = "", para = [], list = null;
+  const flush = () => { if (para.length) html += "<p>" + para.map((l) => inline(l.trim(), turn, byN)).join("<br>") + "</p>"; para = []; };
+  const close = () => { if (list) { html += `</${list}>`; list = null; } };
+  const isRow = (l) => /^\s*\|.*\|\s*$/.test(l);
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]; let m;
+    if (!line.trim()) { flush(); close(); continue; }
+    if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) { flush(); close(); html += "<hr>"; continue; }
+    if ((m = line.match(/^\s*#{1,6}\s+(.*)$/))) { flush(); close(); html += `<h3>${inline(m[1], turn, byN)}</h3>`; continue; }
+    if (isRow(line)) {
+      flush(); close(); const rows = [];
+      while (i < lines.length && isRow(lines[i])) rows.push(lines[i++]);
+      i--; html += table(rows, turn, byN); continue;
+    }
+    if ((m = line.match(/^(\s*)[*\-•‑]\s+(.*)$/))) {
+      flush(); if (list !== "ul") { close(); html += "<ul>"; list = "ul"; }
+      html += `<li${m[1].length >= 2 ? ' class="sub"' : ""}>${inline(m[2], turn, byN)}</li>`; continue;
+    }
+    if ((m = line.match(/^\s*(\d+)[.)]\s+(.*)$/))) {
+      flush(); if (list !== "ol") { close(); html += `<ol start="${m[1]}">`; list = "ol"; }
+      html += `<li>${inline(m[2], turn, byN)}</li>`; continue;
+    }
+    if (list && /^\s{2,}\S/.test(line)) { html = html.replace(/<\/li>$/, "<br>" + inline(line.trim(), turn, byN) + "</li>"); continue; }
+    close(); para.push(line);
+  }
+  flush(); close();
+  return html;
+}
+function table(rows, turn, byN) {
+  const cells = (r) => r.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+  const body = rows.filter((r) => !/^\s*\|?\s*:?-{3,}/.test(r));
+  let h = '<div class="tw"><table>';
+  body.forEach((r, idx) => { const t = idx === 0 ? "th" : "td"; h += "<tr>" + cells(r).map((c) => `<${t}>${inline(c, turn, byN)}</${t}>`).join("") + "</tr>"; });
+  return h + "</table></div>";
+}
+</script>
+</body>
+</html>

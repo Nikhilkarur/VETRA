@@ -535,9 +535,19 @@ def test_telugu_notes_are_in_telugu(monkeypatch, tmp_path):
 
 # ---------------------------------------------------------------- the web page
 
-def test_page_is_the_shared_page_with_a_state_picker():
+def test_page_has_state_and_language_pickers_and_shows_sources():
     page = web.page_html()
-    assert 'id="reply"' in page and "Karnataka" in page and "{{" not in page and "python -m vetra.web" in page
+    assert 'id="reply"' in page and 'id="state"' in page and "Karnataka" in page and "{{" not in page
+    assert 'class="cite"' in page and "Open the official document" in page   # citations and source cards
+
+
+def test_sources_carry_what_a_reader_needs_to_judge_them():
+    r = agent.Result("answer", "Paid [E1].", "agriculture", "AP", "english",
+                     [{"n": 1, "doc": "G.O.Ms.No.29", "url": "https://www.goir.ap.gov.in/x", "date": "2024-07-22",
+                       "status": "in_force", "kind": "government order", "scanned": True, "text": "Rs.10,000"}],
+                     trace={"steps": []})
+    s = web.to_page(r)["sources"][0]
+    assert (s["doc"], s["host"], s["date"], s["kind"], s["scanned"], s["unofficial"]) ==         ("G.O.Ms.No.29", "goir.ap.gov.in", "2024-07-22", "government order", True, False)
 
 
 def test_result_reaches_the_page_in_the_shape_it_renders():
