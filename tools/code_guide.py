@@ -201,7 +201,7 @@ def intake() -> str:
                   ("Embed", ["E5-base, on the CPU", "of this PC"], CODE, "text_index.build"),
                   ("Text index", ["Chroma + JSON,", "one per topic"], STORE, "knowledge/*/text")])
     b += box(10, 264, "Exact records", ["rate_lines.py pulls rate lines", "(OCR too); Claude enters them"], LLM, "rate_lines.py")
-    b += box(212, 264, "Record check", ["No source, repeated id, or crop", "names as topic words: flagged"], CODE, "check_records.py")
+    b += box(212, 264, "Sorter and check", ["No source or place: rejected;", "loose topic words: flagged"], CODE, "sorter, check_records")
     b += line([(196, 303), (212, 303)])
     b += box(414, 264, "Exact stores", ["Dates, rules, numbers,", "links, documents"], STORE, "knowledge/*/*.jsonl")
     b += line([(398, 303), (414, 303)])
