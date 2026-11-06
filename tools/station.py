@@ -65,7 +65,7 @@ def _records(domain: str, state: str) -> list[dict]:
     for name in ("numbers", "dates", "rules"):
         path = ROOT / "knowledge" / domain / f"{name}.jsonl"
         if path.exists():
-            found += [r for r in map(json.loads, path.open(encoding="utf-8")) if r.get("jurisdiction") == state]
+            found += [r for r in map(json.loads, path.open(encoding="utf-8")) if r.get("jurisdiction") in (state, "IN")]
     return found
 
 
@@ -235,7 +235,7 @@ def build() -> str:
     <div class="stat"><b>{last:%d %b %H:%M}</b><span>Last update (on your request)</span></div>
     {completion(totals)}
   </div>
-  <p class="small muted">Completion = share of the deep-level aspect list (docs/STATE_COVERAGE.md) with at least one exact record from an official source, counted by keyword from the files when this page is drawn. "Held" = some text in search. Nothing here is tested yet; a keyword count can miss a record worded differently.</p>
+  <p class="small muted">Completion = share of the deep-level aspect list (docs/STATE_COVERAGE.md) with at least one exact record from an official source (the state's own, or a central rule that applies there), counted by keyword from the files when this page is drawn. "Held" = some text in search. Nothing here is tested yet; a keyword count can miss a record worded differently.</p>
   <p class="small muted">Page drawn {now:%d %B %Y, %H:%M}. Counts on this tab come from the project's files by script; the written parts are Claude's report.</p>
 </section>
 <section id="st-you">

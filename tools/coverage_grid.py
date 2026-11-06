@@ -1,4 +1,5 @@
 """How much do we hold on each aspect for a state? Counts passages and exact records by keyword.
+Exact records include central (IN) ones, since the agent uses them for every state.
 A low count means a likely gap. A high count doesn't prove the answer is there; read to be sure.
 Run: python tools/coverage_grid.py AP TN"""
 import json
@@ -90,7 +91,7 @@ def grid(state: str) -> None:
         records = [json.loads(line) for name in ("numbers", "dates", "rules")
                    if (ROOT / "knowledge" / domain / f"{name}.jsonl").exists()
                    for line in (ROOT / "knowledge" / domain / f"{name}.jsonl").open(encoding="utf-8")]
-        records = [r for r in records if r.get("jurisdiction") == state]
+        records = [r for r in records if r.get("jurisdiction") in (state, "IN")]  # central rules apply in every state, as in the agent's lookups
         low = []
         for name, pattern in aspects.items():
             rx = re.compile(pattern, re.I)
