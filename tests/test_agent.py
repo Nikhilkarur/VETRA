@@ -1847,3 +1847,14 @@ def test_a_record_read_from_a_scan_is_flagged():
     r = {"id": "x", "text": "t", "jurisdiction": "TN", "source": {"doc": "d"}}
     assert not _from_record(r, "lookup_numbers").scanned
     assert _from_record(dict(r, read_by="scan"), "lookup_numbers").scanned
+
+
+def test_exact_records_have_no_loose_topic_words(capsys):
+    """Crop names and general words go in applies_to, not topic_words (see tools/check_records.py)."""
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("check_records", Path(__file__).resolve().parent.parent / "tools" / "check_records.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    module.main()
+    assert capsys.readouterr().out.strip().endswith("0 to look at")
