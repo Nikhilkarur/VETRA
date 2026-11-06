@@ -1879,3 +1879,14 @@ def test_a_record_is_found_by_its_topic_words():
     assert [r["id"] for r in k.find("agriculture", "numbers", "AP", "kaulu ccrc card")] == ["x"]
     k.records[("agriculture", "numbers")][0]["topic_words"].append("కౌలు రైతు")
     assert [r["id"] for r in k.find("agriculture", "numbers", "AP", "కౌలు రైతు కార్డు")] == ["x"]
+
+
+def test_grounding_check_reads_figures_the_way_documents_write_them():
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("check_grounding", Path(__file__).resolve().parent.parent / "tools" / "check_grounding.py")
+    g = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(g)
+    assert "475000" in g.norm("4.75 lakh") and "15000" in g.norm("15,000")
+    assert g.dates("G.O. of 22.04.2025 and 2026-03-18") == {"2025-04-22", "2026-03-18"}
+    assert "2025-04-22" in g.figures("dated 22.04.2025, Rs.4,75,000") and "475000" in g.figures("Rs.4,75,000")
