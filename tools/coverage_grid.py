@@ -96,7 +96,7 @@ def grid(state: str) -> None:
             rx = re.compile(pattern, re.I)
             passages = [i for i in items if rx.search(i["text"])]
             docs = {i["title"] for i in passages}
-            exact = sum(1 for r in records if rx.search(r.get("text", "") + " " + r.get("subject", "")))
+            exact = sum(1 for r in records if rx.search(" ".join([r.get("text", ""), r.get("subject", "")] + list(r.get("topic_words") or []))))
             low.append(f"{name} {len(passages)}/{len(docs)}/{exact}")
         print(f"{domain} ({len(items)} passages, {len(records)} records). passages/docs/exact:")
         print("; ".join(low))

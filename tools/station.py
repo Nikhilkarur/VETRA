@@ -89,7 +89,7 @@ def matrix() -> tuple[str, dict]:
             for state in DEEP:
                 items, records = data[state][domain]
                 passages = sum(1 for i in items if rx.search(i["text"]))
-                exact = sum(1 for r in records if rx.search(r.get("text", "") + " " + r.get("subject", "")))
+                exact = sum(1 for r in records if rx.search(" ".join([r.get("text", ""), r.get("subject", "")] + list(r.get("topic_words") or []))))
                 cls = "none" if not passages and not exact else "thin" if passages < 5 and not exact else "some" if not exact else "exact"
                 totals[state]["aspects"] += 1
                 totals[state]["covered"] += cls != "none"
