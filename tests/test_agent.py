@@ -1723,7 +1723,9 @@ def test_tamil_nadu_stamp_rates_come_from_the_exact_records_and_stay_on_topic():
     ctx = lambda q: Context("finance", "TN", TODAY, kb, question=q)
     found = TOOLS["number_lookup"]("stamp duty registration fee sale deed Tamil Nadu", ctx("what is the stamp duty on a sale deed"))
     assert found and any("Sale: stamp duty 7% of market value; registration fee 2% of market value" in e.text for e in found)
-    assert not TOOLS["number_lookup"]("budget fiscal deficit Tamil Nadu registration", ctx("what is the fiscal deficit in the budget"))
+    budget = TOOLS["number_lookup"]("budget fiscal deficit Tamil Nadu registration", ctx("what is the fiscal deficit in the budget"))
+    assert not any("stamp duty" in e.text.lower() for e in budget)  # stamp rates stay out of a budget question
+    assert any(e.key == "tn-budget-2026-27" for e in budget)
     assert all(not knowledge.problems(r) for r in kb.records[("finance", "numbers")])
 
 
