@@ -94,6 +94,9 @@ def matrix() -> tuple[str, dict]:
                 totals[state]["aspects"] += 1
                 totals[state]["covered"] += cls != "none"
                 totals[state]["exact_aspects"] += bool(exact)
+                totals[state][domain + "_aspects"] += 1
+                totals[state][domain + "_held"] += cls != "none"
+                totals[state][domain + "_exact"] += bool(exact)
                 note = marks.get(f"{state}|{name}", "")
                 dot = f'<i class="st-dot {MARK_LOOK[note][0]}" title="{MARK_LOOK[note][1]}"></i>' if note in MARK_LOOK else ""
                 cells.append(f'<td class="st-{cls}">{passages}{f" · <b>{exact}</b>" if exact else ""}{dot}</td>')
@@ -197,6 +200,18 @@ def commits() -> str:
     return "<ul class=\"small\">" + "".join(f"<li><code>{esc(h)}</code> {esc(d)}: {esc(s)}</li>" for h, d, s in rows) + "</ul>"
 
 
+def completion(totals: dict) -> str:
+    """Per state and topic: exact-record share of the deep aspect list, with the held share beside it."""
+    cells = []
+    for state in ("AP", "TN"):
+        for domain in ("agriculture", "finance"):
+            t = totals.get(state, {})
+            n = t.get(domain + "_aspects", 0) or 1
+            exact, held = t.get(domain + "_exact", 0), t.get(domain + "_held", 0)
+            cells.append(f'<div class="stat"><b>{exact / n:.0%}</b><span>{state} {domain}, deep: {exact} of {n} aspects with exact records; {held / n:.0%} held</span></div>')
+    return "".join(cells)
+
+
 def _list(items: list) -> str:
     return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
 
@@ -206,24 +221,21 @@ def build() -> str:
     table, totals = matrix()
     now = datetime.now()
     last = datetime.fromisoformat(s["last_report"])
-    due = last + timedelta(hours=4)
-    late = now > due + timedelta(minutes=45)
     tone = {"On track": "good", "In progress": "good", "At risk": "warn", "Blocked": "bad", "Paused": "warn"}.get(s["state"], "warn")
     log = "".join(f'<div class="card st-log"><p class="label">{esc(e["time"])} · {esc(e["state"])}</p><p>{e["text"]}</p></div>' for e in reversed(s["log"]))
     return f"""
 <section id="st-now">
   <div class="sec-head">
-    <p class="label">Monitoring station · you lead, Claude manages, the PC and API keys do the long work</p>
+    <p class="label">Monitoring station · you are head of the project, Claude is senior project manager, the PC does the long work</p>
     <h2>Where the project stands</h2>
     <p>{s['headline']}</p>
   </div>
   <div class="stats">
     <div class="stat"><b class="st-text-{tone}">{esc(s['state'])}</b><span>Overall state</span></div>
-    <div class="stat"><b>{last:%d %b %H:%M}</b><span>Last report</span></div>
-    <div class="stat"><b{' class="st-text-bad"' if late else ''}>{due:%d %b %H:%M}</b><span>Next report due, give or take 45 minutes{' · LATE' if late else ''}</span></div>
-    <div class="stat"><b>{s['usage']['five_hour']}%</b><span>5-hour limit. Work pauses at 95%</span></div>
-    <div class="stat"><b>{s['usage']['weekly']}%</b><span>Weekly limit. {esc(s['usage']['weekly_rule'])}</span></div>
+    <div class="stat"><b>{last:%d %b %H:%M}</b><span>Last update (on your request)</span></div>
+    {completion(totals)}
   </div>
+  <p class="small muted">Completion = share of the deep-level aspect list (docs/STATE_COVERAGE.md) with at least one exact record from an official source, counted by keyword from the files when this page is drawn. "Held" = some text in search. Nothing here is tested yet; a keyword count can miss a record worded differently.</p>
   <p class="small muted">Page drawn {now:%d %B %Y, %H:%M}. Counts on this tab come from the project's files by script; the written parts are Claude's report.</p>
 </section>
 <section id="st-you">
@@ -262,7 +274,7 @@ def build() -> str:
   {commits()}
 </section>
 <section id="st-log">
-  <div class="sec-head"><h2>Report log</h2><p>Newest first. One entry about every 4 hours.</p></div>
+  <div class="sec-head"><h2>Report log</h2><p>Newest first. One entry each time you ask for an update.</p></div>
   {log}
 </section>
 """
