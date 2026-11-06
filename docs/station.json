@@ -1,10 +1,10 @@
 {
- "last_report": "2026-11-05T22:22",
+ "last_report": "2026-11-06T06:56",
  "state": "In progress",
- "headline": "Data and architecture only, non-stop: 50 new records, 250 documents queued",
+ "headline": "Overnight: 49 records entered, Tamil Nadu scans now in search, nothing tested",
  "usage": {
-  "five_hour": 11,
-  "weekly": 17,
+  "five_hour": 5,
+  "weekly": 19,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
  "decisions": [
@@ -95,6 +95,11 @@
    "time": "05 Nov 22:22",
    "state": "In progress",
    "text": "On your rule, no free models and no testing. 50 exact records entered tonight, including Tamil Nadu's official paddy incentive and crop loan waiver. PC is downloading picked orders with no model. New: each order's number and what it replaces is read automatically and carried through to the answer."
+  },
+  {
+   "time": "06 Nov 06:56",
+   "state": "In progress",
+   "text": "Morning report, 06:58. Since the 22:22 report: 49 exact records entered (42 agriculture, 6 finance, 1 date), 1 repeat removed. None has been through a full answer; all are marked unreviewed. Documents: 115 scanned Tamil Nadu agriculture orders fetched and read by OCR (27 routine ones dropped, 28 named from their abstracts), 1 Andhra Pradesh DEEPAM-2 order added. Builds: finance AP (+7 chunks), agriculture AP (no change), finance TN (no change), agriculture TN (+2,890 chunks from the scans). What failed: Tesseract crashed on one page at 01:40 and stopped the Tamil Nadu agriculture build; fixed so a bad page is skipped, test added, rebuilt by 02:56. My own failure: the hourly checks from 02:00 to 06:00 did not run, so the PC sat idle for about four hours after 02:57. Andhra Pradesh, added: horticulture subsidies (polyhouse, shade net, mulching, farm pond, nets, orchards, mushroom, pack house, machinery), paddy procurement KMS 2026-27, electricity duty range (from a Bill), free LPG cylinders and piped gas subsidy, pension eligibility, Annadatha, livestock insurance, Kharif 2026 drought, mango insurance date. Andhra Pradesh, still missing: electricity duty rate per category, guideline values, wildlife damage compensation, used-vehicle tax, women's stamp concession, ration entitlement, field-crop machinery subsidy. Tamil Nadu, added: state pension eligibility, Uzhavar Pathukappu, ration entitlement, unemployment aid, machinery hire 2026-27, solar fencing, threshing floors, drones for women, soil conservation, skimming wells, custom hiring centres, SC/ST borewells, ponds, dairy, native breeds, solar dryers. Tamil Nadu, still missing: women's 1% registration fee cut (press only), wildlife crop damage rates (G.O.(D) No.141 of 2016 not found online), Rabi 2026-27 insurance dates, notified electricity tax rate, KMS 2026-27 paddy incentive. Usage: 5-hour 5%, weekly 19% (last report's 20 and 14 were wrong; real then was 24 and 15). You asked me to keep going until 3 pm; I am."
   }
  ]
 }
