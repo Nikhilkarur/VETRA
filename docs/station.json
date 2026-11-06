@@ -1,10 +1,10 @@
 {
  "last_report": "2026-11-06T06:56",
  "state": "In progress",
- "headline": "Overnight: 49 records entered, Tamil Nadu scans now in search, nothing tested",
+ "headline": "Paused at about 82% of the 5-hour limit until 11:52; PC keeps building and crawling",
  "usage": {
-  "five_hour": 69,
-  "weekly": 27,
+  "five_hour": 82,
+  "weekly": 29,
   "weekly_rule": "Stops at 18% in total until you say continue"
  },
  "decisions": [
@@ -16,8 +16,9 @@
   "<strong>Spot-check my marks if you can.</strong> I marked the 179 answers myself, and read native-language answers only to about 520 characters."
  ],
  "next": [
+  "Pause for usage: I'll stop Claude work at about 82-85% of the 5-hour limit and resume at 11:52 when it resets (a one-time check is set). Meanwhile the PC builds Andhra Pradesh agriculture (OCR of the milk procurement rules and sheep breeding policy), crawls 2024 government orders for nine departments, and pulls Andhra Pradesh rate lines.",
   "Working through the coverage grid (tools/coverage_grid.py), gap by gap, as your rules say. All records below are untested and marked unreviewed.",
-  "Since the 06:58 report, 59 new records (43 agriculture, 16 finance). Andhra Pradesh: tenant farmers' Crop Cultivator Rights Card (Act 30 of 2019, scanned gazette), wildlife damage compensation (G.O.Ms.No.29 of 2024: paddy Rs.10,000 an acre, human death Rs.10 lakh, read from the page image), land conversion (NALA Act repealed from 3 September 2025), crop loan interest subsidy up to Rs.3 lakh, Rs.7 lakh ex gratia for farmer suicides, 9 hours free farm power, free power for SC and ST households and weavers, aquaculture power at Rs.1.50 a unit, market fee 1% (CAG), market value lookup and registration helplines, drip and sprinkler subsidy, natural farming contacts, NTR Jalasiri borewells, helplines. Tamil Nadu: electricity tax rates and exemptions (5% of consumption charge; domestic and farm supply exempt), free domestic electricity from 10.05.2026 (200 units every two months up to 500), generator tax 10 paise a unit, KCC loans, crop loan waiver 2026 detail, guideline value lookup, helplines, Magalir Urimai Rs.1,000, Pudhumai Penn, citizen charter schemes and fees, horticulture subsidies.",
+  "Since the 06:58 report, 66 new records (48 agriculture, 18 finance). Andhra Pradesh: tenant farmers' Crop Cultivator Rights Card (Act 30 of 2019, scanned gazette), wildlife damage compensation (G.O.Ms.No.29 of 2024: paddy Rs.10,000 an acre, human death Rs.10 lakh, read from the page image), land conversion (NALA Act repealed from 3 September 2025), crop loan interest subsidy up to Rs.3 lakh, Rs.7 lakh ex gratia for farmer suicides, 9 hours free farm power, free power for SC and ST households and weavers, aquaculture power at Rs.1.50 a unit, market fee 1% (CAG), market value lookup and registration helplines, drip and sprinkler subsidy, natural farming contacts, NTR Jalasiri borewells, helplines. Tamil Nadu: electricity tax rates and exemptions (5% of consumption charge; domestic and farm supply exempt), free domestic electricity from 10.05.2026 (200 units every two months up to 500), generator tax 10 paise a unit, KCC loans, crop loan waiver 2026 detail, guideline value lookup, helplines, Magalir Urimai Rs.1,000, Pudhumai Penn, citizen charter schemes and fees, horticulture subsidies. Since then also: Tamil Nadu tenancy laws and Revenue Courts, Uzhavar Sandhai, Agriculture Infrastructure Fund; Andhra Pradesh 2024 scheme renames (agriculture and welfare, checked against the page images), PMFBY voluntary from Rabi 2024-25 with yield-only claims, SC Corporation self-employment subsidy (60% up to Rs.3 lakh, read from a Telugu order by OCR).",
   "Engine and tools: new tools/check_records.py and a test stop loose topic words (crop names and words like 'damage' now narrow a record instead of triggering it); relief records now need a calamity word, so a wildlife question no longer gets flood relief; rate lines read OCR text; records typed from scans carry the scanned flag; fetch no longer overwrites goir downloads; tools/goir.py crawled five more departments from 2024. 237 code tests pass.",
   "Corrections I made to my own records: removed three sentences that were my inference, not in the source (market fee, farm power hours, farm connection order).",
   "Still missing. Andhra Pradesh: electricity duty rate per category, women's stamp concession (none found), ration entitlement, used-vehicle tax, SC self-employment loan subsidy (order queued for OCR), dairy and solar pump subsidies. Tamil Nadu: women's 1% registration fee cut (press only), wildlife crop damage rates (2016 order not online), Rabi 2026-27 insurance dates, KMS 2026-27 paddy incentive, land conversion."
