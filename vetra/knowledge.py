@@ -28,7 +28,7 @@ KINDS = {"act": "Act of law", "rules": "statutory rules", "notification": "gover
          "budget": "budget document", "explainer": "press explainer",
          "analysis": "independent analysis, not an official document"}
 UNOFFICIAL = {KINDS["analysis"], KINDS["explainer"]}  # summaries of official documents, not the documents
-_WORDS = re.compile(r"[a-z0-9]+")
+_WORDS = re.compile(r"[a-z0-9]+|[ऀ-෿]+")  # English words, and words in the Indian scripts (with their vowel signs)
 _COMMON = frozenset("a an and are at can do for from how i in is it me my of on or the to what when who why with".split())
 
 
@@ -78,7 +78,9 @@ class Knowledge:
         wanted = _words(query)
         scored = []
         for r in self.select(domain, store, state):
-            hay = _words(f"{r['text']} {r.get('subject', '')} {r.get('name', '')}")
+            # A record's topic words are how people ask about it (often in their own language),
+            # so they count as much as its text when matching a question.
+            hay = _words(f"{r['text']} {r.get('subject', '')} {r.get('name', '')} {' '.join(r.get('topic_words') or [])}")
             score = len(wanted & hay)
             if score >= min(2, len(wanted)):  # one shared word is usually chance
                 scored.append((score, r))

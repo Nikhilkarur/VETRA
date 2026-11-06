@@ -1868,3 +1868,14 @@ def test_exact_records_have_no_loose_topic_words(capsys):
     spec.loader.exec_module(module)
     module.main()
     assert capsys.readouterr().out.strip().endswith("0 to look at")
+
+
+def test_a_record_is_found_by_its_topic_words():
+    from vetra.knowledge import Knowledge
+    k = Knowledge.__new__(Knowledge)
+    k.records = {("agriculture", "numbers"): [
+        {"id": "x", "jurisdiction": "AP", "text": "Andhra Pradesh. Crop Cultivator Rights Card for 11 months.",
+         "subject": "tenant farmers", "topic_words": ["kaulu", "ccrc"]}]}
+    assert [r["id"] for r in k.find("agriculture", "numbers", "AP", "kaulu ccrc card")] == ["x"]
+    k.records[("agriculture", "numbers")][0]["topic_words"].append("కౌలు రైతు")
+    assert [r["id"] for r in k.find("agriculture", "numbers", "AP", "కౌలు రైతు కార్డు")] == ["x"]
