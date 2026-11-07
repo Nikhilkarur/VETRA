@@ -66,11 +66,14 @@ def main() -> int:
     states = sys.argv[1:] or ["AP", "TN", "IN"]
     checked = unchecked = flagged = 0
     # A record may cite a document filed under the other topic, so look in both.
+    # Central documents are searchable from every state, and a file is held once, so a state record
+    # may cite a document filed under IN (the same PDF a state portal also publishes).
     held = {s: defaultdict(set) for s in states}
     for s in states:
-        for domain in ("agriculture", "finance"):
-            for url, found in doc_figures(domain, s).items():
-                held[s][url] |= found
+        for place in dict.fromkeys((s, "IN")):
+            for domain in ("agriculture", "finance"):
+                for url, found in doc_figures(domain, place).items():
+                    held[s][url] |= found
     for domain in ("agriculture", "finance"):
         for store in ("numbers", "dates", "rules"):
             path = ROOT / "knowledge" / domain / f"{store}.jsonl"

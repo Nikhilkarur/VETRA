@@ -1,5 +1,5 @@
 {
- "chunks": 6514,
+ "chunks": 6516,
  "items": [
   {
    "id": "TN-f23896c9e399::0",
@@ -130279,6 +130279,46 @@
    "file": "DIPR---P-R-NO-218---Honble-CM-Press-Release---Agri-Dept---Kuruvai-Special-Package-Scheme---Date---12-6-2026.pdf",
    "chunk_index": 5,
    "chunk_count": 6,
+   "read_by": "text"
+  },
+  {
+   "id": "TN-8a68c4852c21::0",
+   "text": "TAMIL NADU GOVERNMENT GAZETTE EXTRAORDINARY PUBLISHED BY AUTHORITY © [Regd. No. TN/CCN/467/2012-14. GOVERNMENT OF TAMIL NADU [R. Dis. No. 197/2009. 2026 [Price: Re. 0.80 Paise. No. 338] CHENNAI, MONDAY , AUGUST 3, 2026 Aadi 18, Parabhava, Thiruvalluvar Aandu–2057 Part III—Section 1(a) General Statutory Rules, Notifications, Orders, Regulations, etc., issued by Secretariat Departments. NOTIFICATIO NS BY GOVERNMENT Ex-III-1(a)—(338) HOUSING AND URBAN DEVELOPMENT DEPARTMENT AMENDMENTS TO THE TAMIL NADU CHANGE OF LAND USE (FROM AGRICULTURE TO NON-AGRICULTURE PURPOSES IN NON-PLANNING AREAS) RULES, 2017 [G.O. Ms. No.149, Housing and Urban Development [UD4(1)], 31st July 2026, ஆடி 15, பராாபவ, திருவள்ளுவர் ஆண்டு-2057.] No. SRO A-14(b)/2026.",
+   "source": "Tamil Nadu Government Gazette Extraordinary No.338, Part III Section 1(a), 2026: amendments to the Tamil Nadu Change of Land Use (Agriculture to Non-Agriculture Purposes in Non-Planning Areas) Rules, 2017 (G.O.(Ms) No.149, Housing and Urban Development, 31.07.2026) [Housing and Urban Development department, 2026-08-03]",
+   "title": "Tamil Nadu Government Gazette Extraordinary No.338, Part III Section 1(a), 2026: amendments to the Tamil Nadu Change of Land Use (Agriculture to Non-Agriculture Purposes in Non-Planning Areas) Rules, 2017 (G.O.(Ms) No.149, Housing and Urban Development, 31.07.2026)",
+   "department": "Housing and Urban Development",
+   "jurisdiction": "TN",
+   "season": "",
+   "order": "",
+   "order_label": "",
+   "amends": "",
+   "replaced_by": "",
+   "in_force": "unknown",
+   "date": "2026-08-03",
+   "source_url": "https://www.stationeryprinting.tn.gov.in/extraordinary/2026/338_Ex_III_1a_2026.pdf",
+   "file": "tn-gazette-338-2026-change-of-land-use.pdf",
+   "chunk_index": 0,
+   "chunk_count": 2,
+   "read_by": "text"
+  },
+  {
+   "id": "TN-8a68c4852c21::1",
+   "text": "SRO A-14(b)/2026. In exercise of the powers conferred by sub-section (1) of section 122 read with section 47-A of the Tamil Nadu Town and Country Planning Act, 1971 (Tamil Nadu Act 35 of 1972), the Governor of Tamil Nadu hereby makes the following amendment to the Tamil Nadu Change of Land Use (From Agriculture to Non-agriculture Purposes in Non-planning Areas) Rules, 2017:- Amendments In the said Rules.— (1) in rule 4, for clause (b), the following clause shall be substituted namely:- “(b) In case of dry lands, the Director shall take a decision himself to issue prior concurrence, after satisfying with the documents uploaded by the applicant under sub-rule (2) of rule 3.” (2) in rule 7, sub-rule (2) shall be omitted. R. KIRLOSH KUMAR, Principal Secretary to Government. PRINTED AND PUBLISHED BY THE COMMISSIONER OF STATIONERY AND PRINTING, CHENNAI ON BEHALF OF THE GOVERNMENT OF TAMIL NADU",
+   "source": "Tamil Nadu Government Gazette Extraordinary No.338, Part III Section 1(a), 2026: amendments to the Tamil Nadu Change of Land Use (Agriculture to Non-Agriculture Purposes in Non-Planning Areas) Rules, 2017 (G.O.(Ms) No.149, Housing and Urban Development, 31.07.2026) [Housing and Urban Development department, 2026-08-03]",
+   "title": "Tamil Nadu Government Gazette Extraordinary No.338, Part III Section 1(a), 2026: amendments to the Tamil Nadu Change of Land Use (Agriculture to Non-Agriculture Purposes in Non-Planning Areas) Rules, 2017 (G.O.(Ms) No.149, Housing and Urban Development, 31.07.2026)",
+   "department": "Housing and Urban Development",
+   "jurisdiction": "TN",
+   "season": "",
+   "order": "",
+   "order_label": "",
+   "amends": "",
+   "replaced_by": "",
+   "in_force": "unknown",
+   "date": "2026-08-03",
+   "source_url": "https://www.stationeryprinting.tn.gov.in/extraordinary/2026/338_Ex_III_1a_2026.pdf",
+   "file": "tn-gazette-338-2026-change-of-land-use.pdf",
+   "chunk_index": 1,
+   "chunk_count": 2,
    "read_by": "text"
   }
  ]
