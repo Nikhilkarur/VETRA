@@ -1,0 +1,72 @@
+05 Nov 18:31 fetch eval/cache/hand/list6.jsonl
+got 2, failed 1
+05 Nov 18:32 fetch eval/cache/hand/list5a.jsonl
+got 9, failed 3
+05 Nov 18:32 build finance AP
+finance: 3078 chunks indexed (75 new, 0 removed)
+05 Nov 18:36 build finance TN
+finance: 3945 chunks indexed (867 new, 0 removed)
+05 Nov 18:49 build agriculture AP
+agriculture: 6896 chunks indexed (0 new, 0 removed)
+05 Nov 18:51 build agriculture TN
+agriculture: 7914 chunks indexed (1018 new, 0 removed)
+05 Nov 19:46 aspect questions AP TN
+05 Nov 21:53 still missing 85
+05 Nov 22:01 test run paused by owner's call: too slow, moving to data
+05 Nov 22:17 fetch picks AP
+got 132, failed 4
+05 Nov 22:20 fetch picks TN
+got 32, failed 4
+05 Nov 22:21 order links
+05 Nov 22:21 build finance AP
+finance: 4679 chunks indexed (734 new, 0 removed)
+05 Nov 22:52 build agriculture AP
+agriculture: 9319 chunks indexed (1405 new, 0 removed)
+05 Nov 23:46 build finance TN
+finance: 4851 chunks indexed (172 new, 0 removed)
+05 Nov 23:59 build agriculture TN
+agriculture: 9698 chunks indexed (379 new, 0 removed)
+06 Nov 00:10 rate lines
+06 Nov 00:12 data queue finished
+06 Nov 00:12 fetch TN orders by file name
+got 115, failed 0
+named 0, dropped 2
+06 Nov 00:15 order links
+06 Nov 00:15 build agriculture TN
+pytesseract.pytesseract.TesseractError: (3221225477, '')
+06 Nov 01:40 build finance TN
+finance: 4851 chunks indexed (0 new, 0 removed)
+06 Nov 01:42 build agriculture AP
+agriculture: 9698 chunks indexed (0 new, 0 removed)
+06 Nov 01:46 build finance AP
+finance: 4858 chunks indexed (7 new, 0 removed)
+06 Nov 01:49 rate lines
+06 Nov 01:52 second data queue finished
+06 Nov 01:52 name TN orders from OCR
+named 28, dropped 27
+06 Nov 01:52 build agriculture TN
+agriculture: 12588 chunks indexed (2890 new, 0 removed)
+06 Nov 02:56 order links
+06 Nov 02:56 rate lines
+06 Nov 02:57 third data queue finished
+06 Nov 07:04 build agriculture TN
+agriculture: 12797 chunks indexed (209 new, 0 removed)
+06 Nov 07:14 build finance TN
+finance: 5073 chunks indexed (215 new, 0 removed)
+06 Nov 07:23 rate lines
+06 Nov 07:25 fourth data queue finished
+06 Nov 07:25 build finance AP
+finance: 5260 chunks indexed (187 new, 0 removed)
+06 Nov 07:31 build agriculture AP
+agriculture: 12828 chunks indexed (31 new, 0 removed)
+06 Nov 07:36 rate lines
+06 Nov 07:37 fifth data queue finished
+06 Nov 08:01 build agriculture AP
+agriculture: 12934 chunks indexed (106 new, 0 removed)
+06 Nov 08:07 build agriculture AP finished
+06 Nov 08:07 build finance AP
+finance: 5273 chunks indexed (13 new, 0 removed)
+06 Nov 08:11 build finance AP finished
+06 Nov 08:19 build agriculture AP
+agriculture: 15138 chunks indexed (2204 new, 0 removed)
+06 Nov 08:52 build agriculture AP finished

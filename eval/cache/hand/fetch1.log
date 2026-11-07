@@ -1,0 +1,3 @@
+FAIL https://aperc.gov.in/admin/upload/PressNoteRSTFY202627English.pdf: ValueError
+FAIL https://apfinance.gov.in/...Bud@et26-27/documents/Gender-Budget.pdf: ConnectionError
+got 12, failed 2

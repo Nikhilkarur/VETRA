@@ -1,0 +1,5 @@
+FAIL https://www.tnagrisnet.tn.gov.in/solar.pdf: HTTPError
+FAIL https://www.tnagrisnet.tn.gov.in/Approvedratesofsolarpumps.pdf: HTTPError
+FAIL https://aed.tn.gov.in/static/assets/Rain_water_Harvesting_measures.pdf: ConnectionError
+FAIL https://aed.tn.gov.in/media/filer_public/e2/06/e2066ba4-b3aa-4b5e-9a88-64c52b160aaf/solar_: ConnectionError
+FAIL https://aed.tn.gov.in/static/assets/DivisionwiseMachinery.pdf: ChunkedEncodingError

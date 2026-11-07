@@ -1,0 +1,9 @@
+FAIL https://horticulture.ap.gov.in/assets/pdfs/Areaexpanison.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/Rejuvnation.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/Waterresources.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/MIDH_AAP-2025-26.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/OilPalm-Application.pdf: HTTPError
+FAIL https://apvatis.apct.gov.in/GSTPortal/GST_Portal/Help_docs/Various_RC.pdf: ValueError
+FAIL https://apvatis.apct.gov.in/GSTPortal/GST_Portal/Help_docs/DocumentsRequiredForVAT.pdf: ValueError
+FAIL https://cdma.ap.gov.in/sites/default/files/FAQs.pdf: HTTPError
+FAIL https://s3.ap-south-1.amazonaws.com/apfinance.gov.in/uploads/index-docs/AP_Socio_Economic_: HTTPError

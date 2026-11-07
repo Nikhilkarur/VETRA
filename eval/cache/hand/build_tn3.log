@@ -1,0 +1,368 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (711 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (745 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1082 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (588 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (648 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (958 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1444 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1374 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (647 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (559 > 512). Running this sequence through the model will result in indexing errors
+Multiple definitions in dictionary at byte 0x300ab1 for key /Info
+Multiple definitions in dictionary at byte 0x300abe for key /Info
+Multiple definitions in dictionary at byte 0x300acb for key /Info
+Multiple definitions in dictionary at byte 0x388b7e for key /Info
+Multiple definitions in dictionary at byte 0x388b8b for key /Info
+Multiple definitions in dictionary at byte 0x388b98 for key /Info
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (714 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (547 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (523 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1858 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (602 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (730 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1063 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (624 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (804 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1789 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1203 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (721 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (523 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (823 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (824 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (802 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (567 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (842 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (560 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (528 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (625 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (515 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (4429 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (974 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (959 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (547 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (768 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1489 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (656 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (691 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1204 > 512). Running this sequence through the model will result in indexing errors
+Multiple definitions in dictionary at byte 0x1cc5144 for key /Info
+Multiple definitions in dictionary at byte 0x1cc5152 for key /Info
+Multiple definitions in dictionary at byte 0x1cc5160 for key /Info
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1410 > 512). Running this sequence through the model will result in indexing errors
+Multiple definitions in dictionary at byte 0x64b197 for key /Info
+Multiple definitions in dictionary at byte 0x64b1a4 for key /Info
+Multiple definitions in dictionary at byte 0x64b1b1 for key /Info
+Multiple definitions in dictionary at byte 0x32fd89 for key /Info
+Multiple definitions in dictionary at byte 0x32fd96 for key /Info
+Multiple definitions in dictionary at byte 0x32fda3 for key /Info
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (839 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (711 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (993 > 512). Running this sequence through the model will result in indexing errors
+  warning  Tamil Nadu Agriculture and Farmers Welfare Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture and Farmers Welfare Department: Policy Note 2026-27: 24 of 321 pages read as a scan, 9 figures marked unclear
+  warning  Tamil Nadu Agriculture Budget Speech 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Budget Speech 2026-27: 2 of 97 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Revenue and Disaster Management Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Revenue and Disaster Management Department: Policy Note 2026-27: 2 of 232 pages read as a scan, 0 figures marked unclear
+  warning  Coimbatore District Collector press note, 03.08.2026 - PMFBY Kharif 2026-27 enrolment: 1 of 1 pages read as a scan, 1 figures marked unclear
+  warning  G.O.(Ms).No.256 Agriculture (AP2) Dt.19.11.2019 - PMFBY Rabi 2019-20 notification: 14 of 48 pages read as a scan, 113 figures marked unclear
+  warning  Revenue and Disaster Management G.O. No.9 - sanction of Rs.35.09 crore for crop damage, North East Monsoon 2021: no date, so it can't be checked for validity
+  warning  Tamil Nadu Fisheries and Fishermen Welfare Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Fisheries and Fishermen Welfare Department: Policy Note 2026-27: 7 of 173 pages read as a scan, 1 figures marked unclear
+  warning  Tamil Nadu Dairy Development Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Dairy Development Department: Policy Note 2026-27: 2 of 132 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Co-operation Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Co-operation Department: Policy Note 2026-27: 4 of 154 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Food and Consumer Protection Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Food and Consumer Protection Department: Policy Note 2026-27: 20 of 196 pages read as a scan, 17 figures marked unclear
+  warning  Tamil Nadu Water Resources Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Water Resources Department: Policy Note 2026-27: 6 of 235 pages read as a scan, 45 figures marked unclear
+  warning  Tamil Nadu Energy Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Energy Department: Policy Note 2026-27: 4 of 181 pages read as a scan, 0 figures marked unclear
+  warning  G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to victims of natural calamities: 24 of 24 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu Animal Husbandry Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Animal Husbandry Department: Policy Note 2026-27: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Animal Husbandry Department: Policy Note 2026-27: 2 of 163 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Environment, Climate Change and Forests Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Environment, Climate Change and Forests Department: Policy Note 2026-27: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Environment, Climate Change and Forests Department: Policy Note 2026-27: 7 of 104 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Handlooms, Handicrafts, Textiles and Khadi Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Handlooms, Handicrafts, Textiles and Khadi Department: Policy Note 2026-27: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Handlooms, Handicrafts, Textiles and Khadi Department: Policy Note 2026-27: 10 of 212 pages read as a scan, 14 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: micro irrigation first instalment: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: micro irrigation first instalment: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: micro irrigation first instalment: 22 of 22 pages read as a scan, 136 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Horticulture Mission first instalment: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Horticulture Mission first instalment: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Horticulture Mission first instalment: 6 of 6 pages read as a scan, 61 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: Paramparagat Krishi Vikas Yojana: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: Paramparagat Krishi Vikas Yojana: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: Paramparagat Krishi Vikas Yojana: 20 of 20 pages read as a scan, 130 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: agroforestry: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: agroforestry: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: agroforestry: 16 of 16 pages read as a scan, 62 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Mission on Natural Farming: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Mission on Natural Farming: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Mission on Natural Farming: 28 of 28 pages read as a scan, 103 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: PM-RKVY first instalment: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: PM-RKVY first instalment: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: PM-RKVY first instalment: 49 of 49 pages read as a scan, 475 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Bamboo Mission: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Bamboo Mission: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: National Bamboo Mission: 10 of 10 pages read as a scan, 27 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: oil palm mission: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: oil palm mission: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2026-27: oil palm mission: 11 of 11 pages read as a scan, 179 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: CM-MKMKS scheme: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: CM-MKMKS scheme: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: CM-MKMKS scheme: 20 of 20 pages read as a scan, 47 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: Uzhavar Nala Sevai Maiyam: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: Uzhavar Nala Sevai Maiyam: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: Uzhavar Nala Sevai Maiyam: 18 of 18 pages read as a scan, 21 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: KAVIADP: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: KAVIADP: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: KAVIADP: 89 of 89 pages read as a scan, 129 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: pandal vegetables: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: pandal vegetables: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: State Horticulture Development Scheme: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: State Horticulture Development Scheme: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: State Horticulture Development Scheme: 31 of 31 pages read as a scan, 61 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: jackfruit mission: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: jackfruit mission: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: jackfruit mission: 6 of 6 pages read as a scan, 12 figures marked unclear
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: nutrition farming mission: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: nutrition farming mission: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agriculture Department G.O. 2025-26: nutrition farming mission: 22 of 22 pages read as a scan, 70 figures marked unclear
+  warning  Tamil Nadu Agricultural Engineering: rainwater harvesting measures: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agricultural Engineering: rainwater harvesting measures: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agricultural Engineering: rainwater harvesting measures: 108 of 108 pages read as a scan, 50 figures marked unclear
+  warning  Tamil Nadu Agricultural Engineering: solar fencing pamphlet: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agricultural Engineering: solar fencing pamphlet: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Agricultural Engineering: solar fencing pamphlet: 4 of 4 pages read as a scan, 20 figures marked unclear
+  warning  Tamil Nadu Agricultural Engineering: division-wise machinery: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agricultural Engineering: division-wise machinery: in_force not set; it will be treated as unknown
+  warning  tnagrisnet.tn.gov.in: Open: no date, so it can't be checked for validity
+  warning  tnagrisnet.tn.gov.in: Open: in_force not set; it will be treated as unknown
+  warning  tnagrisnet.tn.gov.in: Open: no date, so it can't be checked for validity
+  warning  tnagrisnet.tn.gov.in: Open: in_force not set; it will be treated as unknown
+  warning  tnagrisnet.tn.gov.in: Open: no date, so it can't be checked for validity
+  warning  tnagrisnet.tn.gov.in: Open: in_force not set; it will be treated as unknown
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-cashew-board-GO-(231).pdf: no date, so it can't be checked for validity
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-cashew-board-GO-(231).pdf: in_force not set; it will be treated as unknown
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-cashew-board-GO-(231).pdf: 6 of 6 pages read as a scan, 8 figures marked unclear
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-Cashew-board-GO-(243).pdf: no date, so it can't be checked for validity
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-Cashew-board-GO-(243).pdf: in_force not set; it will be treated as unknown
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-Cashew-board-GO-(243).pdf: 10 of 10 pages read as a scan, 20 figures marked unclear
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-Cashew-board-GO-(244).pdf: no date, so it can't be checked for validity
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-Cashew-board-GO-(244).pdf: in_force not set; it will be treated as unknown
+  warning  tnhorticulture.tn.gov.in: 2025-26-TN-Cashew-board-GO-(244).pdf: 4 of 4 pages read as a scan, 12 figures marked unclear
+  warning  tnrd.tn.gov.in: New Guidelines for the Registration of Contractor for works contract - 2026-27: no date, so it can't be checked for validity
+  warning  tnrd.tn.gov.in: New Guidelines for the Registration of Contractor for works contract - 2026-27: in_force not set; it will be treated as unknown
+  warning  tnrd.tn.gov.in: New Guidelines for the Registration of Contractor for works contract - 2026-27: 15 of 15 pages read as a scan, 4 figures marked unclear
+  warning  tnrd.tn.gov.in: Application form for the Registration of Contractor: no date, so it can't be checked for validity
+  warning  tnrd.tn.gov.in: Application form for the Registration of Contractor: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.89 of 2023, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.89 of 2023, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.89 of 2023, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 31 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.77 of 2023, tnagrisnet.tn.gov.in: Agriculture - Farmers Welfare- Tamil Nadu State Agricultural Marketing Board- Budget Announcement of the Hon’‘ble Minister for Agriculture — Farmers Welfare for the year : in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.77 of 2023, tnagrisnet.tn.gov.in: Agriculture - Farmers Welfare- Tamil Nadu State Agricultural Marketing Board- Budget Announcement of the Hon’‘ble Minister for Agriculture — Farmers Welfare for the year : 10 of 10 pages read as a scan, 8 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.299 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare Department - Coconut Development Board - Implementation of the scheme “Replanting and Rejuvenation of Coconut Gardens in Tamil Nadu during: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.299 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare Department - Coconut Development Board - Implementation of the scheme “Replanting and Rejuvenation of Coconut Gardens in Tamil Nadu during: 6 of 6 pages read as a scan, 11 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.286 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.286 of 2022, tnagrisnet.tn.gov.in: 24 of 24 pages read as a scan, 1080 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.284 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.284 of 2022, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 2 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.277 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare — Coconut Development Board assisted scheme 2022-23 - “Integrated farming in Coconut holding for productivity improvement - Laying out of : in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.277 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare — Coconut Development Board assisted scheme 2022-23 - “Integrated farming in Coconut holding for productivity improvement - Laying out of : 4 of 4 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.259 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.259 of 2022, tnagrisnet.tn.gov.in: 16 of 16 pages read as a scan, 12 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.228 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.228 of 2022, tnagrisnet.tn.gov.in: 24 of 24 pages read as a scan, 128 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.227 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.227 of 2022, tnagrisnet.tn.gov.in: 48 of 48 pages read as a scan, 176 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.224 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare — Implementation of Coconut Development Board assisted schemes during the year 2022-2023 for a sum of Rs.1315.63 lakh — Administrative app: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.224 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare — Implementation of Coconut Development Board assisted schemes during the year 2022-2023 for a sum of Rs.1315.63 lakh — Administrative app: 6 of 6 pages read as a scan, 80 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.181 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - State Level and District Level Crop Yield Competition for the year 2021-2022 - Financial sanction for a sum of Rs.20.85 lakh - towards d: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.181 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - State Level and District Level Crop Yield Competition for the year 2021-2022 - Financial sanction for a sum of Rs.20.85 lakh - towards d: 18 of 18 pages read as a scan, 200 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.153 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Administrative Approval and Financial Sanction for a sum of Rs.7.246 Crore for implementation of “Sustainable Cotton Cultivation Mission: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.153 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Administrative Approval and Financial Sanction for a sum of Rs.7.246 Crore for implementation of “Sustainable Cotton Cultivation Mission: 14 of 14 pages read as a scan, 16 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.151 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.151 of 2022, tnagrisnet.tn.gov.in: 28 of 28 pages read as a scan, 8 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.63 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Tamil Nadu Agricultural University - Announcement made by the Hon’ble Chief Minister - Sanction of tuition fee, hostel fee and all other: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.63 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Tamil Nadu Agricultural University - Announcement made by the Hon’ble Chief Minister - Sanction of tuition fee, hostel fee and all other: 6 of 6 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.45 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.45 of 2022, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.14 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Implementation of Price Support Scheme (PSS) - Procurement of Greengram through National Agricultural Cooperative Marketing Federation o: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.14 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Implementation of Price Support Scheme (PSS) - Procurement of Greengram through National Agricultural Cooperative Marketing Federation o: 8 of 8 pages read as a scan, 9 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.13 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.13 of 2022, tnagrisnet.tn.gov.in: 8 of 8 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.4 of 2022, tnagrisnet.tn.gov.in: Agriculture Marketing and Agri Business — Notification of Tamil Nadu State Agricultural Marketing Board as State Level Supporter, Marketing Committees as Primary Procurem: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.4 of 2022, tnagrisnet.tn.gov.in: Agriculture Marketing and Agri Business — Notification of Tamil Nadu State Agricultural Marketing Board as State Level Supporter, Marketing Committees as Primary Procurem: 6 of 6 pages read as a scan, 31 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.20 of 2022, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.20 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.20 of 2022, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 13 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.15 of 2022, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.15 of 2022, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.12 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare Department — Announcement No.40 “Creation of 500 Farm Ponds to catch the rainwater in farm lands — Included in KAGVVT scheme during 2021-2: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.12 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare Department — Announcement No.40 “Creation of 500 Farm Ponds to catch the rainwater in farm lands — Included in KAGVVT scheme during 2021-2: 4 of 4 pages read as a scan, 8 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.7 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Agriculture Budget Announcement 2021-2022 - Recognition of Best Performing Farmers in new local Agri Techniques and Machineries, Organic: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.7 of 2022, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Agriculture Budget Announcement 2021-2022 - Recognition of Best Performing Farmers in new local Agri Techniques and Machineries, Organic: 12 of 12 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.230 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.230 of 2021, tnagrisnet.tn.gov.in: 10 of 10 pages read as a scan, 16 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.188 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Administrative Approval and Financial Sanction for a sum of Rs.11.00 crore for implementation of “Sustainable Cotton Cultivation Mission: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.188 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Administrative Approval and Financial Sanction for a sum of Rs.11.00 crore for implementation of “Sustainable Cotton Cultivation Mission: 12 of 12 pages read as a scan, 16 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.184 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.184 of 2021, tnagrisnet.tn.gov.in: 76 of 76 pages read as a scan, 1049 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.172 of 2021, tnagrisnet.tn.gov.in: Agriculture & Farmers Welfare Department — Agriculture Budget Speech of 2021-2022- Announcement - Sanction for a sum of Rs.299.976 Lakh for implementing the Scheme of “Sp: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.172 of 2021, tnagrisnet.tn.gov.in: Agriculture & Farmers Welfare Department — Agriculture Budget Speech of 2021-2022- Announcement - Sanction for a sum of Rs.299.976 Lakh for implementing the Scheme of “Sp: 10 of 10 pages read as a scan, 17 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.160 of 2021, tnagrisnet.tn.gov.in: — Agriculture & Farmers Welfare — Agriculture Budget Speech of 2021-22 and Demand No.5 — Announcements - Integrated Horticulture Development Scheme 2021-2022 — Sanction f: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.160 of 2021, tnagrisnet.tn.gov.in: — Agriculture & Farmers Welfare — Agriculture Budget Speech of 2021-22 and Demand No.5 — Announcements - Integrated Horticulture Development Scheme 2021-2022 — Sanction f: 8 of 8 pages read as a scan, 41 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.162 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.162 of 2021, tnagrisnet.tn.gov.in: 8 of 8 pages read as a scan, 10 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.163 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.163 of 2021, tnagrisnet.tn.gov.in: 8 of 8 pages read as a scan, 12 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.162 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Implementation of Project proposals of Department of Agriculture under RKVY-RAFTAAR for the year 2021-2022 - Financial sanction accorded: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.162 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Implementation of Project proposals of Department of Agriculture under RKVY-RAFTAAR for the year 2021-2022 - Financial sanction accorded: 54 of 54 pages read as a scan, 86 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.152 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.152 of 2021, tnagrisnet.tn.gov.in: 8 of 8 pages read as a scan, 115 figures marked unclear
+  warning  Tamil Nadu G.O.(D).No.171 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Agriculture Budget Announcement 2021-2022 - Sugarcane - Special Scheme for Sugarcane Production — Sanction of Rs.2.00 Crore - Orders — I: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(D).No.171 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Agriculture Budget Announcement 2021-2022 - Sugarcane - Special Scheme for Sugarcane Production — Sanction of Rs.2.00 Crore - Orders — I: 10 of 10 pages read as a scan, 7 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.155 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Implementation of Projects of Department of Horticulture and Plantation Crops under RKVY-RAFTAAR / NADP for the year 2021-2022 - Financi: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.155 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare - Implementation of Projects of Department of Horticulture and Plantation Crops under RKVY-RAFTAAR / NADP for the year 2021-2022 - Financi: 26 of 26 pages read as a scan, 43 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.152 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare Department — Distribution of Tarpaulin to reduce Post Harvest Losses in food grains — Financial Sanction for Rs.5.00 crore - Accorded - Or: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.152 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare Department — Distribution of Tarpaulin to reduce Post Harvest Losses in food grains — Financial Sanction for Rs.5.00 crore - Accorded - Or: 6 of 6 pages read as a scan, 2 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.136 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare — Agriculture Budget Announcement 2021-2022 - Sugarcane — Extension of the scheme of Transitional Production Incentive to sugarcane farmer: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.136 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers Welfare — Agriculture Budget Announcement 2021-2022 - Sugarcane — Extension of the scheme of Transitional Production Incentive to sugarcane farmer: 10 of 10 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu G.O.(D).No.143 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(D).No.143 of 2021, tnagrisnet.tn.gov.in: 20 of 20 pages read as a scan, 140 figures marked unclear
+  warning  Tamil Nadu G.O.(D).No.141 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(D).No.141 of 2021, tnagrisnet.tn.gov.in: 24 of 24 pages read as a scan, 948 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.112 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.112 of 2021, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.108 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers’ Welfare - Sugarcane - Fixation of mill-wise Fair and Remunerative Price (FRP) for 2019-2020 and 2020-2021 sugar seasons in respect of sugar mills: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.108 of 2021, tnagrisnet.tn.gov.in: Agriculture and Farmers’ Welfare - Sugarcane - Fixation of mill-wise Fair and Remunerative Price (FRP) for 2019-2020 and 2020-2021 sugar seasons in respect of sugar mills: 8 of 8 pages read as a scan, 20 figures marked unclear
+  warning  Tamil Nadu G.O.(D).No.102 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(D).No.102 of 2021, tnagrisnet.tn.gov.in: 16 of 16 pages read as a scan, 16 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.68 of 2021, tnagrisnet.tn.gov.in: Agriculture — Implementation of Price Support Scheme(PSS) - Procurement of Copra under Price Support Scheme for the year 2021 through National Agricultural Cooperative Ma: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.68 of 2021, tnagrisnet.tn.gov.in: Agriculture — Implementation of Price Support Scheme(PSS) - Procurement of Copra under Price Support Scheme for the year 2021 through National Agricultural Cooperative Ma: 6 of 6 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.53 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.53 of 2021, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 2 figures marked unclear
+  warning  Tamil Nadu G.O.(D).No.36 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(D).No.36 of 2021, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 15 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.6 of 2021, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.6 of 2021, tnagrisnet.tn.gov.in: 10 of 10 pages read as a scan, 37 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.323 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.323 of 2020, tnagrisnet.tn.gov.in: 8 of 8 pages read as a scan, 78 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.293 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.293 of 2020, tnagrisnet.tn.gov.in: 12 of 12 pages read as a scan, 38 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.280 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.280 of 2020, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.278 of 2020, tnagrisnet.tn.gov.in: Agriculture — Implementation of Targeting Rice Fallow Area (TRFA) - Oilseeds under National Food Security Mission (Oil Seeds & Oil Palm) during the year 2020 - 2021 Admin: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.278 of 2020, tnagrisnet.tn.gov.in: Agriculture — Implementation of Targeting Rice Fallow Area (TRFA) - Oilseeds under National Food Security Mission (Oil Seeds & Oil Palm) during the year 2020 - 2021 Admin: 16 of 16 pages read as a scan, 40 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.253 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.253 of 2020, tnagrisnet.tn.gov.in: 16 of 16 pages read as a scan, 65 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.252 of 2020, tnagrisnet.tn.gov.in: Agriculture - National Food Security Mission (Oilseeds & Oilpalm) - Revalidation of unspent balance of Rs.319.560 lakh pertaining to 2019-2020 and authorization to utiliz: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.252 of 2020, tnagrisnet.tn.gov.in: Agriculture - National Food Security Mission (Oilseeds & Oilpalm) - Revalidation of unspent balance of Rs.319.560 lakh pertaining to 2019-2020 and authorization to utiliz: 4 of 4 pages read as a scan, 3 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.246 of 2020, tnagrisnet.tn.gov.in: Agriculture — Sugarcane — Extension of the scheme of Transitional Production Incentive to sugarcane farmers 2019-20 crushing season - Sanction of Rs.126.65 Crore (Rupees : in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.246 of 2020, tnagrisnet.tn.gov.in: Agriculture — Sugarcane — Extension of the scheme of Transitional Production Incentive to sugarcane farmers 2019-20 crushing season - Sanction of Rs.126.65 Crore (Rupees : 10 of 10 pages read as a scan, 13 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.228 of 2020, tnagrisnet.tn.gov.in: Agriculture—National Food Security Mission (Oilseeds & Oilpalm)- Revalidation of unspent balance of Rs.319.560 lakh pertaining to 2019-2020 and authorization to utilize t: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.228 of 2020, tnagrisnet.tn.gov.in: Agriculture—National Food Security Mission (Oilseeds & Oilpalm)- Revalidation of unspent balance of Rs.319.560 lakh pertaining to 2019-2020 and authorization to utilize t: 18 of 18 pages read as a scan, 722 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.160 of 2020, tnagrisnet.tn.gov.in: Agriculture Department - Starting up of Agriculture and Allied Science Courses in the Institutions Deemed to be Universities - No Objection Certificate to be obtained fro: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.160 of 2020, tnagrisnet.tn.gov.in: Agriculture Department - Starting up of Agriculture and Allied Science Courses in the Institutions Deemed to be Universities - No Objection Certificate to be obtained fro: 8 of 8 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.151 of 2020, tnagrisnet.tn.gov.in: Agriculture - Cotton - Administrative approval and financial sanction for Implementation of Tamil Nadu Cotton Cultivation Mission during 2020-2021 - Orders - Issued. Agri: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.151 of 2020, tnagrisnet.tn.gov.in: Agriculture - Cotton - Administrative approval and financial sanction for Implementation of Tamil Nadu Cotton Cultivation Mission during 2020-2021 - Orders - Issued. Agri: 8 of 8 pages read as a scan, 10 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.143 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.143 of 2020, tnagrisnet.tn.gov.in: 12 of 12 pages read as a scan, 9 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.144 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.144 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 31 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.145 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.145 of 2020, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.138 of 2020, tnagrisnet.tn.gov.in: Agriculture - Pradhan Mantri Fasal Bima Yojana (PMFBY) - Settlement of ll instalment State Share of premium subsidy for Horticulture Crops for Kharif, 2019 Season — Sanct: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.138 of 2020, tnagrisnet.tn.gov.in: Agriculture - Pradhan Mantri Fasal Bima Yojana (PMFBY) - Settlement of ll instalment State Share of premium subsidy for Horticulture Crops for Kharif, 2019 Season — Sanct: 4 of 4 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.137 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.137 of 2020, tnagrisnet.tn.gov.in: 8 of 8 pages read as a scan, 84 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.131 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.131 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.131 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.118 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.118 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.118 of 2020, tnagrisnet.tn.gov.in: 14 of 14 pages read as a scan, 59 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.96 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.96 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.96 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 2 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.98 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.98 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.98 of 2020, tnagrisnet.tn.gov.in: 12 of 12 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.95 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.95 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.95 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.90 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.90 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.90 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 12 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.81 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.81 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.81 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 2 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.77 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.77 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.77 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.76 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.76 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.76 of 2020, tnagrisnet.tn.gov.in: 10 of 10 pages read as a scan, 311 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.75 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.75 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.75 of 2020, tnagrisnet.tn.gov.in: 10 of 10 pages read as a scan, 69 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.67 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.67 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.67 of 2020, tnagrisnet.tn.gov.in: 6 of 6 pages read as a scan, 5 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.59 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.59 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.59 of 2020, tnagrisnet.tn.gov.in: 14 of 14 pages read as a scan, 672 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.60 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.60 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.60 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 7 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.48 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.48 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.48 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 1 figures marked unclear
+  warning  Tamil Nadu G.O.(2d).No.22 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(2d).No.22 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(2d).No.22 of 2020, tnagrisnet.tn.gov.in: 2 of 2 pages read as a scan, 2 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.19 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.19 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.19 of 2020, tnagrisnet.tn.gov.in: 16 of 16 pages read as a scan, 147 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.3 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.3 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.3 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 3 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.4 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.4 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.4 of 2020, tnagrisnet.tn.gov.in: 4 of 4 pages read as a scan, 3 figures marked unclear
+  warning  Tamil Nadu G.O.(Ms).No.2 of 2020, tnagrisnet.tn.gov.in: no date, so it can't be checked for validity
+  warning  Tamil Nadu G.O.(Ms).No.2 of 2020, tnagrisnet.tn.gov.in: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu G.O.(Ms).No.2 of 2020, tnagrisnet.tn.gov.in: 2 of 2 pages read as a scan, 1 figures marked unclear
+  warning  Tamil Nadu horticulture department: 2025-26-NHM-First-Instalment-GO-(167): no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: 2025-26-NHM-First-Instalment-GO-(167): in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: 2025-26-NHM-First-Instalment-GO-(167): 88 of 88 pages read as a scan, 377 figures marked unclear
+  warning  Tamil Nadu horticulture department: 2025-26-Micro-Irrigation-First-Instalment-GO-(127): no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: 2025-26-Micro-Irrigation-First-Instalment-GO-(127): in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: 2025-26-Micro-Irrigation-First-Instalment-GO-(127): 19 of 19 pages read as a scan, 51 figures marked unclear
+  warning  Tamil Nadu horticulture department: 2025-26-Micro-Irrigation-Second-Instalment-GO-(301): no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: 2025-26-Micro-Irrigation-Second-Instalment-GO-(301): in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: 2025-26-Micro-Irrigation-Second-Instalment-GO-(301): 7 of 7 pages read as a scan, 26 figures marked unclear
+  warning  Tamil Nadu horticulture department: GO-136-ADM-App-2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: GO-136-ADM-App-2026-27: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: GO-136-ADM-App-2026-27: 4 of 4 pages read as a scan, 25 figures marked unclear
+  warning  Tamil Nadu horticulture department: 5--PN-Agriculture-2026-27-TAM-WEB: no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: 5--PN-Agriculture-2026-27-TAM-WEB: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: 5--PN-Agriculture-2026-27-TAM-WEB: 24 of 413 pages read as a scan, 4 figures marked unclear
+  warning  Tamil Nadu horticulture department: 5--PN-Agriculture-2026-27-ENG-WEB: no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: 5--PN-Agriculture-2026-27-ENG-WEB: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: 5--PN-Agriculture-2026-27-ENG-WEB: 24 of 321 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu horticulture department: Agri-BS-English-2026: no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: Agri-BS-English-2026: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu horticulture department: Agri-BS-Tamil-2026: no date, so it can't be checked for validity
+  warning  Tamil Nadu horticulture department: Agri-BS-Tamil-2026: in_force not set; it will be treated as unknown
+130 documents, 6305 chunks
+filed 130 document and link records; rejected 0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 6326.25it/s]
+Batches:   0%|          | 0/181 [00:00<?, ?it/s]Batches:   1%|          | 1/181 [00:12<38:50, 12.95s/it]Batches:   1%|          | 2/181 [00:23<33:54, 11.37s/it]Batches:   2%|▏         | 3/181 [00:32<30:27, 10.27s/it]Batches:   2%|▏         | 4/181 [00:44<32:36, 11.05s/it]Batches:   3%|▎         | 5/181 [00:56<33:51, 11.54s/it]Batches:   3%|▎         | 6/181 [01:07<32:39, 11.19s/it]Batches:   4%|▍         | 7/181 [01:18<32:51, 11.33s/it]Batches:   4%|▍         | 8/181 [01:31<34:05, 11.82s/it]Batches:   5%|▍         | 9/181 [01:42<32:36, 11.38s/it]Batches:   6%|▌         | 10/181 [01:51<30:25, 10.67s/it]Batches:   6%|▌         | 11/181 [02:02<30:55, 10.91s/it]Batches:   7%|▋         | 12/181 [02:16<32:53, 11.68s/it]Batches:   7%|▋         | 13/181 [02:25<30:48, 11.00s/it]Batches:   8%|▊         | 14/181 [02:36<30:33, 10.98s/it]Batches:   8%|▊         | 15/181 [02:48<31:27, 11.37s/it]Batches:   9%|▉         | 16/181 [02:57<28:40, 10.43s/it]Batches:   9%|▉         | 17/181 [03:10<30:52, 11.30s/it]Batches:  10%|▉         | 18/181 [03:23<32:11, 11.85s/it]Batches:  10%|█         | 19/181 [03:35<32:14, 11.94s/it]Batches:  11%|█         | 20/181 [03:45<30:36, 11.40s/it]Batches:  12%|█▏        | 21/181 [03:56<29:47, 11.17s/it]Batches:  12%|█▏        | 22/181 [04:06<28:36, 10.79s/it]Batches:  13%|█▎        | 23/181 [04:17<28:57, 11.00s/it]Batches:  13%|█▎        | 24/181 [04:30<30:06, 11.51s/it]Batches:  14%|█▍        | 25/181 [04:44<32:00, 12.31s/it]Batches:  14%|█▍        | 26/181 [04:56<31:23, 12.15s/it]Batches:  15%|█▍        | 27/181 [05:07<30:33, 11.91s/it]Batches:  15%|█▌        | 28/181 [05:18<29:31, 11.58s/it]Batches:  16%|█▌        | 29/181 [05:28<28:04, 11.09s/it]Batches:  17%|█▋        | 30/181 [05:43<30:24, 12.08s/it]Batches:  17%|█▋        | 31/181 [05:54<29:34, 11.83s/it]Batches:  18%|█▊        | 32/181 [06:08<30:51, 12.42s/it]Batches:  18%|█▊        | 33/181 [06:19<29:37, 12.01s/it]Batches:  19%|█▉        | 34/181 [06:30<29:06, 11.88s/it]Batches:  19%|█▉        | 35/181 [06:40<27:21, 11.24s/it]Batches:  20%|█▉        | 36/181 [06:52<27:53, 11.54s/it]Batches:  20%|██        | 37/181 [07:09<31:13, 13.01s/it]Batches:  21%|██        | 38/181 [07:22<31:33, 13.24s/it]Batches:  22%|██▏       | 39/181 [07:36<31:19, 13.23s/it]Batches:  22%|██▏       | 40/181 [07:48<30:12, 12.86s/it]Batches:  23%|██▎       | 41/181 [07:59<29:02, 12.45s/it]Batches:  23%|██▎       | 42/181 [08:14<30:50, 13.31s/it]Batches:  24%|██▍       | 43/181 [08:28<30:49, 13.40s/it]Batches:  24%|██▍       | 44/181 [08:40<29:47, 13.04s/it]Batches:  25%|██▍       | 45/181 [08:54<29:52, 13.18s/it]Batches:  25%|██▌       | 46/181 [09:06<28:42, 12.76s/it]Batches:  26%|██▌       | 47/181 [09:16<26:39, 11.94s/it]Batches:  27%|██▋       | 48/181 [09:30<27:56, 12.60s/it]Batches:  27%|██▋       | 49/181 [09:43<28:01, 12.74s/it]Batches:  28%|██▊       | 50/181 [09:57<28:50, 13.21s/it]Batches:  28%|██▊       | 51/181 [10:11<29:10, 13.46s/it]Batches:  29%|██▊       | 52/181 [10:22<27:24, 12.75s/it]Batches:  29%|██▉       | 53/181 [10:33<25:54, 12.15s/it]Batches:  30%|██▉       | 54/181 [10:48<27:37, 13.05s/it]Batches:  30%|███       | 55/181 [11:03<28:52, 13.75s/it]Batches:  31%|███       | 56/181 [11:18<29:12, 14.02s/it]Batches:  31%|███▏      | 57/181 [11:33<29:31, 14.29s/it]Batches:  32%|███▏      | 58/181 [11:42<26:07, 12.75s/it]Batches:  33%|███▎      | 59/181 [11:55<25:49, 12.70s/it]Batches:  33%|███▎      | 60/181 [12:10<26:56, 13.36s/it]Batches:  34%|███▎      | 61/181 [12:22<26:10, 13.08s/it]Batches:  34%|███▍      | 62/181 [12:36<26:36, 13.41s/it]Batches:  35%|███▍      | 63/181 [12:50<26:29, 13.47s/it]Batches:  35%|███▌      | 64/181 [13:01<24:51, 12.75s/it]Batches:  36%|███▌      | 65/181 [13:15<25:22, 13.13s/it]Batches:  36%|███▋      | 66/181 [13:30<26:23, 13.77s/it]Batches:  37%|███▋      | 67/181 [13:43<25:33, 13.45s/it]Batches:  38%|███▊      | 68/181 [13:57<25:47, 13.69s/it]Batches:  38%|███▊      | 69/181 [14:08<23:43, 12.71s/it]Batches:  39%|███▊      | 70/181 [14:19<22:31, 12.17s/it]Batches:  39%|███▉      | 71/181 [14:32<23:06, 12.60s/it]Batches:  40%|███▉      | 72/181 [14:46<23:35, 12.99s/it]Batches:  40%|████      | 73/181 [15:01<24:31, 13.63s/it]Batches:  41%|████      | 74/181 [15:16<25:03, 14.05s/it]Batches:  41%|████▏     | 75/181 [15:28<23:24, 13.25s/it]Batches:  42%|████▏     | 76/181 [15:39<22:26, 12.83s/it]Batches:  43%|████▎     | 77/181 [15:54<22:58, 13.25s/it]Batches:  43%|████▎     | 78/181 [16:08<23:31, 13.71s/it]Batches:  44%|████▎     | 79/181 [16:22<23:21, 13.74s/it]Batches:  44%|████▍     | 80/181 [16:38<23:56, 14.23s/it]Batches:  45%|████▍     | 81/181 [16:48<21:34, 12.94s/it]Batches:  45%|████▌     | 82/181 [17:03<22:36, 13.70s/it]Batches:  46%|████▌     | 83/181 [17:22<24:44, 15.15s/it]Batches:  46%|████▋     | 84/181 [17:34<23:20, 14.44s/it]Batches:  47%|████▋     | 85/181 [17:50<23:38, 14.77s/it]Batches:  48%|████▊     | 86/181 [18:01<21:38, 13.67s/it]Batches:  48%|████▊     | 87/181 [18:14<21:05, 13.46s/it]Batches:  49%|████▊     | 88/181 [18:28<21:10, 13.66s/it]Batches:  49%|████▉     | 89/181 [18:42<21:11, 13.82s/it]Batches:  50%|████▉     | 90/181 [18:58<21:40, 14.30s/it]Batches:  50%|█████     | 91/181 [19:12<21:19, 14.22s/it]Batches:  51%|█████     | 92/181 [19:22<19:27, 13.12s/it]Batches:  51%|█████▏    | 93/181 [19:36<19:17, 13.15s/it]Batches:  52%|█████▏    | 94/181 [19:51<19:55, 13.74s/it]Batches:  52%|█████▏    | 95/181 [20:03<19:16, 13.45s/it]Batches:  53%|█████▎    | 96/181 [20:18<19:36, 13.84s/it]Batches:  54%|█████▎    | 97/181 [20:30<18:41, 13.35s/it]Batches:  54%|█████▍    | 98/181 [20:41<17:24, 12.58s/it]Batches:  55%|█████▍    | 99/181 [20:54<17:21, 12.71s/it]Batches:  55%|█████▌    | 100/181 [21:09<18:09, 13.45s/it]Batches:  56%|█████▌    | 101/181 [21:23<17:48, 13.36s/it]Batches:  56%|█████▋    | 102/181 [21:37<18:13, 13.84s/it]Batches:  57%|█████▋    | 103/181 [21:49<16:58, 13.06s/it]Batches:  57%|█████▋    | 104/181 [22:00<16:11, 12.62s/it]Batches:  58%|█████▊    | 105/181 [22:15<16:55, 13.36s/it]Batches:  59%|█████▊    | 106/181 [22:30<17:01, 13.62s/it]Batches:  59%|█████▉    | 107/181 [22:46<17:40, 14.32s/it]Batches:  60%|█████▉    | 108/181 [23:02<18:04, 14.86s/it]Batches:  60%|██████    | 109/181 [23:12<16:12, 13.51s/it]Batches:  61%|██████    | 110/181 [23:25<15:51, 13.39s/it]Batches:  61%|██████▏   | 111/181 [23:41<16:33, 14.19s/it]Batches:  62%|██████▏   | 112/181 [23:54<15:46, 13.72s/it]Batches:  62%|██████▏   | 113/181 [24:09<16:11, 14.28s/it]Batches:  63%|██████▎   | 114/181 [24:23<15:40, 14.04s/it]Batches:  64%|██████▎   | 115/181 [24:34<14:26, 13.12s/it]Batches:  64%|██████▍   | 116/181 [24:49<14:42, 13.58s/it]Batches:  65%|██████▍   | 117/181 [25:02<14:32, 13.63s/it]Batches:  65%|██████▌   | 118/181 [25:16<14:29, 13.80s/it]Batches:  66%|██████▌   | 119/181 [25:30<14:06, 13.65s/it]Batches:  66%|██████▋   | 120/181 [25:40<12:56, 12.73s/it]Batches:  67%|██████▋   | 121/181 [25:52<12:29, 12.50s/it]Batches:  67%|██████▋   | 122/181 [26:08<13:08, 13.36s/it]Batches:  68%|██████▊   | 123/181 [26:22<13:13, 13.69s/it]Batches:  69%|██████▊   | 124/181 [26:34<12:32, 13.21s/it]Batches:  69%|██████▉   | 125/181 [26:47<12:07, 12.98s/it]Batches:  70%|██████▉   | 126/181 [26:57<11:03, 12.07s/it]Batches:  70%|███████   | 127/181 [27:08<10:33, 11.72s/it]Batches:  71%|███████   | 128/181 [27:24<11:30, 13.04s/it]Batches:  71%|███████▏  | 129/181 [27:36<11:04, 12.77s/it]Batches:  72%|███████▏  | 130/181 [27:47<10:25, 12.27s/it]Batches:  72%|███████▏  | 131/181 [27:58<10:00, 12.02s/it]Batches:  73%|███████▎  | 132/181 [28:11<10:01, 12.28s/it]Batches:  73%|███████▎  | 133/181 [28:20<08:59, 11.24s/it]Batches:  74%|███████▍  | 134/181 [28:34<09:30, 12.14s/it]Batches:  75%|███████▍  | 135/181 [28:45<08:55, 11.64s/it]Batches:  75%|███████▌  | 136/181 [28:56<08:41, 11.59s/it]Batches:  76%|███████▌  | 137/181 [29:10<08:56, 12.19s/it]Batches:  76%|███████▌  | 138/181 [29:19<08:06, 11.32s/it]Batches:  77%|███████▋  | 139/181 [29:28<07:19, 10.48s/it]Batches:  77%|███████▋  | 140/181 [29:38<07:06, 10.41s/it]Batches:  78%|███████▊  | 141/181 [29:50<07:14, 10.86s/it]Batches:  78%|███████▊  | 142/181 [30:01<07:11, 11.06s/it]Batches:  79%|███████▉  | 143/181 [30:10<06:34, 10.37s/it]Batches:  80%|███████▉  | 144/181 [30:22<06:43, 10.89s/it]Batches:  80%|████████  | 145/181 [30:33<06:28, 10.80s/it]Batches:  81%|████████  | 146/181 [30:42<06:03, 10.39s/it]Batches:  81%|████████  | 147/181 [30:51<05:40, 10.00s/it]Batches:  82%|████████▏ | 148/181 [31:03<05:47, 10.53s/it]Batches:  82%|████████▏ | 149/181 [31:13<05:28, 10.28s/it]Batches:  83%|████████▎ | 150/181 [31:24<05:28, 10.61s/it]Batches:  83%|████████▎ | 151/181 [31:30<04:37,  9.25s/it]Batches:  84%|████████▍ | 152/181 [31:41<04:41,  9.70s/it]Batches:  85%|████████▍ | 153/181 [31:51<04:36,  9.88s/it]Batches:  85%|████████▌ | 154/181 [31:58<04:03,  9.02s/it]Batches:  86%|████████▌ | 155/181 [32:06<03:46,  8.72s/it]Batches:  86%|████████▌ | 156/181 [32:18<04:02,  9.69s/it]Batches:  87%|████████▋ | 157/181 [32:27<03:42,  9.27s/it]Batches:  87%|████████▋ | 158/181 [32:36<03:37,  9.46s/it]Batches:  88%|████████▊ | 159/181 [32:46<03:26,  9.39s/it]Batches:  88%|████████▊ | 160/181 [32:55<03:16,  9.35s/it]Batches:  89%|████████▉ | 161/181 [33:05<03:08,  9.44s/it]Batches:  90%|████████▉ | 162/181 [33:14<02:56,  9.31s/it]Batches:  90%|█████████ | 163/181 [33:20<02:33,  8.54s/it]Batches:  91%|█████████ | 164/181 [33:28<02:23,  8.42s/it]Batches:  91%|█████████ | 165/181 [33:36<02:09,  8.10s/it]Batches:  92%|█████████▏| 166/181 [33:43<01:58,  7.90s/it]Batches:  92%|█████████▏| 167/181 [33:52<01:54,  8.16s/it]Batches:  93%|█████████▎| 168/181 [33:59<01:41,  7.80s/it]Batches:  93%|█████████▎| 169/181 [34:08<01:36,  8.08s/it]Batches:  94%|█████████▍| 170/181 [34:15<01:25,  7.73s/it]Batches:  94%|█████████▍| 171/181 [34:22<01:14,  7.48s/it]Batches:  95%|█████████▌| 172/181 [34:26<01:00,  6.73s/it]Batches:  96%|█████████▌| 173/181 [34:31<00:49,  6.15s/it]Batches:  96%|█████████▌| 174/181 [34:36<00:39,  5.70s/it]Batches:  97%|█████████▋| 175/181 [34:41<00:33,  5.59s/it]Batches:  97%|█████████▋| 176/181 [34:48<00:29,  5.82s/it]Batches:  98%|█████████▊| 177/181 [34:53<00:22,  5.75s/it]Batches:  98%|█████████▊| 178/181 [34:59<00:17,  5.74s/it]Batches:  99%|█████████▉| 179/181 [35:01<00:09,  4.78s/it]Batches:  99%|█████████▉| 180/181 [35:04<00:04,  4.13s/it]Batches: 100%|██████████| 181/181 [35:05<00:00,  3.18s/it]Batches: 100%|██████████| 181/181 [35:05<00:00, 11.63s/it]
+agriculture: 12588 chunks indexed (2890 new, 0 removed)

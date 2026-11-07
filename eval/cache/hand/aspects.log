@@ -1,0 +1,133 @@
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 6077.68it/s]
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 2661.83it/s]
+AP|income support answer
+AP|crop loans answer
+AP|loan waiver answer
+AP|KCC answer
+AP|tenant farmers answer
+AP|crop insurance answer
+AP|disaster relief answer
+AP|drought norms answer
+AP|wildlife damage answer
+AP|seed answer
+AP|fertiliser answer
+AP|pesticide rules answer
+AP|soil health answer
+AP|natural farming answer
+AP|drip answer
+AP|farm ponds answer
+AP|wells answer
+AP|farm power answer
+AP|solar pumps answer
+AP|machinery answer
+AP|custom hiring answer
+AP|drones answer
+AP|horticulture answer
+AP|plantation answer
+AP|sericulture answer
+AP|animal husbandry answer
+AP|dairy answer
+AP|fisheries answer
+AP|poultry answer
+AP|MSP answer
+AP|state bonus answer
+AP|procurement answer
+AP|markets answer
+AP|eNAM answer
+AP|storage answer
+AP|food processing answer
+AP|FPOs answer
+AP|land records answer
+AP|tenancy law answer
+AP|land conversion answer
+AP|land acquisition answer
+AP|extension answer
+AP|helplines answer
+AP|farmer pension answer
+AP|grievance answer
+AP|budget answer
+AP|debt answer
+AP|finance commission answer
+AP|stamp duty answer
+AP|gift deed answer
+AP|guideline value answer
+AP|vehicle tax answer
+AP|two wheeler answer
+AP|profession tax answer
+AP|state GST answer
+AP|land revenue answer
+AP|electricity duty answer
+AP|property tax answer
+AP|tax arrears answer
+AP|women concessions answer
+AP|pensions not_covered
+AP|widow pension answer
+AP|direct benefits answer
+AP|state loans answer
+AP|SHGs answer
+AP|cooperatives answer
+AP|MSME answer
+AP|housing answer
+TN|income support answer
+TN|crop loans answer
+TN|loan waiver answer
+TN|KCC answer
+TN|tenant farmers answer
+TN|crop insurance answer
+TN|disaster relief answer
+TN|drought norms answer
+TN|wildlife damage answer
+TN|seed answer
+TN|fertiliser answer
+TN|pesticide rules answer
+TN|soil health answer
+TN|natural farming answer
+TN|drip answer
+TN|farm ponds answer
+TN|wells answer
+TN|farm power answer
+TN|solar pumps answer
+TN|machinery answer
+TN|custom hiring answer
+TN|drones answer
+TN|horticulture answer
+TN|plantation answer
+TN|sericulture answer
+TN|animal husbandry answer
+TN|dairy answer
+TN|fisheries answer
+TN|poultry answer
+TN|MSP answer
+TN|state bonus answer
+TN|procurement answer
+TN|markets answer
+TN|eNAM answer
+TN|storage answer
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8383.13it/s]
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 6191.59it/s]
+AP|fertiliser RuntimeError openai/gpt-oss-120b
+AP|fertiliser RuntimeError openai/gpt-oss-120b
+AP|fertiliser RuntimeError openai/gpt-oss-120b
+AP|fertiliser RuntimeError openai/gpt-oss-120b
+AP|fertiliser MISSED
+AP|sericulture RuntimeError openai/gpt-oss-120b
+AP|sericulture RuntimeError openai/gpt-oss-120b
+AP|sericulture RuntimeError openai/gpt-oss-120b
+AP|sericulture RuntimeError openai/gpt-oss-120b
+AP|sericulture MISSED
+AP|fisheries RuntimeError openai/gpt-oss-120b
+AP|fisheries RuntimeError openai/gpt-oss-120b
+AP|fisheries RuntimeError openai/gpt-oss-120b
+AP|fisheries RuntimeError openai/gpt-oss-120b
+AP|fisheries MISSED
+AP|markets answer
+AP|eNAM RuntimeError openai/gpt-oss-120b
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 5981.00it/s]
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 4191.03it/s]
+AP|fertiliser answer
+AP|sericulture answer
+AP|fisheries answer
+AP|eNAM answer
+AP|storage answer
+AP|food processing RuntimeError openai/gpt-oss-120b
+AP|food processing RuntimeError openai/gpt-oss-120b

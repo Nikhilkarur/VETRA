@@ -1,0 +1,16 @@
+[
+ {
+  "q": "floods spoiled my paddy, irrigated field 1 hectare. how much govt gives",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "For paddy crop loss due to floods on an irrigated field of 1 hectare, the government provides financial assistance under the enhanced scale of assistance applied to natural calamities in Andhra Pradesh [E1][E7][E12]. \n\n* **Assistance Amount:** The government provides **Rs.25,000 per hectare** for paddy crop loss, which is the rate paid and not an addition to the SDRF figure [E1].\n* **Condition:** Relief is provided for crops damaged by 33% or more due to notified natural calamities such as floods [E7].",
+  "models": null
+ },
+ {
+  "q": "How do I apply for Annadatha Sukhibhava money?",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Eligible farmers and landless cultivators can receive financial assistance under the Annadatha Sukhibhava scheme through direct benefit transfers to their bank accounts, managed via validated databases, e-KYC, and ground-truthing rather than a separate direct application process [E1][E2][E3][E11]. \n\nTo ensure you are considered and receive the benefit, keep the following conditions, steps, and rules in mind:\n\n* **Landowner Farmer Families:** You must collectively own cultivable land with a minimum of 10 cents, or cultivate ROFR lands [E3]. Your details are taken from the Revenue Department’s Web Land data, and verification is done at the village level by RSK in-charges and Village Revenue Officers [E5][E11]. \n* **Landless Tenant Farmers:** You must be an active landless cultivator who has taken land on lease for agriculture, horticulture, or sericulture crops, with a lease extent meeting the minimum economical lease requirements (such as 1 acre for general crops, 0.5 acres for vegetables, flowers, and fodder, or 0.1 acres for betel vine) [E5][E10]. You must hold a CCRC card and have crop booking registered in the current season's e-Panta data [E11]. Tenant lists are displayed at respective Rythu Seva Kendrams (RSKs) to invite claims and objections [E1][E11].\n* **Mandatory e-KYC:** e-KYC must be completed for all validated beneficiaries, as it is mandatory for extending the benefit [E1][E11].\n* **Bank Account and Seeding:** Ensure your bank account is functional, your Aadhaar number is seeded, and your NPCI status is active for the Direct Benefit Transfer (DBT) [E6]. For joint land holdings, the benefit goes to the family member with the highest land holding or, if equal, the eldest member [E3].\n* **Grievances:** If you have complaints or need assistance, you can reach out to the Toll-Free Number 155251, managed by the RTGS Department and the Department of Agriculture [E1][E6].",
+  "models": null
+ }
+]

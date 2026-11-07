@@ -1,0 +1,56 @@
+[
+ {
+  "q": "Within how many days must crop insurance premium refunds be processed under the mango weather insurance?",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "Under the mango weather insurance scheme, premium refunds must be processed within 45 days of the cut-off date [E2][E5]. If these refunds are delayed, the insurance company is required to accept the application and process claims following the normal procedure [E2][E5]."
+ },
+ {
+  "q": "If I want to change my insured crop under PMFBY in Andhra Pradesh, by when must I tell the insurer?",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "You must inform the insurer of any change of insured crop **at least 2 working days before the enrollment‑cut‑off date for that season**[E1][E5][E4]. \n\n**What you need to do**\n\n* **When to act:** Submit the change request ≥ 2 working days before the cut‑off date for enrollment/premium debiting (the same deadline that applies to all farmers in the scheme)[E2][E3]. \n* **How to submit:** \n  * Loanee farmers – give a written request to the concerned bank branch (the KCC loan‑issuing bank)[E5]. \n  * Non‑loanee farmers – inform the insurance company through the original enrolment channel (bank, CSC, insurance intermediary, or directly)[E3]. \n* **Documents required:** \n  * Written request (letter or application). \n  * Sowing certificate issued by the village/sub‑district official (or self‑declaration where allowed)[E3][E4]. \n  * Any difference in premium must be paid (if the new crop’s premium is higher) or will be refunded (if lower)[E5][E3]. \n* **Other points:** \n  * The change is only allowed if the new crop is also a notified crop for the state/UT[E1]. \n  * If the premium already debited is higher, the excess will be refunded; if lower, the additional amount will be debited to the farmer’s account[E5][E3]. \n\nFollow these steps before the 2‑day deadline to have your crop insurance updated successfully."
+ },
+ {
+  "q": "What service charge do banks get for enrolling farmers under PMFBY in Andhra Pradesh?",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "Banks receive a service charge equal to 4 % of the farmer’s share of the premium for each enrolment, paid by the insurance company [E1][E2]. \n\nThe central PMFBY Operational Guidelines specify that this 4 % commission is to be paid to bank headquarters and branches within 30 days of finalising the enrolment statistics, and it applies uniformly across all states, including Andhra Pradesh. [E1]\n\nNot in our documents yet: Andhra Pradesh's own rules on PMFBY bank service charges. Anything above comes from central government documents, so please also check with your local office."
+ },
+ {
+  "q": "What's the minimum number of pickings to assess red chilli yield in Kharif in Andhra Pradesh?",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The minimum number of pickings required to assess red‑chilli yield in the Kharif season in Andhra Pradesh is **three pickings**[E1]. \n\n**What you need to do**\n\n- **Where:** In the districts notified for red‑chilli (Ananthapuram, Prakasam, NTR, Kurnool, Guntur, Bapatla, Palnadu and Nandyal) the state order mandates three pickings for the crop‑cutting experiments (CCEs)[E1]. \n- **How:** \n  1. Conduct at least three separate pickings of the red‑chilli crop during the Kharif season. \n  2. Record each picking in the CCE‑Agri App as required by the central PMFBY guidelines. \n  3. Ensure the CCEs are observed jointly by the insurance company, primary worker, supervisory officer and the farmer, with signatures as prescribed. \n- **If fewer than three pickings are possible:** The central operational guidelines allow a statistical factor to be applied to extrapolate yield when the required number of pickings is not met[E2]. \n- **Compliance:** Follow the timelines and validation procedures set out in the Andhra Pradesh order to avoid penalties and ensure claim settlement based on the final yield data[E1][E3]. \n\nThus, to meet the insurance requirement for red‑chilli in Kharif, make sure three pickings are carried out and documented in each of the listed districts."
+ },
+ {
+  "q": "How long do insurance companies get to process RWBCIS applications before they're approved automatically?",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The assistant is busy right now. Please try again in a minute. These documents look most relevant:\n- G.O.Ms.No.81 Agri&Coop Dt.04.09.2024 - Restructured Weather Based Crop Insurance Scheme (RWBCIS) 2024-25 & 2025-26 [Agriculture & Cooperation department, 2024-09-04] [E1]\n- Restructured Weather Based Crop Insurance Scheme (RWBCIS) - Revised Operational Guidelines [central government] [E3]\n- G.O.Ms.No.35 Agri&Coop Dt.06.07.2026 - RWBCIS - Extension of notification to 2026-27 on voluntary enrolment [Agriculture & Cooperation department, 2026-07-06] [E5]\n- Pradhan Mantri Fasal Bima Yojana: Affordable Crop Insurance for Every Farmer (PIB, August 2026) [central government, 2026-08-29] [E14]"
+ },
+ {
+  "q": "floods spoiled my paddy, irrigated field 1 hectare. how much govt gives",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The Government provides input subsidy assistance for paddy crop loss due to floods based on specific state norms and damage thresholds [E1][E3][E13].\n\nTo receive assistance, the following conditions and steps apply:\n* **Damage Threshold:** Relief is provided for crops damaged by 33% and above [E1][E3].\n* **Eligibility and Procedure:** District authorities and joint teams (including Agriculture, Revenue, and other department officials) inspect and enumerate the damage (>33%) after a preliminary report is made by the District DAOs [E3]. Assistance is subject to the condition that no other assistance or subsidy has been availed of or is eligible under any other Government Scheme [E4].\n\nSome details were left out because they couldn't be checked against the documents."
+ },
+ {
+  "q": "How much is given to repair a partly damaged fishing net?",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "Under government orders for natural calamity relief in Andhra Pradesh, the financial assistance to repair a partly damaged fishing net is Rs.5,000 [E1]. The older state-adopted SDRF/NDRF norms listed Rs.3,000 for the same repair [E3]."
+ },
+ {
+  "q": "What premium do farmers pay for mango under the weather insurance in Andhra Pradesh?",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "- RWBCIS (weather based): the farmer pays 5% of the sum insured. [E1]\n\nUnder the Restructured Weather Based Crop Insurance Scheme in Andhra Pradesh, farmers need to pay a premium of 5% based on the sum insured of the mango crop, though the farmer's share is limited further if the actuarial rate is lower [E6]. Enrolment is voluntary [E1]."
+ },
+ {
+  "q": "My groundnut crop was destroyed by a cyclone in Andhra Pradesh. How much relief per hectare?",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "For a groundnut crop destroyed by a cyclone in Andhra Pradesh, the enhanced relief is Rs.25,000 per hectare [E1]. This relief is provided by the state government for crops damaged more than 33% due to notified natural calamities like cyclones [E1][E7]."
+ }
+]

@@ -1,0 +1,37 @@
+Q: My groundnut crop failed because of drought. What compensation can I get and how do I claim it?
+[answer / deep]
+Under the Pradhan Mantri Fasal Bima Yojana (PMFBY), if your groundnut crop fails due to drought, you may be eligible for compensation through mid-season adversity payments if expected yields drop below 50% [E2], prevented sowing payouts if dry spells prevent planting [E10], or final yield loss and localized calamity claims calculated via the National Crop Insurance Portal (NCIP) [E2][E8][E10].
+
+## Who qualifies
+This scheme is implemented by the Government of Tamil Nadu on a voluntary basis for all farmers, including both loanee and non-loanee farmers [E6]. Central operational guidelines state that for mid-season adversity due to severe drought or prolonged dry spells between 30 days after sowing and up to 15 days before harvest, insurance cover is available if notified by the State Government, provided the expected yield in the Notified Insurance Unit is less than 50% of the normal yield [E2]. If a dry spell at the beginning of the season prevents sowing or germination in more than 75% of the area of an Insurance Unit, a prevented sowing benefit is payable at the rate of 25% of the Sum Insured [E10]. For example, on a sum insured of Rs. 20,000 per hectare for groundnut, the prevented sowing benefit works out to Rs. 5,000 per hectare in affected units [E10].
+
+## How to claim
+Loss assessments and intermediate events like prevented sowing or mid-season adversity are surveyed by a District Level Joint Committee (DLJC) chaired by the District Collector or District Magistrate, and details must be entered or uploaded on the NCIP by the District Level Monitoring Committee or the concerned Insurance Company [E8][E10]. Actual yield data and loss estimations are verified, approved, or reverted by the insurance company and state authorities on the NCIP, where admissible claims are calculated and made available for tracking [E8].
+======
+Q: Groundnut crop lost to heavy rain, how do I get relief in Tamil Nadu?
+[answer / deep]
+## Crop loss reporting
+Under the central PMFBY operational guidelines, when crops suffer damage from perils such as unseasonal or heavy rains (which can trigger localized calamities, mid-season adversity, prevented sowing, or post-harvest loss depending on the timing), you must report the loss within 72 hours of the occurrence [E4][E6][E7][E18][E22][E23]. The primary modes of intimation are directly through the mobile "Crop Insurance App" or by calling the centralized toll-free number of the Krishi Rakshak Portal & Helpline (14447) [E2][E6][E18]. Alternatively, you may submit your intimation through your bank branch, local agriculture department, or district officials, who must forward it to the insurance company within the next 48 hours [E6][E18]. Your intimation must include details such as your name, affected land parcel or survey number, insured crop, acreage affected, application number on the National Crop Insurance Portal (NCIP), mobile number, and your bank account details (KCC account for loanee farmers or savings bank account for non-loanee farmers) [E2]. For post-harvest losses specifically, if your crop was cut, bundled, or in a 'cut and spread' condition left to dry for up to two weeks, you can report it via the app with latitude, longitude, and pictures [E2][E4][E21].
+
+## District agriculture officer
+The District Level Joint Committee (DLJC), chaired by the District Collector or District Magistrate, includes the District Agriculture, Horticulture, or Revenue Officer acting as the convener [E11]. For damage assessments, a joint survey is conducted by a team comprising an insurance-company-appointed loss assessor, the block-level agriculture officer, a primary worker from the agriculture or revenue department, and you as the concerned farmer [E3][E15]. The block-level agriculture officer participates directly in these individual field-level loss assessments using the mobile app provided by the Government of India [E3][E15]. Furthermore, if your affected area is less than 25% of the total insured area, the individual-level loss assessment is carried out jointly by the loss assessor, the block-level agriculture officer, and yourself [E19].
+
+## PMFBY crop insurance claim
+To process your claim, the insurance company appoints a loss assessor within 48 hours of receiving your intimation [E3][E7][E15][E19]. For individual loss assessments, the assessment must be done after a lapse of a minimum of 7 days to check for crop revival chances and must be completed within the next 14 days [E15]. The finalized loss data and admissible claims are uploaded onto the NCIP, and claim payments are to be completed by the insurance company within 15 days from receiving the loss assessment report, subject to the receipt of the full government share of the subsidy (the second tranche from both the State and Central Governments) [E17][E19]. Individual farm-level claim amounts are calculated using the formula: Sum Insured $\times$ Affected Area out of total Insured Area (%) $\times$ Estimated Crop Damage in Affected Area (%) (multiplied by the Indemnity Level for localized calamities) [E2][E18].
+
+Not in our documents yet: Tamil Nadu's own rules on crop loss reporting. Anything above comes from central government documents, so please also check with your local office.
+Some details were left out because they couldn't be checked against the documents.
+======
+Q: How can a groundnut farmer claim crop loss relief?
+[answer / standard]
+A groundnut farmer can claim crop loss relief under the Pradhan Mantri Fasal Bima Yojana (PMFBY) by reporting the loss within 72 hours through the "Crop Insurance App" or the centralized toll-free number of the Krishi Rakshak Portal & Helpline (14447) [E8, relied upon central scheme guidelines]. 
+
+To successfully claim relief, you must meet the following conditions and follow these steps based on the documents:
+
+* **Eligibility Condition:** You must have paid your insurance premium (or had it debited from your account) before the occurrence of the insured peril; mere loan sanction or disbursement without premium receipt before the event does not make you eligible [E5][E11].
+* **Intimation Details:** Your loss intimation must include your name, the affected land parcel or survey number-wise insured crop and acreage affected, your Farmer’s Application Number on the NCIP, your mobile number, and your KCC Account Number (for loanee farmers) or savings bank account number (for non-loanee farmers) [E9].
+* **Reporting Channels:** While the primary mode of reporting is the "Crop Insurance App" or the toll-free number (14447), you may also forward the intimation through your bank branch, local agriculture department, or district officials [E8]. You can use the mobile app to report incidents with longitude/latitude details and pictures [E8][E9].
+* **Loss Assessment:** A loss assessor will be appointed within 48 hours of receiving the information, and the assessment must be completed within the next 10 days [E2]. Claim settlement and payment to farmers are to be completed within 15 days of receiving the loss assessment report, subject to the receipt of the premium [E2].
+
+Not in our documents yet: Tamil Nadu's own rules on Pradhan Mantri Fasal Bima Yojana. Anything above comes from central government documents, so please also check with your local office.
+======

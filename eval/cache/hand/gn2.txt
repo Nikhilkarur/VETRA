@@ -1,0 +1,29 @@
+[answer / deep]
+Under the Pradhan Mantri Fasal Bima Yojana (PMFBY), implemented on a voluntary basis for all farmers in Tamil Nadu, you can receive financial support for crop failure due to drought through mid-season adversity relief if expected yields drop below 50% [E7][E13], or through yield-based claims calculated via yield shortfall [E3].
+
+## On-Account Payment for Mid-Season Adversity
+If adverse seasonal conditions like prolonged dry spells or severe drought occur between 30 days from the start of the onset of sowing and up to 15 days before the onset of harvest, and expected yields are likely to be less than 50% of the normal yield, you may be eligible for an "On-Account" payment [E13].
+- **Conditions:** This add-on cover must be notified by the State/UT Government, and the affected Insurance Unit's expected yield must be less than 50% of the normal yield determined from the immediately preceding 7 years of yield data [E13]. Mere loan disbursement or sanction without the receipt or debit of premium before the occurrence of the insured peril does not make a farmer eligible for a claim [E11].
+- **Payout:** Payment is made as 25% of the sum insured, and insurance coverage for that crop-IU ends upon this payment, meaning no other claim after this provision will be applicable even to those whose crops survived [E15].
+- **Rules applied:** This is a central scheme guideline implemented state-wide [E1][E7].
+
+## Yield-Based Claims
+
+- **Conditions:** You must have enrolled in the scheme and paid the required premium before the insured peril occurs, as mere loan sanction without premium debit does not qualify you [E11].
+- **Rules applied:** This is a central scheme guideline [E1].
+
+## How to Claim
+- **Intimation and Filing:** Intimation of crop losses is compulsory for individual insured farmers through various channels such as mobile, landline, or social media, providing your bank account number (loan account for loanee farmers, savings account for non-loanee farmers) or portal application number [E4][E14].
+- **Assessment and Settlement:** Loss assessors are appointed within 48 hours of receiving information, loss assessment is completed within the next 10 days, and claim settlement or payment is completed in the next 15 days, subject to receipt of the premium and the first installment of the subsidy [E10].
+
+Some details were left out because they couldn't be checked against the documents.
+[E1] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E2] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E3] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E4] Tamil Nadu Agriculture and Farmers Welfare Department: Policy Note 2026-27 [Agriculture an
+[E5] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E6] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E7] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E8] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+[E9] Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha
+verified: True | problems: None

@@ -1,0 +1,5 @@
+FAIL https://horticulture.ap.gov.in/assets/pdfs/CDP Notice for inviting proposals.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/APHIMS - Final RFP.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/OilPalm-Application.pdf: HTTPError
+FAIL https://horticulture.ap.gov.in/assets/pdfs/MIDH_AAP-2025-26.pdf: HTTPError
+got 132, failed 4

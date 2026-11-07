@@ -1,0 +1,711 @@
+{
+ "AP|income support": {
+  "q": "How much money does the state give farmers each year as income support, and when is it paid? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Under the scheme (formerly known as YSR Rythu Bharosa–PM Kisan and renamed to **Annadatha Sukhibhava - PM Kisan**), the Government of Andhra Pradesh provides eligible farmer families with financial assistance of **Rs. 20,000/- per year** [E2][E4][E17]. The official documents do not provide the exact dates or installment schedule for when the money is paid [E14].\n\n### Key Details, Conditions, and Eligibility\n\n* **Assistance Breakdown:**\n  * **Landholder farmer families** (who collectively own at least 10 cents of cultivable land) and **RoFR land cultivators** receive Rs. 20,000/- per year, which includes the Rs. 6,000/- per annum provided by the Government of India under PM-KISAN [E2].\n  * **Eligible landless tenant farmers/cultivators** receive the entire Rs. 20,000/- per year directly from the Andhra Pradesh state budget [E2].\n* **Family Unit:** A farmer family is defined as a husband, wife, and children [E2][E11]. Married children are treated as a separate unit [E11].\n* **Requirements for Tenant Farmers:** Tenant farmers must be landless active cultivators holding a Crop Cultivator Rights Card (CCRC) with crop booking registered in e-Panta for the current season [E11][E12].\n* **Mandatory Procedures:** \n  * Mandatory **e-KYC** is required for all validated beneficiaries [E12].\n  * Payments are credited directly to bank accounts via Direct Benefit Transfer (DBT), which requires an active Aadhaar-seeded functional bank account with active NPCI status [E13][E14].\n* **Exceptions / Exclusions:** Institutional landholders and families where one or more members hold or have held constitutional posts (among other specified higher economic status categories) are excluded [E11].\n* **Support & Queries:** Beneficiaries can track listings at local Rythu Seva Kendrams (RSKs) or raise grievances through the state toll-free helpline at **155251** [E12][E13][E15].",
+  "sources": [
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.79 Agri&Coop (Agri.II) Dt.02.09.2024 - Change of name of Schemes/Programmes (e-C",
+   "G.O.Ms.No.79 Agri&Coop (Agri.II) Dt.02.09.2024 - Change of name of Schemes/Programmes (e-C"
+  ]
+ },
+ "AP|crop loans": {
+  "q": "What is the interest rate on a crop loan for a small farmer here, and is there an interest subsidy? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "A small farmer in Andhra Pradesh taking a short-term crop loan through a Kisan Credit Card (KCC) receives a concessional base interest rate of 7% per annum for loans up to ₹3.00 lakh [E2]. Central and state interest subvention schemes can further reduce this rate—down to 4% per annum under the central scheme for prompt repayment [E3], and fully interest-free under the Andhra Pradesh state scheme for loans up to ₹1.00 lakh repaid on time [E10]. [E8]\n\n## Kisan Credit Card crop loan interest rate\nThe interest rate on a short-term agricultural loan issued through a Kisan Credit Card (KCC) is capped at a concessional rate of 7% per annum for loans up to ₹3.00 lakh per borrower per financial year [E2].\n\n- **Eligibility and Limits:** This rate applies to small farmers (defined as farmers with landholding of more than 1 hectare and up to 2 hectares) [E8], individual/joint owner-cultivators, tenant farmers, oral lessees, sharecroppers, and SHGs/JLGs [E11]. The concessional rate covers short-term crop loans and allied agricultural activities up to an overall limit of ₹3.00 lakh per annum [E1][E2].\n- **Lending Institutions:** It applies to loans disbursed by Public Sector Banks, private commercial banks (rural and semi-urban branches only), Small Finance Banks, Regional Rural Banks (RRBs), Cooperative Banks, and computerized Primary Agricultural Credit Societies (PACS) [E2].\n- **Conditions:** To prevent evergreening, banks mandate a minimum gap of seven days between the repayment of a previous loan cycle and the renewal/sanction of a new one [E6]. Full drawls in one go are avoided, and drawls are granted in installments [E6].\n- **Collateral Limits:** Margin/security requirements are waived for KCC limits up to ₹1.00 lakh [E13]. Banks may provide loans up to ₹3.00 lakh without collateral if there is a tie-up for recovery [E13].\n- **Framework:** This rule is governed by central government directions from the Ministry of Agriculture & Farmers' Welfare and the Reserve Bank of India (RBI) [E2][E8][E12].\n\n## Interest Subvention Scheme for farmers\nUnder the central Modified Interest Subvention Scheme (MISS) (applicable for FY 2025-26), the central government provides an upfront interest subvention of 1.5% per annum to eligible lending institutions to enable them to offer short-term crop loans up to ₹3.00 lakh at the 7% rate [E2].\n\n- **Prompt Repayment Incentive:** Farmers who repay their short-term crop loans promptly on or before the due date (up to a maximum period of one year from disbursement) receive an additional interest subvention of 3% per annum [E3]. This reduces the effective interest rate for prompt repayers to **4% per annum** [E3]. [E8] Farmers who repay after one year do not get this 3% incentive [E3].\n- **Post-Harvest Extension:** Small and marginal farmers storing their produce in accredited Warehousing Development Regulatory Authority (WDRA) warehouses against negotiable warehouse receipts can extend the interest subvention benefit for up to six months post-harvest at the same rate [E1].\n- **Natural Calamities:** If a crop loan is restructured due to natural calamities, the 1.5% subvention is available to banks for the first year [E5]. [E2] In severe natural calamities (decided by a High Level Committee), subvention is extended for the first three years or the entire period (up to five years), and affected farmers retain the 3% prompt repayment incentive [E5].\n- **Claims System:** All claim submissions by financial institutions are processed digitally through the Kisan Rin Portal (KRP) [E5][E6].\n- **Framework:** This is a central government scheme [E2][E12].\n\n## Interest subvention for small farmers\nIn addition to the central scheme, the State Government of Andhra Pradesh provides interest subsidies to further reduce the cost of borrowing:\n\n- **YSR Sunna Vaddi Panta Runalu (Zero Percent Interest Crop Loans):** Under state operational guidelines, Andhra Pradesh provides interest-free loans to all farmers who avail crop loans up to **₹1.00 lakh** and repay within the stipulated due date (maximum period of one year) [E10]. Upon the farmer paying the total principal and 4% interest to the bank on time, the State Government reimburses the 4% interest amount directly to the farmer's bank account via Direct Benefit Transfer (DBT/AEPS) through e-Kuber [E16]. Beneficiaries are verified against E-Crop booking details to ensure benefits reach actual cultivators [E20].\n- **Vaddee Leni Runalu (VLR):** The state budget documents outline Vaddee Leni Runalu (VLR) and pavala vaddi runalu, extending interest subsidies on crop loans up to **₹3.00 lakhs** [E18].\n- **Framework:** These additional interest subsidy benefits are governed by Andhra Pradesh state rules [E10][E18].\n\n## What changed\n- **July 2018:** RBI issued a Master Circular standardizing KCC credit limit calculations, 5-year validity periods, revolving cash credit sub-limits, and collateral waiver limits (up to ₹1.00 lakh without tie-up, ₹3.00 lakh with tie-up) [E8][E9][E13].\n- **June 2020:** The Government of Andhra Pradesh issued operational guidelines (G.O.Rt.No.464) establishing the YSR Sunna Vaddi Panta Runalu scheme (effective from Kharif 2019-20) to provide zero-percent interest crop loans for prompt repayments up to ₹1.00 lakh via direct benefit transfer of 4% interest reimbursement [E10][E15][E16].\n- **September 2023:** Mandatory digital claim processing was launched across financial institutions using the central Kisan Rin Portal (KRP) [E5].\n- **June 2025:** The central Department of Agriculture & Farmers' Welfare issued orders continuing the Modified Interest Subvention Scheme (MISS) for FY 2025-26, maintaining the 1.5% upfront subvention to banks, the 7% concessional cap, the 3% prompt repayment incentive (yielding 4% effective interest), the 7-day minimum gap for renewals, and mandatory RuPay KCC card issuance [E1][E2][E3][E6]. [E8]\n\nNot in our documents yet: Andhra Pradesh's own rules on Kisan Credit Card crop loan interest rate, Interest subvention for small farmers. Anything above comes from central government documents, so please also check with your local office.\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation",
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation",
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation",
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation",
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "G.O.Rt.No.464 Agri&Coop Dt.30.06.2020 - Operational Guidelines for YSR Sunna Vaddi Panta R",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "G.O.Rt.No.464 Agri&Coop Dt.30.06.2020 - Operational Guidelines for YSR Sunna Vaddi Panta R",
+   "G.O.Rt.No.464 Agri&Coop Dt.30.06.2020 - Operational Guidelines for YSR Sunna Vaddi Panta R",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "G.O.Rt.No.464 Agri&Coop Dt.30.06.2020 - Operational Guidelines for YSR Sunna Vaddi Panta R"
+  ]
+ },
+ "AP|loan waiver": {
+  "q": "Is there a crop loan waiver scheme running in this state now? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "There is no active crop loan waiver scheme running in Andhra Pradesh in the documents, which instead provide for interest-free crop loans, financial assistance, and crop insurance [E4][E12][E26].\n\n## Interest-free crop loans\nThe State Government implements the \"YSR-Sunna Vaddi Panta Runalu\" (Zero Percent Interest Crop Loans) Scheme to provide interest-free loans to farmers who avail crop loans up to Rs. 1.00 Lakh and repay them within the stipulated time of a maximum period of one year [E4]. This scheme has been in effect from Kharif 2019-20 onwards [E4]. Additionally, interest subsidies have been extended to crop loans up to Rs. 3.00 lakhs under the Vaddee Leni Runalu and pavala vaddi runalu programs [E26]. These rules are state-level measures by the Government of Andhra Pradesh [E4][E26].\n\n## Financial assistance and income support\nThe State Government implements the “Annadatha Sukhibhava–PM Kisan” scheme, which provides financial assistance of Rs. 20,000/- per farmer family per year [E12][E16]. This includes Rs. 6,000/- per annum per family provided by the central government under PM-KISAN for landholder farmer families who collectively own cultivable land with a minimum of 10 cents and farmer families cultivating ROFR lands, while landless cultivators receive the full Rs. 20,000/- per year from the state budget allocation [E16]. A farmer family is defined as a family comprising a husband, wife, and children, with married children considered as a separate unit [E14][E16]. Institutional landholders and certain higher economic status categories—such as former and present holders of constitutional posts—are excluded [E14]. This is a state-level scheme operating alongside central provisions [E12][E16].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Rt.No.464 Agri&Coop Dt.30.06.2020 - Operational Guidelines for YSR Sunna Vaddi Panta R",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]"
+  ]
+ },
+ "AP|KCC": {
+  "q": "How do I get a Kisan Credit Card and how much can I borrow? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "**How to apply**\n\n1. **Visit a participating bank** (commercial bank, RRB, small‑finance bank or cooperative) in your district – these institutions implement the KCC scheme nationwide [E5].\n2. **Submit the required documents** such as proof of ownership or tenancy, land‑holding records and a crop‑plan or scale‑of‑finance details as the bank will assess the limit based on the cropping pattern and land size [E6].\n3. **The bank will assess your eligibility** (owner cultivator, tenant farmer, share‑cropper, SHG/JLG member) and calculate the short‑term and term‑loan components [E6].\n4. **If approved, the bank issues a smart‑card cum debit card** (electronic KCC) which you can use for withdrawals, POS purchases, ATM, mobile‑banking etc. [E7][E8].\n\n**Maximum loan amount you can borrow**\n\n* **Other farmers** – the composite limit is the sum of a short‑term crop‑loan component and a term‑loan component, fixed for five years and increased by **10 % each year** for cost escalation [E4][E9].\n  * Example 1: A marginal farmer with 1 acre of paddy (scale of finance ₹11,000 per acre) plus a term‑loan of ₹7,00,000 results in a **maximum permissible limit of ₹11,09,000** [E1].\n  * Example 2: A farmer with 10 acres and multiple crops, with a term‑loan component of ₹70,000, receives a **maximum permissible limit of ₹1,33,000** [E2].\n  * Example 3: An illustration with a short‑term component of ₹15,730 and a term‑loan of ₹15,000 gives a **composite limit of about ₹36,000** [E10].\n* **Short‑term crop loans** are covered up to **₹3 lakh** under the Government’s interest‑subvention scheme [E3].\n\n**Key points to remember**\n\n* The limit is fixed for a **five‑year period** and may be revised if the district‑level technical committee changes the scale of finance or if you change cropping patterns [E4][E9].\n* The bank may require collateral if the total liability exceeds the drawable limit [E9].\n* The KCC card is a **revolving cash‑credit facility** for short‑term needs and a **term‑loan facility** for investment; withdrawals can be made via ATM, POS, mobile banking, BCs, etc. [E7][E12].\n\nNot in our documents yet: Andhra Pradesh's own rules on Kisan Credit Card application, Kisan Credit Card loan limit. Anything above comes from central government documents, so please also check with your local office.\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen",
+   "Master Circular on the Kisan Credit Card (KCC) Scheme (RBI, 04.07.2018) [central governmen"
+  ]
+ },
+ "AP|tenant farmers": {
+  "q": "I farm leased land as a tenant. Can I get crop loans and government benefits? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "As a tenant farmer in Andhra Pradesh, you are eligible for crop loans and government benefits, subject to specific conditions and procedural requirements [E1][E4][E5].\n\n## Who qualifies\nThis is governed by the state rules of Andhra Pradesh [E1][E4].\n\n- **Landless Status:** The tenant farmer or their family member must not own any agricultural, horticultural, or sericultural land of their own [E8].\n- **Exclusion of Family Leases:** Support will not be extended for lease agreements made within the family [E8].\n- **Minimum Lease Extent:** A single individual landless tenant must take a minimum lease area of 1 acre (0.4 Ha) for all agriculture, horticulture, and sericulture crops; 0.5 acres (0.2 Ha) for vegetables, flowers, and fodder crops; and 0.1 acres (0.04 Ha) for betel vine [E1].\n- **One Beneficiary per Family:** Irrespective of the size of the holding, the benefit will be extended to only one cultivator per landowner family between whom there is a mutual understanding [E1]. Only one tenant/cultivator will get the benefit along with landowner farmers [E1].\n- **Preference Order for Multiple Tenants:** In case of multiple tenants to a single landowner, preference is given to the ST tenant, followed by SC, BC, Minority, and OC tenants in that order [E1]. In scheduled areas, as per the statute, only tribal cultivators/tenants are recognized [E1].\n- **Multiple Agreements and Special Lands:** A landless tenant/cultivator having multiple lease agreements is eligible to get the benefit as a single unit [E1]. Cultivators cultivating lands of owners from excluded categories are eligible, and tenants cultivating Inam or endowment lands will be extended benefits as per recorded evidence available with the respective departments [E1].\n\n## Crop Cultivator Rights Card (CCRC)\nThis is a state rule under the Andhra Pradesh Crop Cultivator Rights Act, 2019 [E2][E18].\n\n- **Agreement Period:** The CCRC is an agreement executed between the landowner and the cultivator for a maximum period of 11 months in a crop year [E2][E18]. Agreements in the form of CCRC between family members are not allowed [E11].\n- **Procedure to Obtain:** Either the landowner or the cultivator intending to make an agreement for a particular crop year may obtain an unfilled preprinted CCRC from the respective Village Secretariat at any time during the crop year [E11]. The Village Revenue Officer or Village Volunteer shall facilitate bringing them together for signatures [E11]. The filled CCRC is handed over to the Village Secretariat, where the Village Revenue Officer countersigns it after verification with village revenue records [E11]. The signed CCRC is handed over to both the landowner and cultivator within 3 days of receipt [E11].\n- **Consent Methods:** The landowner may authorize any person in writing to sign on their behalf, or give consent through a video link recorded by the village secretariat (or other electronic media) as evidence, in which case a physical signature on the CCRC is not required [E11].\n- **Loan and Liability Conditions:** Under Section 5 of the Act, the cultivator is entitled to obtain crop loans from the state or central government, agricultural co-operative societies, scheduled banks, or financial institutions controlled by the government, as well as crop insurance, input subsidies, and crop damage benefits [E4][E5]. The CCRC does not provide any right over the land except on the crop cultivated; all land rights vest solely with the landowner, and revenue officials shall not transfer or create land rights using a CCRC [E5]. Furthermore, scheduled land shall not be attached by bankers or financial institutions for recovery of the cultivator's dues, and recovery must be made from the crop proceeds only [E5].\n\n## Local Agricultural Officer or Rythu Bharosa Kendra\nThis is governed by state rules in Andhra Pradesh [E7][E9].\n\n- **Validation and e-Panta:** For the Annadatha Sukhibhava scheme, tenant farmer validation is done based on cultivators and CCRC cardholders from the current season's e-Panta data, and only those CCRC cardholders who have crop booking in e-Panta will be considered [E9].\n- **RSK Services:** Rythu Bharosa Kendralu (RBKs) and their in-charges coordinate village-level processes, including displaying beneficiary lists for claims and objections [E9], enrolling crop insurance through e-Karshak/e-crop booking [E7], and providing agricultural department schemes, subsidized inputs, technical guidance, soil testing, and farmer grievance redressal [E7].\n- **Mandatory e-KYC:** e-KYC must be completed for all validated beneficiaries and is mandatory for extending benefits [E9].\n\n## What changed\n- **Replacement of Scheme:** The YSR Rythu Bharosa scheme (established under G.O.Ms.No.96 in September 2019) [E22] was replaced by the Annadatha Sukhibhava - PM Kisan scheme (established under G.O.Ms.No.33 on August 1, 2025) [E10]. Under the earlier 2019 rules, tenant benefit was restricted specifically to SC, ST, BC, and Minority categories [E24] and excluded lease agreements between landless tenants and marginal farmers residing in the same village [E23], whereas the 2025 operational guidelines broadened tenant eligibility to include OC tenants [E1] and removed the restriction regarding marginal farmer landlords residing in the same village.\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [R",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [R",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [R",
+   "G.O.Ms.No.37 Agri&Coop (Agri.II) Dt.04.02.2020 - Establishment of Rythu Bharosa Kendralu (",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [R",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [R",
+   "NOT IN FORCE (no - replaced by Annadatha Sukhibhava - PM Kisan (G.O.Ms.No.33, 2025)) -- G.",
+   "NOT IN FORCE (no - replaced by Annadatha Sukhibhava - PM Kisan (G.O.Ms.No.33, 2025)) -- G.",
+   "NOT IN FORCE (no - replaced by Annadatha Sukhibhava - PM Kisan (G.O.Ms.No.33, 2025)) -- G."
+  ]
+ },
+ "AP|crop insurance": {
+  "q": "What is the last date and premium to insure my paddy this Rabi season? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- PMFBY: the farmer pays 1.5% of the sum insured. [E1]\n- PMFBY, Rabi 2026-27, enrolment for rice: 1 October 2026 to 31 December 2026. Open now, closes in 56 days. [E2]\n\nThe enrolment cut‑off for paddy under PMFBY for the Rabi 2026‑27 season in Andhra Pradesh is 31 December 2026, and the farmer’s premium is 1.5 % of the sum‑insured (or the actuarial rate if it is lower)[E13][E12]. \n\n**What you need to do**\n\n1. **Check that the enrolment window is open** – the window for Rabi 2026‑27 is currently open[E2]. \n2. **Confirm you are eligible** – enrolment is voluntary and open to all farmers cultivating notified crops (including paddy) in the notified areas[E1][E12]. \n3. **Gather required documents** – land‑record proof (RoR, LPC, etc.), Aadhaar number and a declaration of the crop sown are needed[E12]. \n4. **Pay the premium** – the rate is 1.5 % of the sum‑insured for Rabi food‑grain crops; if the actuarial premium rate is lower, you pay that lower amount[E12][E11]. \n5. **Submit the application before the cut‑off** – for paddy, the last day to enrol and have the premium debited is 31 December 2026[E13]. \n\nIf you miss the 31 December deadline, you will have to wait for the next season’s enrolment window. [E13]",
+  "sources": [
+   "G.O.Ms.No.80 (2024), extended by G.O.Ms.No.34 (2026)",
+   "G.O.Ms.No.34 (2026)",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha",
+   "G.O.Ms.No.80 Agri&Coop (Agri.V) Dt.04.09.2024 - PMFBY (Yield Based) 2024-25 & 2025-26 - fr",
+   "G.O.Ms.No.34 Agri&Coop (Agri.V) Dt.06.07.2026 - PMFBY - Extension of notification to 2026-"
+  ]
+ },
+ "AP|disaster relief": {
+  "q": "My crop was destroyed by flood. How much relief per hectare does the state pay? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Andhra Pradesh relief. Cotton, groundnut, paddy and first-crop sugarcane: Rs.25,000 per hectare (SDRF norm Rs.17,000). From the enhanced-scale column of the order, which applies to natural calamities in the state until further orders. This is the rate paid, not an addition to the SDRF figure shown beside it. [E1]\n- Andhra Pradesh relief. Rs.15,000 per hectare for bajra, black gram, green gram, maize, ragi, red gram, sesamum, soybean, sunflower, tobacco, castor, jute, korra and sama (SDRF norms Rs.8,500 to Rs.12,500). From the enhanced-scale column of the order, which applies to natural calamities in the state until further orders. This is the rate paid, not an addition to the SDRF figure shown beside it. [E2]\n- Andhra Pradesh relief. Rs.35,000 per hectare for banana, turmeric, yam, chillies, guava, acid lime, mango, coffee, pomegranate, apple ber, sapota, cashew and dragon fruit (SDRF norms Rs.17,000 to Rs.25,000). From the enhanced-scale column of the order, which applies to natural calamities in the state until further orders. This is the rate paid, not an addition to the SDRF figure shown beside it. [E3]",
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future "
+  ]
+ },
+ "AP|drought norms": {
+  "q": "When is an area declared drought-hit, and what help do farmers get then? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "An area is declared drought-hit based on specific proxy indicators like rainfall deviation, dry spells, and crop sowing percentage, and farmers receive enhanced input subsidies and relief assistance under state and central rules [E1], [E2], [E3], [E4], [E6], [E8], [E9].\n\n## Drought declaration criteria\nUnder central guidelines effective from Kharif 2023, the eligibility of a more than 75% affected sown area in a notified insurance unit is decided within one month of the sowing period based on the occurrence of proxy indicators defined in the Drought Manual 2016, such as severe drought conditions, dry spells and drought declared by the State or UT, temperature deviations >20%, rainfall deviations >20% from the Long Period Average (LPA), or widespread pest, insect, and disease attacks impacting >75% of the crop sown area, supported by satellite image and satellite index outputs [E3], [E8]. Specific proxy indicators and drought definitions include a rainfall index showing dry spells of 3-4 weeks with <50% normal rainfall and rainfall deviation < -20%; remote sensing indicators with NDVI/NDWI deviation < -20% to -30% and VCI value 0-40%; crop sowing areas under Kharif < 33.3% and Rabi < 50% of crop-wise normal sown areas; plant available soil moisture or moisture adequacy index at 0%-75%; and hydrological indicators such as reservoir storage index, ground water drought index, and stream flow drought index [E8].\n\n## Input subsidy for drought\nUnder the state's own rules, the government provides input subsidy relief for crops damaged by 33% and above due to notified natural calamities including drought, in accordance with G.O.Ms.No.15 dated 04.12.2015 [E6].\n\n## Drought relief application\nUnder state disaster management rules, gratuitous relief for families whose livelihood is seriously affected is provided to two adult members of the affected family at the lower of the actual MNREGA rate per day or the average rate of all States and UTs per day, disbursed through DBT, cash in exigencies, or in kind, with the state certifying beneficiaries are not in relief camps [E4], [E9]. The default period of assistance is up to 30 days, which may be extended up to 60 days in the first instance, and subsequently up to 90 days in case of drought or pest attack, with the State Executive Committee (SEC) able to extend the time period further based on the ground situation [E4], [E9]. Expenditure on this account must not exceed 30% of the SDRF allocation under the response and relief window for the year, though in the case of drought, expenditure must not exceed 50% of the SDRF allocation under this window [E4], [E9]. Beneficiary lists must be uploaded on the state government website, and the state must notify the basis and proof for identification transparently [E4], [E9].\n\n## Crop insurance claims for drought\nUnder central scheme guidelines effective from Kharif 2023, insurance claims are handled through designated nodal departments and agencies based on adverse weather incidence and weather data triggers, where overall claims are calculated by multiplying the claims per unit by the number of units [E3], [E5]. Banks, Primary Agricultural Credit Societies (PACS), and intermediaries must upload insured farmer and crop details onto the National Crop Insurance Portal (NCIP) within the cut-off date, and failure by banks to rectify data errors within 7 days may result in penalties with claims becoming the bank's responsibility [E5]. Insurance companies must verify coverage, reconcile data, send policy details to loanee farmers via Inland Letter Cards or GOI programmes like Mere Policy Mere Haath (MPMH), and settle claims strictly as per scheme terms [E5].\n\nNot in our documents yet: Andhra Pradesh's own rules on drought declaration criteria. Anything above comes from central government documents, so please also check with your local office.\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha",
+   "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF f",
+   "G.O.Ms.No.98 Agri&Coop Dt.18.12.2024 - RWBCIS for Mango crop 2024-25 & 2025-26 (voluntary ",
+   "Natural Calamities - Norms adopted for sanction and release of input subsidy (department n",
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha",
+   "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF f"
+  ]
+ },
+ "AP|wildlife damage": {
+  "q": "Wild boars and elephants damaged my crop. What compensation can I get? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "## Compensation amounts and ex-gratia\n\n Additionally, under the Pradhan Mantri Fasal Bima Yojana (PMFBY), states may provide an optional add-on cover for crop loss caused by the attack of wild animals where the risk is substantial and identifiable [E18]. This central scheme add-on is optional for farmers, and the full actuarial premium must be borne by the farmer unless the state government provides an additional subsidy [E18].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Pradhan Mantri Fasal Bima Yojana (PMFBY) - Operational Guidelines 2023 (effective from Kha"
+  ]
+ },
+ "AP|seed": {
+  "q": "Is there a subsidy on seeds for farmers here? How do I get it? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Yes, farmers in Andhra Pradesh can receive a subsidy on seeds ranging from 25 to 100% through the Department of Agriculture [E7].\n\n- You must be an actual cultivating farmer [E6][E7].\n- The subsidy seed is limited to 2 ha or the actual area sown, whichever is less [E6]. Green manure and contingency crops can be supplied as an additional quantity [E6].\n- The Rythu Seva Kendralu (RSK) in-charge will identify beneficiary farmers in the village specifically as per the guidelines and subsidy pattern issued by the Commissioner and Director of Agriculture [E1][E6].\n- The RSK in-charge will register your land details by entering your Aadhaar number in the registration module of the D-Krishi application, and then authenticate your identity using Aadhaar biometrics, face recognition, or an OTP sent to your Aadhaar-seeded mobile [E1][E6].\n- After registration and authentication, you must pay the non-subsidy amount in the D-Krishi app through UPI or cash mode [E6], or via the GSWS payment gateway (through VAA login) using the issued OTP and OTP IDs [E2].\n- You must provide a declaration to the Village Agriculture Assistant (VAA) stating that the seed distributed under subsidy will be utilized for sowing purposes [E6].\n- Once the payment is made, the RSK in-charge will issue a payment receipt and distribute the seed to you on the same day [E2][E3].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Rt.No.538 Agri&Coop Dt.04.07.2025 - Seeds - SOP for distribution of subsidy seed throu",
+   "G.O.Rt.No.538 Agri&Coop Dt.04.07.2025 - Seeds - SOP for distribution of subsidy seed throu",
+   "G.O.Rt.No.538 Agri&Coop Dt.04.07.2025 - Seeds - SOP for distribution of subsidy seed throu",
+   "Memo - Seeds - Distribution of seeds on subsidy 2026-27 - sale price, subsidy pattern and ",
+   "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26"
+  ]
+ },
+ "AP|pesticide rules": {
+  "q": "A shop sold me fake pesticide. What rules apply and whom do I complain to? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "The legal provisions governing pesticides and dealer licensing are set out in the Central Insecticides Act, 1968, and the Insecticides Rules, 1971 [E1][E3], while appeals regarding cultivator rights in Andhra Pradesh are governed by the Andhra Pradesh Crop Cultivator Rights Rules, 2019 [E6].\n\n## Prohibition of sale and manufacture\nUnder central rules, no person is permitted to sell, stock or exhibit for sale, distribute, transport, use, or cause to be used by any worker any insecticide that is not registered under the Act [E5]. Furthermore, importing or manufacturing misbranded insecticides, or products contrary to registration conditions or prohibitions, is strictly prohibited [E5]. Manufacturing any insecticide requires a valid license [E5].\n\n## What changed\nThe Insecticides Act, 1968 was amended by Act 24 of 1977 (with effect from 2-8-1977), which updated provisions related to licensing conditions and appeals [E4][E8].\n\nNot in our documents yet: Andhra Pradesh's own rules on Insecticides Act 1968, filing complaint against pesticide dealer. Anything above comes from central government documents, so please also check with your local office.\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "The Insecticides Act, 1968 [central government]",
+   "The Insecticides Rules, 1971 [central government]",
+   "The Insecticides Act, 1968 [central government]",
+   "The Insecticides Act, 1968 [central government]",
+   "G.O.Ms.No.410 Revenue Dt.23.09.2019 - Andhra Pradesh Crop Cultivator Rights Rules, 2019 [R",
+   "The Insecticides Act, 1968 [central government]"
+  ]
+ },
+ "AP|soil health": {
+  "q": "How do I get my soil tested and get a soil health card? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "To get your soil tested and obtain a Soil Health Card in Andhra Pradesh, you can access testing through government initiatives and local agricultural facilities where soil sampling and testing are conducted to evaluate fertility status, identify problems like alkalinity, salinity, and nutrient deficiencies, and generate Soil Health Cards [E1][E2].\n\nTo take part and benefit from soil health services:\n* **Utilize village-level facilities:** Rythu Seva Kendralu (RSKs) are established across the state at the village level to ensure the availability of services and inputs [E18].\n* **Follow scheme testing protocols:** When applying for specific agricultural infrastructure or schemes such as protected cultivation or farm ponds, you must enclose a soil and water analysis report from an approved laboratory [E3][E4][E8][E10][E12].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Horticulture Department: protected cultivation guidelines [Horticulture dep",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: protected cultivation guidelines [Horticulture dep",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]"
+  ]
+ },
+ "AP|natural farming": {
+  "q": "What support does the state give for natural or organic farming? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "## Program and technical support\nAPCNF, launched in 2016 under RySS, offers a “Do‑It‑Yourself” low‑cost model that includes: [E8]\n* training on the seven Natural Farming principles (meetings, kitchen gardens, farm implementation, input access, funds access, record‑keeping) [E1];\n* access to farmer‑scientist courses, mentorship (196 mentors) and a 4‑year Bachelor’s programme run by the Indo‑German Global Academy for Agroecology Research and Learning (IGGAARL) [E6];\n* promotion of innovative models such as pre‑monsoon dry sowing, 365‑day green cover, seed pelletisation and drought‑proof rain‑fed practices [E14];\n* a statewide network of women’s SHGs covering more than 90 % of small and marginal farmer households, which drives voluntary transformation and farmer‑to‑farmer learning [E7];\n* model “Resource Mandals” where 100 % of farms adopt Natural Farming, demonstrating a complete food system [E2];\n* technical support from national and international research partners (ICRAF, UNFAO, etc.) [E3].\n\nThese measures are state‑specific (AP) and supplement central policies; they are the current rules in force.\n\n## Financial assistance and subsidies\n* The “Annadatha Sukhibhava – PM Kisan” scheme provides **Rs 20,000 per farmer family per year**, of which **Rs 6,000** comes from the central PM‑Kisan component [E13]; this assistance is available to land‑owner families, ROFR cultivators and land‑less cultivators across the state, including those practising Natural or organic farming [E12].\n* No direct cash subsidy for organic inputs is listed, but the programme guarantees **access to Natural Farming inputs** (seeds, bio‑inocula, botanical extracts) as part of the seven principles [E1].\n\n## Beneficiaries\n* All farmer families—including land‑owners with at least 10 cents of cultivable land, ROFR cultivators, and land‑less tenant families—are eligible for the Rs 20,000 annual assistance [E13];\n* The APCNF technical package targets **small and marginal farmer households**, which constitute over 90 % of the state’s farming families and are reached through SHGs [E7];\n* Champion farmers (≈ 8,724) and women (≈ 60 % of champions) act as field functionaries to extend support to other farmers [E8].\n\n## Application process\n* Enrollment in the APCNF programme is coordinated by RySS and the women’s SHG network; farmers join voluntarily through their SHG or farmer‑institution, receive training, and are linked to the state’s input‑access platform [E1][E7];\n\n## What changed\n* The APCNF programme was **launched in 2016** as a response to farmer distress and climate challenges [E8]; subsequent brochures (E1, E2, E3, E6, E7, E14) show expanded scaling to 12 states, international collaborations, and the establishment of IGGAARL, indicating progressive strengthening of technical and financial support.\n* The “Annadatha Sukhibhava – PM Kisan” operational guidelines were **issued on 1 August 2025**, formalising the Rs 20,000 per‑family assistance that builds on earlier state‑level income‑support measures [E12][E13].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu"
+  ]
+ },
+ "AP|drip": {
+  "q": "What is the subsidy for drip irrigation for a small farmer? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The drip‑irrigation subsidy for a small farmer in Andhra Pradesh is **90 % of the approved cost**, and **100 % for small farmers who belong to the SC/ST category**[E2].\n\n**How to obtain the subsidy**\n\n- **Eligibility** – You must be a small farmer (holding up to 5 acres) and a resident of one of the districts covered by the PDMC scheme[E2].\n- **Category‑based share** –\n  * SC/ST small farmer – 100 % subsidy[E2].\n  * Other small farmer – 90 % subsidy[E2].\n- **Maximum area** – The assistance is limited to a total of **5 ha per beneficiary**[E4].\n- **Application process** –\n  1. Register on the state PDMC web‑portal and link your **Aadhaar** details (required for DBT disbursement)[E4].\n  3. The approved subsidy amount (percentage of the cost) will be transferred directly to your bank account via **Direct Benefit Transfer**[E4].\n- **Financial year** – The subsidy pattern is applicable from **FY 2025‑26** onward[E2].\n\nIf you belong to the SC/ST category you will receive the full cost covered; otherwise you will receive 90 % of the cost, subject to the 5‑ha ceiling and the Aadhaar‑linked DBT requirement. [E1]\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Rt.No.206 Agri&Coop (H&S) Dt.18.03.2026 - Extension of 100% drip / 90% sprinkler subsi",
+   "G.O.Rt.No.206 Agri&Coop (H&S) Dt.18.03.2026 - Extension of 100% drip / 90% sprinkler subsi",
+   "Operational Guidelines of Per Drop More Crop 2025 (PMKSY micro irrigation) [central govern"
+  ]
+ },
+ "AP|farm ponds": {
+  "q": "Is there a government subsidy for digging a farm pond? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Yes, the Andhra Pradesh government offers a subsidy for constructing an individual farm pond.\n\n**What the subsidy is**\n\n- The scheme covers a standard pond of 20 m × 20 m × 3 m (≈ 1,200 cu m) and pays **50 % of the eligible cost**, calculated at **Rs 62.50 per cubic metre** of pond volume [​E2​]. [E1]\n- For the standard 1,200 cu m pond the total project cost is **Rs 1.50 lakhs**, so the subsidy amount is **Rs 75,000** (50 % of the cost) [​E5​]. [E5] [E1]\n\n**Who can get it**\n\n- Only new ponds that meet the specified dimensions and are lined with the approved 300‑micron (or 500‑micron) geomembrane or RCC lining are eligible. Existing RCC‑lined or partially completed ponds are **not eligible** [​E7​].\n\n**How to apply**\n\n1. **Prepare the application** with farmer details, land‑holding, soil suitability, and proposed pond dimensions (the form is in the guidelines) [​E6​].\n2. **Pre‑inspection** – a Horticulture Officer and MI Engineer inspect the site and issue a technical feasibility report [​E5​].\n3. **District Mission Committee (DMC) approval** – the application and feasibility report are placed before the DMC for sanction [​E8​].\n4. **Construction** – the farmer carries out excavation, bunding, lining, and fencing within the time limit (typically 60 days from sanction) [​E8​].\n5. **Final inspection** – the Joint Committee (farmer, MI Engineer, HO/DHO or DMIO) inspects the completed pond, takes photographs, and verifies dimensions [​E2​][​E7​].\n6. **Release of subsidy** – after the final inspection, 50 % of the eligible cost (Rs 62.50 / cu m) is released to the farmer’s bank account [​E2​]. [E1]\n\n**Key conditions & limits**\n\n- **Size limit:** 20 m × 20 m × 3 m (1,200 cu m). Smaller ponds receive a pro‑rata subsidy based on volume [​E2​].\n-  Using a higher‑spec material incurs extra cost for the farmer [​E7​].\n- **Exclusions:** Existing RCC‑lined ponds, old incomplete ponds, and ponds not linked to micro‑irrigation are excluded [​E7​][​E8​].\n- **Farmer responsibility:** Excavation, bunding, lining, and fencing are at the farmer’s own expense; the subsidy only covers the eligible portion of the total cost [​E7​].\n\nIf you meet these criteria and follow the application and inspection steps, you can receive the Rs 75,000 subsidy for building a new farm pond in Andhra Pradesh. [E5]\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]"
+  ]
+ },
+ "AP|wells": {
+  "q": "Does the government help pay for a borewell for small farmers? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Under the Mission for Integrated Development of Horticulture (MIDH) guidelines in Andhra Pradesh, priority is given to small, marginal, and women farmers, and integration with micro-irrigation like drip is mandatory for plantations [E3].\n\nNot found in the documents we hold: borewell subsidy scheme; borewell subsidy amount.\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Mission for Integrated Development of Horticulture (MIDH) - Implementation Guidelines 2025"
+  ]
+ },
+ "AP|farm power": {
+  "q": "Is electricity free for farm pump sets, and how do I get a new connection? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Agricultural power is provided for free to farmers in Andhra Pradesh under the \"Andhra Pradesh Uchita Vyavasaya Vidyut Pathakam\" scheme [E1][E2].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "G.O.Rt.No.74 Energy Dt.19.06.2024 - Free agriculture power - renaming 'YSR Uchita Vyavasay"
+  ]
+ },
+ "AP|solar pumps": {
+  "q": "What is the subsidy on a solar pump set? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "**Why the answer is limited:**\n- The available government orders and guidelines (e.g., the APMIP subsidy pattern for drip and sprinkler irrigation [E1], the PDMC operational guidelines [E2], and the Andhra Pradesh outcome budget [E5]) discuss micro‑irrigation, automation costs, and other subsidies, but none of them mention a specific solar‑pump subsidy or the conditions to receive it.\n- Consequently, there is no stated figure or eligibility rule in the provided sources that can be quoted for a solar pump set.\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Rt.No.82 Agri&Coop (H&S) Dt.17.02.2025 - APMIP - Subsidy pattern for drip and sprinkle",
+   "Operational Guidelines of Per Drop More Crop 2025 (PMKSY micro irrigation) [central govern",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]"
+  ]
+ },
+ "AP|machinery": {
+  "q": "What subsidy can I get on a tractor or power tiller? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "You can receive up to **Rs 1.60 lakh** for a 2‑WD tractor (≤ 20 PTO HP) or **Rs 1.96 lakh** for a 4‑WD tractor (≤ 20 PTO HP), and up to **Rs 0.80 lakh** for a power tiller (8‑11 BHP) or **Rs 1.00 lakh** for a larger tiller (≥ 11 BHP); SC/ST, women and small‑marginal farmers get a higher share (50 %) – Rs 2.00 lakh (2‑WD tractor), Rs 2.45 lakh (4‑WD tractor), Rs 1.00 lakh (8‑11 BHP tiller) or Rs 1.20 lakh (≥ 11 BHP tiller)[E1][E3].\n\n**How to claim the subsidy**\n\n1. **Eligibility & priority**\n   * Must be a horticulture‑crop farmer; priority to first‑time, SC/ST, women, and small‑marginal farmers[E2].\n   * Selection is done transparently through the Grama Sabha and the beneficiary is registered on the Suraksha Portal and approved by the District Mission Committee (DMC)[E2].\n\n2. **Choose the machine**\n\n3. **Pay the dealer**\n   * Pay the full purchase price to an authorised dealer (the dealer must supply the 2026 model, be geo‑referenced and fit a telematics kit for machines > Rs 1 lakh)[E5].\n\n4. **Submit documents**\n   * Provide the dealer’s invoice, your bank account details (account number, IFSC), and the required photographs to the Horticulture Officer (HO)[E2].\n   * The HO verifies the data, ensures engraving/painting of scheme details on the machine, and uploads the documents via the mobile app[E1].\n\n5. **Subsidy calculation**\n   * If the actual cost exceeds the permissible cost, you bear the excess; if it is lower, the subsidy is calculated on the lower price (approved cost or actual price, whichever is less)[E2].\n   * General beneficiaries receive 40 % of the permissible cost, while SC/ST, women and small‑marginal farmers receive 50 %[E1][E3].\n\n6. **Release of funds**\n   * After the HO’s approval, the subsidy is transferred directly to your bank account online[E1].\n\n7. **Timing**\n   * Applications must be submitted before the window closes at midnight on the 15th of the month[E8].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Farm Mechanisation (SMAM) - implementation and farmer registration guide (eseed.ap.gov.in/",
+   "Farm Mechanisation (SMAM) - implementation and farmer registration guide (eseed.ap.gov.in/"
+  ]
+ },
+ "AP|custom hiring": {
+  "q": "Where can I hire farm machinery at a low rate from a government scheme? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "You can hire farm machinery at reasonable hiring charges through Community Hiring Centres (CHCs) established under the Yantra Seva Padhakam scheme, which are supported and coordinated by Rythu Bharosa Kendras (RBKs) [E3][E4]. \n\n* **Where to go:** You can access the hiring services through village/cluster RBKs, where machinery details, hiring charges, and contact information are displayed at the premises [E4].\n* **How to book:** You can arrange for online booking of implements on hire through your local Village Agriculture Assistant (VAA) and the web portal [E4].\n* **Hiring charges:** The hiring charges are kept reasonable as per local rates and are fixed with the due approval of the Mandal Advisory Committee [E4].\n* **Available equipment:** The machinery available includes farm machinery required for the crops cultivated in your village and items with hiring demand at RBK-level centres, combined harvesters and straw balers at cluster-level centres, and Kisan Drones with their accessories at Kisan Drone CHCs [E2].",
+  "sources": [
+   "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note [Agriculture & Cooperati",
+   "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note [Agriculture & Cooperati",
+   "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note [Agriculture & Cooperati"
+  ]
+ },
+ "AP|drones": {
+  "q": "Is there a subsidy to buy or hire agriculture drones? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Yes – the Andhra Pradesh government subsidises the purchase of agricultural (Kisan) drones and also subsidises their use through Custom Hiring Centres (CHCs).\n\n**How the drone subsidy works**\n\n* **Scheme** – The “Yantra Seva Padhakam” farm‑mechanisation programme includes a “Kisan Drone CHC” component that provides drones to farmer‑run hiring centres and to individual farmers [E2][E3][E11].\n* **Subsidy amount** – For each drone the total cost is Rs 10 lakhs; the government pays a subsidy of Rs 4.0 lakhs, the farmer must arrange a loan of Rs 5.0 lakhs and contribute Rs 1.0 lakh as his/her own share [E3].\n* **Eligibility** –\n  * The purchase is made through a farmer‑group‑run CHC (village‑level RBK or cluster‑level) or by an individual farmer applying for the subsidy.\n* **Application process** –\n  1. Form or join a farmer group that will set up a CHC [E3][E8].\n  2. Choose an empanelled drone model; the group signs an agreement with the authorised dealer [E3].\n  3. Obtain a loan (e.g., through APCOB) for the full cost of the drone [E3].\n  4. Submit the required documents (beneficiary data, photo with dealer, etc.) to the District/Horticulture Officer for verification [E4].\n  5. After approval, the subsidy is transferred directly to the farmer’s bank account under the DBT (Direct Benefit Transfer) mode [E3][E8].\n* **Use of the drone** – The drone can be owned by the farmer or placed in a CHC for hire by other farmers; the subsidy is not transferable or for sale [E4] (applies to mechanised equipment generally).\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note [Agriculture & Cooperati",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note [Agriculture & Cooperati",
+   "Farm Mechanization and Custom Hiring Centres (CHCs) - scheme note [Agriculture & Cooperati"
+  ]
+ },
+ "AP|horticulture": {
+  "q": "What subsidy can I get to grow vegetables or fruit crops? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "Farmers in Andhra Pradesh can access various horticulture subsidies for growing vegetable and fruit crops through schemes such as the Mission for Integrated Development of Horticulture (MIDH). These subsidies depend on the specific component, such as reducing exposure to pests and diseases for creeper vegetables, or establishing planting material infrastructure.\n\n## Who qualifies\nUnder the MIDH scheme in Andhra Pradesh, financial assistance is available for specific activities related to vegetable and fruit crop production, subject to state and scheme guidelines:\n\n* **Pest and Disease Reduction for Creeper Vegetables:** For nylon nets, nylon threads, and rings used for creeper vegetables or indeterminate vegetable crops, the unit cost is Rs. 20,000 per hectare with a 50% subsidy amounting to Rs. 10,000 per hectare, limited to a maximum of 2 hectares per beneficiary [E4].\n* **Small Nurseries for Fruit and Plantation Crops:** For the production of planting material, small nurseries (0.4 to 1 hectare) have a total unit cost of Rs. 20.00 lakh per hectare as a project-based activity on a pro-rata basis (minimum area 1 acre with proportionate funding with Rs. 4.00 Lakh assistance) [E5]. Public sector applicants receive 100% assistance of the unit cost, while private sector applicants receive a back-ended subsidy subject to a maximum of 50% of Rs. 10.00 lakh per unit as a project-based activity [E5]. Each nursery must produce a minimum of 50,000 plants per hectare of mandated perennial fruit plants, tree spices, aromatic plants, plantation crops, and perennial flowers per year, certified for quality by the concerned agency [E5].\n* **General Conditions and Documentation:** Land documents are mandatory for the sanction of any scheme [E8].  Scheme applications are available free of cost through Village Horticulture Assistants in Village Secretariats [E8].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "Andhra Pradesh Horticulture Department: MIDH guidelines 2025-26 [Horticulture department]",
+   "A report on Right to Information Act 2005 in the Department of Horticulture (Section 4(1)("
+  ]
+ },
+ "AP|plantation": {
+  "q": "Is there help for oil palm or coconut farmers? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "Yes – the state of Andhra Pradesh provides financial assistance to both oil‑palm and coconut growers.\n\n**What the assistance includes**\n\n* **Disaster‑relief payment** – When a natural calamity is declared, the government pays **Rs 1,500 per oil‑palm or coconut tree** as a direct relief amount [E1].\n\n**How to benefit**\n\n1. **Natural‑calamity relief** – When a disaster is officially declared, submit a claim for the Rs 1,500 per tree payment to the Agriculture & Cooperation Department (or the designated relief authority). [E1] The claim must list the number of affected oil‑palm or coconut trees.\n2. **Insurance scheme** – Enroll your coconut palms with the Coconut Palm Insurance Scheme through the department’s insurance portal or designated district office; the scheme covers loss from natural calamities.\n4. **Oil‑palm development projects** – Participate in oil‑palm projects under the National Mission on Edible Oils – Oil Palm by contacting the district agriculture office for eligibility and project‑specific application procedures.\n\n**Key points to remember**\n\n* The Rs 1,500 per‑tree relief is **not an addition** to any other State Disaster Relief Fund (SDRF) amounts; it is the full rate paid for calamities [E1].\n* The insurance and development schemes are **budget‑approved** for 2026‑27, so they are currently in force.\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future "
+  ]
+ },
+ "AP|animal husbandry": {
+  "q": "What schemes help a farmer buy cows or goats? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "I couldn't verify a written answer, so I won't guess. These documents look most relevant:\n- Andhra Pradesh budget estimates 2026-27: Animal Husbandry, Dairy Development and Fisheries Department (Volume III-17) [Animal Husbandry department] [E1]\n- Andhra Pradesh Outcome Budget 2026-27 [Finance department] [E2]\n- G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF for 2022-23 to 2025-26 - adoption [Revenue (Disaster Management) department, 2023-11-14] [E4]\n- G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of assistance (Aug-Sep 2024 floods) made applicable to all future natural calamities in the State [Revenue (Disaster Management) department, 2025-01-07] [E7]",
+  "sources": [
+   "Andhra Pradesh budget estimates 2026-27: Animal Husbandry, Dairy Development and Fisheries",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF f",
+   "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of"
+  ]
+ },
+ "AP|dairy": {
+  "q": "Is there a milk incentive for dairy farmers, and how much per litre? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The documents do not mention a milk incentive scheme or a specific per-litre incentive amount for dairy farmers in Andhra Pradesh [E1][E2][E3][E4][E5][E6][E7][E8][E9][E10][E11][E12][E13][E14][E15][E16].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh budget estimates 2026-27: Animal Husbandry, Dairy Development and Fisheries",
+   "Andhra Pradesh budget estimates 2026-27: Animal Husbandry, Dairy Development and Fisheries",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Note on Integrated Agri Labs [Agriculture & Cooperation department]",
+   "Andhra Pradesh Community Managed Natural Farming brochure (Rythu Sadhikara Samstha) [Rythu"
+  ]
+ },
+ "AP|poultry": {
+  "q": "Is there a subsidy to start a poultry unit? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The documents do not mention a government subsidy specifically for starting a new poultry unit in Andhra Pradesh, though they show financial assistance for poultry death due to natural calamities [E1][E6] and poultry insurance [E4].\n\n* **Natural Calamity Relief:** If your poultry birds die due to a natural calamity, assistance is provided at the rate of Rs. 100 per bird, subject to a ceiling of Rs. 10,000 per beneficiary household [E1][E6].\n* **Exclusions:** Relief under natural calamity norms is not given if assistance is available from any other government scheme, such as when birds die from Avian Influenza or other diseases covered by a separate Animal Husbandry Department compensation scheme [E6].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "Andhra Pradesh budget estimates 2026-27: Animal Husbandry, Dairy Development and Fisheries",
+   "G.O.Ms.No.1 Revenue (DM) 2023 - Revision of items and norms of assistance from SDRF/NDRF f"
+  ]
+ },
+ "AP|MSP": {
+  "q": "What is the minimum support price of common paddy for 2026-27? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "The documents do not contain the minimum support price for common paddy for the 2026-27 marketing season [E1][E2][E3][E4][E5][E6][E7][E8][E9].",
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "Andhra Pradesh G.O.RT-919 dated 23/09/2026: AP Markfed - Nominating AP Markfed as State Le",
+   "Andhra Pradesh G.O.RT-920 dated 23/09/2026: APOILFED - Nominating APOILFED as State Level ",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f"
+  ]
+ },
+ "AP|state bonus": {
+  "q": "Does the state pay anything extra over MSP for paddy? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "No – the Andhra Pradesh government does not add any bonus to the Minimum Support Price for paddy; it pays the MSP set by the Government of India.\n\n**What the documents say**\n\n* The Kharif Marketing Season 2025‑26 order lists the MSP for FAQ paddy at **Rs 2,369 per quintal (common) and Rs 2,389 per quintal (Grade‑A)** [E2]. \n* The same order states that the state will take “all necessary steps … to ensure payment of **100 % MSP** to farmers” [E7]. \n* No provision in the current orders mentions any additional premium or bonus over that MSP for paddy. \n\n(The higher assistance of Rs 25,000 per hectare for cotton, groundnut, paddy and sugarcane in the natural‑calamity relief order is a separate disaster‑relief payment, not a procurement price [E1].)\n\n**What a farmer needs to do to receive the MSP**\n\n1. **Register** in the e‑Panta portal through the Rythu Sahaya Kendras before procurement begins [E4]. \n2. **Bring paddy that meets FAQ quality norms**; if it does, it will be procured immediately [E4]. \n3. **Payment** is made directly to the farmer’s bank account (NEFT/RTGS or A/c‑payee cheque) [E2]. \n4. The procurement agencies (APSCSCL and AP MARKFED) handle the purchase; the state guarantees payment at the full MSP, with no extra premium. \n\nSo, under the current Andhra Pradesh paddy procurement scheme, you will receive the MSP amount only, and there is no additional state‑paid bonus.",
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f"
+  ]
+ },
+ "AP|procurement": {
+  "q": "How do I sell my paddy at a government procurement centre? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "**Steps and requirements**\n\n1. **Register on e‑Panta** – All paddy‑growing farmers (including tenants) must be registered in the e‑Panta portal by Rythu Sahaya Kendras assistants before the procurement season begins. [E1]\n\n2. **Locate a Paddy Procurement Centre** – PPCs have been established in every paddy‑growing district for easy farmer access. [E2]\n\n3. **Check FAQ quality** – Your paddy must conform to the Fair Average Quality (FAQ) standards. If it does not, technical staff will ask you to dry, clean or otherwise improve the grain to meet FAQ norms before it can be bought. [E1]\n\n4. **Bring required documents** – Payment is made on the basis of Aadhaar‑linked bank details; therefore you should have your Aadhaar card (and bank account) ready for verification. [E6]\n\n5. **Submit the paddy at the PPC** – Once the paddy meets FAQ, it will be procured immediately at the centre. [E1]\n\n6. **Receive payment** – The State will pay 100 % of the Minimum Support Price (MSP) directly to your Aadhaar‑linked bank account by NEFT/RTGS or A/c‑payee cheque. The MSP rates for Kharif Marketing Season 2025‑26 are Rs 2,369 per quintal (common) and Rs 2,389 per quintal (Grade‑A). [E2][E6]\n\n7. **State agencies involved** – The Andhra Pradesh State Civil Supplies Corporation Ltd (APSCSCL) and AP MARKFED act as the State‑level procurement agencies that coordinate the purchase and later custom‑milling of the paddy. [E1][E3]\n\nFollow these steps in order to sell your paddy through the government procurement system in Andhra Pradesh.\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f",
+   "G.O.Ms.No.23 CA,F&CS Dt.22.10.2025 - Civil Supplies - Decentralised Procurement - Policy f"
+  ]
+ },
+ "AP|helplines": {
+  "q": "What is the helpline number for farmers? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "The helpline number for farmers in Andhra Pradesh to raise grievances or seek assistance is **155251**[E6]. This toll‑free number is provided in the operational guidelines of the “Annadatha Sukhibhava‑PM Kisan” scheme for filing complaints and getting help.",
+  "sources": [
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme "
+  ]
+ },
+ "AP|stamp duty": {
+  "q": "What are the stamp duty and registration charges to buy a house? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Andhra Pradesh sale deed: stamp duty 5%, transfer duty 1.5%, registration fee 1%, plus user charges of Rs.500, on the higher of the consideration or market value. On Rs.10,00,000 the state's calculator shows stamp duty Rs.50,000, transfer duty Rs.15,000, registration fee Rs.10,000, Rs.75,500 in all. Older department PDFs showing 4% and 0.5% are out of date. [E1]\n- Andhra Pradesh gift deed: stamp duty 5%, transfer duty 1.5%; registration fee Rs.1,000 on Rs.1 lakh, Rs.5,000 on Rs.10 lakh, Rs.10,000 on Rs.1 crore. Plus user charges of Rs.500. From the state's live calculator. [E2]\n- Andhra Pradesh gift settlement in favour of a family member: stamp duty 2%, no transfer duty; registration fee Rs.1,000 on Rs.1 lakh, Rs.5,000 on Rs.10 lakh, Rs.10,000 on Rs.1 crore. Plus user charges of Rs.500. From the state's live calculator. [E3]",
+  "sources": [
+   "IGRS Andhra Pradesh Duty Fee Calculator, sale deed, checked 5 November 2026 on a sample va",
+   "IGRS Andhra Pradesh Duty Fee Calculator, checked 5 November 2026 on sample values of Rs.1,",
+   "IGRS Andhra Pradesh Duty Fee Calculator, checked 5 November 2026 on sample values of Rs.1,"
+  ]
+ },
+ "AP|gift deed": {
+  "q": "What will it cost to gift my land to my daughter? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Andhra Pradesh gift deed: stamp duty 5%, transfer duty 1.5%; registration fee Rs.1,000 on Rs.1 lakh, Rs.5,000 on Rs.10 lakh, Rs.10,000 on Rs.1 crore. Plus user charges of Rs.500. From the state's live calculator. [E1]\n- Andhra Pradesh sale deed: stamp duty 5%, transfer duty 1.5%, registration fee 1%, plus user charges of Rs.500, on the higher of the consideration or market value. On Rs.10,00,000 the state's calculator shows stamp duty Rs.50,000, transfer duty Rs.15,000, registration fee Rs.10,000, Rs.75,500 in all. Older department PDFs showing 4% and 0.5% are out of date. [E2]\n- Andhra Pradesh gift settlement in favour of a family member: stamp duty 2%, no transfer duty; registration fee Rs.1,000 on Rs.1 lakh, Rs.5,000 on Rs.10 lakh, Rs.10,000 on Rs.1 crore. Plus user charges of Rs.500. From the state's live calculator. [E3]",
+  "sources": [
+   "IGRS Andhra Pradesh Duty Fee Calculator, checked 5 November 2026 on sample values of Rs.1,",
+   "IGRS Andhra Pradesh Duty Fee Calculator, sale deed, checked 5 November 2026 on a sample va",
+   "IGRS Andhra Pradesh Duty Fee Calculator, checked 5 November 2026 on sample values of Rs.1,"
+  ]
+ },
+ "AP|vehicle tax": {
+  "q": "How much road tax do I pay on a new Rs.8 lakh car? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "- Andhra Pradesh life tax on a new non-transport three or four wheeler, including motor cars and jeeps: 13% of the cost below Rs.5 lakh, 14% from Rs.5 lakh to below Rs.10 lakh, 17% from Rs.10 lakh to below Rs.20 lakh, 18% at Rs.20 lakh or above. Rates from the 2021 amending bill; the date it took effect by notification isn't held. A 10% Road Safety Cess on the life tax is added from 13 January 2026. [E1]\n- Andhra Pradesh life tax on a new motor cycle, tri-cycle or scooter: 9% of the cost if the cost does not exceed Rs.50,000, 12% if it exceeds Rs.50,000. Rates from the 2021 amending bill; the date it took effect by notification isn't held. A 10% Road Safety Cess on the life tax is added from 13 January 2026. [E2]\n- Andhra Pradesh Road Safety Cess: 10% of the life tax payable, collected at registration, on motor cycles, motor cars and cabs, four-wheeled goods carriages below 3000 kg GVW, construction equipment vehicles and other vehicles that pay life tax. Applies from 13 January 2026. Passage of the replacing bill is reported in the press, not yet confirmed from an official copy of the act. [E3]",
+  "sources": [
+   "Andhra Pradesh Motor Vehicles Taxation (Amendment) Bill, 2021, L.A. Bill No.23 of 2021, Ga",
+   "Andhra Pradesh Motor Vehicles Taxation (Amendment) Bill, 2021, L.A. Bill No.23 of 2021, Ga",
+   "Andhra Pradesh Motor Vehicles Taxation (Amendment) Ordinance No.1 of 2026, Gazette 13 Janu"
+  ]
+ },
+ "AP|two wheeler": {
+  "q": "How much life tax do I pay on a new motorcycle? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "You pay a life tax of 9 % of the vehicle’s cost if the motorcycle costs up to Rs 50,000, and 12 % if it costs more than Rs 50,000 [E1]; note that a 10 % Road‑Safety Cess on that life tax is also levied on registrations from 13 January 2026 [E3].",
+  "sources": [
+   "Andhra Pradesh Motor Vehicles Taxation (Amendment) Bill, 2021, L.A. Bill No.23 of 2021, Ga",
+   "Andhra Pradesh Motor Vehicles Taxation (Amendment) Ordinance No.1 of 2026, Gazette 13 Janu"
+  ]
+ },
+ "AP|profession tax": {
+  "q": "How much profession tax does a person earning Rs.40,000 a month pay? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "- Andhra Pradesh profession tax. Salary or wages up to Rs.15,000 a month: nil. [E1]\n- Andhra Pradesh profession tax. Salary or wages from Rs.15,001 to Rs.20,000 a month: Rs.150 a month. [E2]\n- Andhra Pradesh profession tax. Salary or wages above Rs.20,000 a month: Rs.200 a month. [E3]",
+  "sources": [
+   "Andhra Pradesh Tax on Professions, Trades, Callings and Employments (Amendment) Act, 2013 ",
+   "Andhra Pradesh Tax on Professions, Trades, Callings and Employments (Amendment) Act, 2013 ",
+   "Andhra Pradesh Tax on Professions, Trades, Callings and Employments (Amendment) Act, 2013 "
+  ]
+ },
+ "AP|women concessions": {
+  "q": "Is there a stamp duty concession if the property is in the name of a woman? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Andhra Pradesh sale deed: stamp duty 5%, transfer duty 1.5%, registration fee 1%, plus user charges of Rs.500, on the higher of the consideration or market value. On Rs.10,00,000 the state's calculator shows stamp duty Rs.50,000, transfer duty Rs.15,000, registration fee Rs.10,000, Rs.75,500 in all. Older department PDFs showing 4% and 0.5% are out of date. [E1]\n- Andhra Pradesh gift deed: stamp duty 5%, transfer duty 1.5%; registration fee Rs.1,000 on Rs.1 lakh, Rs.5,000 on Rs.10 lakh, Rs.10,000 on Rs.1 crore. Plus user charges of Rs.500. From the state's live calculator. [E2]\n- Andhra Pradesh gift settlement in favour of a family member: stamp duty 2%, no transfer duty; registration fee Rs.1,000 on Rs.1 lakh, Rs.5,000 on Rs.10 lakh, Rs.10,000 on Rs.1 crore. Plus user charges of Rs.500. From the state's live calculator. [E3]",
+  "sources": [
+   "IGRS Andhra Pradesh Duty Fee Calculator, sale deed, checked 5 November 2026 on a sample va",
+   "IGRS Andhra Pradesh Duty Fee Calculator, checked 5 November 2026 on sample values of Rs.1,",
+   "IGRS Andhra Pradesh Duty Fee Calculator, checked 5 November 2026 on sample values of Rs.1,"
+  ]
+ },
+ "AP|pensions": {
+  "q": "How much is the old age pension and who is eligible? I am in Andhra Pradesh.",
+  "kind": "not_covered",
+  "depth": "deep",
+  "answer": "The documents I have don't cover this.",
+  "sources": []
+ },
+ "TN|crop loans": {
+  "q": "What is the interest rate on a crop loan for a small farmer here, and is there an interest subsidy? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|crop insurance": {
+  "q": "What is the last date and premium to insure my paddy this Rabi season? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Crop insurance (PMFBY) allocation from the State fund, 2026-27: Rs.648.55 crore, in 14 clusters of 37 districts. [E1]",
+  "sources": [
+   "Tamil Nadu Agriculture Budget Speech 2026-27"
+  ]
+ },
+ "TN|disaster relief": {
+  "q": "My crop was destroyed by flood. How much relief per hectare does the state pay? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|drought norms": {
+  "q": "When is an area declared drought-hit, and what help do farmers get then? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]\n\nNot in our documents yet: Tamil Nadu's own rules on drought declaration criteria. Anything above comes from central government documents, so please also check with your local office.",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|wildlife damage": {
+  "q": "Wild boars and elephants damaged my crop. What compensation can I get? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|natural farming": {
+  "q": "What support does the state give for natural or organic farming? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "- Tamil Nadu. Organic farming incentive, 2026-27: Rs.4,000 per acre. [E1]",
+  "sources": [
+   "Tamil Nadu Agriculture Budget Speech 2026-27"
+  ]
+ },
+ "TN|drip": {
+  "q": "What is the subsidy for drip irrigation for a small farmer? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Micro irrigation subsidy, 2026-27: 100% for small and marginal farmers, 75% for other farmers. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "Tamil Nadu Agriculture Budget Speech 2026-27",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|farm ponds": {
+  "q": "Is there a government subsidy for digging a farm pond? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|solar pumps": {
+  "q": "What is the subsidy on a solar pump set? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|machinery": {
+  "q": "What subsidy can I get on a tractor or power tiller? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|drones": {
+  "q": "Is there a subsidy to buy or hire agriculture drones? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|horticulture": {
+  "q": "What subsidy can I get to grow vegetables or fruit crops? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "TN|poultry": {
+  "q": "Is there a subsidy to start a poultry unit? I am in Tamil Nadu.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "- Tamil Nadu. Input subsidy for crop loss of 33% and above, assured irrigated areas: Rs.17,000 per hectare, at least Rs.2,000 per farmer, restricted to sown areas. [E1]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, crops other than paddy in rainfed areas: Rs.8,500 per hectare, at least Rs.1,000 per farmer, restricted to sown areas. [E2]\n- Tamil Nadu. Input subsidy for crop loss of 33% and above, perennial crops and agro forestry: Rs.22,500 per hectare, at least Rs.2,500 per farmer, restricted to sown areas. [E3]",
+  "sources": [
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi",
+   "G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to vi"
+  ]
+ },
+ "AP|markets": {
+  "q": "How do regulated markets work, and what fee does a farmer pay to sell there? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "## How APMC markets operate\nThe horticulture department’s post‑harvest guidelines describe the modern wholesale market (which includes APMC‑type markets) as a “professionally managed competitive alternative marketing structure” that links farmers directly to buyers, shortens the supply chain and aims to increase farmer income [E5]. The same guidelines list the steps to be followed for a project, from obtaining a proposal and DMC approval to administrative sanction by the District Collector and monitoring of construction [E8]. These steps apply to setting up a regulated market and therefore define how the market is authorised and overseen.\n\n## Market fees and commissions\nThe Rural Primary Market / Apni Mandi form includes a line for “Rate of market fee levied, if any” [E4]. This shows that a market fee can be imposed on traders or farmers, but the form does not contain a specific figure; the rate is to be decided by the market committee. No other document provides a concrete amount or percentage for the fee.\n\n## Selling produce in APMC markets\nEligibility to set up and operate a modern wholesale market (including APMC markets) is open to individuals, groups of farmers, partnerships, companies, cooperatives, SHGs, FPOs, marketing boards and local bodies [E5]. Once a market is approved and operational, farmers can bring their perishable (fruits, vegetables, flowers, etc.) and limited non‑perishable produce (max 15 % of total throughput) for sale [E5]. The guidelines require that the market be regulated by a market committee or a local body, which ensures that transactions are transparent and that price discovery mechanisms are in place [E5].\n\n## Market committee offices\nThe documents state that each rural primary market or Apni Mandi must be “functioning under the market committee” or, if not regulated, under a local body [E4]. The committee’s responsibilities include maintaining financial records, levying any market fee, and signing off on inspection reports [E4]. The form also asks for the name of the market committee and the signature of its chairman [E4].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "sources": [
+   "Andhra Pradesh Horticulture Department: post-harvest management guidelines [Horticulture d",
+   "Andhra Pradesh Horticulture Department: post-harvest management guidelines [Horticulture d",
+   "Andhra Pradesh Horticulture Department: post-harvest management guidelines [Horticulture d"
+  ]
+ },
+ "AP|fertiliser": {
+  "q": "What is the price of a bag of urea and where do I complain if a dealer overcharges? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "The documents do not state a specific price for a bag of urea, as the Central Government fixes maximum prices or rates for fertilizers by notification in the Official Gazette, which dealers are prohibited from exceeding [E5]. If a dealer overcharges, you should follow the grievance redressal procedures established for the agriculture sector in Andhra Pradesh.\n\n**Price Information**\n* The Central Government regulates the equitable distribution of fertilizers and sets the maximum prices or rates at which any fertilizer may be sold [E5].\n* Dealers are required to prominently display the price list of fertilizers at their place of business [E5].\n\n**Complaint Procedure**\nIf you observe issues such as overcharging, you should follow these steps:\n* **Initial Feedback:** Submit feedback regarding the issue to the concerned District Administration [E3][E6].\n* **Grievance Redressal Officers:** Each district designates Taluka and District Level Grievance Redressal Officers, typically from the Agriculture or Horticulture departments, to address grievances [E3][E6]. These officers must resolve grievances within seven days of receipt [E3][E6].\n* **District-Level Grievance Redressal Committee (DGRC):** If the issue remains unresolved, it is escalated to the DGRC, which is headed by the District Magistrate or Collector [E3][E6]. This committee is responsible for resolving grievances within 15 days [E3][E6].\n* **State-Level Grievance Redressal Committee (SGRC):** If the DGRC fails to resolve the issue, it can be escalated to the SGRC, chaired by the Principal Secretary of Agriculture, which must resolve the grievance within 15 days [E3][E6].\n\nAdditionally, the Fertilizer Section of the Department of Agriculture in Andhra Pradesh is responsible for fertilizer control and regulation [E7]. You may contact the relevant district or state agricultural authorities for further assistance regarding dealer compliance.\n\nSome details were left out because they couldn't be checked against the documents.",
+  "models": [
+   "gemini-3.1-flash-lite"
+  ],
+  "sources": [
+   "G.O.Ms.No.81 Agri&Coop Dt.04.09.2024 - Restructured Weather Based Crop Insurance Scheme (R",
+   "The Fertiliser (Control) Order, 1985 [central government]",
+   "G.O.Ms.No.80 Agri&Coop (Agri.V) Dt.04.09.2024 - PMFBY (Yield Based) 2024-25 & 2025-26 - fr",
+   "Agriculture Department - Information Manual under Section 4(1)(b) of RTI Act 2005 (2025-26"
+  ]
+ },
+ "AP|sericulture": {
+  "q": "What support does the state give for silkworm rearing? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "## Financial assistance for farmers\nThe \"Annadatha Sukhibhava - PM Kisan\" scheme provides financial assistance of Rs. 20,000 per year to eligible farmer families, including those involved in sericulture [E9][E13][E14]. This support is available to landholder farmer families (owning at least 10 cents of cultivable land), RoFR land cultivators, and eligible landless tenant farmers [E12][E14]. For landless tenant farmers, the minimum lease area required to qualify is 1 acre (0.4 Ha) for general sericulture crops, or 0.1 acres (0.04 Ha) for betel vine [E19].\n\n## Subsidies and incentives\nThe state provides subsidies and incentives to individual beneficiaries under various sericulture schemes [E23][E29]. Specific support includes:\n* **Micro-irrigation:** Under the Per Drop More Crop (PDMC) scheme, the state provides subsidies for drip and sprinkler irrigation systems [E10][E21]. As of March 2026, 100% subsidy for drip irrigation and 90% for sprinkler irrigation is extended to Forest Rights Act (FRA) patta holders in eight specific districts: Alluri Sitharamaraju, Eluru, Parvathipuram Manyam, Nandyal, Palnadu, Prakasam, Srikakulam, and Vizianagaram [E8][E21].\n* **Production and inputs:** The government provides production incentives for cocoons and silk, and supplies disinfectants and farm mechanization units to farmers [E4].\n* **Natural calamity relief:** In the event of natural calamities, the state provides assistance for sericulture at a rate of Rs. 25,000 per hectare [E1][E24].\n\n## Technical and operational support\nThe Sericulture Department aims to increase cocoon productivity and promote quality bivoltine cocoon production through a cluster approach [E6]. Technical support is provided through:\n* **Rythu Bharosa Kendralu (RBKs):** Sericulture assistants operate from these centers to provide technical content and address farmer problems [E11].\n* **Integrated Call Center:** An integrated call center at the Agriculture Commissionerate provides solutions to farmers in the agriculture and allied sectors [E11].\n* **Research and Development:** The Andhra Pradesh State Sericulture Research & Development Institute supports the industry [E3].\n\n## What the documents don't settle\nThe documents do not provide the specific application forms or the exact physical locations of all local Sericulture Department offices, though they note the existence of district offices and the headquarters office [E2][E28].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "models": [
+   "gemini-3.1-flash-lite"
+  ],
+  "sources": [
+   "G.O.Ms.No.1 Revenue (DM-I) Dt.07.01.2025 - Enhanced scale of assistance applied to future ",
+   "Andhra Pradesh Budget Estimates 2026-27: Agriculture, Co-operation, Food and Civil Supplie",
+   "Andhra Pradesh Budget Estimates 2026-27: Agriculture, Co-operation, Food and Civil Supplie",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]",
+   "G.O.Rt.No.206 Agri&Coop (H&S) Dt.18.03.2026 - Extension of 100% drip / 90% sprinkler subsi",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Rt.No.82 Agri&Coop (H&S) Dt.17.02.2025 - APMIP - Subsidy pattern for drip and sprinkle",
+   "G.O.Ms.No.37 Agri&Coop (Agri.II) Dt.04.02.2020 - Establishment of Rythu Bharosa Kendralu (",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Ms.No.33 Agri&Coop (Agri.II) Dt.01.08.2025 - 'Annadatha Sukhibhava - PM Kisan' Scheme ",
+   "G.O.Rt.No.206 Agri&Coop (H&S) Dt.18.03.2026 - Extension of 100% drip / 90% sprinkler subsi",
+   "Andhra Pradesh Budget Estimates 2026-27: Agriculture, Co-operation, Food and Civil Supplie",
+   "G.O.No.2 Revenue (DM) Dt.07.01.2025 - Natural calamities - Enhanced ex-gratia and scale of",
+   "Andhra Pradesh Budget Estimates 2026-27: Agriculture, Co-operation, Food and Civil Supplie",
+   "Andhra Pradesh Budget Estimates 2026-27: Agriculture, Co-operation, Food and Civil Supplie"
+  ]
+ },
+ "AP|fisheries": {
+  "q": "What help do fishermen get during the fishing ban? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "deep",
+  "answer": "## Who qualifies\n The state government identifies eligible beneficiaries through social auditing conducted by the Fisheries Department [E9].\n\n## How to participate\nTo receive benefits, fishermen must be identified as eligible through the social auditing process managed by the Fisheries Department [E9]. The department facilitates the registration of fishermen and monitors their cooperative societies to ensure the scheme reaches the intended beneficiaries [E9].\n\nSome details were left out because they couldn't be checked against the documents.",
+  "models": [
+   "gemini-3.1-flash-lite"
+  ],
+  "sources": [
+   "G.O.Ms.No.37 Agri&Coop (Agri.II) Dt.04.02.2020 - Establishment of Rythu Bharosa Kendralu ("
+  ]
+ },
+ "AP|eNAM": {
+  "q": "How can I sell my crop on eNAM from this state? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "standard",
+  "answer": "To sell your agricultural produce on the e-NAM platform in Andhra Pradesh, you must register as a farmer on the platform to participate in the digital market, which aims to eliminate middlemen and provide true price discovery for your crops [E1].\n\n**Steps to participate:**\n* **Registration:** You must onboard onto the e-NAM platform by registering your details [E1].\n* **Market Access:** You can utilize the 33 e-NAM market yards currently established across the state to facilitate your sales [E1].\n* **Integration:** The state is actively integrating wholesale markets with the Government of India’s e-NAM platform to increase competition for your produce [E1].\n\n**Important considerations:**\n* **Support:** The government promotes the onboarding of farmers, Farmer Producer Organizations (FPOs), traders, big buyers, assayers, and logistics providers into the e-NAM platform [E1].\n* **Strategy:** The state’s strategy involves strengthening FPOs and aggregators at the village level to help eliminate middlemen in the marketing chain [E1].\n* **Infrastructure:** The government is also working to provide warehouses that can function as markets to improve the ease of marketing your produce [E1].\n\nFor specific technical assistance or to confirm the current registration portal for e-NAM onboarding, you may contact your local Agriculture Marketing Committee or the Department of Agriculture, as the state is actively working to expand these digital services [E1].",
+  "models": [
+   "gemini-3.1-flash-lite"
+  ],
+  "sources": [
+   "Andhra Pradesh Outcome Budget 2026-27 [Finance department]"
+  ]
+ },
+ "AP|storage": {
+  "q": "Can I store my produce in a government warehouse and get a loan against it? I am in Andhra Pradesh.",
+  "kind": "answer",
+  "depth": "quick",
+  "answer": "Yes – you can store your crop in a warehouse that is accredited by the Warehousing Development Regulatory Authority and obtain a short‑term Kisan Credit Card loan against the negotiable warehouse receipt, with interest subsidised at the same rate as a regular KCC agri‑loan for up to six months after harvest[E2]. You must have a KCC, use a WDRA‑accredited warehouse, and the loan can be for the amount you need (which must exceed any subsidy you may also receive).",
+  "models": [
+   "groq:openai/gpt-oss-120b",
+   "groq:openai/gpt-oss-20b"
+  ],
+  "sources": [
+   "Modified Interest Subvention Scheme (MISS) for short-term loans through KCC - continuation"
+  ]
+ }
+}

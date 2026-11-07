@@ -1,0 +1,40 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (711 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (745 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1082 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (588 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (648 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (958 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1444 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (1374 > 512). Running this sequence through the model will result in indexing errors
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (647 > 512). Running this sequence through the model will result in indexing errors
+  warning  Tamil Nadu Agriculture and Farmers Welfare Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture and Farmers Welfare Department: Policy Note 2026-27: 24 of 321 pages read as a scan, 9 figures marked unclear
+  warning  Tamil Nadu Agriculture Budget Speech 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Agriculture Budget Speech 2026-27: 2 of 97 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Revenue and Disaster Management Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Revenue and Disaster Management Department: Policy Note 2026-27: 2 of 232 pages read as a scan, 0 figures marked unclear
+  warning  Coimbatore District Collector press note, 03.08.2026 - PMFBY Kharif 2026-27 enrolment: 1 of 1 pages read as a scan, 1 figures marked unclear
+  warning  G.O.(Ms).No.256 Agriculture (AP2) Dt.19.11.2019 - PMFBY Rabi 2019-20 notification: 14 of 48 pages read as a scan, 113 figures marked unclear
+  warning  Revenue and Disaster Management G.O. No.9 - sanction of Rs.35.09 crore for crop damage, North East Monsoon 2021: no date, so it can't be checked for validity
+  warning  Tamil Nadu Fisheries and Fishermen Welfare Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Fisheries and Fishermen Welfare Department: Policy Note 2026-27: 7 of 173 pages read as a scan, 1 figures marked unclear
+  warning  Tamil Nadu Dairy Development Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Dairy Development Department: Policy Note 2026-27: 2 of 132 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Co-operation Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Co-operation Department: Policy Note 2026-27: 4 of 154 pages read as a scan, 0 figures marked unclear
+  warning  Tamil Nadu Food and Consumer Protection Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Food and Consumer Protection Department: Policy Note 2026-27: 20 of 196 pages read as a scan, 17 figures marked unclear
+  warning  Tamil Nadu Water Resources Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Water Resources Department: Policy Note 2026-27: 6 of 235 pages read as a scan, 45 figures marked unclear
+  warning  Tamil Nadu Energy Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Energy Department: Policy Note 2026-27: 4 of 181 pages read as a scan, 0 figures marked unclear
+  warning  G.O.(Ms).No.579 Revenue and Disaster Management Dt.09.12.2023 - financial assistance to victims of natural calamities: 24 of 24 pages read as a scan, 6 figures marked unclear
+  warning  Tamil Nadu Animal Husbandry Department: Policy Note 2026-27: no date, so it can't be checked for validity
+  warning  Tamil Nadu Animal Husbandry Department: Policy Note 2026-27: in_force not set; it will be treated as unknown
+  warning  Tamil Nadu Animal Husbandry Department: Policy Note 2026-27: 2 of 163 pages read as a scan, 0 figures marked unclear
+16 documents, 2018 chunks
+filed 16 document and link records; rejected 0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 4306.62it/s]
+Batches:   0%|          | 0/11 [00:00<?, ?it/s]Batches:   9%|▉         | 1/11 [00:08<01:22,  8.21s/it]Batches:  18%|█▊        | 2/11 [00:15<01:10,  7.88s/it]Batches:  27%|██▋       | 3/11 [00:26<01:14,  9.33s/it]Batches:  36%|███▋      | 4/11 [00:41<01:20, 11.52s/it]Batches:  45%|████▌     | 5/11 [00:54<01:11, 11.97s/it]Batches:  55%|█████▍    | 6/11 [01:05<00:58, 11.75s/it]Batches:  64%|██████▎   | 7/11 [01:14<00:42, 10.64s/it]Batches:  73%|███████▎  | 8/11 [01:22<00:29,  9.77s/it]Batches:  82%|████████▏ | 9/11 [01:33<00:20, 10.24s/it]Batches:  91%|█████████ | 10/11 [01:46<00:11, 11.08s/it]Batches: 100%|██████████| 11/11 [01:47<00:00,  7.91s/it]Batches: 100%|██████████| 11/11 [01:47<00:00,  9.74s/it]
+agriculture: 5793 chunks indexed (161 new, 0 removed)

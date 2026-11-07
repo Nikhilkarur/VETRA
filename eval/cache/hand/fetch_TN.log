@@ -1,0 +1,5 @@
+FAIL https://www.tnagrisnet.tn.gov.in/Approvedratesofsolarpumps.pdf: HTTPError
+FAIL https://www.tnagrisnet.tn.gov.in/Listofempanelledcompaniesforsolarpumps.pdf: HTTPError
+FAIL https://tnrd.tn.gov.in/pdf/Contractor Registration BG Format.pdf: ConnectTimeout
+FAIL https://msmeonline.tn.gov.in/uyegp/pdf/MS_28_D2_2024_UYEGP.pdf: HTTPError
+got 32, failed 4
