@@ -42,6 +42,14 @@ _TEXT = {
         "english": "Not found in the documents we hold: {subject}.",
         "telugu": "మా దగ్గర ఉన్న పత్రాలలో ఇవి దొరకలేదు: {subject}.",
     },
+    "web_live": {
+        "english": "Part of this answer comes from official government websites read just now, not from documents VETRA holds and has checked. Please confirm with the department before acting on it.",
+        "telugu": "ఈ సమాధానంలో కొంత భాగం ఇప్పుడే చదివిన అధికారిక ప్రభుత్వ వెబ్‌సైట్ల నుండి వచ్చింది, VETRA దగ్గర ఉన్న పరిశీలించిన పత్రాల నుండి కాదు. దీనిపై చర్య తీసుకునే ముందు శాఖతో నిర్ధారించుకోండి.",
+    },
+    "web_none": {
+        "english": "I also searched official government websites ({sites}) and found no official source for: {subject}.",
+        "telugu": "అధికారిక ప్రభుత్వ వెబ్‌సైట్లలో ({sites}) కూడా వెతికాను, వీటికి అధికారిక సమాచారం దొరకలేదు: {subject}.",
+    },
     "left_out": {
         "english": "Some details were left out because they couldn't be checked against the documents.",
         "telugu": "పత్రాలతో సరిచూడలేకపోయిన కొన్ని వివరాలను వదిలేశాము.",

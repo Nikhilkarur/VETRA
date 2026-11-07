@@ -287,6 +287,7 @@ function card(s, turn, onClick) {
   if (s.status === "not_in_force") meta.append(el("span", "tag warn", "No longer in force"));
   if (s.scanned) meta.append(el("span", "tag warn", "Read from a scan"));
   if (s.unofficial) meta.append(el("span", "tag warn", "Not an official document"));
+  if (s.live) meta.append(el("span", "tag warn", "Fetched live, not yet checked by VETRA"));
   b.append(top, meta);
   b.addEventListener("click", onClick);
   return b;

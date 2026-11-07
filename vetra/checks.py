@@ -58,7 +58,7 @@ def order(items: list[Evidence]) -> list[Evidence]:
             seen.add(e.key)
             unique.append(e)
     rank = {"rule_check": 0, "dates_lookup": 1, "number_lookup": 1, "directory_lookup": 1,
-            "links_walk": 2, "form_search": 2, "text_search": 3}
+            "links_walk": 2, "form_search": 2, "text_search": 3, "web_search": 4}  # a fetched page never outranks a held document
     # A summary comes after the documents it summarises, so it's the first to go when evidence is cut.
     return sorted(unique, key=lambda e: (rank.get(e.tool, 3), e.status == "not_in_force", e.kind in UNOFFICIAL))
 

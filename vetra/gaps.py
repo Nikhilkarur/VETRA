@@ -36,7 +36,7 @@ class Gap:
     state: str          # a state's code, or "any" when the user didn't say
     data_type: str
     subject: str
-    level: str          # no_data: nothing found. text_only: found only in text.
+    level: str          # no_data: nothing found. text_only: found only in text. web_only: found only on an official website, live.
     date: str
 
 

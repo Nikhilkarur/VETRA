@@ -78,7 +78,7 @@ def to_page(r: agent.Result) -> dict:
             "sources": [{"n": s["n"], "doc": s["doc"], "source": s["doc"] + (f" · {s['kind']}" if s.get("kind") else ""),
                          "url": s.get("url"), "host": _host(s.get("url")), "date": s.get("date"),
                          "status": s.get("status"), "kind": s.get("kind") or "", "scanned": bool(s.get("scanned")),
-                         "unofficial": s.get("kind") in UNOFFICIAL, "reviewed": bool(s.get("reviewed")),
+                         "unofficial": s.get("kind") in UNOFFICIAL, "live": s.get("tool") == "web_search", "reviewed": bool(s.get("reviewed")),
                          "added": bool(s.get("added_because")), "text": s.get("text", "")}
                         for s in r.sources]}
 

@@ -1917,3 +1917,65 @@ def test_a_record_filed_under_the_other_topic_is_still_found():
     ctx = Context("finance", "TN", TODAY, kb, question="what interest do cooperative crop loans charge in tamil nadu")
     found = TOOLS["number_lookup"]("cooperative crop loan interest Tamil Nadu", ctx)
     assert any(e.key == "tn-crop-loan-interest" for e in found)
+
+
+# ---------------------------------------------------------------- live official web search
+
+from vetra import websearch  # noqa: E402
+
+
+class FakeSearch:
+    name = "fake"
+
+    def __init__(self, *hits, fail=False):
+        self.hits, self.fail, self.asked = list(hits), fail, []
+
+    def search(self, query, limit):
+        self.asked.append(query)
+        if self.fail:
+            raise RuntimeError("quota")
+        return self.hits
+
+
+POND = ("The Andhra Pradesh farm pond scheme gives a subsidy of Rs.5,000 per farm pond to small farmers. "
+        "Apply at the Rythu Seva Kendra. ") * 4
+
+
+def test_only_official_hosts_are_searched_or_read():
+    assert websearch.allowed("https://agri.ap.gov.in/x") and websearch.allowed("https://rbi.org.in/a")
+    assert not websearch.allowed("https://gov.in.example.com/x") and not websearch.allowed("https://notgov.in/x")
+    assert not websearch.allowed("https://www.reddit.com/r/x")
+
+
+def test_live_search_reads_official_pages_and_marks_them():
+    s = FakeSearch(websearch.Hit("https://www.reddit.com/x", "forum"), websearch.Hit("https://agri.ap.gov.in/pond", "Farm ponds"))
+    read = []
+    found, hosts = websearch.find("farm pond subsidy", "Andhra Pradesh", "how much is the farm pond subsidy", s,
+                                  fetcher=lambda u: read.append(u) or (POND, u))
+    assert read == ["https://agri.ap.gov.in/pond"]   # the forum is never fetched
+    assert found and all(e.kind == websearch.KIND and e.tool == "web_search" and not e.reviewed for e in found)
+    assert "Rs.5,000" in found[0].text and hosts
+    assert websearch.find("x", "", "x", None) == ([], [])
+    assert websearch.find("x", "", "x", FakeSearch(fail=True))[0] == []
+
+
+def test_a_part_the_store_lacks_is_answered_from_an_official_site_and_labelled(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [])
+    monkeypatch.setattr(websearch, "fetch", lambda u: (POND, u))
+    s = FakeSearch(websearch.Hit("https://agri.ap.gov.in/pond", "Farm ponds"))
+    gaps = Gaps()
+    m = models(plan(needs=[{"type": "amount", "subject": "farm pond subsidy"}]), "The subsidy is Rs.5,000 per farm pond [E1].")
+    r = agent.answer("how much is the farm pond subsidy?", models=m, knowledge=knowledge.Knowledge(tmp_path),
+                     as_of=TODAY, gaps=gaps, web=s)
+    assert r.kind == "answer" and "Rs.5,000" in r.answer
+    assert "official government websites read just now" in r.answer
+    assert r.sources and r.sources[0]["tool"] == "web_search"
+    assert [g.level for g in gaps.seen] == ["web_only"]   # ours to collect, not reported to the reader as missing
+
+
+def test_when_no_official_site_has_it_the_reader_is_told_where_it_looked(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [])
+    m = models(plan(needs=[{"type": "amount", "subject": "farm pond subsidy"}]))
+    r = agent.answer("how much is the farm pond subsidy?", models=m, knowledge=knowledge.Knowledge(tmp_path),
+                     as_of=TODAY, gaps=Gaps(), web=FakeSearch())
+    assert r.kind == "not_covered" and "found no official source for: farm pond subsidy" in r.answer and "gov.in" in r.answer
