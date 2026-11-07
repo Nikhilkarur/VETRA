@@ -1,7 +1,7 @@
 {
  "last_report": "2026-11-07T16:50",
  "state": "Paused",
- "headline": "Paused for your review. Andhra Pradesh: 95% of deep aspects have exact records in agriculture and finance; Tamil Nadu: 100% in both. Next for the MVP, when you say: refine answers, live web search for what's missing, and sub-aspects.",
+ "headline": "Paused for your review. Andhra Pradesh: 95% of deep aspects have exact records in agriculture and finance; Tamil Nadu: 100% in both. MVP plan when you say: deepen data, review it by hand, web search for gaps, then answer structure.",
  "usage": {
   "five_hour": 0,
   "weekly": 0,
@@ -9,7 +9,7 @@
  },
  "decisions": [
   "<strong>Your rules (6 Nov) stay in force:</strong> you are head of the project and I act as senior project manager; this page is updated only when you ask, with Andhra Pradesh and Tamil Nadu completion in percent; data and engine are equal focuses; testing comes later.",
-  "<strong>Goal update, 7 Nov:</strong> to make VETRA hard to beat, three steps remain for the MVP (Andhra Pradesh and Tamil Nadu, agriculture and finance): 1) refine the answers; 2) when information is still missing after the store, search official websites live, use it if it checks out (and queue it for the store) or say clearly that no official source was found; 3) broaden and deepen the aspects into sub-aspects. Other states belong to the full product. All three are planned, not started. The design is on the Current plan tab.",
+  "<strong>MVP plan (your words, 7 Nov), in order, for Andhra Pradesh and Tamil Nadu, agriculture and finance:</strong> 1) deepen the data, including sub-aspects; 2) review the data by hand: which types of data are present and which are missing; 3) web search for what isn't there, using it if an official source checks out (and adding it to the store) or saying clearly that none was found; 4) change the structure and quality of the answers. Other states belong to the full product. All four are planned, not started. Details are on the Current plan tab.",
   "<strong>Models (7 Nov, for now):</strong> Groq is primary and Gemini the fallback until you choose a paid API. The key is only in .env.",
   "<strong>You are reviewing this page for the next few days.</strong> Nothing runs until you say to resume. The full technical account of how VETRA finds documents and checks answers is at the top of the Current plan tab."
  ],

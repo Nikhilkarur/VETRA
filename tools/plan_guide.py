@@ -79,15 +79,18 @@ def build() -> str:
 <section id="pl-goal7">
   <div class="sec-head">
     <p class="label">Updated 7 November 2026 · the sections further down are from 5 November and kept for history · live figures are on the Monitoring station tab</p>
-    <h2>The goal, as you set it on 7 November</h2>
-    <p>The MVP is <strong>Andhra Pradesh and Tamil Nadu, agriculture and finance, at deep level</strong>. Every deep aspect now has an exact record from an official source, except three Andhra Pradesh aspects where no official source exists (recorded in <code>knowledge/searched.jsonl</code>). To make VETRA hard to beat, three things are left for the MVP. They are planned, not started: work resumes only when you say.</p>
+    <h2>The goal and the MVP plan, as you set them on 7 November</h2>
+    <p>The MVP is <strong>Andhra Pradesh and Tamil Nadu, agriculture and finance, at deep level</strong>. Every deep aspect now has an exact record from an official source, except three Andhra Pradesh aspects where no official source exists (recorded in <code>knowledge/searched.jsonl</code>). Your plan for the rest of the MVP has four steps, in this order. They are planned, not started: work resumes only when you say.</p>
   </div>
   <div class="grid3">
-    <div class="card"><p class="label">MVP step 1</p><p class="big">Refine the answers</p><p class="small muted">Read real answers by hand for every aspect in Andhra Pradesh and Tamil Nadu, and fix what's wrong by design: shape and length per depth, plain language, every statement cited, figures printed exactly, conditions and exceptions kept, and clear notes when a part isn't held.</p></div>
-    <div class="card"><p class="label">MVP step 2</p><p class="big">Web search when the store has nothing</p><p class="small muted">If a part is still missing after the documents, the records and looking further, search official websites live. If the information is there and checks out, answer with it, labelled as fetched live, and queue it for the store. If not, say clearly that no official source was found and what was searched.</p></div>
-    <div class="card"><p class="label">MVP step 3</p><p class="big">Broaden and deepen the aspects</p><p class="small muted">Split each aspect into sub-aspects (crop insurance into enrolment, premium, claims, grievances; land records into mutation, subdivision, freehold, and so on) for Andhra Pradesh and Tamil Nadu, agriculture and finance, and fill each from official documents, aiming at three or more records per sub-aspect.</p></div>
+    <div class="card"><p class="label">MVP step 1</p><p class="big">Deepen the data</p><p class="small muted">For Andhra Pradesh and Tamil Nadu, fill every aspect from official documents, and split aspects into sub-aspects (crop insurance into enrolment, premium, claims, grievances; land records into mutation, subdivision, freehold, and so on), aiming at three or more exact records per sub-aspect.</p></div>
+    <div class="card"><p class="label">MVP step 2</p><p class="big">Review the data by hand</p><p class="small muted">Go through what is held, state by state and aspect by aspect: which types of data are present (amounts, deadlines, eligibility, procedure, contacts, forms, amendments) and which are missing, and whether each record is current and correctly sourced. The result is a written list of what's present and what isn't.</p></div>
+    <div class="card"><p class="label">MVP step 3</p><p class="big">Web search for what isn't there</p><p class="small muted">For what the review shows is missing, and for any part of a question still missing after the store, search official websites live. If the information is there and checks out, answer with it, labelled as fetched live, and add it to the store; if not, say clearly that no official source was found and what was searched.</p></div>
   </div>
-  <h3>MVP step 2 in more detail: the live web-search fallback (design, not built)</h3>
+  <div class="grid3" style="margin-top:12px">
+    <div class="card"><p class="label">MVP step 4</p><p class="big">Answer structure and quality</p><p class="small muted">Change how answers are built and read: structure and length per depth, the order of sections, plain language, every statement cited, figures printed exactly, conditions and exceptions kept, and clear notes for what isn't held. Checked by reading real answers by hand for every aspect, and fixed by design, not around single questions.</p></div>
+  </div>
+  <h3>MVP step 3 in more detail: the live web-search fallback (design, not built)</h3>
   <ol class="small">
     <li><strong>When it runs:</strong> only for a part of the question that is still missing after the exact stores, text search and the look-further rounds. The engine already records these as gaps (<code>vetra/gaps.py</code>), and its docstring already names a web collector as the handler that plugs in there, so the agent itself doesn't change.</li>
     <li><strong>Where it may look:</strong> an allow-list of official hosts only: <code>*.gov.in</code>, <code>*.nic.in</code>, RBI, PIB, NABARD and the state portals already used (goir.ap.gov.in, cms.tn.gov.in, tnagrisnet, apfinance and so on). No blogs, news or aggregators as sources; they may be used only to find an official page.</li>
@@ -153,7 +156,7 @@ def build() -> str:
   <p class="small">Unless exact records already answer everything, a model judges the evidence against the question. It sees up to 700 characters of each passage, and for exact records only that the record exists, not its figures. If a part is missing it chooses up to the depth's number of moves: search again in other words, read the passages just before and after one it found, or look inside one document for something specific. Every move only reads; code fixes the state and topic; results pass the same in-force and on-topic checks. It repeats for the depth's number of rounds and stops as soon as the evidence is enough. Text inside documents is treated as data: instructions in it are ignored.</p>
 
   <h3>8. Record what's missing (<code>gaps.py</code>)</h3>
-  <p class="small">A part with nothing found, or found only for the centre when a state was asked, goes on the to-do list (<code>data/gaps.jsonl</code>, no personal data, just topic, state, type and subject). A type that should have an exact record but was answered from text is logged too. This is where the live web-search fallback (MVP step 2) will plug in.</p>
+  <p class="small">A part with nothing found, or found only for the centre when a state was asked, goes on the to-do list (<code>data/gaps.jsonl</code>, no personal data, just topic, state, type and subject). A type that should have an exact record but was answered from text is logged too. This is where the live web-search fallback (MVP step 3) will plug in.</p>
 
   <h3>9. Write the answer (<code>agent.py</code>, LLM job "compose")</h3>
   <p class="small">If exact records answer everything in a quick or standard question, they are printed as stored and no model writes anything. Otherwise the writing model gets the evidence and the shape for the depth: a short answer, a standard answer with steps and conditions, or a research brief (direct answer first, a section per part, what changed, where sources differ and which applies by legal weight, and what the documents don't settle). Exact figures are printed by code from the records, so the model can't change a number. Notes are added in code: a part not found, a part found only for the centre, a question without a state, or facts the person should tell us. Answers can be in the question's language or one picked on the page.</p>
@@ -188,7 +191,7 @@ def build() -> str:
     <li>Nothing has been tested on answers yet: the one question run on 7 November answered in about 44 seconds with 16 sources, but answers haven't been read by hand per aspect.</li>
     <li>Coverage percentages count keyword matches, so they guide rather than grade.</li>
     <li>Free-tier models have per-minute limits; several questions in a row can slow down or fall back.</li>
-    <li>Sub-aspects don't exist yet; an aspect with one record counts as covered.</li>
+    <li>Sub-aspects don't exist yet (MVP step 1); an aspect with one record counts as covered.</li>
   </ul>
 </section>
 """
