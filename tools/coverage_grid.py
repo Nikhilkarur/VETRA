@@ -20,7 +20,7 @@ ASPECTS = {
         "crop insurance": r"fasal bima|\bPMFBY\b|crop insurance",
         "disaster relief": r"input subsidy|natural calamit|\bSDRF\b",
         "wildlife damage": r"wild ?animal|wild ?boar|elephant.{0,40}(?:crop|damage)|wildlife.{0,40}compensation",
-        "seed": r"seed (?:subsidy|village|distribution)|subsidi[sz]ed seed|certified seed|seed act",
+        "seed": r"seed (?:subsidy|village|distribution|certification|testing)|subsidi[sz]ed seed|certified seed|seeds? act",
         "fertiliser": r"fertili[sz]er|urea|\bDAP\b",
         "pesticide rules": r"pesticide|insecticides act",
         "soil health": r"soil health|soil test",
