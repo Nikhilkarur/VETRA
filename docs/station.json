@@ -1,7 +1,7 @@
 {
- "last_report": "2026-11-07T16:50",
+ "last_report": "2026-11-07T18:03",
  "state": "Paused",
- "headline": "Paused for your review. Andhra Pradesh: 95% of deep aspects have exact records in agriculture and finance; Tamil Nadu: 100% in both. MVP plan when you say: deepen data, review it by hand, web search for gaps, then answer structure.",
+ "headline": "Paused for your review. Andhra Pradesh: 95% of deep aspects have exact records in agriculture and finance; Tamil Nadu: 100% in both. Web search: a first version is built and was tried on a few questions, but it is not satisfactory or tested yet.",
  "usage": {
   "five_hour": 0,
   "weekly": 0,
@@ -10,10 +10,12 @@
  "decisions": [
   "<strong>Your rules (6 Nov) stay in force:</strong> you are head of the project and I act as senior project manager; this page is updated only when you ask, with Andhra Pradesh and Tamil Nadu completion in percent; data and engine are equal focuses; testing comes later.",
   "<strong>MVP plan (your words, 7 Nov), in order, for Andhra Pradesh and Tamil Nadu, agriculture and finance:</strong> 1) deepen the data, including sub-aspects; 2) review the data by hand: which types of data are present and which are missing; 3) web search for what isn't there, using it if an official source checks out (and adding it to the store) or saying clearly that none was found; 4) change the structure and quality of the answers. Other states belong to the full product. All four are planned, not started. Details are on the Current plan tab.",
+  "<strong>Web search (MVP step 3), first version tried on 7 Nov, not satisfied, not tested:</strong> when VETRA's own data can't answer a part, it now searches official government websites live through Tavily (a web-search API: VETRA sends a search and an allowed-sites list, gets back page links, then reads the pages itself), and shows what it finds labelled 'Fetched live, not yet checked by VETRA', or says no official source was found. Nothing is stored. It was tried on a few questions only; no question set has been run and no answers read by hand. Details and known weaknesses are on the Current plan tab.",
   "<strong>Models (7 Nov, for now):</strong> Groq is primary and Gemini the fallback until you choose a paid API. The key is only in .env.",
   "<strong>You are reviewing this page for the next few days.</strong> Nothing runs until you say to resume. The full technical account of how VETRA finds documents and checks answers is at the top of the Current plan tab."
  ],
  "next": [
+  "<strong>Web search, first version (7 Nov):</strong> built in vetra/websearch.py and wired into the agent; state's own sites first (ap.gov.in, tn.gov.in), then other government sites; other states' pages skipped; passages must contain the subject's own words; same answer checks as held documents. Tried on two Andhra Pradesh questions: farm pond found district horticulture pages; silkworm shed found nothing official and the answer now says so instead of wrongly saying no subsidy exists. 247 code tests pass. Not tested on answers.",
   "<strong>Andhra Pradesh, deep level:</strong> agriculture 42 of 44 aspects have exact records (95%), 27 of 44 have three or more (61%); finance 20 of 21 (95%), 10 of 21 with three or more (48%). The aspects still without a record were searched and no official source exists: paddy bonus over MSP and a farmers' welfare board (agriculture), and a women's stamp duty concession (finance). Held: 217 documents, about 6,860 passages, 378 exact records.",
   "<strong>Tamil Nadu, deep level:</strong> agriculture 44 of 44 aspects with exact records (100%), 36 of 44 with three or more (82%); finance 21 of 21 (100%), 13 of 21 with three or more (62%). Held: 190 documents, about 9,720 passages, 346 exact records.",
   "<strong>Central rules that apply in every state:</strong> 72 records from 24 documents, including PM-KISAN, Kisan Credit Card interest and the new RBI KCC rules (from 1 Jan 2027), fertiliser prices, eNAM, land acquisition compensation, PMFME, drones, farm machinery subsidy (SMAM, Dec 2025), Soil Health Card and the Natural Farming Mission.",
@@ -22,6 +24,7 @@
  ],
  "issues": [
   "<strong>Nothing is tested.</strong> Every count means held, not right. All 270 records whose source is held match their documents figure by figure; some were read from scans and are flagged. A person should review them before launch.",
+  "<strong>Web search is not finished:</strong> you are not satisfied with it yet and it hasn't been tested. Weak points: live pages can be old and undated, it adds 10 to 20 seconds, Tavily's free tier has a monthly limit, passage picking is plain word matching, and it can sometimes search when it didn't need to. Gemini, the fallback model, is also out of free quota, so answers rely on Groq.",
   "<strong>Andhra Pradesh aspects with fewer than three records:</strong> agriculture: loan waiver, KCC, wildlife damage, seed, soil health, natural farming, drip, farm ponds, wells, solar pumps, dairy, food processing, tenancy, land conversion, land acquisition; finance: debt, finance commission, guideline values, state GST, land revenue, electricity duty, property tax, tax arrears, state loans, housing. Most need official AP orders that the GO index and reachable department sites don't have.",
   "<strong>Tamil Nadu aspects with fewer than three records:</strong> agriculture: loan waiver, drip, sericulture, eNAM, food processing, land conversion, land acquisition, extension offices; finance: debt, finance commission, guideline values, land revenue, electricity duty, property tax, tax arrears, women concessions.",
   "<strong>Percent caveat:</strong> completion counts keyword matches against each aspect, so the figures are a guide, not a grade; an aspect with one record counts as covered, which is why the three-or-more figure is shown beside it."
@@ -99,6 +102,11 @@
    "time": "07 Nov 16:50",
    "state": "Paused",
    "text": "Goal update on your request (7 Nov). The MVP plan now has three remaining steps for Andhra Pradesh and Tamil Nadu, agriculture and finance: refine answers; a live web-search fallback that uses official sites only, adds what checks out to the store and says clearly when nothing official is found; and sub-aspects to broaden and deepen each aspect. Other states are for the full product. The Current plan tab now opens with this plan and a step-by-step account of how VETRA plans, searches, checks and cites. Completion unchanged: Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100% of deep aspects with exact records. Paused for your review."
+  },
+  {
+   "time": "07 Nov 18:03",
+   "state": "Paused",
+   "text": "Update on your request (7 Nov, evening). Web search, MVP step 3: a first version is built and switched on with a Tavily key. Tavily is a web-search API: VETRA sends it a search limited to official sites, gets back page links, and reads the pages itself. It was tried on a few Andhra Pradesh questions only. You are not satisfied with it yet and it has not been tested: no question set run, no answers read by hand. Completion unchanged: Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100% of deep aspects with exact records."
   }
  ]
 }
