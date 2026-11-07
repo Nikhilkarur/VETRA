@@ -59,7 +59,7 @@ ASPECTS = {
     },
     "finance": {
         "budget": r"budget (?:estimate|speech|in brief)",
-        "debt": r"outstanding (?:debt|liabilit)|fiscal deficit|borrowing",
+        "debt": r"outstanding (?:debt|liabilit)|fiscal deficit|borrowing|public debt|state debt|debt swap",
         "finance commission": r"finance commission",
         "stamp duty": r"stamp duty",
         "registration fee": r"registration fee",
