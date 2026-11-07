@@ -1909,3 +1909,11 @@ def test_aspects_searched_without_an_official_source_say_what_was_tried():
         if line.strip():
             entry = json.loads(line)
             assert all(entry.get(k) for k in ("state", "domain", "aspect", "date", "finding", "tried")), entry
+
+
+def test_a_record_filed_under_the_other_topic_is_still_found():
+    kb = knowledge.Knowledge()
+    from vetra.tools import TOOLS
+    ctx = Context("finance", "TN", TODAY, kb, question="what interest do cooperative crop loans charge in tamil nadu")
+    found = TOOLS["number_lookup"]("cooperative crop loan interest Tamil Nadu", ctx)
+    assert any(e.key == "tn-crop-loan-interest" for e in found)

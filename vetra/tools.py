@@ -137,7 +137,12 @@ def dates_lookup(query: str, ctx: Context) -> list[Evidence]:
 def _lookup(store: str, tool: str) -> Callable[[str, Context], list[Evidence]]:
     def run(query: str, ctx: Context) -> list[Evidence]:
         asked = ctx.question.lower()
-        found = F.on_its_topic(ctx.knowledge.find(ctx.domain, store, ctx.state, query), asked)
+        # Some subjects sit between topics: a cooperative crop loan, an SHG loan, a welfare board, land
+        # conversion. Records under every topic are looked at, the planner's topic first, all through the
+        # same on-topic filter, so the topic chosen for a question doesn't hide the record that answers it.
+        from .domains import DOMAINS
+        topics = [ctx.domain] + [d for d in DOMAINS if d != ctx.domain and not DOMAINS[d].legacy]
+        found = [r for d in topics for r in F.on_its_topic(ctx.knowledge.find(d, store, ctx.state, query), asked)]
         return [_from_record(r, tool) for r in F.narrowed(found, asked)]
     return run
 

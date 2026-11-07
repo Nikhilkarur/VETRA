@@ -70,7 +70,7 @@ ASPECTS = {
         "land revenue": r"land revenue|land cess|\bkist\b",
         "electricity duty": r"electricity duty",
         "property tax": r"property tax|house tax",
-        "tax arrears": r"arrears.{0,50}(?:settlement|scheme)|settlement of arrears|amnesty|one.?time settlement",
+        "tax arrears": r"(?:tax|duty|vat|sales|cess)\w*.{0,60}(?:arrears|one.?time settlement|amnesty)|settlement of arrears",  # a tax context: a land OTS isn't a tax scheme
         "women concessions": r"(?:women|woman|female).{0,50}(?:stamp|concession|rebate)",
         "pensions": r"old age pension|social security pension|widow pension|\bNTR Bharosa\b|pension scheme",
         "direct benefits": r"direct benefit|\bDBT\b|magalir urimai|thalliki vandanam|amma vodi",
@@ -96,9 +96,10 @@ def grid(state: str) -> None:
     for domain, aspects in ASPECTS.items():
         path = ROOT / "knowledge" / domain / "text" / f"{state}.json"
         items = json.loads(path.read_text(encoding="utf-8"))["items"] if path.exists() else []
-        records = [json.loads(line) for name in ("numbers", "dates", "rules")
-                   if (ROOT / "knowledge" / domain / f"{name}.jsonl").exists()
-                   for line in (ROOT / "knowledge" / domain / f"{name}.jsonl").open(encoding="utf-8")]
+        # Record lookups search every topic, so records from both topics count for an aspect.
+        records = [json.loads(line) for topic in ASPECTS for name in ("numbers", "dates", "rules")
+                   if (ROOT / "knowledge" / topic / f"{name}.jsonl").exists()
+                   for line in (ROOT / "knowledge" / topic / f"{name}.jsonl").open(encoding="utf-8")]
         records = [r for r in records if r.get("jurisdiction") in (state, "IN")]  # central rules apply in every state, as in the agent's lookups
         low = []
         for name, pattern in aspects.items():

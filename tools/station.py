@@ -80,7 +80,9 @@ def matrix() -> tuple[str, dict]:
     answered = json.loads(ANSWERS.read_text(encoding="utf-8")) if ANSWERS.exists() else {}
     totals: dict = {s: Counter() for s in DEEP}
     blocks = []
-    data = {s: {d: (_items(d, s), _records(d, s)) for d in aspects} for s in DEEP}
+    # Record lookups search every topic (a cooperative loan may be filed under either), so an aspect counts
+    # records from both topics; passages stay per topic.
+    data = {s: {d: (_items(d, s), [r for t in aspects for r in _records(t, s)]) for d in aspects} for s in DEEP}
     for domain, group in aspects.items():
         rows = []
         for name, pattern in group.items():
