@@ -83,6 +83,7 @@ def matrix() -> tuple[str, dict]:
     # Record lookups search every topic (a cooperative loan may be filed under either), so an aspect counts
     # records from both topics; passages stay per topic.
     data = {s: {d: (_items(d, s), [r for t in aspects for r in _records(t, s)]) for d in aspects} for s in DEEP}
+    looked = _searched()
     for domain, group in aspects.items():
         rows = []
         for name, pattern in group.items():
@@ -99,6 +100,7 @@ def matrix() -> tuple[str, dict]:
                 totals[state][domain + "_aspects"] += 1
                 totals[state][domain + "_held"] += cls != "none"
                 totals[state][domain + "_exact"] += bool(exact)
+                totals[state][domain + "_searched"] += not exact and (state, domain, name) in looked
                 note = marks.get(f"{state}|{name}", "")
                 dot = f'<i class="st-dot {MARK_LOOK[note][0]}" title="{MARK_LOOK[note][1]}"></i>' if note in MARK_LOOK else ""
                 cells.append(f'<td class="st-{cls}">{passages}{f" · <b>{exact}</b>" if exact else ""}{dot}</td>')
@@ -217,7 +219,7 @@ def completion(totals: dict) -> str:
             t = totals.get(state, {})
             n = t.get(domain + "_aspects", 0) or 1
             exact, held = t.get(domain + "_exact", 0), t.get(domain + "_held", 0)
-            none = sum(1 for (st, dom, _a) in _searched() if st == state and dom == domain)
+            none = t.get(domain + "_searched", 0)  # searched and still without a record
             gap = f"; {none} searched, no official source" if none else ""
             cells.append(f'<div class="stat"><b>{exact / n:.0%}</b><span>{state} {domain}, deep: {exact} of {n} aspects with exact records{gap}; {held / n:.0%} held</span></div>')
     return "".join(cells)
