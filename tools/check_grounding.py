@@ -17,11 +17,12 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parent.parent
 FIGURE = re.compile(r"\d[\d,]*(?:\.\d+)?(?:\s*(?:lakh|crore))?", re.I)
 DATE = re.compile(r"\b(\d{1,2})[./-](\d{1,2})[./-](\d{4})\b|\b(\d{4})-(\d{2})-(\d{2})\b")
+YEARS = re.compile(r"\b(?:19|20)\d\d\s*[-–]\s*\d\d(?:\d\d)?\b")  # 2026-27: a financial year says when, not how much
 
 
 def norm(figure: str) -> set:
     """A figure in the forms it may be written: 4.75 lakh is also 475000; 15,000 is 15000."""
-    low = figure.lower().replace(",", "").strip()
+    low = re.sub(r"\s*(%|per\s*cent\.?)$", "", figure.lower().replace(",", "").strip())  # 66% is the figure 66
     unit = 100000 if low.endswith("lakh") else 10000000 if low.endswith("crore") else 1
     number = re.sub(r"\s*(lakh|crore)$", "", low).rstrip(".")
     try:
@@ -44,7 +45,7 @@ def dates(text: str) -> set:
 
 def figures(text: str) -> set:
     """Every figure in a text, dates taken out first so their parts aren't read as figures."""
-    plain = DATE.sub(" ", text)
+    plain = YEARS.sub(" ", DATE.sub(" ", text))
     out = set()
     for f in FIGURE.findall(plain):
         out |= norm(f)
@@ -90,7 +91,7 @@ def main() -> int:
                 checked += 1
                 text = r.get("text", "")
                 own = set(dates(text))
-                for f in FIGURE.findall(DATE.sub(" ", text)):
+                for f in FIGURE.findall(YEARS.sub(" ", DATE.sub(" ", text))):
                     forms = norm(f)
                     whole = [x for x in forms if not re.fullmatch(r"(19|20)\d\d", x)]  # years say when, not how much
                     if whole and max(len(x.replace(".", "")) for x in whole) >= 2 and not (forms & in_doc):

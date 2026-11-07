@@ -1890,5 +1890,12 @@ def test_grounding_check_reads_figures_the_way_documents_write_them():
     g = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(g)
     assert "475000" in g.norm("4.75 lakh") and "15000" in g.norm("15,000")
+    assert g.norm("66%") == g.norm("66 per cent") == {"66"}
+    assert "27" not in g.figures("for 2026-27 and 2025–2026") and "6000" in g.figures("Rs.6,000 in 2026-27")
     assert g.dates("G.O. of 22.04.2025 and 2026-03-18") == {"2025-04-22", "2026-03-18"}
     assert "2025-04-22" in g.figures("dated 22.04.2025, Rs.4,75,000") and "475000" in g.figures("Rs.4,75,000")
+
+
+def test_a_passage_held_twice_fills_one_place_in_the_results():
+    items = [{"text": "Rs.6,000 a year"}, {"text": "Rs.6,000  a year "}, {"text": "other rule"}, {"text": "RS.6,000 A YEAR"}]
+    assert text_index.distinct([1, 0, 2, 3], items) == [1, 2]

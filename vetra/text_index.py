@@ -149,6 +149,19 @@ def _dense(text: str, domain: str, places: tuple[str, ...], position: dict) -> l
     return [position[i] for i in found["ids"][0] if i in position]
 
 
+def distinct(ranking: list[int], items: list[dict]) -> list[int]:
+    """The ranking with repeated passages dropped, the best-ranked copy kept. One document held from two
+    official sites (a policy note on the department's site and on the state portal) gives the same passage
+    twice; both copies would fill places in the top k that other evidence should have."""
+    seen, kept = set(), []
+    for n in ranking:
+        key = " ".join(items[n]["text"].split()).lower()
+        if key not in seen:
+            seen.add(key)
+            kept.append(n)
+    return kept
+
+
 def _with_amendments(chosen: list[int], ranking: list[int], items: list[dict]) -> list[tuple[int, str]]:
     """A rule without its amendments is wrong: add the orders linked to what was found."""
     wanted: dict[str, str] = {}
@@ -192,7 +205,7 @@ def search(query: str, domain: str, state: str | None, passage: str = "", topic:
         votes.append(hybrid(topic))
     if keywords:
         votes.append(bm25.rank(" ".join(keywords)))
-    ranking = R._rrf(*votes)
+    ranking = distinct(R._rrf(*votes), items)
     if settings.rerank and rerank:
         ranking = _reranked(query, ranking, items, settings.rerank)
     chosen = R._top_k(ranking, items, k)
@@ -219,7 +232,8 @@ def search_within(query: str, domain: str, state: str | None, document: str, k: 
     if not items:
         return []
     ranking = R._rrf(_dense(query, domain, places, position), bm25.rank(query))
-    return [dict(items[n]) for n in ranking if items[n].get("source") == document][:k]
+    inside = [n for n in ranking if items[n].get("source") == document]
+    return [dict(items[n]) for n in distinct(inside, items)][:k]
 
 
 def _reranked(query: str, ranking: list[int], items: list[dict], model: str, n: int = 30) -> list[int]:
