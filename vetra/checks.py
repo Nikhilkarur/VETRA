@@ -13,6 +13,7 @@ from typing import Callable
 
 from .knowledge import UNOFFICIAL
 from .languages import western_digits
+from . import structure
 from .tools import Evidence
 
 def _out_of_date(e: Evidence, as_of: str) -> bool:
@@ -358,6 +359,9 @@ def faults(answer: str, evidence: list[Evidence], as_of: str, question: str = ""
             fault("gives a step or requirement with no citation. Cite the passage that says it, or remove it")
         if _BACKSTAGE.search(s.text):
             fault("talks about the evidence or the records instead of the rules. Say \"the documents\" or \"the rates above\"")
+        if structure.denials([(s.text, [evidence[n - 1].text for n in s.cited if 1 <= n <= len(evidence)])]):
+            fault("says something doesn't exist when the documents only don't mention it. Say the documents you have don't "
+                  "mention it, unless a passage you cite says there is none")
         if "[unclear" in s.text:
             fault("repeats a figure the scan couldn't confirm. Say the figure couldn't be read clearly, and to check the document")
         if not has_facts(evidence) and _POINTS_UP.search(s.text):

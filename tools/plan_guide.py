@@ -57,6 +57,20 @@ def _search_settings() -> dict:
             "subtopics": {k: len(v.subtopics) for k, v in DOMAINS.items() if not v.legacy}}
 
 
+def _cases_table() -> str:
+    from vetra import structure
+
+    rows = []
+    for c in structure.CASES:
+        parts = [line.split(". ", 1)[1] for line in c.standard.splitlines()[1:] if ". " in line[:4]]
+        rows.append(f"<tr><td><strong>{esc(c.name)}</strong></td><td>{esc(c.asks)}</td>"
+                    f"<td>{esc(c.quick)}</td><td>{'<br>'.join(esc(p) for p in parts)}</td>"
+                    f"<td>{esc(c.deep) or 'the research brief as it is'}</td></tr>")
+    return ("<div class='tw'><table><thead><tr><th>Case</th><th>The person wants</th><th>Quick answer opens with</th>"
+            "<th>Standard answer, in order</th><th>Deep brief leads with</th></tr></thead><tbody>"
+            + "".join(rows) + "</tbody></table></div>")
+
+
 def _models() -> str:
     try:
         from vetra import llm
@@ -88,7 +102,7 @@ def build() -> str:
     <div class="card"><p class="label">MVP step 3 · first version tried, not satisfied, not tested</p><p class="big">Web search for what isn't there</p><p class="small muted">For what the review shows is missing, and for any part of a question still missing after the store, search official websites live. If the information is there and checks out, answer with it, labelled as fetched live, and add it to the store; if not, say clearly that no official source was found and what was searched.</p></div>
   </div>
   <div class="grid3" style="margin-top:12px">
-    <div class="card"><p class="label">MVP step 4</p><p class="big">Answer structure and quality</p><p class="small muted">Change how answers are built and read: structure and length per depth, the order of sections, plain language, every statement cited, figures printed exactly, conditions and exceptions kept, and clear notes for what isn't held. Checked by reading real answers by hand for every aspect, and fixed by design, not around single questions.</p></div>
+    <div class="card"><p class="label">MVP step 4 · foundation laid 7 Nov, not tested</p><p class="big">Answer structure and quality</p><p class="small muted">Change how answers are built and read: structure and length per depth, the order of sections, plain language, every statement cited, figures printed exactly, conditions and exceptions kept, and clear notes for what isn't held. Checked by reading real answers by hand for every aspect, and fixed by design, not around single questions.</p></div>
   </div>
   <h3>MVP step 3 in more detail: the live web-search fallback (first version tried on 7 November; <span class="st-text-warn">not satisfied, not tested</span>)</h3>
   <div class="card" style="margin-bottom:12px"><p class="label">Status, plainly</p><p class="small">A first version is built and switched on, and it was tried on a handful of real questions on 7 November. <strong>You are not satisfied with it yet, and it has not been tested</strong>: no question set has been run through it and no answers using it have been read by hand. Treat everything below as a first attempt to be reviewed, not a finished feature.</p></div>
@@ -117,6 +131,29 @@ def build() -> str:
     <li>Data engineering that collects, verifies and sorts documents automatically, and an auto-update that finds new orders and changed rates.</li>
     <li>A paid LLM provider (Groq is primary and Gemini the fallback only until you choose one), and all 22 scheduled languages checked live.</li>
     <li>A person's review of the exact records before launch; every record is marked unreviewed today.</li>
+  </ul>
+</section>
+
+<section id="pl-structure7">
+  <div class="sec-head">
+    <h2>MVP step 4: answer structure, the foundation laid on 7 November</h2>
+    <p>Not the full job: the base the rest of step 4 builds on. It lives in one file, <code>vetra/structure.py</code>, so structure is decided in one place instead of scattered through prompts. <span class="st-text-warn">Not tested on answers yet</span>: two live questions were tried, and 265 code tests pass.</p>
+  </div>
+  <h3>1. Question cases, like the aspect lists but for answers</h3>
+  <p class="small">The aspect lists say what the data must cover; the cases say how an answer must be built for each kind of question. Code picks the case from the question's words (English, Telugu and Tamil), or from the planner's data types when the words don't say, checked in the order below: "the difference in premium" is a comparison, not an amount. The writer is then given that case's structure for the answer's depth. On 19 sample questions, including Telugu and Tamil, all were sorted correctly.</p>
+  {_cases_table()}
+  <h3>2. Honest "not found" wording, enforced by code</h3>
+  <p class="small">Every answer follows shared rules: put what the person can act on first, one idea per sentence, name the scheme, state and period, and above all, when the documents don't cover something, say "the documents I have don't mention it", never that it doesn't exist. A code check now sends an answer back if a sentence says something doesn't exist or isn't provided and no cited document says so. This came from a live answer that told a farmer "no subsidy is provided" for silkworm sheds, when VETRA simply held nothing on it.</p>
+  <h3>3. Structure measured on every answer</h3>
+  <p class="small">Each answer's trace now records its case, whether it opens with the answer (the records block code prints first is skipped), its section headings, length, list items and whether it has a table, beside the structure expected for its depth. This lets a question set show where structure goes wrong before anything is changed. A table the writer splits with blank lines is joined back by code, so it shows as one table on the page.</p>
+  <h3>Tried on 7 November</h3>
+  <p class="small">"Difference between PMFBY and RWBCIS in Andhra Pradesh" was sorted as a comparison. The first try had no table, because at deep level the case's instruction came after the research brief's layout and the writer followed the layout; the case now comes first and takes priority. The second try opened with the direct answer and gave a comparison table (premium rule, basis of claims, voluntary enrolment, current windows), with the enrolment windows printed by code above it. It took about three and a half minutes, which is too slow and is a next step.</p>
+  <h3>Next for step 4 (not started)</h3>
+  <ul class="small">
+    <li>Run a question set with several questions per case for Andhra Pradesh and Tamil Nadu, read the answers by hand, and compare each answer's recorded structure with its case.</li>
+    <li>Turn the most important case rules into code checks, as was done for "not found" wording (for example: a comparison must have a table; an eligibility answer must open with yes, no or depends).</li>
+    <li>Speed: deep answers with a rewrite take minutes; find where the time goes (searches per part, the second-model check, the rewrite).</li>
+    <li>Sub-cases inside a case where the reader needs them (comparing schemes, states or periods; eligibility for a person versus for a crop).</li>
   </ul>
 </section>
 

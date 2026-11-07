@@ -1984,3 +1984,68 @@ def test_when_no_official_site_has_it_the_reader_is_told_where_it_looked(monkeyp
     r = agent.answer("how much is the farm pond subsidy?", models=m, knowledge=knowledge.Knowledge(tmp_path),
                      as_of=TODAY, gaps=Gaps(), web=FakeSearch())
     assert r.kind == "not_covered" and "found no official source for: farm pond subsidy" in r.answer and "gov.in" in r.answer
+
+
+# ---------------------------------------------------------------- answer structure (foundation)
+
+from vetra import structure  # noqa: E402
+
+
+def test_saying_a_scheme_does_not_exist_needs_a_document_that_says_so():
+    budget = "The sericulture department will raise silk production to 12,000 MT."
+    assert structure.denials([("There is no subsidy for silkworm rearing sheds in Andhra Pradesh.", [budget])])
+    assert structure.denials([("No subsidy is provided for such sheds.", [budget])])
+    # honest: about our documents, not the world
+    assert not structure.denials([("The documents I have don't mention a subsidy for silkworm sheds.", [budget])])
+    # backed: the cited order itself says there is none
+    assert not structure.denials([("There is no fee for this service.", ["There is no fee for registration of the application."])])
+
+
+def test_the_code_checks_send_back_an_answer_that_denies_what_it_only_lacks():
+    e = [agent.Evidence("b", "text_search", "The sericulture department will raise silk production.", "Outcome Budget", "AP")]
+    bad = checks.faults("There is no subsidy for silkworm sheds in Andhra Pradesh [E1].", e, TODAY)
+    assert any("doesn't exist" in f.why for f in bad)
+    assert not checks.faults("The documents I have don't mention a subsidy for silkworm sheds [E1].", e, TODAY)
+
+
+def test_every_answer_records_its_structure():
+    r = structure.report("You pay 2% of the sum insured [E1].\n\n## Who qualifies\n- Loanee farmers [E2]\n- Tenants [E2]", "standard")
+    assert r["opens_with_answer"] and r["sections"] == ["Who qualifies"] and r["list_items"] == 2
+    assert not structure.report("## Heading first\ntext", "deep")["opens_with_answer"]
+    assert r["expected"][0] == "direct answer"
+    printed = structure.report("## From the official records\n\n- 2% [E1]\n\nYou pay 2% [E1].\n\n| A | B |\n|---|---|\n| 1 | 2 |",
+                               "standard", "## From the official records")
+    assert printed["opens_with_answer"] and printed["has_table"]   # the printed records block isn't the writer's opening
+
+
+@pytest.mark.parametrize("question,case", [
+    ("what is the difference between PMFBY and RWBCIS", "comparison"), ("can a tenant farmer get crop insurance", "eligibility"),
+    ("last date for rabi crop insurance", "deadline"), ("how much is the farm pond subsidy", "amount"),
+    ("how to apply for kisan credit card", "procedure"), ("my claim was rejected what should I do", "grievance"),
+    ("what schemes are there for dairy farmers", "options"), ("what changed in stamp duty this year", "change"),
+    ("what is PM-KISAN", "explanation"), ("helpline number for crop insurance", "contact"),
+    ("status of my PM-KISAN instalment", "status"), ("పంట బీమా చివరి తేదీ ఎప్పుడు", "deadline"),
+])
+def test_each_kind_of_question_gets_its_own_answer_case(question, case):
+    assert structure.choose(question, []).name == case
+
+
+def test_the_plan_decides_the_case_when_the_words_do_not():
+    assert structure.choose("tell me about crop insurance premium for paddy", []).name == "amount"   # the premium is what they want
+    assert structure.choose("paddy crop insurance", ["deadline"]).name == "deadline"
+    assert structure.choose("paddy crop insurance", []).name == "explanation"
+
+
+def test_a_comparison_is_written_as_a_table_at_every_depth():
+    c = structure.BY_NAME["comparison"]
+    assert "table" in structure.shape(c, "standard", "x") and "not in the documents" in structure.shape(c, "standard", "x")
+    deep = structure.shape(c, "deep", "BRIEF")
+    assert "table" in deep and deep.index("table") < deep.index("BRIEF")   # the case comes first, or the layout wins
+    assert structure.shape(c, "quick", "Short.").startswith("Short.")
+    prompt = agent.compose_prompt(TODAY, "english", "Andhra Pradesh", agent.depths.STANDARD, c)
+    assert "Structure for a comparison" in prompt and "never say it doesn't exist" in prompt.lower()
+
+
+def test_a_table_split_by_blank_lines_is_joined_back():
+    split = "Intro.\n\n| A | B |\n|---|---|\n| 1 | 2 |\n\n| 3 | 4 |\n\nAfter."
+    assert structure.tidy_tables(split) == "Intro.\n\n| A | B |\n|---|---|\n| 1 | 2 |\n| 3 | 4 |\n\nAfter."
