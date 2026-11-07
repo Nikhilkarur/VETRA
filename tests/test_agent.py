@@ -1930,8 +1930,8 @@ class FakeSearch:
     def __init__(self, *hits, fail=False):
         self.hits, self.fail, self.asked = list(hits), fail, []
 
-    def search(self, query, limit):
-        self.asked.append(query)
+    def search(self, query, limit, domains=()):
+        self.asked.append((query, domains))
         if self.fail:
             raise RuntimeError("quota")
         return self.hits
@@ -1957,6 +1957,11 @@ def test_live_search_reads_official_pages_and_marks_them():
     assert "Rs.5,000" in found[0].text and hosts
     assert websearch.find("x", "", "x", None) == ([], [])
     assert websearch.find("x", "", "x", FakeSearch(fail=True))[0] == []
+    assert websearch.other_state("https://fisheries.jk.gov.in/a", "AP") and not websearch.other_state("https://krishna.ap.gov.in/a", "AP")
+    assert not websearch.other_state("https://www.pib.gov.in/a", "AP")   # central sites apply everywhere
+    s2 = FakeSearch()
+    websearch.find("farm pond", "Andhra Pradesh", "q", s2, fetcher=lambda u: None, state="AP")
+    assert s2.asked[0][1] == ("ap.gov.in",)   # the state's own sites first
 
 
 def test_a_part_the_store_lacks_is_answered_from_an_official_site_and_labelled(monkeypatch, tmp_path):

@@ -549,14 +549,21 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
             found.append(Found(Need("explanation", "further reading", plan.domain, implied=True), "text", added))
     # Still nothing for a part, after the store and looking further: search official websites live.
     # What comes back is evidence like any other and passes the same checks; it isn't stored.
+    # "Missing" means either nothing came back, or the look-further judge said the evidence still
+    # doesn't answer something: passages on a neighbouring scheme aren't an answer, and without this
+    # the writer told a farmer a subsidy doesn't exist when we simply don't hold it.
     web_hosts, web_none = [], []
     empty = [f for f in found if f.level == "none" and not f.need.implied]
+    if web and route.missing and len(empty) < 2:
+        judged = Found(Need("explanation", route.missing, plan.domain, implied=True), "none")
+        empty.append(judged)
+        found.append(judged)
     if web and (empty or not items):
         if not empty:   # nothing at all for the question: search on what it's about
             empty = [Found(Need("explanation", plan.topic or plan.standalone or question, plan.domain), "none")]
             found.append(empty[0])
         for f in empty[:2]:   # a citizen is waiting: at most two live searches
-            live, hosts = websearch.find(f.need.subject, place, plan.standalone or question, web)
+            live, hosts = websearch.find(f.need.subject, place, plan.standalone or question, web, state=plan.state)
             web_hosts = hosts or web_hosts
             if live:
                 f.level, f.items = "web", live
