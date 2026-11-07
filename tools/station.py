@@ -200,6 +200,13 @@ def commits() -> str:
     return "<ul class=\"small\">" + "".join(f"<li><code>{esc(h)}</code> {esc(d)}: {esc(s)}</li>" for h, d, s in rows) + "</ul>"
 
 
+def _searched() -> set:
+    """Aspects looked for and not found in any official source (knowledge/searched.jsonl)."""
+    path = ROOT / "knowledge" / "searched.jsonl"
+    rows = [json.loads(line) for line in path.open(encoding="utf-8") if line.strip()] if path.exists() else []
+    return {(r["state"], r["domain"], r["aspect"]) for r in rows}
+
+
 def completion(totals: dict) -> str:
     """Per state and topic: exact-record share of the deep aspect list, with the held share beside it."""
     cells = []
@@ -208,7 +215,9 @@ def completion(totals: dict) -> str:
             t = totals.get(state, {})
             n = t.get(domain + "_aspects", 0) or 1
             exact, held = t.get(domain + "_exact", 0), t.get(domain + "_held", 0)
-            cells.append(f'<div class="stat"><b>{exact / n:.0%}</b><span>{state} {domain}, deep: {exact} of {n} aspects with exact records; {held / n:.0%} held</span></div>')
+            none = sum(1 for (st, dom, _a) in _searched() if st == state and dom == domain)
+            gap = f"; {none} searched, no official source" if none else ""
+            cells.append(f'<div class="stat"><b>{exact / n:.0%}</b><span>{state} {domain}, deep: {exact} of {n} aspects with exact records{gap}; {held / n:.0%} held</span></div>')
     return "".join(cells)
 
 

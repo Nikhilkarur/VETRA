@@ -1899,3 +1899,13 @@ def test_grounding_check_reads_figures_the_way_documents_write_them():
 def test_a_passage_held_twice_fills_one_place_in_the_results():
     items = [{"text": "Rs.6,000 a year"}, {"text": "Rs.6,000  a year "}, {"text": "other rule"}, {"text": "RS.6,000 A YEAR"}]
     assert text_index.distinct([1, 0, 2, 3], items) == [1, 2]
+
+
+def test_aspects_searched_without_an_official_source_say_what_was_tried():
+    import json
+    from pathlib import Path
+    path = Path(__file__).resolve().parent.parent / "knowledge" / "searched.jsonl"
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            entry = json.loads(line)
+            assert all(entry.get(k) for k in ("state", "domain", "aspect", "date", "finding", "tried")), entry

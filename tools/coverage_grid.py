@@ -83,8 +83,16 @@ ASPECTS = {
 }
 
 
+def searched() -> dict:
+    """Aspects looked for and not found in any official source (knowledge/searched.jsonl), by state, topic and aspect."""
+    path = ROOT / "knowledge" / "searched.jsonl"
+    rows = [json.loads(line) for line in path.open(encoding="utf-8") if line.strip()] if path.exists() else []
+    return {(r["state"], r["domain"], r["aspect"]): r for r in rows}
+
+
 def grid(state: str) -> None:
     print(f"== {state}")
+    looked = searched()
     for domain, aspects in ASPECTS.items():
         path = ROOT / "knowledge" / domain / "text" / f"{state}.json"
         items = json.loads(path.read_text(encoding="utf-8"))["items"] if path.exists() else []
@@ -98,7 +106,8 @@ def grid(state: str) -> None:
             passages = [i for i in items if rx.search(i["text"])]
             docs = {i["title"] for i in passages}
             exact = sum(1 for r in records if rx.search(" ".join([r.get("text", ""), r.get("subject", "")] + list(r.get("topic_words") or []))))
-            low.append(f"{name} {len(passages)}/{len(docs)}/{exact}")
+            note = " (searched, no official source)" if not exact and (state, domain, name) in looked else ""
+            low.append(f"{name} {len(passages)}/{len(docs)}/{exact}{note}")
         print(f"{domain} ({len(items)} passages, {len(records)} records). passages/docs/exact:")
         print("; ".join(low))
 
