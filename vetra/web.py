@@ -15,6 +15,7 @@ import html
 import json
 import re
 import sys
+import os
 import threading
 import time
 import webbrowser
@@ -38,6 +39,12 @@ EXAMPLES = ("what is the last date to insure my cashew crop under weather insura
             "how do i get a kisan credit card",
             "how does atal pension yojana work",
             "how much is the rti fee")
+class Server(ThreadingHTTPServer):
+    """On Windows, address reuse lets a second server bind a port that is already in use, and requests
+    then go to either one: an old server with old settings answered a citizen. So a busy port fails there."""
+    allow_reuse_address = os.name != "nt"
+
+
 PIPELINE = threading.Lock()  # one question at a time: shared rate limits and search models
 
 _CITATION = re.compile(r"\[E(\d+)\]")
@@ -151,7 +158,7 @@ def main() -> int:
         if not domain.legacy and text_index.corpus(name):
             text_index.search("loading", name, None)
     try:
-        server = ThreadingHTTPServer((args.host, args.port), Handler)
+        server = Server((args.host, args.port), Handler)
     except OSError:
         print(f"Port {args.port} is already in use. Try:  python -m vetra.web --port 8080")
         return 1
