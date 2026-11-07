@@ -32,6 +32,7 @@ QUEUE = ROOT / "eval" / "cache" / "hand" / "queue.log"
 STALL_MINUTES = 45
 BEGIN, END = "<!--STATION:BEGIN-->", "<!--STATION:END-->"
 CODE_BEGIN, CODE_END = "<!--CODE:BEGIN-->", "<!--CODE:END-->"
+PLAN_BEGIN, PLAN_END = "<!--PLAN:BEGIN-->", "<!--PLAN:END-->"
 DEEP = {"AP": "Andhra Pradesh", "TN": "Tamil Nadu", "MH": "Maharashtra", "KA": "Karnataka"}
 OTHERS = {"AR": "Arunachal Pradesh", "AS": "Assam", "BR": "Bihar", "CG": "Chhattisgarh", "GA": "Goa", "GJ": "Gujarat", "HR": "Haryana",
           "HP": "Himachal Pradesh", "JH": "Jharkhand", "KL": "Kerala", "MP": "Madhya Pradesh", "MN": "Manipur", "ML": "Meghalaya",
@@ -301,7 +302,11 @@ def draw() -> None:
     import code_guide
 
     a, b = page.index(CODE_BEGIN) + len(CODE_BEGIN), page.index(CODE_END)
-    PAGE.write_text(page[:a] + code_guide.build() + page[b:], encoding="utf-8")
+    page = page[:a] + code_guide.build() + page[b:]
+    import plan_guide
+
+    a, b = page.index(PLAN_BEGIN) + len(PLAN_BEGIN), page.index(PLAN_END)
+    PAGE.write_text(page[:a] + plan_guide.build() + page[b:], encoding="utf-8")
 
 
 def main() -> int:
