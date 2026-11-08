@@ -134,6 +134,21 @@ def build() -> str:
   </ul>
 </section>
 
+<section id="pl-general8">
+  <div class="sec-head">
+    <h2>General questions: a direct path (first version, 8 November)</h2>
+    <p>Until now every question went through all the steps, even one that needs no government record at all. Now a simple general question is answered directly by the model, without searching, and labelled as general. <span class="st-text-warn">First version, rigid on purpose, not tested on a question set</span>: the line between "general" and "needs the records" will be made more flexible later, for the MVP and beyond.</p>
+  </div>
+  <ul class="small">
+    <li><strong>Who decides:</strong> the planner, which already reads every question, now also says whether it is <em>general</em>: true only if a correct answer needs no scheme, law, rule, rate, fee, subsidy, eligibility, deadline, office, form or official figure ("what is crop rotation", "how do I keep pests off my tomatoes", "what does GST stand for"). Anything about a scheme, money to or from the government, a right, a procedure with an office, or a situation a rule decides is not general, and neither is anything the planner is unsure about.</li>
+    <li><strong>What happens:</strong> one direct call to the writing model (Groq first), under 150 words, told not to state any scheme amount, rate, deadline, eligibility rule or office and to suggest asking about a scheme by name instead. Nothing is searched and no sources are shown.</li>
+    <li><strong>The safety line in code:</strong> if the general answer contains a rupee amount or a percentage, it is thrown away and the question goes through the full process with the records. This is the first, simple version of the fine line.</li>
+    <li><strong>What the reader sees:</strong> the answer, then "This is a general answer, not taken from government records. For a scheme, rate or rule, ask about it by name and I'll answer from the official documents." The page shows "General answer: not from government records" where sources would be.</li>
+    <li><strong>Tried on 8 November:</strong> "What is crop rotation and why is it useful?" was answered directly in 2.6 seconds with two model calls; "How much money does PM-KISAN give?" still went through the full process and cited the official record. Three code tests cover it.</li>
+    <li><strong>To refine later:</strong> questions that are partly general and partly about a scheme; general answers in languages other than English and Telugu (the label is translated by the model); and whether some general topics (farming practice, for example) should still show official advisories when VETRA holds them.</li>
+  </ul>
+</section>
+
 <section id="pl-structure7">
   <div class="sec-head">
     <h2>MVP step 4: answer structure, the foundation laid on 7 November</h2>

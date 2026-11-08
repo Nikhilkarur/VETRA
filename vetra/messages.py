@@ -42,6 +42,10 @@ _TEXT = {
         "english": "Not found in the documents we hold: {subject}.",
         "telugu": "మా దగ్గర ఉన్న పత్రాలలో ఇవి దొరకలేదు: {subject}.",
     },
+    "general": {
+        "english": "This is a general answer, not taken from government records. For a scheme, rate or rule, ask about it by name and I'll answer from the official documents.",
+        "telugu": "ఇది సాధారణ సమాధానం, ప్రభుత్వ రికార్డుల నుండి తీసుకున్నది కాదు. ఏదైనా పథకం, రేటు లేదా నియమం గురించి దాని పేరుతో అడిగితే అధికారిక పత్రాల నుండి సమాధానం ఇస్తాను.",
+    },
     "web_live": {
         "english": "Part of this answer comes from official government websites read just now, not from documents VETRA holds and has checked. Please confirm with the department before acting on it.",
         "telugu": "ఈ సమాధానంలో కొంత భాగం ఇప్పుడే చదివిన అధికారిక ప్రభుత్వ వెబ్‌సైట్ల నుండి వచ్చింది, VETRA దగ్గర ఉన్న పరిశీలించిన పత్రాల నుండి కాదు. దీనిపై చర్య తీసుకునే ముందు శాఖతో నిర్ధారించుకోండి.",

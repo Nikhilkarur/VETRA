@@ -62,6 +62,7 @@ class Plan:
     topic: str = ""
     keywords: tuple[str, ...] = ()
     depth: str = ""
+    general: bool = False   # needs no government record at all: answered directly, labelled as general
 
 
 @dataclass
@@ -128,6 +129,7 @@ Return one JSON object with these keys:
 "passage": 40 to 80 English words in the formal style an official order would use to answer this, for searching only. Accuracy doesn't matter; vocabulary does.
 "topic": the name of the rule or scheme asked about, in English.
 "keywords": up to 8 English words likely to appear in the answering text.
+"general": true only if a correct answer needs no government scheme, law, rule, rate, fee, subsidy, eligibility, deadline, office, form or official figure, so general knowledge answers it fully: "what is crop rotation", "how do I keep pests off my tomatoes", "what does GST stand for". False whenever it asks about a scheme, a law, money from or to the government, a right, a procedure with an office, or a situation where a rule decides the outcome, and false whenever you are unsure.
 
 Output only the JSON."""
 
@@ -156,7 +158,7 @@ def parse_plan(text: str) -> Plan | None:
                 facts=facts if isinstance(facts, dict) else {},
                 passage=str(data.get("passage") or ""), topic=str(data.get("topic") or ""),
                 keywords=tuple(str(k) for k in keywords) if isinstance(keywords, list) else (),
-                depth=str(data.get("depth") or ""))
+                depth=str(data.get("depth") or ""), general=data.get("general") is True)
 
 
 def make_plan(question: str, history: list[dict], models: llm.Models, meter: llm.Meter, today: str,
@@ -176,6 +178,32 @@ def make_plan(question: str, history: list[dict], models: llm.Models, meter: llm
         if plan:
             return plan
     return None
+
+
+# ------------------------------------------------------------------ 1b. a general question
+
+# A general answer that states a rupee amount or a percentage is talking about money rules, and those
+# must come from the records. The first, simple line between "general" and "needs records"; to be refined.
+_NEEDS_RECORDS = re.compile(r"(?:₹|\bRs\.?|\brupees?\b)\s*\d|\d+(?:\.\d+)?\s*(?:%|per ?cent)", re.I)
+
+
+def general_prompt(language: str) -> str:
+    write = "Write in plain English." if language == "english" else f"Write in {language}, in its usual script."
+    return f"""You answer a general question for an Indian citizen, briefly and correctly, from general knowledge. {write}
+- Under 150 words. Lead with the answer, then the few points that matter.
+- Don't state any government scheme, subsidy, rate, fee, deadline, eligibility rule, office or official figure. If the person would need one, say they can ask about that scheme or rule by name.
+- No citations, no headings unless they help, no notes to yourself."""
+
+
+def answer_general(question: str, plan: Plan, models: llm.Models, meter: llm.Meter) -> str | None:
+    """A direct answer to a general question, or None if it strays into figures that need the records."""
+    sent = [{"role": "system", "content": general_prompt(plan.language)},
+            {"role": "user", "content": plan.standalone or question}]
+    try:
+        text = models.call("compose", sent, meter).text.strip()
+    except llm.LLMError:
+        return None
+    return None if not text or _NEEDS_RECORDS.search(text) else text
 
 
 # ------------------------------------------------------------------ 2. do we have it?
@@ -515,6 +543,15 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
 
     if reply in languages.REPLIES:   # the reader's choice wins over the question's language
         plan.language = reply
+    if plan.general:   # no government record needed: one direct call, labelled, nothing searched
+        text = answer_general(question, plan, models, meter)
+        if text:
+            note = messages.say("general", plan.language)
+            if not languages.is_templated(plan.language):
+                note = languages.translate([note], plan.language, models, meter)[0] or note
+            return done(Result("general", f"{text}\n\n{note}", plan.domain, plan.state, plan.language, depth="quick"),
+                        general=True)
+        # it strayed into figures, or the call failed: answer from the records as usual
     # The user's own words, then the state they chose, then the model's reading of the rest.
     # The model can guess from a scheme's name, and a guess mustn't override a person's choice.
     plan.state = jurisdictions.named_in(question) or jurisdictions.normalise(state) or plan.state

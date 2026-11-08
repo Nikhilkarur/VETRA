@@ -71,7 +71,7 @@ def to_page(r: agent.Result) -> dict:
     """The agent's result, in the shape the page already renders."""
     steps = r.trace.get("steps") or []
     label = DOMAINS[r.domain].label if r.domain in DOMAINS else None
-    return {"domain": r.domain, "domain_label": label, "routed": bool(label), "language": r.language,
+    return {"kind": r.kind, "domain": r.domain, "domain_label": label, "routed": bool(label), "language": r.language,
             "reply_language": r.language, "answer": _CITATION.sub(r"[\1]", r.answer),
             "standalone": "", "passage": None, "model": steps[-1]["model"] if steps else "no model",
             "search_s": r.trace.get("seconds", 0), "answer_s": 0, "coverage": r.coverage,

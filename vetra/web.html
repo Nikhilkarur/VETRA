@@ -240,7 +240,9 @@ function show(article, answer, data, turn) {
   const byN = Object.fromEntries(sources.map((s) => [String(s.n), s]));
   answer.innerHTML = md(data.answer || "", turn, byN);
   if (!sources.length) {
-    article.append(el("p", "note", "No official document was cited for this answer."));
+    article.append(el("p", "note", data.kind === "general"
+      ? "General answer: not from government records, so there are no sources to show."
+      : "No official document was cited for this answer."));
     return;
   }
   const box = el("div", "sources");

@@ -2049,3 +2049,28 @@ def test_a_comparison_is_written_as_a_table_at_every_depth():
 def test_a_table_split_by_blank_lines_is_joined_back():
     split = "Intro.\n\n| A | B |\n|---|---|\n| 1 | 2 |\n\n| 3 | 4 |\n\nAfter."
     assert structure.tidy_tables(split) == "Intro.\n\n| A | B |\n|---|---|\n| 1 | 2 |\n| 3 | 4 |\n\nAfter."
+
+
+# ---------------------------------------------------------------- general questions: the direct path
+
+def test_a_general_question_is_answered_directly_and_labelled(monkeypatch, tmp_path):
+    def fail(query, ctx):
+        raise AssertionError("a general question searches nothing")
+    monkeypatch.setitem(agent.TOOLS, "text_search", fail)
+    m = models(plan(general=True, needs=[]), "Crop rotation means growing different crops on the same land in turns, which keeps the soil healthy.")
+    r = agent.answer("what is crop rotation?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY, gaps=Gaps(), web=None)
+    assert r.kind == "general" and "Crop rotation" in r.answer and "not taken from government records" in r.answer
+    assert not r.sources and r.trace["general"] and r.trace["calls"] == 2
+    assert web.to_page(r)["kind"] == "general"
+
+
+def test_a_general_answer_that_states_money_figures_goes_to_the_records(monkeypatch, tmp_path):
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [])
+    m = models(plan(general=True), "You get Rs.6,000 a year.")
+    r = agent.answer("do farmers get money?", models=m, knowledge=knowledge.Knowledge(tmp_path), as_of=TODAY, gaps=Gaps(), web=None)
+    assert r.kind != "general" and "Rs.6,000" not in r.answer   # answered (here: not covered) from the records instead
+
+
+def test_the_planner_must_say_general_plainly():
+    assert agent.parse_plan(plan(general=True)).general and not agent.parse_plan(plan()).general
+    assert not agent.parse_plan(plan(general="yes")).general   # only a real true counts
