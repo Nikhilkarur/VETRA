@@ -134,6 +134,57 @@ def build() -> str:
   </ul>
 </section>
 
+<section id="pl-goal8">
+  <div class="sec-head">
+    <p class="label">Revised MVP goal, set by you on 8 November 2026 · a plan and research, nothing built yet</p>
+    <h2>The MVP, revised: Andhra Pradesh and Tamil Nadu, every domain, government first, general research second</h2>
+    <p>Your judgement: VETRA is not yet "intelligent". It relies entirely on the data given to it, so a reasonable question whose answer isn't sitting in one government document, such as "what is the difference between agriculture in Andhra Pradesh and Tamil Nadu?", is rejected. Data breadth and depth still matter, but the system must also be flexible: reason across what it holds, use the wider web when it must, say clearly where each part came from, and have a stronger model write the final answer once the API budget allows.</p>
+  </div>
+  <div class="grid3">
+    <div class="card"><p class="label">Scope</p><p class="big">AP and TN, all domains</p><p class="small muted">Not only agriculture and finance: every area where citizens deal with the state government in Andhra Pradesh and Tamil Nadu. Other states stay for the full product.</p></div>
+    <div class="card"><p class="label">Sources</p><p class="big">Government first, then the web</p><p class="small muted">Government documents and records stay the main and preferred source. Official websites come next, then general websites (research, news, institutions), always labelled as from the web, never used silently for a binding rule.</p></div>
+    <div class="card"><p class="label">Intelligence</p><p class="big">Reason, compare, synthesise</p><p class="small muted">Answer questions that need several documents put together (comparisons between states, trends, "why" questions), and have a stronger model write the final draft when the budget allows. Today's limit is the free API tier.</p></div>
+  </div>
+
+  <h3>The design this points to (proposal, to review)</h3>
+  <ol class="small">
+    <li><strong>Route each question by what it needs</strong>, not one fixed pipeline: general (direct answer, built 8 Nov), record lookup (today's engine), or research and synthesis (new). Adaptive-RAG does this with a small classifier that predicts how complex a question is before any retrieval.</li>
+    <li><strong>Source tiers, shown to the reader.</strong> Tier 1: held government documents and exact records. Tier 2: official websites read live (built 7 Nov, first version). Tier 3: general websites. Each section or sentence carries its tier, and the page groups sources under "From government records", "From official websites (read live)" and "From other websites (not verified by VETRA)". Tier 3 can explain and compare, but never sets an amount, deadline or right on its own.</li>
+    <li><strong>Grade the evidence, then widen.</strong> Corrective RAG (CRAG) puts a light evaluator between retrieval and writing that grades what was found as correct, ambiguous or wrong, and widens to web search only when needed. VETRA's look-further judge already does part of this; the change is to let a weak grade step down the tiers instead of ending in "not covered".</li>
+    <li><strong>Prepared summaries for "big picture" questions.</strong> "AP versus TN agriculture" isn't in any one document, but it can be answered from summaries VETRA builds ahead of time from its own documents: a profile of each state in each domain (main crops, schemes, budget lines, institutions). GraphRAG (Microsoft Research) does this for "global" questions by building summaries of related groups ahead of time and combining them at question time; RAPTOR builds a tree of summaries over the documents.</li>
+    <li><strong>Outline first for long answers.</strong> Stanford's STORM writes an outline from several perspectives before any text, then fills it section by section with citations. This fits VETRA's deep briefs and the comparison case laid on 7 Nov.</li>
+    <li><strong>A small model to plan and judge, a big model to write.</strong> Cheap fast models (Groq today) plan, route and grade; a stronger paid model writes the final draft from the gathered evidence; the code checks (figures must be in a cited source, no claiming something doesn't exist) stay in front of the reader whatever writes.</li>
+    <li><strong>Check long answers claim by claim.</strong> The second-model check already reads deep answers against their sources; for web-sourced parts, the same idea as Google DeepMind's SAFE (search-augmented factuality evaluation): split the answer into claims and check each against search results.</li>
+  </ol>
+
+  <h3>What to read and borrow (research, 8 November)</h3>
+  <div class="tw"><table><thead><tr><th>Work</th><th>What it is</th><th>What VETRA would take</th></tr></thead><tbody>
+    <tr><td><strong>Adaptive-RAG</strong> (Jeong et al., NAACL 2024, arXiv 2403.14403)</td><td>A classifier routes each question to no retrieval, one retrieval or iterative retrieval</td><td>The router in point 1; today's general path is its first, rigid form</td></tr>
+    <tr><td><strong>Corrective RAG</strong> (Yan et al., 2024, arXiv 2401.15884)</td><td>An evaluator grades retrieved passages; poor grades trigger web search</td><td>Grading evidence and stepping down source tiers (point 3)</td></tr>
+    <tr><td><strong>Self-RAG</strong> (Asai et al., 2023, arXiv 2310.11511)</td><td>The model decides when to retrieve and critiques its own output with reflection steps</td><td>When to search more, and self-critique before the code checks</td></tr>
+    <tr><td><strong>GraphRAG</strong> (Edge et al., Microsoft Research, 2024, arXiv 2404.16130)</td><td>Builds an entity graph and community summaries so "global" questions over a whole corpus can be answered</td><td>State and domain profiles for comparison and big-picture questions (point 4)</td></tr>
+    <tr><td><strong>RAPTOR</strong> (Sarthi et al., 2024, arXiv 2401.18059)</td><td>A tree of summaries over documents, searched at several levels</td><td>Summaries of long policy notes and budgets that can still be cited</td></tr>
+    <tr><td><strong>STORM</strong> (Shao et al., Stanford, NAACL 2024; github.com/stanford-oval/storm)</td><td>Outline-first, multi-perspective research writing with citations</td><td>Long briefs and comparisons (point 5)</td></tr>
+    <tr><td><strong>GPT Researcher</strong> (github.com/assafelovic/gpt-researcher)</td><td>Open-source agent: plans sub-questions, searches and scrapes in parallel, summarises, writes a cited report</td><td>Parallel web research and summarising before writing</td></tr>
+    <tr><td><strong>Open Deep Research</strong> (LangChain, github.com/langchain-ai/open_deep_research)</td><td>Configurable deep-research agent on LangGraph, a supervisor with researchers; uses Tavily by default</td><td>The supervisor and researcher split, and how to plug in different models and search</td></tr>
+    <tr><td><strong>SAFE</strong> (Wei et al., Google DeepMind, 2024, arXiv 2403.18802)</td><td>Splits a long answer into facts and checks each with search</td><td>Checking web-sourced claims (point 7)</td></tr>
+    <tr><td><strong>AI Engineering</strong>, Chip Huyen (O'Reilly, 2025)</td><td>Book: building applications on foundation models: evaluation, RAG, agents, cost and latency</td><td>How to evaluate, and how to manage model cost and speed</td></tr>
+    <tr><td><strong>Hands-On Large Language Models</strong>, Alammar and Grootendorst (O'Reilly, 2024)</td><td>Book: embeddings, search, RAG and generation, with code</td><td>Better retrieval and embeddings for Telugu and Tamil</td></tr>
+    <tr><td><strong>Prompt Engineering for LLMs</strong>, Berryman and Ziegler (O'Reilly, 2024)</td><td>Book: structuring prompts and context for applications</td><td>Writer and judge prompts as the model mix changes</td></tr>
+  </tbody></table></div>
+  <p class="small muted">Some details above (paper numbers, what each project includes) came from secondary summaries in the 8 November search and should be checked against the papers and repositories before building.</p>
+
+  <h3>The MVP plan, in order (revised)</h3>
+  <ol class="small">
+    <li><strong>Deepen and broaden the data</strong> for Andhra Pradesh and Tamil Nadu, now across all citizen domains, government sources first.</li>
+    <li><strong>Review the data by hand:</strong> what is present and missing, by state, domain and aspect.</li>
+    <li><strong>Web search in tiers:</strong> official websites, then general websites, each clearly labelled (the official tier exists as a first version).</li>
+    <li><strong>Make it intelligent:</strong> routing by question type, evidence grading, prepared state and domain profiles for synthesis, and outline-first long answers.</li>
+    <li><strong>Answer structure and quality,</strong> with a stronger model writing the final draft once a paid API is chosen (the case foundation exists).</li>
+  </ol>
+  <p class="small"><strong>Not started.</strong> No code was written for this; you asked for the plan and research first.</p>
+</section>
+
 <section id="pl-general8">
   <div class="sec-head">
     <h2>General questions: a direct path (first version, 8 November)</h2>

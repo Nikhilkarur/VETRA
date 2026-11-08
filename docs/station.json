@@ -1,7 +1,7 @@
 {
- "last_report": "2026-11-08T07:50",
+ "last_report": "2026-11-08T10:55",
  "state": "Paused",
- "headline": "Paused for your review. Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100% of deep aspects with exact records. Web search, answer structure and the general-question path are first versions, not tested.",
+ "headline": "Paused for your review. MVP revised on 8 Nov: AP and TN across every domain, government first plus labelled general research, and more intelligent reasoning. Completion so far (agriculture and finance): Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100%.",
  "usage": {
   "five_hour": 0,
   "weekly": 0,
@@ -9,7 +9,7 @@
  },
  "decisions": [
   "<strong>Your rules (6 Nov) stay in force:</strong> you are head of the project and I act as senior project manager; this page is updated only when you ask, with Andhra Pradesh and Tamil Nadu completion in percent; data and engine are equal focuses; testing comes later.",
-  "<strong>MVP plan (your words, 7 Nov), in order, for Andhra Pradesh and Tamil Nadu, agriculture and finance:</strong> 1) deepen the data, including sub-aspects; 2) review the data by hand: which types of data are present and which are missing; 3) web search for what isn't there, using it if an official source checks out (and adding it to the store) or saying clearly that none was found; 4) change the structure and quality of the answers. Other states belong to the full product. All four are planned, not started. Details are on the Current plan tab.",
+  "<strong>Revised MVP (your words, 8 Nov):</strong> Andhra Pradesh and Tamil Nadu, every domain, not only agriculture and finance. Government documents stay the main and preferred source; general research from the web is added, always labelled as from the web. VETRA should reason and synthesise (for example the difference between agriculture in AP and TN, which no single document holds) instead of rejecting such questions, and a stronger model should write the final draft once the API budget allows. Plan, in order: deepen and broaden the data; review it by hand; tiered web search (official, then general); make it intelligent (routing, evidence grading, state profiles, outline-first answers); answer structure with a stronger writer. Researched, not built: see the Current plan tab.",
   "<strong>Web search (MVP step 3), first version tried on 7 Nov, not satisfied, not tested:</strong> when VETRA's own data can't answer a part, it now searches official government websites live through Tavily (a web-search API: VETRA sends a search and an allowed-sites list, gets back page links, then reads the pages itself), and shows what it finds labelled 'Fetched live, not yet checked by VETRA', or says no official source was found. Nothing is stored. It was tried on a few questions only; no question set has been run and no answers read by hand. Details and known weaknesses are on the Current plan tab.",
   "<strong>Answer structure (MVP step 4), foundation laid on 7 Nov, not tested:</strong> answers now follow question cases the way data follows aspects: comparison (a table), change, grievance, status, eligibility (yes, no or depends first), deadline (date and open or closed first), amount (figure and unit first), procedure (numbered steps), contact, options and explanation, each with a shape for quick, standard and deep answers. A code check stops answers saying something doesn't exist when the documents only don't mention it, and every answer's structure is now recorded. Tried on two live questions only. Details are on the Current plan tab.",
   "<strong>General questions, first version (8 Nov), rigid on purpose:</strong> a question that needs no government record (\"what is crop rotation\") is now answered directly by the model in a few seconds, labelled as a general answer with no sources. Anything about a scheme, rule, money, rights or offices still goes through the records, and a general answer that states a rupee amount or percentage is sent to the records too. The line will be made more flexible later. Not tested on a question set.",
@@ -123,6 +123,11 @@
    "time": "08 Nov 07:50",
    "state": "Paused",
    "text": "Update on your request (8 Nov). General questions: a first, deliberately rigid version of a direct path. If the planner judges that a question needs no government record, one model call answers it in a few seconds, labelled as general with no sources; scheme, rule, money and rights questions still go through the records, and a general answer with a rupee amount or percentage is sent to the records. Tried live: crop rotation in 2.6 seconds; PM-KISAN still cited from the record. Also noted: the server answers one question at a time, so slow deep answers hold up the next one. Completion unchanged."
+  },
+  {
+   "time": "08 Nov 10:55",
+   "state": "Paused",
+   "text": "Revised MVP goal on your request (8 Nov). Scope: Andhra Pradesh and Tamil Nadu across every domain. Sources: government first and preferred, then official websites, then general websites, each labelled. Intelligence: route questions by what they need, grade evidence and widen the search, prepare state and domain profiles so comparisons like AP versus TN agriculture can be answered, write long answers outline-first, and use a stronger model for the final draft when the budget allows. Research gathered (Adaptive-RAG, Corrective RAG, Self-RAG, GraphRAG, RAPTOR, STORM, GPT Researcher, Open Deep Research, SAFE, and three books) and written on the Current plan tab. No code written."
   }
  ]
 }
