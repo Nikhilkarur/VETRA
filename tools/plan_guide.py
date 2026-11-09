@@ -183,6 +183,27 @@ def build() -> str:
     <li><strong>Answer structure and quality,</strong> with a stronger model writing the final draft once a paid API is chosen (the case foundation exists).</li>
   </ol>
   <p class="small"><strong>Not started.</strong> No code was written for this; you asked for the plan and research first.</p>
+
+  <h3>Across every step: as fast as possible (added 9 November)</h3>
+  <p class="small">Your goal: the whole system with the least latency and replies as fast as we can make them. Speed is a requirement for every step above, not a step of its own: each change should be measured for time as well as correctness.</p>
+  <div class="tw"><table><thead><tr><th>Kind of answer</th><th>Measured now (7 to 9 Nov, Groq free tier)</th><th>Target to aim for</th></tr></thead><tbody>
+    <tr><td>General question (direct path)</td><td>about 3 seconds</td><td>under 2 seconds, and words appearing at once</td></tr>
+    <tr><td>Quick answer from exact records</td><td>3 to 30 seconds</td><td>under 3 seconds</td></tr>
+    <tr><td>Standard answer</td><td>20 to 60 seconds</td><td>under 10 seconds</td></tr>
+    <tr><td>Deep brief or comparison</td><td>2 to 3.5 minutes</td><td>under 30 seconds to the first section, under a minute in full</td></tr>
+  </tbody></table></div>
+  <p class="small"><strong>Where today's time goes, and what to try</strong> (to measure first, then change by design):</p>
+  <ol class="small">
+    <li><strong>Show the answer as it is written (streaming).</strong> The page waits for the whole answer today. Printing exact records at once and streaming the writer's text cuts the wait a person feels, even before anything else gets faster.</li>
+    <li><strong>Fewer model calls per question.</strong> A deep answer makes 8 to 10 calls in turn (plan, look-further rounds, write, second-model check, a rewrite). Merge steps where one call can do two jobs, skip the look-further rounds when the evidence is already good, and run the second-model check only where the code checks can't decide.</li>
+    <li><strong>Do things at the same time.</strong> The parts of a deep question are searched one after another, and web pages are read one after another; both can run in parallel.</li>
+    <li><strong>Remember what was already done (caching).</strong> Keep plans, search results, fetched web pages and finished answers for repeated questions for a set time, with the date checked so nothing stale is served for a deadline or rate.</li>
+    <li><strong>The right model for each job.</strong> A small, fast model to plan, route and judge; the bigger model only to write. A paid API removes the free tier's per-minute limits, which cause most of today's waiting between calls.</li>
+    <li><strong>More than one question at a time.</strong> The server answers one question at a time, so a slow deep answer holds up everyone behind it, and it keeps working on a question even after the page is closed. Answer questions side by side, and stop work on a question nobody is waiting for.</li>
+    <li><strong>Prepare ahead.</strong> The state and domain profiles planned for synthesis (point 4 above) also make comparison questions fast, because the heavy reading is done before anyone asks.</li>
+    <li><strong>Faster search on the machine.</strong> The embedding and re-ranking models run on the laptop's processor; a smaller model, a GPU, or re-ranking only when needed would cut search time.</li>
+    <li><strong>Measure every stage.</strong> Each answer already records its total seconds and number of calls; recording the time of each step (plan, search, look further, web, write, check) shows exactly where to cut.</li>
+  </ol>
 </section>
 
 <section id="pl-general8">
