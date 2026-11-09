@@ -2080,3 +2080,8 @@ def test_the_start_screen_offers_written_questions_across_areas():
     page = web.page_html()
     assert page.count('class="starter"') == 4 and 'data-q="Who can get PM-KISAN, and how much is it?"' in page
     assert "Answers come only from official documents" not in page   # no longer true: general and web answers exist
+
+
+def test_the_logo_and_tab_icon_are_on_the_page():
+    page = web.page_html()
+    assert 'class="brand"><img src="data:image/png;base64,' in page and 'rel="icon" type="image/png" href="data:image/png;base64,' in page

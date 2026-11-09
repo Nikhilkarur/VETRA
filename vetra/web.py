@@ -66,7 +66,16 @@ def page_html() -> str:
     starters = "".join(f'<button class="starter" type="button" data-q="{html.escape(q)}"><span class="topic">{html.escape(t)}</span>'
                        f'<span class="ask">{html.escape(q)}</span></button>' for t, q in STARTERS)
     return (page.replace("{{STATE_OPTIONS}}", states).replace("{{REPLY_OPTIONS}}", replies)
-            .replace("{{STARTERS}}", starters))
+            .replace("{{STARTERS}}", starters).replace("{{LOGO}}", _image("logo.png"))
+            .replace("{{FAVICON}}", _image("favicon.png")))
+
+
+def _image(name: str) -> str:
+    """A picture beside the page, inlined so the server needs no file route for it."""
+    import base64
+
+    path = PAGE.parent / name
+    return "data:image/png;base64," + base64.b64encode(path.read_bytes()).decode() if path.exists() else ""
 
 
 def _host(url: str | None) -> str:

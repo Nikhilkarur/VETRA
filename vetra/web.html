@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VETRA</title>
+<link rel="icon" type="image/png" href="{{FAVICON}}">
 <style>
   :root {
     --bg: #ffffff;
@@ -33,7 +34,12 @@
     position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
     display: flex; align-items: center; gap: 10px; padding: 12px 20px;
   }
-  .brand { font-weight: 650; letter-spacing: -0.01em; margin-right: auto; }
+  .brand {
+    display: flex; align-items: center; gap: 9px; margin-right: auto;
+    font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; font-weight: 600; font-size: 19px;
+    letter-spacing: 0.14em; color: var(--accent);
+  }
+  .brand img { height: 32px; width: auto; display: block; }
   .pick {
     appearance: none; border: 1px solid var(--line); background: var(--bg); border-radius: 999px;
     padding: 6px 30px 6px 12px; font-size: 14px; color: var(--ink-2); cursor: pointer;
@@ -141,6 +147,8 @@
 
   @media (max-width: 600px) {
     .bar { padding: 10px 12px; gap: 6px; }
+    .brand { font-size: 16px; gap: 6px; letter-spacing: 0.1em; }
+    .brand img { height: 26px; }
     .pick { font-size: 13px; padding: 5px 24px 5px 10px; max-width: 30vw; text-overflow: ellipsis; }
     .icon { padding: 6px 6px; }
     .hello h1 { font-size: 23px; }
@@ -152,7 +160,7 @@
 </head>
 <body>
 <div class="bar">
-  <span class="brand">VETRA</span>
+  <span class="brand"><img src="{{LOGO}}" alt="">VETRA</span>
   <select id="state" class="pick" aria-label="Your state">{{STATE_OPTIONS}}</select>
   <select id="reply" class="pick" aria-label="Answer language">{{REPLY_OPTIONS}}</select>
   <button id="new" class="icon" type="button" title="New conversation">New</button>
