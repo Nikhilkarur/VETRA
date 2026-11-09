@@ -7,9 +7,12 @@
 <link rel="icon" type="image/png" href="{{FAVICON}}">
 <style>
   :root {
-    --bg: #ffffff;
-    --soft: #f6f6f4;
-    --line: #e7e6e2;
+    --bg: #fbfaf6;          /* warm off-white, a touch of beige */
+    --paper: #ffffff;       /* cards and the question box sit on it */
+    --soft: #f3f1e9;
+    --line: #e6e2d6;
+    --olive: #5f6b34;       /* from the olive branch in the logo */
+    --olive-soft: #eef0e2;
     --ink: #1c1c1a;
     --ink-2: #5b5a55;
     --ink-3: #908e87;
@@ -31,8 +34,8 @@
 
   /* Top bar: name on the left, the two choices that change answers on the right. */
   .bar {
-    position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
-    display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+    position: sticky; top: 0; z-index: 5; background: rgba(251,250,246,.92); backdrop-filter: blur(8px);
+    display: flex; align-items: center; gap: 8px; padding: 12px 24px; border-bottom: 1px solid transparent;
   }
   .brand {
     display: flex; align-items: center; gap: 9px; margin-right: auto;
@@ -41,13 +44,15 @@
   }
   .brand img { height: 32px; width: auto; display: block; }
   .pick {
-    appearance: none; border: 1px solid var(--line); background: var(--bg); border-radius: 999px;
-    padding: 6px 30px 6px 12px; font-size: 14px; color: var(--ink-2); cursor: pointer;
+    appearance: none; border: 1px solid var(--line); background-color: var(--paper); border-radius: 999px;
+    height: 36px; padding: 0 30px 0 14px; font-size: 14px; color: var(--ink-2); cursor: pointer;
+    max-width: 230px; text-overflow: ellipsis;
     background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
     background-position: calc(100% - 15px) 52%, calc(100% - 10px) 52%; background-size: 5px 5px; background-repeat: no-repeat;
   }
   .icon {
-    border: 0; background: none; padding: 6px 10px; border-radius: 999px; cursor: pointer; color: var(--ink-2); font-size: 14px;
+    border: 1px solid var(--line); background: var(--paper); height: 36px; padding: 0 14px; border-radius: 999px;
+    cursor: pointer; color: var(--ink-2); font-size: 14px;
   }
   .icon:hover, .pick:hover { background-color: var(--soft); }
 
@@ -55,24 +60,25 @@
 
   /* Empty state: a short greeting, one quiet line, the box, four cards to start from. */
   .hello { min-height: calc(100vh - 230px); display: grid; align-content: center; justify-items: center; text-align: center; }
-  .hello h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
-  .hello > p { margin: 0 0 26px; color: var(--ink-3); font-size: 15px; max-width: 52ch; }
+  .hello h1 { margin: 0 0 8px; font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    font-size: 30px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .hello > p { margin: 0 0 26px; color: var(--ink-2); font-size: 15px; max-width: 72ch; text-wrap: balance; }
   #slot { width: 100%; max-width: 680px; }
   .starters { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; width: 100%; max-width: 680px; }
   .starter {
     display: flex; flex-direction: column; gap: 2px; text-align: left; cursor: pointer;
-    border: 1px solid var(--line); background: var(--bg); border-radius: var(--radius); padding: 12px 14px;
-    transition: background-color .15s, border-color .15s;
+    border: 1px solid var(--line); background: var(--paper); border-radius: var(--radius); padding: 13px 16px;
+    transition: background-color .15s, border-color .15s; height: 100%;
   }
-  .starter .topic { font-size: 13px; font-weight: 600; color: var(--ink); }
-  .starter .ask { font-size: 13.5px; line-height: 1.45; color: var(--ink-3); }
-  .starter:hover { background: var(--soft); border-color: #dcdad4; }
+  .starter .topic { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--olive); }
+  .starter .ask { font-size: 14px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+  .starter:hover { background: var(--olive-soft); border-color: #cfd2b4; }
   .starter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* Conversation */
   .turn { padding: 18px 0 8px; }
   .you { display: flex; justify-content: flex-end; margin-bottom: 14px; }
-  .you p { margin: 0; background: var(--soft); border-radius: 18px; padding: 10px 16px; max-width: 80%; white-space: pre-wrap; }
+  .you p { margin: 0; background: var(--olive-soft); border-radius: 18px; padding: 10px 16px; max-width: 80%; white-space: pre-wrap; }
   .answer { min-width: 0; overflow-wrap: break-word; }
   .answer p { margin: 0 0 12px; }
   .answer h3 { font-size: 16px; margin: 18px 0 6px; }
@@ -103,7 +109,7 @@
   .sources-head { font-size: 13px; color: var(--ink-3); margin: 0 0 8px; }
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
   .card {
-    text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 10px 12px;
+    text-align: left; border: 1px solid var(--line); background: var(--paper); border-radius: 12px; padding: 10px 12px;
     cursor: pointer; display: grid; gap: 4px; align-content: start; min-width: 0;
   }
   .card:hover, .card.on { border-color: var(--accent); background: #fbfdfc; }
@@ -133,25 +139,25 @@
   .composer-wrap.centered { position: static; background: none; padding: 0; width: 100%; max-width: 680px; }
   .composer {
     max-width: 740px; margin: 0 auto; display: flex; align-items: flex-end; gap: 8px;
-    border: 1px solid var(--line); border-radius: 26px; padding: 8px 8px 8px 18px; background: var(--bg);
+    border: 1px solid var(--line); border-radius: 26px; padding: 8px 8px 8px 18px; background: var(--paper);
     box-shadow: 0 2px 14px rgba(0,0,0,.05);
   }
-  .composer:focus-within { border-color: #c9c8c2; }
+  .composer:focus-within { border-color: #c4c7a4; }
   textarea { flex: 1; border: 0; outline: 0; resize: none; background: none; padding: 8px 0; max-height: 200px; line-height: 1.5; overflow-y: hidden; }
   .send {
-    width: 38px; height: 38px; flex: none; border: 0; border-radius: 50%; background: var(--ink); color: #fff; cursor: pointer;
+    width: 38px; height: 38px; flex: none; border: 0; border-radius: 50%; background: var(--accent); color: #fff; cursor: pointer;
     display: grid; place-items: center;
   }
-  .send:disabled { background: #d6d5d0; cursor: default; }
-  .fine { text-align: center; font-size: 12px; color: var(--ink-3); margin: 8px 0 0; }
+  .send:disabled { background: #d3d1c6; cursor: default; }
+  .fine { text-align: center; font-size: 12px; color: var(--ink-3); margin: 10px 0 0; }
 
   @media (max-width: 600px) {
     .bar { padding: 10px 12px; gap: 6px; }
     .brand { font-size: 16px; gap: 6px; letter-spacing: 0.1em; }
     .brand img { height: 26px; }
-    .pick { font-size: 13px; padding: 5px 24px 5px 10px; max-width: 30vw; text-overflow: ellipsis; }
-    .icon { padding: 6px 6px; }
-    .hello h1 { font-size: 23px; }
+    .pick { font-size: 13px; height: 34px; padding: 0 24px 0 10px; max-width: 30vw; }
+    .icon { height: 34px; padding: 0 10px; }
+    .hello h1 { font-size: 24px; }
     .starters { grid-template-columns: 1fr; }
     .starter:nth-child(n+3) { display: none; }   /* two cards are enough on a phone */
     .you p { max-width: 92%; }
