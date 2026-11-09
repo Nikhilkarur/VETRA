@@ -47,17 +47,21 @@
 
   main { max-width: 740px; margin: 0 auto; padding: 0 20px 180px; }
 
-  /* Empty state: one line of what it is, the box, a few starters. */
-  .hello { min-height: calc(100vh - 260px); display: grid; align-content: center; justify-items: center; text-align: center; }
-  .hello h1 { margin: 0 0 6px; font-size: 30px; font-weight: 650; letter-spacing: -0.02em; }
-  .hello > p { margin: 0 0 22px; color: var(--ink-2); max-width: 46ch; }
+  /* Empty state: a short greeting, one quiet line, the box, four cards to start from. */
+  .hello { min-height: calc(100vh - 230px); display: grid; align-content: center; justify-items: center; text-align: center; }
+  .hello h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  .hello > p { margin: 0 0 26px; color: var(--ink-3); font-size: 15px; max-width: 52ch; }
   #slot { width: 100%; max-width: 680px; }
-  .starters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; max-width: 640px; }
+  .starters { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; width: 100%; max-width: 680px; }
   .starter {
-    border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 7px 14px;
-    font-size: 14px; color: var(--ink-2); cursor: pointer; text-align: left;
+    display: flex; flex-direction: column; gap: 2px; text-align: left; cursor: pointer;
+    border: 1px solid var(--line); background: var(--bg); border-radius: var(--radius); padding: 12px 14px;
+    transition: background-color .15s, border-color .15s;
   }
-  .starter:hover { background: var(--soft); color: var(--ink); }
+  .starter .topic { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .starter .ask { font-size: 13.5px; line-height: 1.45; color: var(--ink-3); }
+  .starter:hover { background: var(--soft); border-color: #dcdad4; }
+  .starter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* Conversation */
   .turn { padding: 18px 0 8px; }
@@ -139,7 +143,9 @@
     .bar { padding: 10px 12px; gap: 6px; }
     .pick { font-size: 13px; padding: 5px 24px 5px 10px; max-width: 30vw; text-overflow: ellipsis; }
     .icon { padding: 6px 6px; }
-    .hello h1 { font-size: 24px; }
+    .hello h1 { font-size: 23px; }
+    .starters { grid-template-columns: 1fr; }
+    .starter:nth-child(n+3) { display: none; }   /* two cards are enough on a phone */
     .you p { max-width: 92%; }
   }
 </style>
@@ -154,8 +160,8 @@
 
 <main id="main">
   <section class="hello" id="hello">
-    <h1>Ask your government's own documents</h1>
-    <p>Farm schemes, crop insurance, pensions, taxes and fees. Every answer shows the official order or notice it comes from.</p>
+    <h1>What would you like to know?</h1>
+    <p>Government schemes, rules, rates and deadlines, answered from official documents.</p>
     <div id="slot"></div>
     <div class="starters">{{STARTERS}}</div>
   </section>
@@ -164,12 +170,12 @@
 
 <div class="composer-wrap centered" id="composer-wrap">
   <form class="composer" id="ask">
-    <textarea id="q" rows="1" placeholder="Ask anything about schemes, rates or rules…" aria-label="Your question"></textarea>
+    <textarea id="q" rows="1" placeholder="Ask about a scheme, rate, rule or deadline…" aria-label="Your question"></textarea>
     <button class="send" type="submit" aria-label="Ask">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M8 3L3.5 7.5M8 3l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </form>
-  <p class="fine">Answers come only from official documents. Check the source before acting. Not legal advice.</p>
+  <p class="fine">Cites government documents. Web and general answers are labelled. Not legal advice.</p>
 </div>
 
 <script>
@@ -197,7 +203,7 @@ function grow() {
   input.style.overflowY = input.scrollHeight > 200 ? "auto" : "hidden";
 }
 form.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value.trim()); });
-document.querySelectorAll(".starter").forEach((b) => b.addEventListener("click", () => ask(b.textContent)));
+document.querySelectorAll(".starter").forEach((b) => b.addEventListener("click", () => ask(b.dataset.q)));
 $("new").addEventListener("click", () => { if (!busy) location.reload(); });
 
 async function ask(question) {

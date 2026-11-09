@@ -39,6 +39,12 @@ EXAMPLES = ("what is the last date to insure my cashew crop under weather insura
             "how do i get a kisan credit card",
             "how does atal pension yojana work",
             "how much is the rti fee")
+# The start screen's four cards: a topic, then a question written as a person would ask it. One per
+# area, so the first screen shows the range (farm support, insurance, land and property, comparisons).
+STARTERS = (("Farm support", "Who can get PM-KISAN, and how much is it?"),
+            ("Crop insurance", "What is the last date to insure my crop this season?"),
+            ("Land and property", "What is the stamp duty on a sale deed in Tamil Nadu?"),
+            ("Compare", "What is the difference between PMFBY and weather-based crop insurance?"))
 class Server(ThreadingHTTPServer):
     """On Windows, address reuse lets a second server bind a port that is already in use, and requests
     then go to either one: an old server with old settings answered a citizen. So a busy port fails there."""
@@ -57,7 +63,8 @@ def page_html() -> str:
         for code, name in sorted(jurisdictions.STATES.items(), key=lambda pair: pair[1]))
     replies = '<option value="auto">Same language as the question</option>' + "".join(
         f'<option value="{code}">{html.escape(name)}</option>' for code, name in languages.NAMES.items())
-    starters = "".join(f'<button class="starter" type="button">{html.escape(q)}</button>' for q in EXAMPLES[:4])
+    starters = "".join(f'<button class="starter" type="button" data-q="{html.escape(q)}"><span class="topic">{html.escape(t)}</span>'
+                       f'<span class="ask">{html.escape(q)}</span></button>' for t, q in STARTERS)
     return (page.replace("{{STATE_OPTIONS}}", states).replace("{{REPLY_OPTIONS}}", replies)
             .replace("{{STARTERS}}", starters))
 

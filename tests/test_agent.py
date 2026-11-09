@@ -2074,3 +2074,9 @@ def test_a_general_answer_that_states_money_figures_goes_to_the_records(monkeypa
 def test_the_planner_must_say_general_plainly():
     assert agent.parse_plan(plan(general=True)).general and not agent.parse_plan(plan()).general
     assert not agent.parse_plan(plan(general="yes")).general   # only a real true counts
+
+
+def test_the_start_screen_offers_written_questions_across_areas():
+    page = web.page_html()
+    assert page.count('class="starter"') == 4 and 'data-q="Who can get PM-KISAN, and how much is it?"' in page
+    assert "Answers come only from official documents" not in page   # no longer true: general and web answers exist
