@@ -176,7 +176,7 @@ def build() -> str:
 
   <h3>The MVP plan, in order (revised)</h3>
   <ol class="small">
-    <li><strong>Deepen and broaden the data</strong> for Andhra Pradesh and Tamil Nadu, now across all citizen domains, government sources first.</li>
+    <li><strong>Deepen and broaden the data</strong> for Andhra Pradesh and Tamil Nadu, government sources first. Both ways at once (owner, 10 November): <em>depth</em> is more exact records and documents for each aspect already listed; <em>breadth</em> is more aspects and sub-aspects inside each domain, and more domains until all citizen domains are covered.</li>
     <li><strong>Review the data by hand:</strong> what is present and missing, by state, domain and aspect.</li>
     <li><strong>Web search in tiers:</strong> official websites, then general websites, each clearly labelled (the official tier exists as a first version).</li>
     <li><strong>Make it intelligent:</strong> routing by question type, evidence grading, prepared state and domain profiles for synthesis, and outline-first long answers.</li>
