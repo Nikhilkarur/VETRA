@@ -38,14 +38,14 @@
     --on-accent: #ffffff;
     --shadow: 0 2px 14px rgba(0,0,0,.05);
   }
-  /* Dark: plain black and greys; the logo's teal and olive, lightened so they read on black. */
+  /* Dark: plain black and greys with the ark logo's warm cream as the accent. */
   :root[data-theme="dark"] {
     --bg: #0b0b0b; --paper: #161616; --soft: #1f1f1f; --line: #2c2c2c;
-    --olive: #a9b77c; --olive-soft: #1b1d16;
+    --olive: #cdb894; --olive-soft: #1d1a15;
     --ink: #ededeb; --ink-2: #b4b3ae; --ink-3: #85847f;
-    --accent: #5fb39f; --accent-soft: #16302a;
+    --accent: #f1e5d4; --accent-soft: #2b261e;
     --warn: #e5aa6f; --warn-soft: #2a2118; --bad: #f2907f;
-    --bar-bg: rgba(11,11,11,.9); --hover-line: #3d3f33; --focus-line: #4a4a4a;
+    --bar-bg: rgba(11,11,11,.9); --hover-line: #4a4337; --focus-line: #4a4a4a;
     --card-hover: #1a1a1a; --send-off: #333333; --on-accent: #0b0b0b;
     --shadow: 0 2px 18px rgba(0,0,0,.6);
   }
@@ -73,7 +73,7 @@
   .brand img { height: 32px; width: auto; display: block; }
   .brand .logo-dark { display: none; }
   [data-theme="dark"] .brand .logo-light { display: none; }
-  [data-theme="dark"] .brand .logo-dark { display: block; }
+  [data-theme="dark"] .brand .logo-dark { display: block; height: 34px; }
   /* Until the dark logo exists, the light one sits on a small pale tile so its outlines still show. */
   [data-theme="dark"] .brand.no-dark-logo .logo-light { display: block; background: #efece4; border-radius: 8px; padding: 2px 3px; }
   .theme { width: 36px; padding: 0; display: grid; place-items: center; }
