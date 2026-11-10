@@ -2084,4 +2084,13 @@ def test_the_start_screen_offers_written_questions_across_areas():
 
 def test_the_logo_and_tab_icon_are_on_the_page():
     page = web.page_html()
-    assert 'class="brand"><img src="data:image/png;base64,' in page and 'rel="icon" type="image/png" href="data:image/png;base64,' in page
+    assert '<img class="logo-light" src="data:image/png;base64,' in page and 'rel="icon" type="image/png" href="data:image/png;base64,' in page
+    assert "{{" not in page
+
+
+def test_the_page_has_a_dark_theme_and_a_switch():
+    page = web.page_html()
+    assert ':root[data-theme="dark"]' in page and 'id="theme"' in page and "vetra-theme" in page
+    # without a dark logo file the light logo is kept, on a pale tile
+    if not (web.PAGE.parent / "logo-dark.png").exists():
+        assert 'class="brand no-dark-logo"' in page

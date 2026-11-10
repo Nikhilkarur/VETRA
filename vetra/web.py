@@ -65,9 +65,11 @@ def page_html() -> str:
         f'<option value="{code}">{html.escape(name)}</option>' for code, name in languages.NAMES.items())
     starters = "".join(f'<button class="starter" type="button" data-q="{html.escape(q)}"><span class="topic">{html.escape(t)}</span>'
                        f'<span class="ask">{html.escape(q)}</span></button>' for t, q in STARTERS)
+    dark = _image("logo-dark.png")  # the dark-theme logo, once it is added beside web.html
     return (page.replace("{{STATE_OPTIONS}}", states).replace("{{REPLY_OPTIONS}}", replies)
             .replace("{{STARTERS}}", starters).replace("{{LOGO}}", _image("logo.png"))
-            .replace("{{FAVICON}}", _image("favicon.png")))
+            .replace("{{FAVICON}}", _image("favicon.png")).replace("{{LOGO_DARK}}", dark)
+            .replace("{{NO_DARK_LOGO}}", "" if dark else " no-dark-logo"))
 
 
 def _image(name: str) -> str:

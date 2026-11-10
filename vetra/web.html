@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VETRA</title>
 <link rel="icon" type="image/png" href="{{FAVICON}}">
+<script>
+  // Theme before first paint: the visitor's saved choice, else their device setting.
+  (function () {
+    let t = null; try { t = localStorage.getItem("vetra-theme"); } catch (e) {}
+    if (t !== "dark" && t !== "light") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
 <style>
   :root {
     --bg: #fbfaf6;          /* warm off-white, a touch of beige */
@@ -22,9 +30,29 @@
     --warn-soft: #fbf0e4;
     --bad: #a3321f;
     --radius: 14px;
+    --bar-bg: rgba(251,250,246,.92);
+    --hover-line: #cfd2b4;
+    --focus-line: #c4c7a4;
+    --card-hover: #fbfdfc;
+    --send-off: #d3d1c6;
+    --on-accent: #ffffff;
+    --shadow: 0 2px 14px rgba(0,0,0,.05);
   }
+  /* Dark: plain black and greys; the logo's teal and olive, lightened so they read on black. */
+  :root[data-theme="dark"] {
+    --bg: #0b0b0b; --paper: #161616; --soft: #1f1f1f; --line: #2c2c2c;
+    --olive: #a9b77c; --olive-soft: #1b1d16;
+    --ink: #ededeb; --ink-2: #b4b3ae; --ink-3: #85847f;
+    --accent: #5fb39f; --accent-soft: #16302a;
+    --warn: #e5aa6f; --warn-soft: #2a2118; --bad: #f2907f;
+    --bar-bg: rgba(11,11,11,.9); --hover-line: #3d3f33; --focus-line: #4a4a4a;
+    --card-hover: #1a1a1a; --send-off: #333333; --on-accent: #0b0b0b;
+    --shadow: 0 2px 18px rgba(0,0,0,.6);
+  }
+
   * { box-sizing: border-box; }
   html { color-scheme: light; }
+  html[data-theme="dark"] { color-scheme: dark; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
     font: 16px/1.65 "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
@@ -34,7 +62,7 @@
 
   /* Top bar: name on the left, the two choices that change answers on the right. */
   .bar {
-    position: sticky; top: 0; z-index: 5; background: rgba(251,250,246,.92); backdrop-filter: blur(8px);
+    position: sticky; top: 0; z-index: 5; background: var(--bar-bg); backdrop-filter: blur(8px);
     display: flex; align-items: center; gap: 8px; padding: 12px 24px; border-bottom: 1px solid transparent;
   }
   .brand {
@@ -43,6 +71,12 @@
     letter-spacing: 0.14em; color: var(--accent);
   }
   .brand img { height: 32px; width: auto; display: block; }
+  .brand .logo-dark { display: none; }
+  [data-theme="dark"] .brand .logo-light { display: none; }
+  [data-theme="dark"] .brand .logo-dark { display: block; }
+  /* Until the dark logo exists, the light one sits on a small pale tile so its outlines still show. */
+  [data-theme="dark"] .brand.no-dark-logo .logo-light { display: block; background: #efece4; border-radius: 8px; padding: 2px 3px; }
+  .theme { width: 36px; padding: 0; display: grid; place-items: center; }
   .pick {
     appearance: none; border: 1px solid var(--line); background-color: var(--paper); border-radius: 999px;
     height: 36px; padding: 0 30px 0 14px; font-size: 14px; color: var(--ink-2); cursor: pointer;
@@ -72,7 +106,7 @@
   }
   .starter .topic { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--olive); }
   .starter .ask { font-size: 14px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
-  .starter:hover { background: var(--olive-soft); border-color: #cfd2b4; }
+  .starter:hover { background: var(--olive-soft); border-color: var(--hover-line); }
   .starter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   /* Conversation */
@@ -102,7 +136,7 @@
     margin: 0 1px; border-radius: 9px; background: var(--accent-soft); color: var(--accent);
     font-size: 11px; font-weight: 650; line-height: 1; text-decoration: none; vertical-align: 2px; cursor: pointer;
   }
-  .cite:hover, .cite.on { background: var(--accent); color: #fff; }
+  .cite:hover, .cite.on { background: var(--accent); color: var(--on-accent); }
 
   /* Sources: always visible under the answer, one card per cited document. */
   .sources { margin: 14px 0 4px; }
@@ -112,7 +146,7 @@
     text-align: left; border: 1px solid var(--line); background: var(--paper); border-radius: 12px; padding: 10px 12px;
     cursor: pointer; display: grid; gap: 4px; align-content: start; min-width: 0;
   }
-  .card:hover, .card.on { border-color: var(--accent); background: #fbfdfc; }
+  .card:hover, .card.on { border-color: var(--accent); background: var(--card-hover); }
   .card .top { display: flex; gap: 8px; align-items: baseline; }
   .card .num { font-size: 12px; font-weight: 650; color: var(--accent); }
   .card .title { font-size: 13.5px; line-height: 1.4; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -140,15 +174,15 @@
   .composer {
     max-width: 740px; margin: 0 auto; display: flex; align-items: flex-end; gap: 8px;
     border: 1px solid var(--line); border-radius: 26px; padding: 8px 8px 8px 18px; background: var(--paper);
-    box-shadow: 0 2px 14px rgba(0,0,0,.05);
+    box-shadow: var(--shadow);
   }
-  .composer:focus-within { border-color: #c4c7a4; }
+  .composer:focus-within { border-color: var(--focus-line); }
   textarea { flex: 1; border: 0; outline: 0; resize: none; background: none; padding: 8px 0; max-height: 200px; line-height: 1.5; overflow-y: hidden; }
   .send {
-    width: 38px; height: 38px; flex: none; border: 0; border-radius: 50%; background: var(--accent); color: #fff; cursor: pointer;
+    width: 38px; height: 38px; flex: none; border: 0; border-radius: 50%; background: var(--accent); color: var(--on-accent); cursor: pointer;
     display: grid; place-items: center;
   }
-  .send:disabled { background: #d3d1c6; cursor: default; }
+  .send:disabled { background: var(--send-off); cursor: default; }
   .fine { text-align: center; font-size: 12px; color: var(--ink-3); margin: 10px 0 0; }
 
   @media (max-width: 600px) {
@@ -166,9 +200,10 @@
 </head>
 <body>
 <div class="bar">
-  <span class="brand"><img src="{{LOGO}}" alt="">VETRA</span>
+  <span class="brand{{NO_DARK_LOGO}}"><img class="logo-light" src="{{LOGO}}" alt=""><img class="logo-dark" src="{{LOGO_DARK}}" alt="">VETRA</span>
   <select id="state" class="pick" aria-label="Your state">{{STATE_OPTIONS}}</select>
   <select id="reply" class="pick" aria-label="Answer language">{{REPLY_OPTIONS}}</select>
+  <button id="theme" class="icon theme" type="button" title="Dark or light" aria-label="Switch dark or light"></button>
   <button id="new" class="icon" type="button" title="New conversation">New</button>
 </div>
 
@@ -197,6 +232,18 @@ const $ = (id) => document.getElementById(id);
 const form = $("ask"), input = $("q"), send = form.querySelector(".send");
 const thread = $("thread"), hello = $("hello"), wrap = $("composer-wrap");
 const statePick = $("state"), replyPick = $("reply");
+
+// Dark or light: a moon in light mode, a sun in dark mode; the choice is remembered.
+const MOON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+const SUN = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+const themeBtn = $("theme");
+function showTheme() { themeBtn.innerHTML = document.documentElement.dataset.theme === "dark" ? SUN : MOON; }
+themeBtn.addEventListener("click", () => {
+  const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = t; showTheme();
+  try { localStorage.setItem("vetra-theme", t); } catch (e) {}
+});
+showTheme();
 let history = [], busy = false, turns = 0;
 
 // Before the first question the box sits in the middle of the page; after it, at the bottom.
