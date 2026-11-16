@@ -1,0 +1,400 @@
+{
+ "agriculture": {
+  "income support": [
+   "eligibility and exclusions",
+   "amount per year and instalments",
+   "tenant and landless coverage",
+   "e-KYC and Aadhaar seeding",
+   "payment status and grievance"
+  ],
+  "crop loans": [
+   "scale of finance per crop",
+   "interest subvention and prompt repayment",
+   "interest-free / zero-interest limit",
+   "collateral-free limit",
+   "repayment period and due date"
+  ],
+  "loan waiver": [
+   "eligibility and cut-off date",
+   "ceiling per family",
+   "loans covered (crop, gold, term)",
+   "status and grievance"
+  ],
+  "KCC": [
+   "who can get a KCC (incl. tenants, fishers, livestock)",
+   "limit and validity",
+   "interest rate and subvention",
+   "documents and processing fee",
+   "RuPay card and insurance"
+  ],
+  "tenant farmers": [
+   "cultivator rights card (CCRC) issue",
+   "validity and renewal",
+   "benefits available (loan, insurance, input subsidy)",
+   "landowner rights protected",
+   "how to apply"
+  ],
+  "crop insurance": [
+   "enrolment and last dates",
+   "premium share",
+   "sum insured",
+   "claim process and settlement time",
+   "claim rejection and grievance",
+   "tenant/sharecropper farmers",
+   "loanee vs non-loanee",
+   "crop-cutting experiments and yield",
+   "localised calamity (hailstorm, inundation)",
+   "prevented sowing",
+   "post-harvest losses",
+   "weather-based insurance (RWBCIS)"
+  ],
+  "disaster relief": [
+   "input subsidy rate per hectare",
+   "minimum 33% crop loss rule",
+   "land and silt removal relief",
+   "livestock and house damage relief",
+   "ex gratia on death",
+   "how to claim and enumeration"
+  ],
+  "wildlife damage": [
+   "crop loss compensation rate",
+   "human death or injury compensation",
+   "livestock kill compensation",
+   "how and where to claim, time limit"
+  ],
+  "seed": [
+   "subsidised seed rates and share",
+   "seed distribution and registration",
+   "certified seed and certification",
+   "spurious seed complaint and compensation",
+   "seed village / seed production",
+   "seed licence for dealers"
+  ],
+  "fertiliser": [
+   "MRP of urea, DAP and complexes",
+   "nutrient-based subsidy rates",
+   "dealer licence and stock display",
+   "adulteration and complaint",
+   "Aadhaar-linked purchase (PoS)"
+  ],
+  "pesticide rules": [
+   "banned and restricted pesticides",
+   "dealer licence",
+   "spurious pesticide complaint",
+   "safe use and residue limits"
+  ],
+  "soil health": [
+   "soil health card and how to get it",
+   "soil testing fee and labs",
+   "sampling cycle and grid",
+   "micronutrient / amendment subsidy"
+  ],
+  "natural farming": [
+   "assistance per farmer / acre",
+   "certification (PGS, organic)",
+   "inputs (jeevamrutham, bio-inputs) and resource centres",
+   "cluster and enrolment"
+  ],
+  "drip": [
+   "subsidy percentage by farmer category",
+   "unit cost and area ceiling",
+   "how to apply and approved companies",
+   "re-subsidy after years",
+   "sprinkler vs drip"
+  ],
+  "farm ponds": [
+   "subsidy / cost norm",
+   "size and specification",
+   "eligibility and how to apply",
+   "lining and maintenance"
+  ],
+  "wells": [
+   "borewell / open well subsidy",
+   "groundwater permission and over-exploited areas",
+   "electricity connection for wells",
+   "registration of wells"
+  ],
+  "farm power": [
+   "free power eligibility and hours",
+   "new connection: how and cost",
+   "meters and tariff",
+   "compensation for transformer / supply failure"
+  ],
+  "solar pumps": [
+   "subsidy share (central, state, farmer)",
+   "pump capacity (HP) allowed",
+   "grid-connected and feeder solarisation",
+   "how to apply"
+  ],
+  "machinery": [
+   "subsidy percentage by farmer category",
+   "ceiling per machine",
+   "eligible machines list",
+   "how to apply and selection"
+  ],
+  "custom hiring": [
+   "hiring centre subsidy / setup",
+   "hire rates for farmers",
+   "who can run a CHC (FPO, group)",
+   "booking and app"
+  ],
+  "drones": [
+   "drone purchase subsidy",
+   "drone spraying service charge",
+   "drone pilot training / licence",
+   "Namo drone didi / women groups"
+  ],
+  "horticulture": [
+   "area expansion subsidy per hectare",
+   "protected cultivation (polyhouse, shade net)",
+   "post-harvest units and pack houses",
+   "nursery and planting material",
+   "mechanisation and other components"
+  ],
+  "plantation": [
+   "oil palm assistance per hectare",
+   "coconut assistance and insurance",
+   "replanting / rejuvenation",
+   "cashew and other plantation crops"
+  ],
+  "sericulture": [
+   "mulberry plantation subsidy",
+   "rearing house and equipment subsidy",
+   "cocoon price / incentive",
+   "training and seed (DFLs)"
+  ],
+  "animal husbandry": [
+   "livestock insurance",
+   "veterinary services and mobile units",
+   "vaccination and disease control",
+   "fodder and feed subsidy",
+   "sheep/goat unit schemes",
+   "cattle/livestock death compensation"
+  ],
+  "dairy": [
+   "milk procurement price",
+   "dairy unit / cow purchase subsidy",
+   "dairy cooperative membership and bonus",
+   "milk incentive per litre"
+  ],
+  "fisheries": [
+   "fishing ban period relief",
+   "fishermen accident insurance and ex gratia",
+   "boat, net and engine subsidy",
+   "aquaculture and pond registration, power tariff",
+   "PM Matsya Sampada Yojana assistance"
+  ],
+  "poultry": [
+   "backyard poultry unit subsidy",
+   "bird flu and culling compensation",
+   "broiler / layer farm licence and rules"
+  ],
+  "MSP": [
+   "MSP per crop and season",
+   "who announces and when",
+   "quality norms (FAQ)"
+  ],
+  "state bonus": [
+   "bonus or incentive over MSP per quintal",
+   "crops and seasons covered"
+  ],
+  "procurement": [
+   "procurement centres and how to sell",
+   "payment time and mode",
+   "moisture and quality norms",
+   "registration / e-crop link",
+   "pulses / oilseeds PSS procurement"
+  ],
+  "markets": [
+   "market fee and commission",
+   "farmers' markets (Rythu bazaar, Uzhavar sandhai)",
+   "market committee and licence",
+   "weighment and payment disputes"
+  ],
+  "eNAM": [
+   "registration for farmers",
+   "online payment and trading",
+   "mandis integrated"
+  ],
+  "storage": [
+   "warehouse receipt and pledge loan",
+   "storage charges and rent",
+   "cold storage subsidy",
+   "godown building assistance (AIF)"
+  ],
+  "food processing": [
+   "PMFME micro-unit subsidy",
+   "state food processing policy incentives",
+   "how to apply"
+  ],
+  "FPOs": [
+   "formation and registration",
+   "equity grant and credit guarantee",
+   "management cost support",
+   "licences for inputs trade"
+  ],
+  "land records": [
+   "patta / ROR copy and how to get it",
+   "mutation / name transfer and fee",
+   "correction of errors",
+   "survey and boundary disputes",
+   "timelines (services guarantee)"
+  ],
+  "tenancy law": [
+   "lease agreement rules and duration",
+   "tenant rights and eviction",
+   "rent limits"
+  ],
+  "land conversion": [
+   "conversion fee / NALA tax",
+   "procedure and authority",
+   "time limit for decision"
+  ],
+  "land acquisition": [
+   "compensation multiplier and solatium",
+   "rehabilitation and resettlement",
+   "consent and social impact assessment",
+   "land pooling"
+  ],
+  "extension offices": [
+   "what the village centre provides",
+   "staff contact (VAA, AO)",
+   "training and demos"
+  ],
+  "helplines": [
+   "farmer helpline number",
+   "Kisan call centre",
+   "helpline hours and languages"
+  ],
+  "welfare boards": [
+   "membership and registration",
+   "pension and age",
+   "accident / death assistance",
+   "education and marriage assistance"
+  ],
+  "grievance": [
+   "where to complain (portal, number)",
+   "time limit for reply",
+   "appeal / escalation"
+  ]
+ },
+ "finance": {
+  "budget": [
+   "total size and receipts",
+   "allocation by department / scheme",
+   "new schemes announced",
+   "fiscal targets"
+  ],
+  "debt": [
+   "outstanding debt and ratio to GSDP",
+   "borrowing this year",
+   "guarantees and off-budget borrowing",
+   "interest payments"
+  ],
+  "finance commission": [
+   "state share of central taxes",
+   "grants to local bodies",
+   "state finance commission"
+  ],
+  "stamp duty": [
+   "sale deed rate",
+   "gift / settlement within family",
+   "lease deed",
+   "mortgage / loan agreements",
+   "partition",
+   "power of attorney",
+   "exemptions and concessions"
+  ],
+  "registration fee": [
+   "sale deed fee and cap",
+   "gift/settlement/partition fee",
+   "lease and mortgage fee",
+   "other services (certified copy, encumbrance)"
+  ],
+  "guideline values": [
+   "how to find guideline value",
+   "revision dates",
+   "objection / appeal against value"
+  ],
+  "vehicle tax": [
+   "two-wheeler life tax",
+   "car life tax by price",
+   "electric vehicle exemption",
+   "transport / goods vehicle quarterly tax"
+  ],
+  "profession tax": [
+   "slab by salary / income",
+   "maximum Rs.2,500 limit",
+   "who is exempt",
+   "payment due dates"
+  ],
+  "state GST": [
+   "registration threshold",
+   "returns and due dates",
+   "state-level relief and amnesty"
+  ],
+  "land revenue": [
+   "land revenue / cess rate",
+   "exemptions for small farmers",
+   "how to pay"
+  ],
+  "electricity duty": [
+   "duty rate by consumer type",
+   "exemptions"
+  ],
+  "property tax": [
+   "how tax is calculated",
+   "rebate for early payment",
+   "penalty / interest for delay",
+   "revision and appeal"
+  ],
+  "tax arrears": [
+   "one-time settlement terms",
+   "schemes open now and last date"
+  ],
+  "women concessions": [
+   "stamp duty / registration concession",
+   "other tax concessions"
+  ],
+  "pensions": [
+   "categories and monthly amount",
+   "eligibility and age",
+   "how to apply / new sanction",
+   "payment date and mode"
+  ],
+  "direct benefits": [
+   "main DBT schemes and amounts",
+   "eligibility",
+   "payment status / Aadhaar seeding"
+  ],
+  "state loans": [
+   "corporation loan schemes and subsidy",
+   "eligibility (caste, income)",
+   "how to apply"
+  ],
+  "SHGs": [
+   "interest-free / interest subvention on SHG loans",
+   "loan limits and bank linkage",
+   "revolving fund and community investment fund",
+   "insurance for members"
+  ],
+  "cooperatives": [
+   "cooperative bank loans and interest",
+   "jewel / gold loans and waivers",
+   "membership and elections",
+   "deposit insurance and rates"
+  ],
+  "MSME": [
+   "self-employment loan subsidy (UYEGP/NEEDS/PMEGP)",
+   "capital and interest subsidy",
+   "Udyam registration",
+   "collateral-free credit (CGTMSE, Mudra)"
+  ],
+  "housing": [
+   "assistance per house",
+   "eligibility",
+   "how to apply and selection",
+   "instalments and construction stages"
+  ]
+ }
+}
