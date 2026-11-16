@@ -90,6 +90,58 @@ def build() -> str:
     s = _search_settings()
     sub = ", ".join(f"{k} {v}" for k, v in s["subtopics"].items())
     return f"""
+<section id="pl-focus16">
+  <div class="sec-head">
+    <p class="label">Set by you on 16 November 2026 · research done, nothing built yet · data work running in its own session</p>
+    <h2>Current focus: speed, and deeper and broader data</h2>
+    <p>Your three priorities, in order: <strong>1) cite proper, accurate information; 2) a proper answer structure with low latency; 3) a robust architecture.</strong> The two areas of work now are <strong>speed</strong> and <strong>data depth and breadth</strong> in the selected domains (agriculture and finance, Andhra Pradesh and Tamil Nadu). Data work started on 16 November in a separate session: listing sub-aspects and cases for every aspect (<code>knowledge/subaspects.json</code>), then filling the gaps from official sources.</p>
+  </div>
+
+  <h3>Your question: do we even need vector RAG?</h3>
+  <p class="small">The short you sent compares vector RAG with "vectorless RAG" (the best-known vectorless method is PageIndex, which builds a table-of-contents tree for each document and has a model reason its way down the tree instead of searching embeddings). I compared the main options against our case: about 400 documents and 16,500 passages, growing; questions in casual English, Telugu and Tamil; citations required; replies wanted in seconds.</p>
+  <div class="tw"><table class="small">
+    <tr><th>Approach</th><th>How it finds information</th><th>Fit for VETRA</th></tr>
+    <tr><td><strong>Exact records (structured, like a database)</strong></td><td>Look up stored amounts, dates and rules by scheme, state and aspect</td><td><strong>Best fit for figures and deadlines</strong>, and we already have it. Fast, exact, no guessing. Research on numbers in RAG says the same: numbers embed badly and belong in tables. Keep it first and grow it.</td></tr>
+    <tr><td><strong>Keyword search only (BM25)</strong></td><td>Matches words</td><td>Strong on official terms and order numbers, weak when a farmer's words differ from the order's words, or the question is in Telugu or Tamil. Not enough alone.</td></tr>
+    <tr><td><strong>Vector search only</strong></td><td>Matches meaning</td><td>Handles casual and multilingual wording, but misses exact names, numbers and order references. Not enough alone.</td></tr>
+    <tr><td><strong>Hybrid + rerank (what we have)</strong></td><td>Both of the above, merged, then a second model re-orders the top results</td><td>The default most studies and practitioners land on; a 2026 financial benchmark found hybrid plus reranking beat every single method by a large margin. <strong>Keep, but make it faster.</strong></td></tr>
+    <tr><td><strong>Vectorless / reasoning tree (PageIndex)</strong></td><td>A model reads each document's contents tree and picks sections</td><td>Good for one long, well-structured report. Poor fit here: it needs model calls for every question (reported 3 seconds to over a minute), it is meant for a few long documents rather than hundreds of short orders, and its 98.7% accuracy figure is the maker's own claim, not independently checked. <strong>Not as the main search.</strong> Its idea, using a document's own headings, can be borrowed cheaply (below).</td></tr>
+    <tr><td><strong>Long context (send everything)</strong></td><td>Put all documents in the prompt</td><td>Only works for small collections (Anthropic's guidance: under about 200,000 tokens). Ours is millions of tokens and growing, and it would be slow and costly per question. <strong>No.</strong></td></tr>
+    <tr><td><strong>Knowledge graph (GraphRAG)</strong></td><td>Stores how things relate</td><td>Useful for relations: which order replaced which, what applies in AP vs TN vs all India, scheme to sub-aspect. A full GraphRAG build is heavy; <strong>a light link table is worth it</strong> and helps comparison questions.</td></tr>
+  </table></div>
+  <p class="small"><strong>Answer:</strong> we need vector search, but not vector search alone, and it should not be the first step. The right shape for VETRA is <em>records first, hybrid search second, reasoning only when needed</em>.</p>
+
+  <h3>Proposed architecture: fast lanes by question type</h3>
+  <ol class="small">
+    <li><strong>Cache.</strong> The same question (same state, same day) gets the saved answer instantly.</li>
+    <li><strong>One planning call, smaller.</strong> The planner already splits the question, picks state and depth, and marks general questions. It also says which lane the question takes.</li>
+    <li><strong>Lane A, general:</strong> one direct call, labelled general (built).</li>
+    <li><strong>Lane B, a figure, date or rule:</strong> answer from the exact records, with one short writing call. No document search unless a record is missing. Target: a few seconds.</li>
+    <li><strong>Lane C, explanation or procedure:</strong> one round of hybrid search, all parts searched <em>at the same time</em>, reranked, then the writer. No look-further loop unless a part comes back empty.</li>
+    <li><strong>Lane D, comparison and deep answers:</strong> prepared state and domain profiles plus search, the look-further loop, then outline-first writing with each section streamed as it is written. The only lane that uses several model calls; research on adaptive routing finds this costs little and saves much on simple questions.</li>
+    <li><strong>Web search</strong> only for a part that is still missing, run alongside the writer's preparation rather than before it.</li>
+    <li><strong>Checks</strong> stay on every answer (code, fast); the second-model verify stays only for deep answers.</li>
+    <li><strong>Stream</strong> the answer to the page as it is written, and let several questions run at once.</li>
+  </ol>
+
+  <h3>Search changes that help accuracy and speed (all done when documents are built, not per question)</h3>
+  <ul class="small">
+    <li><strong>Contextual passages:</strong> add a one-line label to every passage before indexing (document title, scheme, state, year, section heading). Anthropic reported this cut search failures by about 35% for meaning search and about 49% with keyword search too (their numbers, on their data). It costs nothing per question.</li>
+    <li><strong>Sub-aspect tags:</strong> tag each passage and record with its aspect and sub-aspect from the new list, so a search can be narrowed first. This links the data work directly to search quality.</li>
+    <li><strong>Headings as a tree (the cheap part of PageIndex):</strong> keep each document's section headings, so the writer can cite "Clause 7.2" and neighbouring clauses can be pulled in when a rule continues.</li>
+    <li><strong>Rerank fewer:</strong> test reranking the top 15 instead of 30, which roughly halves that step.</li>
+  </ul>
+
+  <h3>Experiments to run first (measured on about 50 real questions, accuracy and seconds per step)</h3>
+  <ul class="small">
+    <li><strong>Time each step</strong> of every answer (plan, records, search, look further, web, write, check), so cuts go where the time is.</li>
+    <li><strong>HyDE on or off.</strong> The planner writes a 40 to 80 word imagined government passage that is used only for searching. Studies suggest it helps most when a citizen's words differ from the order's words, and helps less once there is hybrid search and a reranker, as we have; it also adds output time to the planning call. Measure whether the right passage reaches the top results with and without it, overall and for Telugu/Tamil and casual questions separately. Keep it, drop it, or keep it only for those questions.</li>
+    <li><strong>Hybrid vs keyword only vs meaning only</strong> on our own documents.</li>
+    <li><strong>Rerank 30 vs 15,</strong> and with and without contextual passages.</li>
+  </ul>
+  <p class="small muted">Sources: PageIndex (VectifyAI, pypi.org/project/PageIndex) and reviews of it; "Long Context vs. RAG for LLMs" (arXiv 2501.01880); a 2026 financial retrieval benchmark (arXiv 2604.01733); Anthropic, "Contextual Retrieval" (September 2024); Adaptive-RAG and later routing studies; work on numbers and tables in RAG. Most speed and gain figures are from the authors or secondary write-ups, not checked by us; our own tests decide.</p>
+</section>
+
 <section id="pl-goal7">
   <div class="sec-head">
     <p class="label">Updated 7 November 2026 · the sections further down are from 5 November and kept for history · live figures are on the Monitoring station tab</p>

@@ -1,13 +1,14 @@
 {
- "last_report": "2026-11-10T21:24",
- "state": "Paused",
- "headline": "Waiting for your instruction. Since the last report only the web page's look changed (start screen, light and dark themes, two logos). Completion unchanged (agriculture and finance, deep level): Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100%. Other domains are not started.",
+ "last_report": "2026-11-16T21:26",
+ "state": "Working",
+ "headline": "Resumed on 16 Nov: research on retrieval and speed is done and on the Current plan tab; data deepening and broadening (sub-aspects, cases, gaps) is running. Completion unchanged so far: Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100% (agriculture and finance, deep level).",
  "usage": {
   "five_hour": 0,
   "weekly": 0,
   "weekly_rule": "No usage rules (owner, 6 Nov)"
  },
  "decisions": [
+  "<strong>Current focus (your words, 16 Nov):</strong> speed, and deeper and broader data in agriculture and finance for Andhra Pradesh and Tamil Nadu. Priorities: accurate citations first, then answer structure with low latency, then a robust architecture. Research on vector versus other kinds of retrieval and a proposed architecture with fast lanes by question type are at the top of the Current plan tab; a HyDE on/off test is planned. Data work (sub-aspects and cases, then filling gaps) runs in its own session.",
   "<strong>Your rules (6 Nov) stay in force:</strong> you are head of the project and I act as senior project manager; this page is updated only when you ask, with Andhra Pradesh and Tamil Nadu completion in percent; data and engine are equal focuses; testing comes later.",
   "<strong>Revised MVP (your words, 8 Nov):</strong> Andhra Pradesh and Tamil Nadu, every domain, not only agriculture and finance. Government documents stay the main and preferred source; general research from the web is added, always labelled as from the web. VETRA should reason and synthesise (for example the difference between agriculture in AP and TN, which no single document holds) instead of rejecting such questions, and a stronger model should write the final draft once the API budget allows. Plan, in order: deepen and broaden the data; review it by hand; tiered web search (official, then general); make it intelligent (routing, evidence grading, state profiles, outline-first answers); answer structure with a stronger writer. Researched, not built: see the Current plan tab.",
   "<strong>Speed goal (your words, 9 Nov):</strong> the whole system with the least latency and replies as fast as possible. It applies to every MVP step: each change is measured for time as well as correctness. Today a general answer takes about 3 seconds, a standard one 20 to 60 seconds and a deep one 2 to 3.5 minutes. The ideas, to measure first (streaming the answer, fewer model calls, parallel searches, caching, a fast model for planning and a bigger one only to write, more than one question at a time, preparing profiles ahead), are on the Current plan tab. Not started.",
@@ -17,7 +18,7 @@
   "<strong>Answer structure (MVP step 4), foundation laid on 7 Nov, not tested:</strong> answers now follow question cases the way data follows aspects: comparison (a table), change, grievance, status, eligibility (yes, no or depends first), deadline (date and open or closed first), amount (figure and unit first), procedure (numbered steps), contact, options and explanation, each with a shape for quick, standard and deep answers. A code check stops answers saying something doesn't exist when the documents only don't mention it, and every answer's structure is now recorded. Tried on two live questions only. Details are on the Current plan tab.",
   "<strong>General questions, first version (8 Nov), rigid on purpose:</strong> a question that needs no government record (\"what is crop rotation\") is now answered directly by the model in a few seconds, labelled as a general answer with no sources. Anything about a scheme, rule, money, rights or offices still goes through the records, and a general answer that states a rupee amount or percentage is sent to the records too. The line will be made more flexible later. Not tested on a question set.",
   "<strong>Models (7 Nov, for now):</strong> Groq is primary and Gemini the fallback until you choose a paid API. The key is only in .env.",
-  "<strong>Waiting for your instruction.</strong> No data collection, deepening or testing runs until you say to resume. The full technical account of how VETRA finds documents and checks answers is at the top of the Current plan tab."
+  "<strong>Work resumed on 16 November</strong> on speed research and data depth and breadth. The full technical account of how VETRA finds documents and checks answers is on the Current plan tab."
  ],
  "next": [
   "<strong>Web search, first version (7 Nov):</strong> built in vetra/websearch.py and wired into the agent; state's own sites first (ap.gov.in, tn.gov.in), then other government sites; other states' pages skipped; passages must contain the subject's own words; same answer checks as held documents. Tried on two Andhra Pradesh questions: farm pond found district horticulture pages; silkworm shed found nothing official and the answer now says so instead of wrongly saying no subsidy exists. 247 code tests pass. Not tested on answers.",
@@ -141,6 +142,11 @@
    "time": "10 Nov 21:24",
    "state": "Paused",
    "text": "Update on your request (10 Nov). Looked over the whole project. Built and held: deep data for agriculture and finance in Andhra Pradesh (95% and 95% of aspects with an exact record) and Tamil Nadu (100% and 100%); first versions of official-site web search, answer structure by 11 question cases, and the direct path for general questions. New since 9 Nov, appearance only: redesigned start screen, light theme with the tablets and olive branch logo, dark theme in black with the ark and David logo in cream, a theme switch. 271 code tests pass. Not done: the other domains of the revised MVP, review of the data by hand, general-site web search, the reasoning work, a stronger writing model, speed work, and any testing of answers. Web search remains a first version you are not satisfied with."
+  },
+  {
+   "time": "16 Nov 21:26",
+   "state": "Working",
+   "text": "Update on your request (16 Nov). Research: vector search is needed but not alone; the best fit is exact records first, hybrid search second, reasoning only for comparison and deep questions, with fast lanes by question type, contextual passages, sub-aspect tags, parallel searches and streaming. Vectorless tree search (PageIndex) and long context were judged a poor fit as the main search. Planned experiments: time each step, HyDE on and off, hybrid versus single methods, rerank 30 versus 15. Nothing built yet. Data: a separate session is listing sub-aspects and cases for every agriculture and finance aspect and filling gaps from official sources."
   }
  ]
 }
