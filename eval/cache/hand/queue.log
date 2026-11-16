@@ -133,3 +133,15 @@ finance: 5457 chunks indexed (2 new, 0 removed)
 16 Nov 22:11 build finance AP
 finance: 5461 chunks indexed (4 new, 0 removed)
 16 Nov 22:14 build finance AP finished
+16 Nov 22:18 build agriculture IN
+agriculture: 16230 chunks indexed (91 new, 0 removed)
+16 Nov 22:21 build agriculture IN finished
+16 Nov 22:21 build agriculture TN
+agriculture: 16232 chunks indexed (2 new, 0 removed)
+16 Nov 22:29 build agriculture TN finished
+16 Nov 22:29 build finance TN
+finance: 5473 chunks indexed (12 new, 0 removed)
+16 Nov 22:33 build finance TN finished
+16 Nov 22:33 build finance IN
+finance: 6147 chunks indexed (676 new, 2 removed)
+16 Nov 22:42 build finance IN finished
