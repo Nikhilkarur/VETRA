@@ -1,0 +1,469 @@
+[
+ {
+  "q": "can i get loan by keeping my paddy in the market godown in tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-pledge-loan",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "is there zero interest crop loan in AP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-crop-loan-interest",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf"
+  ]
+ },
+ {
+  "q": "my landlord wants to evict me from the land i cultivate, which court do i go to in tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-tenancy-courts",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/revenue_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "can i take kisan credit card loan for my cows in TN",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-kcc-allied",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/coop_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "where do i apply for agriculture schemes in tamil nadu, is there an app",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-extension-centres",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/agri_e_pn_2026_27.pdf",
+   "http://tnagrisnet.tn.gov.in/fcms/documents/go/23-agri_e_ms_227_ap5_2022.pdf",
+   "http://tnagrisnet.tn.gov.in/fcms/documents/go/23-agri_e_ms_153_ap4_2022.pdf"
+  ]
+ },
+ {
+  "q": "what is the hire charge for a bulldozer from agriculture engineering department tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-aed-earthmover-hire",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "subsidy for paddy seeds tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-paddy-seed-scheme",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/agri_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "i want to start small dairy with few cows, any interest help in tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-mini-dairy",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/dairy_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "govt buying copra at support price what quality they want",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-price-support-faq",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "subsidy for bunding and soil conservation works in my field TN",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-soil-water-conservation",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/policy_note/5--PN-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "do they give money for doing natural farming in tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-natural-farming-incentive",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_uploads/site_pdfs/gos/2026-27-NMNF-First-Instalment-GO-(93).pdf"
+  ]
+ },
+ {
+  "q": "fishermen lean season relief amount tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-fishing-lean-relief",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/fisheries_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "how much extra per litre for milk given to aavin society",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-milk-incentive",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/dairy_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "farmer died in accident at regulated market, compensation tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-market-accident-grant",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "oil palm cultivation subsidy tamil nadu 2026-27",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-oil-palm",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_uploads/site_pdfs/gos/2026-27-NMEO-OP-First-Instalment-GO-(191).pdf"
+  ]
+ },
+ {
+  "q": "who gets fishing rights in government tanks in andhra",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-fish-tank-lease-2025-28",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=566603&fileType=E"
+  ]
+ },
+ {
+  "q": "subsidy to start country chicken unit in AP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-poultry-rural-nlm",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=584846&fileType=E"
+  ]
+ },
+ {
+  "q": "copra MSP procurement andhra pradesh 2026",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-copra-procurement-2026",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=580478&fileType=E"
+  ]
+ },
+ {
+  "q": "how many hours free current for farm motors in AP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-farm-free-power",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf"
+  ]
+ },
+ {
+  "q": "silkworm rearing shed subsidy tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-sericulture-subsidies",
+  "urls": [
+   "https://www.tnagrisnet.tn.gov.in/people_app/sericulture_schemes.html"
+  ]
+ },
+ {
+  "q": "naatu kozhi farm subsidy tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "romanised",
+  "record": "tn-native-chicken-unit",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/ah_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "my hens died in the cyclone, any relief in tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-relief-poultry",
+  "urls": [
+   "http://tnsdma.tn.gov.in//webroot/frontend/gos/09.12.2023%20G.O.Ms.No.579,%20grant%20of%20financial%20assitance%20to%20victims%20of%20NC.pdf"
+  ]
+ },
+ {
+  "q": "who is not eligible for pm kisan tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-pm-kisan-rules",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "what is AP government doing about its high cost loans",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-debt-management-2026",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/SpeechEnglish.pdf"
+  ]
+ },
+ {
+  "q": "electricity duty for power loom weavers andhra",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-powerloom-electricity-duty",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=515223&fileType=E"
+  ]
+ },
+ {
+  "q": "1000 rupees per month for college girls tamil nadu scheme",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-pudhumai-penn",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/swwe_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "stamp duty for power of attorney to sell property given to my brother tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-stamp-poa-sell-family",
+  "urls": [
+   "https://tnreginet.gov.in/portal/"
+  ]
+ },
+ {
+  "q": "subsidy for self help group women starting business tamil nadu budget",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-shg-investment",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/budget_speech_e_2026_2027.pdf"
+  ]
+ },
+ {
+  "q": "what is local cess on land tax in tamil nadu villages",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-local-cess-land-revenue",
+  "urls": [
+   "https://tnrd.tn.gov.in/pract/chapter_IX.htm",
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/revenue_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "profession tax in chennai for salary 40000",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-chennai-profession-tax-30001-45000",
+  "urls": [
+   "https://chennaicorporation.gov.in/gcc/pdf/PT_Press_Release.pdf"
+  ]
+ },
+ {
+  "q": "dwcra women interest free loans andhra 2026",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-shg-interest-free-loans",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf",
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Gender-Budget.pdf",
+   "https://apfinance.gov.in/...Bud@et26-27/documents/SpeechEnglish.pdf"
+  ]
+ },
+ {
+  "q": "seed money for widows to start business tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-women-seed-capital",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/swwe_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "interest rate on loans for backward class people from TABCEDCO",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-bc-individual-loan",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/bcmbc_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "old sales tax dues settlement scheme tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-tax-arrears-settlement-2023",
+  "urls": [
+   "https://prsindia.org/files/bills_acts/acts_states/tamil-nadu/2023/Act24of2023TamilNadu.pdf"
+  ]
+ },
+ {
+  "q": "registration charges for partition of ancestral property among family tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-stamp-partition-family",
+  "urls": [
+   "https://tnreginet.gov.in/portal/"
+  ]
+ },
+ {
+  "q": "do i pay road tax for electric scooter in tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-ev-motor-vehicle-tax-exemption",
+  "urls": [
+   "https://www.stationeryprinting.tn.gov.in/extraordinary/2025/861_Ex_II_2_2025.pdf"
+  ]
+ },
+ {
+  "q": "electricity duty rate andhra pradesh per unit",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-electricity-duty-range",
+  "urls": [
+   "https://prsindia.org/files/bills_acts/bills_states/andhra-pradesh/2025/Ord8of2025AP.pdf",
+   "https://prsindia.org/files/bills_acts/bills_states/andhra-pradesh/2026/Bill3of2026AP.pdf"
+  ]
+ },
+ {
+  "q": "loan with subsidy for SC people to start business tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-tahdco-subsidy-loans",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/sj_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "pension for fully bedridden disabled person AP how much",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-pension-15000",
+  "urls": [
+   "https://sspensions.ap.gov.in/SSP/Documents/GO%20MS%2043%2013.06.2024.pdf"
+  ]
+ },
+ {
+  "q": "help to build house on own plot in town andhra pmay",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-pmay-urban-2",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=584368&fileType=E"
+  ]
+ },
+ {
+  "q": "tractor trailer road tax andhra",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-vehicle-tax-exemptions",
+  "urls": [
+   "https://www.aptransport.org/images/pdf/taxes/tax-exemptions.pdf"
+  ]
+ },
+ {
+  "q": "stamp duty on mortgage deed in andhra pradesh",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-stamp-mortgage",
+  "urls": [
+   "https://registration.ap.gov.in/igrs/pdfs/StampFees.pdf"
+  ]
+ },
+ {
+  "q": "how do PACS and DCCB give farm loans in andhra",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-cooperative-credit",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/SpeechEnglish.pdf",
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf"
+  ]
+ },
+ {
+  "q": "vaddi leni runalu raithulaku entha varaku",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "romanised",
+  "record": "ap-crop-loan-interest",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf"
+  ]
+ },
+ {
+  "q": "vyavasayaniki uchita vidyut enni gantalu",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "romanised",
+  "record": "ap-farm-free-power",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf"
+  ]
+ },
+ {
+  "q": "paal oru litre ku evvalavu oodhavi thogai",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "romanised",
+  "record": "tn-milk-incentive",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/dairy_e_pn_2026_27.pdf"
+  ]
+ }
+]

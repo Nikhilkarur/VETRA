@@ -92,7 +92,7 @@ def build() -> str:
     return f"""
 <section id="pl-focus16">
   <div class="sec-head">
-    <p class="label">Set by you on 16 November 2026 · research done, nothing built yet · data work running in its own session</p>
+    <p class="label">Set by you on 16 November 2026 · research done · first speed changes built and measured the same day · data work running in its own session</p>
     <h2>Current focus: speed, and deeper and broader data</h2>
     <p>Your three priorities, in order: <strong>1) cite proper, accurate information; 2) a proper answer structure with low latency; 3) a robust architecture.</strong> The two areas of work now are <strong>speed</strong> and <strong>data depth and breadth</strong> in the selected domains (agriculture and finance, Andhra Pradesh and Tamil Nadu). Data work started on 16 November in a separate session: listing sub-aspects and cases for every aspect (<code>knowledge/subaspects.json</code>), then filling the gaps from official sources.</p>
   </div>
@@ -139,6 +139,26 @@ def build() -> str:
     <li><strong>Hybrid vs keyword only vs meaning only</strong> on our own documents.</li>
     <li><strong>Rerank 30 vs 15,</strong> and with and without contextual passages.</li>
   </ul>
+  <h3>Built and measured on 16 November</h3>
+  <ul class="small">
+    <li><strong>Every answer is timed step by step</strong> (plan, search, look further, web, write, check, verify, translate), in the trace and the server log. First live run: PM-KISAN amount 5.4 s (plan 2.8, write 2.5); "how do I get a KCC in Andhra Pradesh" 37.7 s (write 14.5 over three tries after failed checks, web 8.9, look further 8.0, search 4.3).</li>
+    <li><strong>All parts of a question are searched at the same time</strong>, and up to two web searches run together. Parts of one topic still share one search.</li>
+    <li><strong>Meaning search reads the top 300 passages</strong> instead of all of them, with the three query texts encoded together: the same top 10 on 9 or 10 of 10 test queries, and faster.</li>
+    <li><strong>Lanes, first step:</strong> a quick fact whose every part found something skips looking further. Explanations and deep answers keep it, because its judge catches evidence about a neighbouring scheme (accuracy first).</li>
+    <li><strong>The page shows each stage as it starts</strong> ("Searching the official records…", "Checking every figure against its source…"); a reader who leaves stops their question; two questions run at once; the same first question on the same day is answered again in 0.3 s from memory.</li>
+    <li><strong>Fixed:</strong> a general question the planner put outside our topics was declined instead of answered; an invisible character inside a citation marker broke it.</li>
+  </ul>
+  <p class="small"><strong>Search experiment</strong> (<code>tools/retrieval_eval.py</code>, 46 citizen questions in <code>eval/retrieval_set.json</code>, each with a known source document; 26 casual, 16 plain, 4 typed in Telugu or Tamil words with English letters):</p>
+  <div class="tw"><table class="small">
+    <tr><th>Setting</th><th>Right document in top 6</th><th>In top 10</th><th>MRR</th><th>Seconds per search</th></tr>
+    <tr><td>HyDE, rerank 30 (before)</td><td>33</td><td>39</td><td>0.61</td><td>4.69</td></tr>
+    <tr><td>No HyDE, rerank 30</td><td>33</td><td>38</td><td>0.58</td><td>4.27</td></tr>
+    <tr><td>HyDE, rerank 15</td><td>34</td><td>39</td><td>0.61</td><td>3.40</td></tr>
+    <tr><td>No HyDE, rerank 15</td><td>34</td><td>37</td><td>0.58</td><td>2.89</td></tr>
+    <tr><td><strong>HyDE, no rerank (now)</strong></td><td><strong>37</strong></td><td><strong>39</strong></td><td><strong>0.63</strong></td><td><strong>1.56</strong></td></tr>
+    <tr><td>No HyDE, no rerank</td><td>35</td><td>38</td><td>0.59</td><td>0.76</td></tr>
+  </table></div>
+  <p class="small"><strong>Decisions taken from it:</strong> the reranker is switched off (<code>RERANK_DEPTH = 0</code> in <code>vetra/text_index.py</code>): it was no more accurate, slightly less on casual questions, and took about 3 seconds a search. It is an English web-search model, and our documents are formal Indian orders. <strong>HyDE stays</strong>: it found the right document a little more often (MRR 0.63 against 0.59, most of the gain on casual questions) for about 0.8 s a search. With 46 questions a difference of one or two is within chance, so both are to be checked again on a larger set. The 7 questions missed by every setting point at data and wording gaps, not settings.</p>
   <p class="small muted">Sources: PageIndex (VectifyAI, pypi.org/project/PageIndex) and reviews of it; "Long Context vs. RAG for LLMs" (arXiv 2501.01880); a 2026 financial retrieval benchmark (arXiv 2604.01733); Anthropic, "Contextual Retrieval" (September 2024); Adaptive-RAG and later routing studies; work on numbers and tables in RAG. Most speed and gain figures are from the authors or secondary write-ups, not checked by us; our own tests decide.</p>
 </section>
 

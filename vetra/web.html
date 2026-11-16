@@ -267,6 +267,40 @@ form.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value.tri
 document.querySelectorAll(".starter").forEach((b) => b.addEventListener("click", () => ask(b.dataset.q)));
 $("new").addEventListener("click", () => { if (!busy) location.reload(); });
 
+// What the assistant is doing, shown while it works. The server sends each stage as it starts.
+const STAGES = {
+  queued: "Waiting for a free slot…",
+  plan: "Understanding your question…",
+  search: "Searching the official records…",
+  look_further: "Looking further in the documents…",
+  web: "Checking official government websites…",
+  write: "Writing the answer…",
+  check: "Checking every figure against its source…",
+  verify: "Double-checking each statement…",
+  translate: "Translating…",
+};
+
+// Lines of JSON: stages while it works, then the answer (marked done). Plain JSON from an older server also works.
+async function readStream(res, onStage) {
+  if (!res.body || !(res.headers.get("Content-Type") || "").includes("ndjson")) return res.json();
+  const reader = res.body.getReader(), decoder = new TextDecoder();
+  let buffer = "", last = {};
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (value) buffer += decoder.decode(value, { stream: true });
+    let cut;
+    while ((cut = buffer.indexOf("\n")) >= 0) {
+      const line = buffer.slice(0, cut).trim(); buffer = buffer.slice(cut + 1);
+      if (!line) continue;
+      const msg = JSON.parse(line);
+      if (msg.done) last = msg; else if (msg.stage) onStage(msg.stage);
+    }
+    if (done) break;
+  }
+  if (buffer.trim()) last = JSON.parse(buffer);
+  return last;
+}
+
 async function ask(question) {
   if (!question || busy) return;
   busy = true; send.disabled = true; dock();
@@ -285,11 +319,15 @@ async function ask(question) {
   }, 8000);
   try {
     const res = await fetch("/ask", {
-      method: "POST", headers: { "Content-Type": "application/json" },
+      method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/x-ndjson" },
       body: JSON.stringify({ question, history: history.slice(-3), state: statePick.value, reply: replyPick.value }),
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `Something went wrong (${res.status}).`);
+    const data = await readStream(res, (stage) => {
+      clearTimeout(slow);
+      const t = answer.querySelector(".thinking span:last-child");
+      if (t && STAGES[stage]) t.textContent = STAGES[stage];
+    });
+    if (!res.ok || data.error) throw new Error(data.error || `Something went wrong (${res.status}).`);
     show(article, answer, data, turn);
     if ((data.sources || []).length) history.push({ q: question, a: data.answer });
   } catch (err) {

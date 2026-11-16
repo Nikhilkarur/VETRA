@@ -51,7 +51,17 @@ class Server(ThreadingHTTPServer):
     allow_reuse_address = os.name != "nt"
 
 
-PIPELINE = threading.Lock()  # one question at a time: shared rate limits and search models
+# Two questions at a time: a slow brief no longer holds up a short answer, while the free model
+# quotas and the search models on this machine aren't overrun.
+PIPELINE = threading.BoundedSemaphore(2)
+CACHE: dict[tuple, dict] = {}   # the same first question, state and language today: answered again at once
+CACHE_SIZE = 200
+
+
+def _cache_key(question: str, state: str | None, reply, history: list) -> tuple | None:
+    if history:   # a follow-up depends on what came before
+        return None
+    return (" ".join(question.lower().split()), state or "", str(reply or ""), time.strftime("%Y-%m-%d"))
 
 _CITATION = re.compile(r"\[E(\d+)\]")
 
@@ -136,16 +146,57 @@ class Handler(BaseHTTPRequestHandler):
         if len(question) > agent.MAX_QUESTION:
             self._json(400, {"error": f"Keep the question under {agent.MAX_QUESTION} characters."})
             return
+        streaming = "ndjson" in (self.headers.get("Accept") or "")
+        key = _cache_key(question, state, reply, history)
+        if key in CACHE:
+            print(f"Q [cached] {question[:60]}", flush=True)
+            self._reply(streaming, 200, {**CACHE[key], "cached": True})
+            return
+        if streaming:   # stages as they start, then the answer, on one open response
+            self.send_response(200)
+            self.send_header("Content-Type", "application/x-ndjson; charset=utf-8")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+
+        def progress(stage: str) -> None:
+            if streaming:   # a reader who left makes this fail, which stops the work for them
+                self.wfile.write(json.dumps({"stage": stage}).encode() + b"\n")
+                self.wfile.flush()
+
         with PIPELINE:
             try:
-                result = agent.answer(question, history, state, self.models, self.knowledge, reply=reply)
+                if streaming:
+                    progress("queued")
+                result = agent.answer(question, history, state, self.models, self.knowledge, reply=reply, progress=progress)
+            except (ConnectionError, OSError) as exc:
+                print(f"  reader left: {type(exc).__name__}", flush=True)
+                return
             except Exception as exc:  # the page must always get an answer it can show
                 print(f"  error: {type(exc).__name__}: {exc}", file=sys.stderr, flush=True)
-                self._json(503, {"error": "The assistant hit a problem. Please try again in a minute."})
+                self._reply(streaming, 503, {"error": "The assistant hit a problem. Please try again in a minute."}, started=True)
                 return
+        page = to_page(result)
+        if key and result.kind in ("answer", "general"):
+            if len(CACHE) >= CACHE_SIZE:
+                CACHE.pop(next(iter(CACHE)))
+            CACHE[key] = page
         print(f"Q [{result.kind} {result.domain} {result.state or '-'}] {result.trace.get('needs')} "
-              f"calls={result.trace.get('calls')} {result.trace.get('seconds')}s", flush=True)
-        self._json(200, to_page(result))
+              f"calls={result.trace.get('calls')} {result.trace.get('seconds')}s {result.trace.get('stages', {})}", flush=True)
+        self._reply(streaming, 200, page, started=True)
+
+    def _reply(self, streaming: bool, code: int, obj: dict, started: bool = False) -> None:
+        """The answer as plain JSON, or as the last line of a stream."""
+        if not streaming:
+            self._json(code, obj)
+            return
+        if not started:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/x-ndjson; charset=utf-8")
+            self.end_headers()
+        try:
+            self.wfile.write(json.dumps({"done": True, "status": code, **obj}, ensure_ascii=False).encode("utf-8") + b"\n")
+        except OSError:
+            pass
 
     def _json(self, code: int, obj: dict) -> None:
         self._send(code, json.dumps(obj, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")

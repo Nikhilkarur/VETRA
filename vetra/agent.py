@@ -21,7 +21,9 @@ import argparse
 import json
 import re
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -39,6 +41,30 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 MAX_QUESTION = 500
+
+
+class Clock:
+    """Seconds spent in each stage of one answer, so speed work goes where the time is.
+    with clock("search"): ...   A stage entered twice adds up."""
+
+    def __init__(self, on_stage=None) -> None:
+        self.stages: dict[str, float] = {}
+        self._name = ""
+        self.on_stage = on_stage   # told each stage as it starts, so a page can show what is happening
+
+    def __call__(self, name: str) -> "Clock":
+        self._name = name
+        return self
+
+    def __enter__(self) -> "Clock":
+        if self.on_stage:
+            self.on_stage(self._name)
+        self._start, self._entered = time.perf_counter(), self._name
+        return self
+
+    def __exit__(self, *exc) -> None:
+        spent = time.perf_counter() - self._start
+        self.stages[self._entered] = round(self.stages.get(self._entered, 0.0) + spent, 2)
 
 
 @dataclass
@@ -208,6 +234,20 @@ def answer_general(question: str, plan: Plan, models: llm.Models, meter: llm.Met
 
 # ------------------------------------------------------------------ 2. do we have it?
 
+_ONCE = threading.Lock()
+
+
+def _once(cache: dict, key, make):
+    """make() at most once per key, even when the parts of a question are searched at the same time:
+    parts of one topic share a single search, and the second part waits for the first's result."""
+    with _ONCE:
+        entry = cache.setdefault(key, [threading.Lock(), None, False])
+    with entry[0]:
+        if not entry[2]:
+            entry[1], entry[2] = make(), True
+    return entry[1]
+
+
 def _with_topic(subject: str, topic: str) -> str:
     """The subject, with the scheme's name in front if the planner left it out."""
     words = set(re.findall(r"[a-z0-9]+", subject.lower()))
@@ -229,14 +269,10 @@ def _read_text(need: Need, plan: Plan, level: Depth, today: str, knowledge: Know
         # On its own: adding the topic as a vote pulled every search back to the same general passages
         # and reached fewer parts. But a subject that doesn't name the scheme needs the name to search.
         query = _with_topic(need.subject, plan.topic)
-        if (need.domain, query) not in searched:
-            searched[need.domain, query] = TOOLS["text_search"](query, bare)
-        items = searched[need.domain, query]
+        items = _once(searched, (need.domain, query), lambda: TOOLS["text_search"](query, bare))
     else:
         query = plan.standalone or need.subject
-        if need.domain not in searched:
-            searched[need.domain] = TOOLS["text_search"](query, aids)
-        items = searched[need.domain]
+        items = _once(searched, need.domain, lambda: TOOLS["text_search"](query, aids))
     if checks.on_topic(items, need.subject):
         return items
     if query == need.subject and level.each_part:   # it was already searched on the subject alone
@@ -287,16 +323,18 @@ def needs_for(plan: Plan, level: Depth, question: str) -> list[Need]:
 
 def gather(plan: Plan, needs: list[Need], level: Depth, today: str, knowledge: Knowledge,
            asked: str) -> tuple[list[Found], list[str], dict]:
-    """The first look: what we have for every need. A deep answer also reads the whole question."""
+    """The first look: what we have for every need, all parts at the same time (a citizen is waiting,
+    and each part's search is independent). A deep answer also reads the whole question, alongside."""
     found, missing, searched = [], [], {}
-    for need in needs:
-        f, ctx = find(need, plan, level, today, knowledge, asked, searched)
-        found.append(f)
-        missing += [m for m in ctx.missing if m not in missing]
+    whole = Context(plan.domain, plan.state, today, knowledge, plan.facts, plan.passage, plan.topic, plan.keywords,
+                    asked, plan.language, k=level.passages)
+    with ThreadPoolExecutor(max_workers=max(1, min(4, len(needs) + level.each_part))) as pool:
+        overall = pool.submit(TOOLS["text_search"], plan.standalone or plan.topic or asked, whole) if level.each_part else None
+        for f, ctx in pool.map(lambda need: find(need, plan, level, today, knowledge, asked, searched), needs):
+            found.append(f)
+            missing += [m for m in ctx.missing if m not in missing]
+        text = overall.result() if overall else []
     if level.each_part:
-        whole = Context(plan.domain, plan.state, today, knowledge, plan.facts, plan.passage, plan.topic, plan.keywords,
-                        asked, plan.language, k=level.passages)
-        text = TOOLS["text_search"](plan.standalone or plan.topic or asked, whole)
         # A scheme we hold nothing on still brings back the nearest other scheme, so this is tested too.
         # Last in line for a share: it's a safety net for a part the planner missed, and it reached
         # no more parts than the parts' own searches when measured.
@@ -507,7 +545,7 @@ def _legacy(question: str, history: list[dict], plan: Plan) -> Result:
 def answer(question: str, history: list[dict] | None = None, state: str | None = None,
            models: llm.Models | None = None, knowledge: Knowledge | None = None,
            as_of: str | None = None, gaps: GapHandler | None = None, reply: str | None = None,
-           depth: str | None = None, web: "websearch.Backend | None | bool" = True) -> Result:
+           depth: str | None = None, web: "websearch.Backend | None | bool" = True, progress=None) -> Result:
     started = time.perf_counter()
     question = mask(question.strip())
     if not question or len(question) > MAX_QUESTION:
@@ -519,19 +557,23 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     web = websearch.from_env() if web is True else (web or None)   # True: whatever .env sets up; False/None: off
     gaps = gaps or GapLog()
     meter = llm.Meter()
+    clock = Clock(progress)
 
     def done(result: Result, **more) -> Result:
         result.trace = {"calls": meter.calls, "tokens": meter.tokens, "steps": meter.steps,
-                        "seconds": round(time.perf_counter() - started, 1), **more}
+                        "seconds": round(time.perf_counter() - started, 1), "stages": clock.stages, **more}
         return result
 
     try:
-        plan = make_plan(question, history, models, meter, today, knowledge)
+        with clock("plan"):
+            plan = make_plan(question, history, models, meter, today, knowledge)
     except llm.LLMError as exc:
         return done(Result("failed", messages.say("busy", "english")), error=str(exc))
     if plan is None:
         return done(Result("failed", messages.say("rephrase", "english")))
     plan.language = languages.settle(plan.language, question)
+    if plan.domain == "other" and plan.general:   # a general question about none of our topics is still answered
+        plan.domain = "agriculture"   # a label for the trace only: the general path searches nothing
     if plan.domain == "other":
         names = ", ".join(d.label for d in DOMAINS.values())
         text = messages.say("decline", plan.language, topics=names)
@@ -544,7 +586,8 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     if reply in languages.REPLIES:   # the reader's choice wins over the question's language
         plan.language = reply
     if plan.general:   # no government record needed: one direct call, labelled, nothing searched
-        text = answer_general(question, plan, models, meter)
+        with clock("write"):
+            text = answer_general(question, plan, models, meter)
         if text:
             note = messages.say("general", plan.language)
             if not languages.is_templated(plan.language):
@@ -561,7 +604,8 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     needs = needs_for(plan, level, question)
     asked = f"{question} {plan.standalone}"
 
-    found, missing, searched = gather(plan, needs, level, today, knowledge, asked)
+    with clock("search"):
+        found, missing, searched = gather(plan, needs, level, today, knowledge, asked)
     if checks.about_a_past_year(question, today):  # today's windows and rates don't answer it
         for f in found:
             f.items = [e for e in f.items if not e.fact]
@@ -577,11 +621,16 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     items = tidy(share(found, level.evidence - level.moves * 2))   # leaves room for what looking further finds
     # Exact records that answer everything need no more looking. Anything else gets judged.
     route = navigate.Route()
-    if not (checks.has_facts(items) and all_exact()):
+    # Lanes: a quick fact whose every part found something on its subject is answered from that. Looking
+    # further costs model calls, and its judge also catches evidence that is near but not on the point
+    # (a neighbouring scheme), so explanations and deep answers keep it: accuracy comes first.
+    empty_part = any(f.level == "none" for f in found if not f.need.implied)
+    if not (checks.has_facts(items) and all_exact()) and (level.explore_always or empty_part or not items):
         first = {e.key for e in items}
         base = Context(plan.domain, plan.state, today, knowledge, plan.facts, question=asked, language=plan.language, k=level.passages)
-        items, route = navigate.explore(plan.standalone or question, [f.need.subject for f in found if not f.need.implied],
-                                        list(dict.fromkeys(f.need.domain for f in found)), items, base, models, meter, tidy, level)
+        with clock("look_further"):
+            items, route = navigate.explore(plan.standalone or question, [f.need.subject for f in found if not f.need.implied],
+                                            list(dict.fromkeys(f.need.domain for f in found)), items, base, models, meter, tidy, level)
         added = [e for e in items if e.key not in first]
         for f in found:  # a need the first look missed, answered by looking further, isn't a gap
             if f.level == "none" and not f.need.implied and added and checks.on_topic(added, f.need.subject):
@@ -604,8 +653,10 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
         if not empty:   # nothing at all for the question: search on what it's about
             empty = [Found(Need("explanation", plan.topic or plan.standalone or question, plan.domain), "none")]
             found.append(empty[0])
-        for f in empty[:2]:   # a citizen is waiting: at most two live searches
-            live, hosts = websearch.find(f.need.subject, place, plan.standalone or question, web, state=plan.state)
+        with clock("web"), ThreadPoolExecutor(max_workers=2) as pool:   # a citizen is waiting: at most two, together
+            looked = list(pool.map(lambda f: websearch.find(f.need.subject, place, plan.standalone or question, web,
+                                                            state=plan.state), empty[:2]))
+        for f, (live, hosts) in zip(empty[:2], looked):
             web_hosts = hosts or web_hosts
             if live:
                 f.level, f.items = "web", live
@@ -657,7 +708,8 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     # A brief opens with the printed records, so they need a heading of their own to read as part of it.
     heading = messages.say("records", plan.language) if level.each_part and checks.has_facts(items) else ""
     if not languages.is_templated(plan.language):
-        said, asking = localise(items, [*([heading] if heading else []), *notes], asking, plan.language, models, meter)
+        with clock("translate"):
+            said, asking = localise(items, [*([heading] if heading else []), *notes], asking, plan.language, models, meter)
         heading, notes = (said[0], said[1:]) if heading else ("", said)
 
     # Exact records answer everything: print them. A model that can't see the figures only
@@ -674,17 +726,20 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
         return compose(question, plan, items, models, meter, today, place, problems, missing, level, found)
 
     def draft(problems: list[str] | None = None) -> str:
-        return checks.recite(write(problems), items, today, asked)
+        with clock("write"):
+            return checks.recite(write(problems), items, today, asked)
 
     read_by_second: list[str] = []
 
     def review(text: str) -> list[checks.Fault]:
         """Code's checks first, because they're free. A deep answer then goes to a second model."""
-        bad = checks.faults(text, items, today, asked, guard_gaps=not level.verify)
+        with clock("check"):
+            bad = checks.faults(text, items, today, asked, guard_gaps=not level.verify)
         if bad or not level.verify:
             return bad
         read_by_second.append(text)
-        doubted, trace["verified"] = verify.unsupported(text, items, models, meter)
+        with clock("verify"):
+            doubted, trace["verified"] = verify.unsupported(text, items, models, meter)
         return [checks.Fault(f"this statement isn't backed by the passages it cites: \"{s}\". Correct it from the evidence, or remove it", s)
                 for s in doubted]
 

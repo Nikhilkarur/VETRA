@@ -36,6 +36,7 @@ class Depth:
     print_alone: bool       # exact records that answer everything are printed with no model
     verify: bool            # a second model checks each statement against what it cites
     shape: str              # how the answer is written
+    explore_always: bool = False   # look further even when every part found something (not for a quick fact)
 
 
 QUICK = Depth(
@@ -45,7 +46,7 @@ QUICK = Depth(
 
 STANDARD = Depth(
     "standard", '''how to do something, or what to do in a situation. "how do I get a kisan credit card", "the dealer sold me fake seeds, what can I do"''',
-    passages=10, each_part=False, evidence=18, rounds=2, moves=2, calls=6, answer_calls=3, print_alone=True, verify=False,
+    passages=10, each_part=False, evidence=18, rounds=2, moves=2, calls=6, answer_calls=3, print_alone=True, verify=False, explore_always=True,
     shape="Answer the question first, in one or two sentences. Then give what the person needs to act on it: the steps, "
           "conditions, limits and exceptions that could affect them. Use a short list where it helps. Leave out what "
           "doesn't bear on the question.")
@@ -53,7 +54,7 @@ STANDARD = Depth(
 DEEP = Depth(
     "deep", '''understanding a whole scheme, rule or law; comparing; how something changed; why; several linked questions; or asking for detail. "what is PM-KISAN and who gets it", "compare PMFBY and RWBCIS", "explain crop insurance in detail"''',
     passages=6, each_part=True, evidence=36, rounds=3, moves=3, calls=10, answer_calls=5, print_alone=False, verify=True,
-    shape=_RESEARCH)
+    shape=_RESEARCH, explore_always=True)
 
 LEVELS = {d.name: d for d in (QUICK, STANDARD, DEEP)}
 

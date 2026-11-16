@@ -91,11 +91,16 @@ def chunks_in(domain: str, place: str) -> int:
     return sum(1 for i in corpus(domain) if i["jurisdiction"] == place)
 
 
-def _collection(domain: str):
+@lru_cache(maxsize=None)
+def _client():
     import chromadb
 
+    return chromadb.PersistentClient(path=str(CHROMA_DIR))
+
+
+def _collection(domain: str):
     name = f"vetra_{domain}_{EMBEDDING.tag}" if EMBEDDING.tag else f"vetra_{domain}"
-    return chromadb.PersistentClient(path=str(CHROMA_DIR)).get_or_create_collection(name, metadata={"hnsw:space": "cosine"})
+    return _client().get_or_create_collection(name, metadata={"hnsw:space": "cosine"})
 
 
 def build(domain: str) -> int:
@@ -142,11 +147,22 @@ def _view(domain: str, places: tuple[str, ...]):
     return items, bm25, {item["id"]: n for n, item in enumerate(items)}
 
 
-def _dense(text: str, domain: str, places: tuple[str, ...], position: dict) -> list[int]:
-    vector = _rag()._load_model(EMBEDDING.name).encode([EMBEDDING.query_prefix + text], normalize_embeddings=True).tolist()
+DENSE_DEPTH = 300   # how far down the meaning ranking is read; fusion gives a passage below this almost no weight
+
+
+def _dense_many(texts: list[str], domain: str, places: tuple[str, ...], position: dict) -> list[list[int]]:
+    """Meaning rankings for several texts at once: one encode and one index query, not one each.
+    Reading the top 300 instead of every passage made each query about ten times faster (measured 16 Nov)."""
+    vectors = _rag()._load_model(EMBEDDING.name).encode([EMBEDDING.query_prefix + t for t in texts],
+                                                        normalize_embeddings=True).tolist()
     where = {"jurisdiction": {"$in": list(places)}} if len(places) > 1 else {"jurisdiction": places[0]}
-    found = _collection(domain).query(query_embeddings=vector, n_results=len(position), where=where, include=[])
-    return [position[i] for i in found["ids"][0] if i in position]
+    found = _collection(domain).query(query_embeddings=vectors, n_results=min(DENSE_DEPTH, len(position)),
+                                      where=where, include=[])
+    return [[position[i] for i in ids if i in position] for ids in found["ids"]]
+
+
+def _dense(text: str, domain: str, places: tuple[str, ...], position: dict) -> list[int]:
+    return _dense_many([text], domain, places, position)[0]
 
 
 def distinct(ranking: list[int], items: list[dict]) -> list[int]:
@@ -195,18 +211,12 @@ def search(query: str, domain: str, state: str | None, passage: str = "", topic:
 
         query = legacy.expand_abbreviations(query, legacy.get(settings.abbreviations_from))
 
-    def hybrid(text: str) -> list[int]:
-        return R._rrf(_dense(text, domain, places, position), bm25.rank(text))
-
-    votes = [hybrid(query)]
-    if passage:
-        votes.append(hybrid(passage))
-    if topic:
-        votes.append(hybrid(topic))
+    texts = [t for t in (query, passage, topic) if t]
+    votes = [R._rrf(dense, bm25.rank(text)) for text, dense in zip(texts, _dense_many(texts, domain, places, position))]
     if keywords:
         votes.append(bm25.rank(" ".join(keywords)))
     ranking = distinct(R._rrf(*votes), items)
-    if settings.rerank and rerank:
+    if settings.rerank and rerank and RERANK_DEPTH:
         ranking = _reranked(query, ranking, items, settings.rerank)
     chosen = R._top_k(ranking, items, k)
     found = [dict(items[n]) for n in chosen]
@@ -236,8 +246,16 @@ def search_within(query: str, domain: str, state: str | None, document: str, k: 
     return [dict(items[n]) for n in distinct(inside, items)][:k]
 
 
-def _reranked(query: str, ranking: list[int], items: list[dict], model: str, n: int = 30) -> list[int]:
+# How many fused results the cross-encoder reads; 0 turns it off. Measured on 16 Nov (tools/retrieval_eval.py,
+# 46 citizen questions with a known source document): reranking found the right document in the top 6 for
+# 33-34 questions, against 37 without it, and took 3-5 s a search against 1.6 s. The reranker is an
+# English web-search model; these are formal Indian orders and casual or romanised questions. Off.
+RERANK_DEPTH = 0
+
+
+def _reranked(query: str, ranking: list[int], items: list[dict], model: str, n: int | None = None) -> list[int]:
     """A cross-encoder over the top n, fused with the search order rather than replacing it."""
+    n = n or RERANK_DEPTH or 30
     R = _rag()
     top = ranking[:n]
     scores = R._cross_encoder(model).predict(

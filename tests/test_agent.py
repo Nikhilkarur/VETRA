@@ -1254,8 +1254,17 @@ def test_each_level_limits_how_far_it_looks(monkeypatch, tmp_path):
     monkeypatch.setattr(navigate, "explore", EXPLORE)
     n = iter(range(100))
     monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk(f"c{next(n)}", "AP", "how to apply here.")])
-    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="quick", needs=HOW), go("search", query="one"), "Apply here [E1].")
-    assert r.trace["route"]["rounds"] == depths.QUICK.rounds
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="standard", needs=HOW), go("search", query="one"), go("search", query="two"),
+               "Apply here [E1].")
+    assert r.trace["route"]["rounds"] == depths.STANDARD.rounds
+
+
+def test_a_quick_fact_that_found_its_part_skips_looking_further(monkeypatch, tmp_path):
+    monkeypatch.setattr(navigate, "explore", EXPLORE)
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "how to apply here.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="quick", needs=HOW), "Apply here [E1].")
+    assert r.trace["route"]["rounds"] == 0 and "look_further" not in r.trace["stages"]
+    assert set(r.trace["stages"]) >= {"plan", "search", "write"}
 
 
 def test_moves_are_limited_by_the_level():
@@ -2094,3 +2103,25 @@ def test_the_page_has_a_dark_theme_and_a_switch():
     # without a dark logo file the light logo is kept, on a pale tile
     if not (web.PAGE.parent / "logo-dark.png").exists():
         assert 'class="brand no-dark-logo"' in page
+
+
+def test_the_clock_names_each_stage_as_it_starts_and_adds_up_repeats():
+    seen = []
+    clock = agent.Clock(seen.append)
+    with clock("search"):
+        pass
+    with clock("write"):
+        pass
+    with clock("write"):
+        pass
+    assert seen == ["search", "write", "write"] and set(clock.stages) == {"search", "write"}
+
+
+def test_only_a_first_question_is_answered_again_from_the_cache():
+    assert web._cache_key("What is  PM-KISAN?", "AP", "auto", []) == web._cache_key("what is pm-kisan?", "AP", "auto", [])
+    assert web._cache_key("what is pm-kisan?", "AP", "auto", []) != web._cache_key("what is pm-kisan?", "TN", "auto", [])
+    assert web._cache_key("and for tenants?", "AP", "auto", [{"q": "x", "a": "y"}]) is None
+
+
+def test_invisible_characters_inside_a_citation_are_removed():
+    assert checks.tidy_citations("Rs 6,000 a year [​E2].") == "Rs 6,000 a year [E2]."

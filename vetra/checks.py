@@ -71,6 +71,7 @@ _FIGURE = re.compile(r"(?:₹|Rs\.?\s*)\s*\d[\d,]*(?:\.\d+)?|\d[\d,]*(?:\.\d+)?\
 
 def tidy_citations(answer: str) -> str:
     """Models write citations many ways; the checks and the page expect [E2]."""
+    answer = re.sub("[​-‍⁠﻿]", "", answer)   # invisible characters split "[E2]" so it wasn't recognised
     answer = re.sub(r"【\s*E?(\d+)[^】]*】", r"[E\1]", answer)
     answer = re.sub(r"\[((?:\s*E?\d+\s*[,;]?)+)\]",
                     lambda m: "".join(f"[E{n}]" for n in re.findall(r"\d+", m.group(1))), answer)
