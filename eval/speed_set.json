@@ -1,0 +1,10 @@
+[
+ {"q": "What is crop rotation?", "state": "AP", "type": "general"},
+ {"q": "How much is PM-KISAN per year?", "state": "AP", "type": "fact"},
+ {"q": "What is the stamp duty on a sale deed in Tamil Nadu?", "state": "TN", "type": "fact"},
+ {"q": "What subsidy does Tamil Nadu give for farm machinery?", "state": "TN", "type": "fact"},
+ {"q": "How do I get a Kisan Credit Card in Andhra Pradesh?", "state": "AP", "type": "explain"},
+ {"q": "My crop was damaged by wild boars, what compensation can I get?", "state": "TN", "type": "explain"},
+ {"q": "vaddi leni runalu ki evaru arhulu?", "state": "AP", "type": "telugu"},
+ {"q": "Explain crop insurance in Tamil Nadu in detail", "state": "TN", "type": "deep"}
+]

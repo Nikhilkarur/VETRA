@@ -167,6 +167,19 @@ def build() -> str:
     <li><strong>Sub-aspect tags: next.</strong> The 264 cases have names but no search words yet; tagging passages needs those words first. The "which order replaced which" links already exist for orders that say so (amendments are pulled in by search); a fuller table is still to do.</li>
     <li><strong>Blocked by free limits:</strong> after the 46-question test and the live runs, Groq's and Gemini's free daily quotas ran out on 16 November, so end-to-end timings could not be re-measured. A paid key would remove this, and the waits above.</li>
   </ul>
+  <h3>Re-measured on 17 November (8 real questions, <code>tools/speed_run.py</code>, free quotas back)</h3>
+  <div class="tw"><table class="small">
+    <tr><th>Question</th><th>Type</th><th>Before</th><th>Now</th><th>Where the time goes now</th></tr>
+    <tr><td>What is crop rotation?</td><td>general</td><td>about 3 s</td><td>3.4 s</td><td>plan 2.2, write 1.3</td></tr>
+    <tr><td>How much is PM-KISAN per year?</td><td>fact</td><td>5.4 s</td><td>3.6 s</td><td>plan 2.0, write 1.6</td></tr>
+    <tr><td>Stamp duty on a sale deed in Tamil Nadu</td><td>fact</td><td>20-60 s range</td><td>3.2 s</td><td>plan 1.9, write 1.2</td></tr>
+    <tr><td>TN farm machinery subsidy</td><td>fact</td><td>4.6 s</td><td>4.1 s</td><td>plan 1.4, write 2.6</td></tr>
+    <tr><td>How do I get a KCC in Andhra Pradesh?</td><td>explain</td><td>37.7 s</td><td>29.5 s</td><td>write 10.5, web 7.1, look further 6.3, search 3.0</td></tr>
+    <tr><td>Wild boar crop damage compensation (TN)</td><td>deep</td><td>2-3.5 min range</td><td>51.8 s</td><td>verify 15.7, write 11.3, look further 9.5, web 7.8</td></tr>
+    <tr><td>vaddi leni runalu ki evaru arhulu? (Telugu in English letters)</td><td>fact</td><td>not measured</td><td>19.5 s</td><td>write 11.8, plan 6.5</td></tr>
+    <tr><td>Explain crop insurance in Tamil Nadu in detail</td><td>deep</td><td>2-3.5 min range</td><td>29.2 s</td><td>write 11.5, look further 10.8</td></tr>
+  </table></div>
+  <p class="small">Facts and general questions now take 3 to 4 seconds; explanations about 30; deep answers 30 to 50 instead of 2 to 3.5 minutes. In every slow answer the free tiers still cost time: 3 to 8 refused calls per question (per-minute limits, requests too large for the free tier, one malformed reply), because questions ran back to back. The remaining real costs are the model calls themselves (plan about 2 s, write 1 to 3 s per try, verify 16 s on deep answers), looking further and the live web search.</p>
   <p class="small muted">Sources: PageIndex (VectifyAI, pypi.org/project/PageIndex) and reviews of it; "Long Context vs. RAG for LLMs" (arXiv 2501.01880); a 2026 financial retrieval benchmark (arXiv 2604.01733); Anthropic, "Contextual Retrieval" (September 2024); Adaptive-RAG and later routing studies; work on numbers and tables in RAG. Most speed and gain figures are from the authors or secondary write-ups, not checked by us; our own tests decide.</p>
 </section>
 
