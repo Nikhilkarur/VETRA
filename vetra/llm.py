@@ -76,7 +76,8 @@ class Provider(Protocol):
 
 
 class OpenAICompatible:
-    def __init__(self, base_url: str, key: str, timeout: float = 90, reasoning: dict[str, str] | None = None):
+    def __init__(self, base_url: str, key: str, timeout: float | tuple = (5, 40), reasoning: dict[str, str] | None = None):
+        # 5 s to connect, 40 s between bytes: a model that hangs is passed over (one took 217 s to fail on 16 Nov)
         self.base_url, self.key, self.timeout = base_url.rstrip("/"), key, timeout
         self.reasoning = reasoning or {}   # model: effort. Hidden thinking is billed as output
 
