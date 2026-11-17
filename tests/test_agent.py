@@ -483,9 +483,9 @@ def test_vendor_json_failure_retries_without_json_mode(kb):
 
 
 def test_a_short_rate_limit_rests_only_that_long():
-    m = models(llm.RateLimited("p1", retry_after=5), "fine")
+    m = models(llm.RateLimited("p1", retry_after=15), "fine")   # longer than a quick wait, so the next model answers
     m.call("plan", [], llm.Meter())
-    assert m.resting["p1"] - time.time() < 10
+    assert m.resting["p1"] - time.time() < 20
 
 
 def test_without_an_explanation_no_raw_document_text_is_shown(tmp_path, monkeypatch):
@@ -1586,7 +1586,9 @@ def test_token_details_are_kept_for_cost_checks(monkeypatch):
     reply = llm.OpenAICompatible("http://x", "k").complete("m", [])
     meter = llm.Meter()
     meter.record("plan", reply)
-    assert meter.steps[0] == {"role": "plan", "model": "m", "tokens": 30, "in": 20, "out": 10, "cached": 5, "thinking": 4}
+    step = dict(meter.steps[0])
+    assert step.pop("seconds") >= 0
+    assert step == {"role": "plan", "model": "m", "tokens": 30, "in": 20, "out": 10, "cached": 5, "thinking": 4}
 
 
 def test_more_personal_details_are_masked():
@@ -2125,3 +2127,20 @@ def test_only_a_first_question_is_answered_again_from_the_cache():
 
 def test_invisible_characters_inside_a_citation_are_removed():
     assert checks.tidy_citations("Rs 6,000 a year [​E2].") == "Rs 6,000 a year [E2]."
+
+
+def test_a_short_rate_limit_is_waited_out_instead_of_trying_slow_fallbacks(monkeypatch):
+    tried = []
+
+    class Provider:
+        def complete(self, model, messages, json_mode=False):
+            tried.append(model)
+            if model == "fast" and tried.count("fast") == 1:
+                raise llm.RateLimited("fast", 2)
+            return llm.Reply("ok", model)
+
+    slept = []
+    monkeypatch.setattr(llm.time, "sleep", slept.append)
+    models = llm.Models(Provider(), {"compose": ("fast", "slow-fallback")})
+    assert models.call("compose", [], llm.Meter()).model == "fast"
+    assert tried == ["fast", "fast"] and slept == [2]

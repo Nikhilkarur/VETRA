@@ -28,7 +28,9 @@ DEFAULT_ROLES = {
     "plan": ("openai/gpt-oss-20b", "qwen/qwen3.8-27b"),
     "compose": ("openai/gpt-oss-120b", "openai/gpt-oss-20b"),
 }
-REST_SECONDS = 600  # a model at its limit isn't tried again for this long
+REST_SECONDS = 1800  # a model at its limit isn't tried again for this long (a daily quota doesn't come back in minutes)
+QUICK_WAIT = 6      # a model that asks for this few seconds is waited for, not passed over: measured on 16 Nov, the
+                    # free fallbacks behind it were out of quota and took 1 to 14 s each to say so
 BUSY_SECONDS = 15   # a model that says it's overloaded is worth trying again soon
 MAX_CALLS = 6       # for one question: the limit the proposal holds to
 MAX_WAIT = 20       # a citizen will wait this long for a per-minute limit to pass
@@ -164,20 +166,35 @@ class Models:
         last: LLMError | None = None
         for model in ready:
             meter.spend()
+            began = time.perf_counter()
             try:
                 reply = self.provider.complete(model, messages, json_mode)
+            except LLMError as exc:
+                meter.failed(role, model, type(exc).__name__, time.perf_counter() - began)
+                if not isinstance(exc, (RateLimited, BadOutput)):
+                    raise
+                handled = exc
+            else:
+                handled = None
+            try:
+                if handled:
+                    raise handled
             except RateLimited as exc:
                 # A per-minute limit passes soon; a daily one is worth skipping for a while.
                 self.resting[model] = time.time() + (exc.retry_after or REST_SECONDS)
                 meter.calls -= 1   # nothing was spent, so a busy provider shouldn't use up the budget
                 last = exc
+                if not waited and 0 < exc.retry_after <= QUICK_WAIT:
+                    time.sleep(exc.retry_after)
+                    self.resting.pop(model, None)   # its wait is over
+                    return self.call(role, messages, meter, json_mode, waited=True)
                 continue
             except BadOutput as exc:
                 last = exc
                 if json_mode:  # the reply is parsed anyway; only the vendor's own check failed
                     return self.call(role, messages, meter, json_mode=False)
                 continue
-            meter.record(role, reply)
+            meter.record(role, reply, time.perf_counter() - began)
             return reply
         if isinstance(last, RateLimited) and not waited and 0 < last.retry_after <= MAX_WAIT:
             time.sleep(last.retry_after)
@@ -198,7 +215,11 @@ class Meter:
             raise BudgetExceeded(f"{self.limit} LLM calls used")
         self.calls += 1
 
-    def record(self, role: str, reply: Reply) -> None:
+    def record(self, role: str, reply: Reply, seconds: float = 0.0) -> None:
         self.tokens += reply.tokens
         self.steps.append({"role": role, "model": reply.model, "tokens": reply.tokens, "in": reply.tokens_in, "out": reply.tokens_out,
-                           "cached": reply.tokens_cached, "thinking": reply.tokens_thinking})
+                           "cached": reply.tokens_cached, "thinking": reply.tokens_thinking, "seconds": round(seconds, 2)})
+
+    def failed(self, role: str, model: str, why: str, seconds: float) -> None:
+        """A call that didn't answer still cost time: kept, so slow fallbacks show in the trace."""
+        self.steps.append({"role": role, "model": model, "failed": why, "seconds": round(seconds, 2)})

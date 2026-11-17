@@ -139,11 +139,16 @@ def _places(state: str | None) -> tuple[str, ...]:
     return (state, CENTRAL) if state and state != CENTRAL else (CENTRAL,)
 
 
+BM25_TITLE = True   # keyword search also reads each passage's document title, as meaning search does: on the 46-question
+                    # set (16 Nov) the right document reached the top 6 for 38 questions instead of 37, at no cost
+
+
 @lru_cache(maxsize=None)
 def _view(domain: str, places: tuple[str, ...]):
     """The chunks searchable from these places, their keyword index, and id positions."""
     items = [i for i in corpus(domain) if i["jurisdiction"] in places]
-    bm25 = _rag()._BM25([i["text"] for i in items], tokenize=words) if items else None
+    texts = [i.get("title", "") + "\n" + i["text"] if BM25_TITLE else i["text"] for i in items]
+    bm25 = _rag()._BM25(texts, tokenize=words) if items else None
     return items, bm25, {item["id"]: n for n, item in enumerate(items)}
 
 
