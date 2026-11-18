@@ -41,6 +41,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 MAX_QUESTION = 500
+ANSWER_BUDGET = 60.0   # seconds: past this, a failed check is fixed by cutting the faulty sentences, not by
+                       # writing the answer again (a rewrite on the free tiers can take a minute of waiting)
 
 
 class Clock:
@@ -560,8 +562,11 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     clock = Clock(progress)
 
     def done(result: Result, **more) -> Result:
+        # A fallback model answered (the first choice was busy or out of quota): kept, so quality drops are seen.
+        fallback = sorted({s["model"] for s in meter.steps if not s.get("failed") and s["model"] != models.roles[s["role"]][0]})
         result.trace = {"calls": meter.calls, "tokens": meter.tokens, "steps": meter.steps,
-                        "seconds": round(time.perf_counter() - started, 1), "stages": clock.stages, **more}
+                        "seconds": round(time.perf_counter() - started, 1), "stages": clock.stages,
+                        **({"fallback": fallback} if fallback else {}), **more}
         return result
 
     try:
@@ -757,7 +762,10 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
         return finish("\n\n".join([facts_only(items, plan.language, "busy_facts"), *notes]), error=str(exc))
 
     bad = review(prose)
-    if bad:  # one more try, told what failed; a failed rewrite still leaves the first answer to check
+    late = time.perf_counter() - started > ANSWER_BUDGET
+    if late:
+        trace["over_budget"] = True
+    if bad and not late:  # one more try, told what failed; a failed rewrite still leaves the first answer to check
         trace["first_try_problems"] = [f.why for f in bad]
         try:
             again = draft([f.why for f in bad])

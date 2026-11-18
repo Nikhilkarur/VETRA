@@ -465,5 +465,551 @@
   "urls": [
    "https://cms.tn.gov.in/cms_migrated/document/docfiles/dairy_e_pn_2026_27.pdf"
   ]
+ },
+ {
+  "q": "flood destroyed my irrigated paddy, how much relief per hectare in tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-relief-irrigated",
+  "urls": [
+   "http://tnsdma.tn.gov.in//webroot/frontend/gos/09.12.2023%20G.O.Ms.No.579,%20grant%20of%20financial%20assitance%20to%20victims%20of%20NC.pdf"
+  ]
+ },
+ {
+  "q": "cyclone damaged cotton crop compensation per hectare andhra",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-relief-field-25000",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=532298&fileType=E"
+  ]
+ },
+ {
+  "q": "my buffalo died in floods, any compensation in AP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-relief-livestock",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=532298&fileType=E"
+  ]
+ },
+ {
+  "q": "how much money do fishermen get during fishing ban in andhra",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-fishing-ban-relief",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=549547&fileType=E"
+  ]
+ },
+ {
+  "q": "is cooperative crop loan interest free if i repay on time tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-crop-loan-interest",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/coop_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "drip irrigation subsidy for small farmers tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-micro-irrigation",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "subsidy for digging borewell for farming tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-borewell",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/agri_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "extra incentive for sugarcane per tonne tamil nadu 2025-26",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-sugarcane-incentive",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "wild pigs destroying my groundnut, any help to keep them away tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-wild-boar-repellent",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/agri_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "how much extra over MSP for paddy in tamil nadu kharif 2025-26",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-paddy-incentive-2025-26",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/agri_budget_speech_e_2026_27.pdf",
+   "https://agritech.tnau.ac.in/pdf/IAB_e_2026_27%20(1).pdf"
+  ]
+ },
+ {
+  "q": "how much money under annadata sukhibhava per year",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-annadatha-amount",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=556812&fileType=E"
+  ]
+ },
+ {
+  "q": "cattle insurance premium farmer share andhra",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-pasu-bhima",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=547124&fileType=E"
+  ]
+ },
+ {
+  "q": "new farm pond subsidy tamil nadu 2026-27",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-new-farm-ponds",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/agri_budget_speech_e_2026_27.pdf",
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/policy_note/5--PN-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "polyhouse subsidy for horticulture in andhra pradesh",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-midh-polyhouse",
+  "urls": [
+   "https://horticulture.ap.gov.in/assets/pdfs/MIDH - Guidelines 2025-26.pdf"
+  ]
+ },
+ {
+  "q": "help to start mushroom unit AP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-midh-mushroom",
+  "urls": [
+   "https://horticulture.ap.gov.in/assets/pdfs/MIDH - Guidelines 2025-26.pdf"
+  ]
+ },
+ {
+  "q": "how will government buy my paddy this season in AP, moisture rules",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-paddy-procurement-kms-2026-27",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=587568&fileType=E"
+  ]
+ },
+ {
+  "q": "what benefits does uzhavar pathukappu card give",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-uzhavar-pathukappu",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/revenue_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "solar fence subsidy to stop elephants tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-solar-fencing",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/policy_note/5--PN-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "drone subsidy for women farmers tamil nadu",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "tn-women-drone",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/policy_note/5--PN-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "drip subsidy for 5 acre farmer in andhra APMIP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-micro-irrigation",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=542774&fileType=E",
+   "https://goir.ap.gov.in/dgo.ashx?gid=571752&fileType=E"
+  ]
+ },
+ {
+  "q": "how to get subsidy seeds at rythu seva kendram",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-seed-subsidy-distribution",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=588329&fileType=E"
+  ]
+ },
+ {
+  "q": "terrace garden kit subsidy chennai",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-hort-terrace-garden",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "how much to test soil sample in tamil nadu lab",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-soil-test-fee",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "ex gratia for farmer family after suicide andhra pradesh",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-farmer-suicide-exgratia",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VII-1.pdf"
+  ]
+ },
+ {
+  "q": "how can tenant farmer get crop cultivator rights card in AP",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-ccrc-tenant-rights",
+  "urls": [
+   "https://prsindia.org/files/bills_acts/acts_states/andhra-pradesh/2019/2019AP30.pdf"
+  ]
+ },
+ {
+  "q": "elephants destroyed my crop, compensation andhra",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-wildlife-compensation",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=512069&fileType=E"
+  ]
+ },
+ {
+  "q": "how to convert agricultural land to non agricultural andhra NALA",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-land-conversion",
+  "urls": [
+   "https://prsindia.org/files/bills_acts/bills_states/andhra-pradesh/2025/Bill29of2025AP.pdf"
+  ]
+ },
+ {
+  "q": "can i sell vegetables directly at uzhavar sandhai",
+  "state": "TN",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "tn-uzhavar-sandhai",
+  "urls": [
+   "https://www.tnhorticulture.tn.gov.in/tnhorticulture/site_assets/site-pdfs/citizen_charter/5--CC-Agriculture-2026-27-ENG-WEB.pdf"
+  ]
+ },
+ {
+  "q": "is crop insurance free in andhra now",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-pmfby-voluntary-claims",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=478685&fileType=E",
+   "https://goir.ap.gov.in/dgo.ashx?gid=579980&fileType=E"
+  ]
+ },
+ {
+  "q": "what do amaravati land pooling farmers get annually",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-amaravati-land-pooling",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=554744&fileType=E",
+   "https://goir.ap.gov.in/dgo.ashx?gid=574598&fileType=E"
+  ]
+ },
+ {
+  "q": "is paraquat weedicide banned in andhra",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "casual",
+  "record": "ap-paraquat-ban-2026",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=576514&fileType=E"
+  ]
+ },
+ {
+  "q": "totapuri mango price support 2026 how much per kg",
+  "state": "AP",
+  "domain": "agriculture",
+  "style": "plain",
+  "record": "ap-totapuri-mango-pdp-2026",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=585242&fileType=E"
+  ]
+ },
+ {
+  "q": "stamp duty on sale deed tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-stamp-sale",
+  "urls": [
+   "https://tnreginet.gov.in/portal/"
+  ]
+ },
+ {
+  "q": "registration charges for gift deed to non family tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-stamp-gift",
+  "urls": [
+   "https://tnreginet.gov.in/portal/"
+  ]
+ },
+ {
+  "q": "stamp duty for 10 year lease agreement tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-stamp-lease-30",
+  "urls": [
+   "https://tnreginet.gov.in/portal/"
+  ]
+ },
+ {
+  "q": "transfer duty on sale deed in andhra",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-transfer-duty",
+  "urls": [
+   "https://registration.ap.gov.in/igrs/pdfs/StampFees.pdf"
+  ]
+ },
+ {
+  "q": "road tax for new bike in andhra pradesh",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-life-tax-new-motorcycle",
+  "urls": [
+   "https://prsindia.org/files/bills_acts/bills_states/andhra-pradesh/2021/Bill%20No.%2023%20of%202021%20Andhra%20Pradesh.pdf"
+  ]
+ },
+ {
+  "q": "life tax for new car tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-life-tax-new-vehicle",
+  "urls": [
+   "https://prsindia.org/files/bills_acts/bills_states/tamil-nadu/2023/Bill33of2023TamilNadu.pdf"
+  ]
+ },
+ {
+  "q": "old age pension amount in andhra pradesh now",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-pension-4000",
+  "urls": [
+   "https://sspensions.ap.gov.in/SSP/Documents/GO%20MS%2043%2013.06.2024.pdf"
+  ]
+ },
+ {
+  "q": "unit cost of house under vetri veedu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-vetri-veedu",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/rd_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "capital subsidy for micro enterprises tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "plain",
+  "record": "tn-msme-micro-capital",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/msme_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "unemployment dole for graduates tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-unemployment-assistance",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/lwsd_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "free gas cylinders scheme andhra deepam",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-deepam-2-lpg",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=549922&fileType=E",
+   "https://goir.ap.gov.in/dgo.ashx?gid=559016&fileType=E"
+  ]
+ },
+ {
+  "q": "100 days work daily wage tamil nadu 2026-27",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-rural-job-wage",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/rd_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "thalliki vandanam amount per child",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-thalliki-vandanam",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Gender-Budget.pdf"
+  ]
+ },
+ {
+  "q": "1000 rupees for women every month tamil nadu who gets it",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-magalir-urimai",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/spi_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "how many days to get registered document back in AP sub registrar office",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-registration-service-times",
+  "urls": [
+   "https://registration.ap.gov.in/igrs/pdfs/CitizenCharter.pdf"
+  ]
+ },
+ {
+  "q": "andhra pradesh budget 2026-27 total size and fiscal deficit",
+  "state": "AP",
+  "domain": "finance",
+  "style": "plain",
+  "record": "ap-budget-2026-27",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Volume-VI.pdf"
+  ]
+ },
+ {
+  "q": "registration fee concession if property is in wife's name tamil nadu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "casual",
+  "record": "tn-women-registration-fee-concession",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/budget_speech_e_2025_2026.pdf"
+  ]
+ },
+ {
+  "q": "breadwinner died, family benefit amount andhra",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-nfbs-family-benefit",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=589283&fileType=E"
+  ]
+ },
+ {
+  "q": "house tax exemption for army people in andhra",
+  "state": "AP",
+  "domain": "finance",
+  "style": "casual",
+  "record": "ap-ex-servicemen-house-tax",
+  "urls": [
+   "https://goir.ap.gov.in/dgo.ashx?gid=550549&fileType=E"
+  ]
+ },
+ {
+  "q": "vruddhapya pension entha istunnaru",
+  "state": "AP",
+  "domain": "finance",
+  "style": "romanised",
+  "record": "ap-pension-4000",
+  "urls": [
+   "https://sspensions.ap.gov.in/SSP/Documents/GO%20MS%2043%2013.06.2024.pdf"
+  ]
+ },
+ {
+  "q": "magalir urimai thogai evvalavu",
+  "state": "TN",
+  "domain": "finance",
+  "style": "romanised",
+  "record": "tn-magalir-urimai",
+  "urls": [
+   "https://cms.tn.gov.in/cms_migrated/document/docfiles/spi_e_pn_2026_27.pdf"
+  ]
+ },
+ {
+  "q": "thalliki vandanam ki entha dabbulu vastayi",
+  "state": "AP",
+  "domain": "finance",
+  "style": "romanised",
+  "record": "ap-thalliki-vandanam",
+  "urls": [
+   "https://apfinance.gov.in/...Bud@et26-27/documents/Gender-Budget.pdf"
+  ]
  }
 ]

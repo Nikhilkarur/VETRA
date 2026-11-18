@@ -122,6 +122,11 @@ class Handler(BaseHTTPRequestHandler):
     knowledge: Knowledge
 
     def do_GET(self) -> None:
+        if self.path == "/health":   # for a monitor: up, how busy, which models are resting after a limit
+            now = time.time()
+            resting = {m: round(t - now) for m, t in self.models.resting.items() if t > now}
+            self._json(200, {"ok": True, "busy": 2 - PIPELINE._value, "cached_answers": len(CACHE), "resting_models": resting})
+            return
         if self.path not in ("/", "/index.html"):
             self.send_error(404)
             return
@@ -187,7 +192,9 @@ class Handler(BaseHTTPRequestHandler):
                 CACHE.pop(next(iter(CACHE)))
             CACHE[key] = page
         print(f"Q [{result.kind} {result.domain} {result.state or '-'}] {result.trace.get('needs')} "
-              f"calls={result.trace.get('calls')} {result.trace.get('seconds')}s {result.trace.get('stages', {})}", flush=True)
+              f"calls={result.trace.get('calls')} {result.trace.get('seconds')}s {result.trace.get('stages', {})}"
+              + (f" fallback={result.trace['fallback']}" if result.trace.get("fallback") else "")
+              + (" OVER-BUDGET" if result.trace.get("over_budget") else ""), flush=True)
         self._reply(streaming, 200, page, started=True)
 
     def _reply(self, streaming: bool, code: int, obj: dict, started: bool = False) -> None:

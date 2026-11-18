@@ -2170,3 +2170,41 @@ def test_a_saved_answer_is_not_reused_once_the_data_changes(monkeypatch):
     before = web._cache_key("what is pm-kisan?", "AP", "auto", [])
     monkeypatch.setattr(web, "_data_version", lambda: 2.0)
     assert web._cache_key("what is pm-kisan?", "AP", "auto", []) != before
+
+
+def test_a_late_answer_with_a_faulty_sentence_is_cut_not_rewritten(monkeypatch, tmp_path):
+    monkeypatch.setattr(agent, "ANSWER_BUDGET", -1.0)   # already over budget
+    monkeypatch.setitem(agent.TOOLS, "text_search", lambda q, c: [chunk("c1", "AP", "Apply at the bank with your land records.")])
+    r, _ = run(knowledge.Knowledge(tmp_path), plan(depth="quick", needs=HOW),
+               "Apply at the bank with your land records [E1]. Bring a photo.")
+    assert r.trace.get("over_budget") and "first_try_problems" not in r.trace
+
+
+def test_the_health_page_says_how_busy_the_server_is():
+    class H(web.Handler):
+        def __init__(self):
+            self.sent = None
+
+        def _json(self, code, obj):
+            self.sent = (code, obj)
+
+    h = H()
+    h.path = "/health"
+    h.models = llm.Models(None, {"plan": ("m",)})
+    h.do_GET()
+    assert h.sent[0] == 200 and h.sent[1]["ok"] is True and "resting_models" in h.sent[1]
+
+
+def test_a_broken_meaning_index_falls_back_to_keywords(monkeypatch):
+    class Broken:
+        def query(self, **k):
+            raise RuntimeError("Error finding id")
+
+    class Model:
+        def encode(self, texts, normalize_embeddings=True):
+            import numpy
+            return numpy.zeros((len(texts), 3))
+
+    monkeypatch.setattr(text_index, "_collection", lambda d: Broken())
+    monkeypatch.setattr(text_index._rag(), "_load_model", lambda name: Model())
+    assert text_index._dense_many(["a", "b"], "agriculture", ("AP",), {"x": 0}) == [[], []]

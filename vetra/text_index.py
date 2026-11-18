@@ -161,9 +161,18 @@ def _dense_many(texts: list[str], domain: str, places: tuple[str, ...], position
     vectors = _rag()._load_model(EMBEDDING.name).encode([EMBEDDING.query_prefix + t for t in texts],
                                                         normalize_embeddings=True).tolist()
     where = {"jurisdiction": {"$in": list(places)}} if len(places) > 1 else {"jurisdiction": places[0]}
-    found = _collection(domain).query(query_embeddings=vectors, n_results=min(DENSE_DEPTH, len(position)),
-                                      where=where, include=[])
-    return [[position[i] for i in ids if i in position] for ids in found["ids"]]
+    # The index can be mid-rebuild when new documents are added while the server runs (seen on 18 Nov:
+    # "Error finding id"). Try once more on a fresh connection; failing that, keyword search answers alone.
+    for attempt in range(2):
+        try:
+            found = _collection(domain).query(query_embeddings=vectors, n_results=min(DENSE_DEPTH, len(position)),
+                                              where=where, include=[])
+            return [[position[i] for i in ids if i in position] for ids in found["ids"]]
+        except Exception as exc:   # chromadb raises its own error types
+            print(f"  meaning search failed ({type(exc).__name__}); {'retrying' if not attempt else 'keywords only'}",
+                  file=sys.stderr, flush=True)
+            _client.cache_clear()
+    return [[] for _ in texts]
 
 
 def _dense(text: str, domain: str, places: tuple[str, ...], position: dict) -> list[int]:
@@ -202,6 +211,35 @@ def _with_amendments(chosen: list[int], ranking: list[int], items: list[dict]) -
     return extra[:MAX_AMENDMENTS]
 
 
+SUBASPECT_VOTE = False   # also search on the citizen case (knowledge/subaspects.json) closest to the question
+SUBASPECT_MIN = 0.80     # how close, in meaning, a case must be to count
+
+
+@lru_cache(maxsize=None)
+def _cases(domain: str) -> tuple[list[str], object]:
+    """Every "aspect: case" of a domain, and their meaning vectors."""
+    path = ROOT / "knowledge" / "subaspects.json"
+    if not path.exists():
+        return [], None
+    cases = [f"{aspect}: {case}" for aspect, names in json.loads(path.read_text(encoding="utf-8")).get(domain, {}).items()
+             for case in names]
+    if not cases:
+        return [], None
+    vectors = _rag()._load_model(EMBEDDING.name).encode([EMBEDDING.passage_prefix + c for c in cases], normalize_embeddings=True)
+    return cases, vectors
+
+
+def case_for(query: str, domain: str) -> str:
+    """The citizen case this question is closest to, or "" if none is close enough."""
+    cases, vectors = _cases(domain)
+    if not cases:
+        return ""
+    q = _rag()._load_model(EMBEDDING.name).encode([EMBEDDING.query_prefix + query], normalize_embeddings=True)[0]
+    scores = vectors @ q
+    best = int(scores.argmax())
+    return cases[best] if scores[best] >= SUBASPECT_MIN else ""
+
+
 def search(query: str, domain: str, state: str | None, passage: str = "", topic: str = "",
            keywords: tuple[str, ...] = (), k: int = 10, rerank: bool = True) -> list[dict]:
     """The best chunks for a question in this state, best first, then any amending orders."""
@@ -216,7 +254,8 @@ def search(query: str, domain: str, state: str | None, passage: str = "", topic:
 
         query = legacy.expand_abbreviations(query, legacy.get(settings.abbreviations_from))
 
-    texts = [t for t in (query, passage, topic) if t]
+    case = case_for(query, domain) if SUBASPECT_VOTE else ""
+    texts = [t for t in (query, passage, topic, case) if t]
     votes = [R._rrf(dense, bm25.rank(text)) for text, dense in zip(texts, _dense_many(texts, domain, places, position))]
     if keywords:
         votes.append(bm25.rank(" ".join(keywords)))

@@ -27,12 +27,10 @@ SET = ROOT / "eval" / "retrieval_set.json"
 PLANS = ROOT / "eval" / "cache" / "retrieval_plans.json"
 
 VARIANTS = {
-    "full (HyDE, rerank 30)": dict(hyde=True, rerank=30),
-    "no HyDE, rerank 30": dict(hyde=False, rerank=30),
-    "HyDE, rerank 15": dict(hyde=True, rerank=15),
-    "no HyDE, rerank 15": dict(hyde=False, rerank=15),
-    "HyDE, no rerank": dict(hyde=True, rerank=0),
+    "now (HyDE, no rerank)": dict(hyde=True, rerank=0),
     "no HyDE, no rerank": dict(hyde=False, rerank=0),
+    "HyDE, rerank 30": dict(hyde=True, rerank=30),
+    "HyDE + sub-aspect case": dict(hyde=True, rerank=0, case=True),
 }
 
 
@@ -64,8 +62,12 @@ def main() -> int:
     for c in cases:   # warm the indexes, so the first variant isn't charged for loading
         text_index.search("warm up", c["domain"], c["state"], rerank=True)
     rows = {}
+    only = [a.lower() for a in sys.argv[1:]]   # e.g. "rerank" "sub-aspect": run only the variants named so
     for name, v in VARIANTS.items():
+        if only and not any(o in name.lower() for o in only):
+            continue
         text_index.RERANK_DEPTH = v["rerank"] or 30
+        text_index.SUBASPECT_VOTE = bool(v.get("case"))
         hits6 = hits10 = 0
         rr, secs, by_style = [], [], {}
         for c in cases:
