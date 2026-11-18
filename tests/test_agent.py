@@ -2208,3 +2208,38 @@ def test_a_broken_meaning_index_falls_back_to_keywords(monkeypatch):
     monkeypatch.setattr(text_index, "_collection", lambda d: Broken())
     monkeypatch.setattr(text_index._rag(), "_load_model", lambda name: Model())
     assert text_index._dense_many(["a", "b"], "agriculture", ("AP",), {"x": 0}) == [[], []]
+
+
+def test_every_state_a_question_names_is_found_in_order():
+    assert jurisdictions.all_named("Compare stamp duty in Andhra Pradesh and Tamil Nadu") == ["AP", "TN"]
+    assert jurisdictions.all_named("tamil nadu vs andhra pradesh farm ponds") == ["TN", "AP"]
+    assert jurisdictions.all_named("stamp duty in Andhra Pradesh") == ["AP"]
+
+
+def test_a_comparison_searches_each_states_own_records():
+    needs = [agent.Need("amount", "farm pond subsidy", "agriculture"),
+             agent.Need("amount", "Tamil Nadu farm pond subsidy", "agriculture")]
+    split = agent.by_state(needs, ("AP", "TN"))
+    assert [(n.subject, n.state) for n in split] == [
+        ("farm pond subsidy Andhra Pradesh", "AP"), ("farm pond subsidy Tamil Nadu", "TN"),
+        ("Tamil Nadu farm pond subsidy", "TN")]
+    assert agent.by_state(needs, ("AP",)) == needs
+
+
+def test_a_state_name_followed_by_punctuation_is_still_found():
+    assert jurisdictions.all_named("Which gives more, Andhra Pradesh or Tamil Nadu?") == ["AP", "TN"]
+    assert jurisdictions.named_in("What is the stamp duty in Tamil Nadu?") == "TN"
+
+
+def test_a_state_profile_has_one_own_record_per_aspect(tmp_path):
+    from vetra import profiles
+    (tmp_path / "agriculture").mkdir()
+    rows = [{"id": "ap-loan", "store": "numbers", "domain": "agriculture", "jurisdiction": "AP", "subject": "AP crop loan interest",
+             "text": "Crop loans up to Rs 1 lakh at zero interest.", "status": "in_force", "source": {"doc": "G.O."}},
+            {"id": "ap-dairy", "store": "numbers", "domain": "agriculture", "jurisdiction": "AP", "subject": "AP dairy unit",
+             "text": "Interest subvention on dairy loans.", "status": "in_force", "source": {"doc": "G.O."}},
+            {"id": "in-kisan", "store": "numbers", "domain": "agriculture", "jurisdiction": "IN", "subject": "PM-KISAN crop loan",
+             "text": "Rs 6,000 a year.", "status": "in_force", "source": {"doc": "Guidelines"}}]
+    (tmp_path / "agriculture" / "numbers.jsonl").write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
+    got = profiles.profile("agriculture", "AP", knowledge.Knowledge(tmp_path), "compare crop loans in AP and TN")
+    assert [e.key for e in got] == ["ap-loan"]   # named for the aspect, the state's own, not the central one

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 CENTRAL = "IN"
 
 STATES = {
@@ -30,13 +32,34 @@ def normalise(state: str | None) -> str | None:
     return _BY_NAME.get(text.lower())
 
 
+def _spaced(text: str) -> str:
+    """Lower case with punctuation as spaces, so "Tamil Nadu?" and "Andhra Pradesh," still match."""
+    return " " + " ".join(re.sub(r"[^\w]+", " ", text.lower()).split()) + " "
+
+
 def named_in(text: str) -> str | None:
     """The state a person's own words name, if any. Longest names first: "Andhra" isn't enough."""
-    lowered = f" {text.lower()} "
+    lowered = _spaced(text)
     for full in sorted(_BY_NAME, key=len, reverse=True):
         if f" {full} " in lowered:
             return _BY_NAME[full]
     return None
+
+
+def all_named(text: str) -> list[str]:
+    """Every state a person's own words name, in the order they come: "compare AP and Tamil Nadu"."""
+    lowered = _spaced(text)
+    spans: dict[str, int] = {}
+    taken: list[tuple[int, int]] = []
+    for full in sorted(_BY_NAME, key=len, reverse=True):   # "andhra pradesh" before "andhra"
+        at = lowered.find(f" {full} ")
+        while at >= 0:
+            end = at + len(full) + 1
+            if not any(a <= at < b or a < end <= b for a, b in taken):
+                taken.append((at, end))
+                spans.setdefault(_BY_NAME[full], at)
+            at = lowered.find(f" {full} ", at + 1)
+    return sorted(spans, key=spans.get)
 
 
 def name(code: str) -> str:

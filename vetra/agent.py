@@ -24,11 +24,11 @@ import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date
 from pathlib import Path
 
-from . import checks, jurisdictions, languages, llm, messages, navigate, structure, verify, websearch
+from . import checks, jurisdictions, languages, llm, messages, navigate, profiles, structure, verify, websearch
 from . import depth as depths
 from .datatypes import DATA_TYPES
 from .depth import Depth
@@ -76,6 +76,7 @@ class Need:
     subject: str
     domain: str = ""
     implied: bool = False   # added by code for a deep answer, so never reported as a gap
+    state: str | None = None   # in a comparison across states, the one state this part is about
 
 
 @dataclass
@@ -91,6 +92,7 @@ class Plan:
     keywords: tuple[str, ...] = ()
     depth: str = ""
     general: bool = False   # needs no government record at all: answered directly, labelled as general
+    states: tuple[str, ...] = ()   # a comparison across states: every state the question names
 
 
 @dataclass
@@ -271,10 +273,10 @@ def _read_text(need: Need, plan: Plan, level: Depth, today: str, knowledge: Know
         # On its own: adding the topic as a vote pulled every search back to the same general passages
         # and reached fewer parts. But a subject that doesn't name the scheme needs the name to search.
         query = _with_topic(need.subject, plan.topic)
-        items = _once(searched, (need.domain, query), lambda: TOOLS["text_search"](query, bare))
+        items = _once(searched, (plan.state, need.domain, query), lambda: TOOLS["text_search"](query, bare))
     else:
-        query = plan.standalone or need.subject
-        items = _once(searched, need.domain, lambda: TOOLS["text_search"](query, aids))
+        query = (plan.standalone or need.subject) if not need.state else need.subject
+        items = _once(searched, (plan.state, need.domain, query), lambda: TOOLS["text_search"](query, aids))
     if checks.on_topic(items, need.subject):
         return items
     if query == need.subject and level.each_part:   # it was already searched on the subject alone
@@ -292,6 +294,10 @@ def find(need: Need, plan: Plan, level: Depth, today: str, knowledge: Knowledge,
     """
     ctx = Context(need.domain, plan.state, today, knowledge, plan.facts, plan.passage, plan.topic, plan.keywords,
                   asked, plan.language, k=level.passages)
+    if need.state and need.state != plan.state:   # one state's part of a comparison is searched in that state
+        plan = replace(plan, state=need.state)
+        ctx = Context(need.domain, plan.state, today, knowledge, plan.facts, plan.passage, plan.topic, plan.keywords,
+                      asked, plan.language, k=level.passages)
     query = f"{need.subject} {plan.standalone}".strip()
     exact: list[Evidence] = []
     for tool in () if text_only else DATA_TYPES[need.data_type].exact:
@@ -321,6 +327,22 @@ def needs_for(plan: Plan, level: Depth, question: str) -> list[Need]:
     if level.each_part and not any(n.data_type == "change_history" for n in needs):
         needs = [*needs, Need("change_history", f"{plan.topic or plan.standalone or question} amended", plan.domain, implied=True)]
     return needs
+
+
+def by_state(needs: list[Need], states: tuple[str, ...]) -> list[Need]:
+    """In a comparison across states, every part belongs to one state: the one its subject names, or else
+    each state in turn. Without this, a question about AP and TN searched AP's records only, and the answer
+    said Tamil Nadu's documents had nothing (18 Nov), though its farm pond and stamp duty records were held."""
+    if len(states) < 2:
+        return needs
+    split = []
+    for need in needs:
+        own = jurisdictions.named_in(need.subject)
+        if own in states:
+            split.append(replace(need, state=own))
+            continue
+        split += [replace(need, subject=f"{need.subject} {jurisdictions.name(s)}", state=s) for s in states]
+    return split[:depths.MAX_PARTS]
 
 
 def gather(plan: Plan, needs: list[Need], level: Depth, today: str, knowledge: Knowledge,
@@ -374,8 +396,8 @@ def record_gaps(found: list[Found], plan: Plan, today: str, handler: GapHandler)
     the user got an answer, and the fix is ours. Text-only types are fine in text.
     """
     tell = []
-    place = plan.state or "any"
     for f in found:
+        place = f.need.state or plan.state or "any"
         if f.need.implied:
             continue
         if f.level == "web":   # answered from an official website read live: ours to collect, not the reader's gap
@@ -383,7 +405,7 @@ def record_gaps(found: list[Found], plan: Plan, today: str, handler: GapHandler)
             continue
         wants_exact = bool(DATA_TYPES[f.need.data_type].exact)
         local = f.level in ("exact", "text")
-        if f.level == "none" or (plan.state and not local):
+        if f.level == "none" or ((f.need.state or plan.state) and not local):
             tell.append(f)
             handler.report(Gap(f.need.domain, place, f.need.data_type, f.need.subject, "no_data", today))
         elif wants_exact and f.level in ("text", "central_text"):
@@ -468,6 +490,10 @@ def compose(question: str, plan: Plan, items: list[Evidence], models: llm.Models
                  + ". The printed block lists every case; ask the user for these.)")
     if plan.standalone and plan.standalone != question:
         user += f"\n(In context, this means: {plan.standalone})"
+    if plan.states:
+        names = ", ".join(jurisdictions.name(s) for s in plan.states)
+        user += (f"\n\nThis compares {names}. Each passage says which state it applies to. Give each state's own rule "
+                 "side by side, and say plainly where one state's documents don't cover a point; never fill it from the other state.")
     if problems:
         user += "\n\nYour last answer failed these checks. Fix them, using only the evidence:\n- " + "\n- ".join(problems)
     case = structure.choose(question, [n.data_type for n in plan.needs])   # a comparison gets a table, a deadline its date first
@@ -603,14 +629,23 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     # The user's own words, then the state they chose, then the model's reading of the rest.
     # The model can guess from a scheme's name, and a guess mustn't override a person's choice.
     plan.state = jurisdictions.named_in(question) or jurisdictions.normalise(state) or plan.state
-    place = jurisdictions.name(plan.state) if plan.state else "India"
+    named = jurisdictions.all_named(f"{question} {plan.standalone}")
+    if len(named) >= 2:   # "compare AP and TN": each state's own records are searched, not only the first one's
+        plan.states, plan.state = tuple(named[:3]), named[0]
+    place = " and ".join(jurisdictions.name(s) for s in plan.states) if plan.states else (
+        jurisdictions.name(plan.state) if plan.state else "India")
     level = depths.choose(plan.depth, [n.data_type for n in plan.needs], depth)
     meter.limit = level.calls
-    needs = needs_for(plan, level, question)
+    needs = by_state(needs_for(plan, level, question), plan.states)
     asked = f"{question} {plan.standalone}"
 
     with clock("search"):
         found, missing, searched = gather(plan, needs, level, today, knowledge, asked)
+        for s in plan.states:   # a comparison also gets each state's profile: a record per main aspect
+            held = profiles.profile(plan.domain, s, knowledge, asked)
+            if held:
+                found.append(Found(Need("explanation", f"{jurisdictions.name(s)} profile", plan.domain, implied=True,
+                                        state=s), "exact", held))
     if checks.about_a_past_year(question, today):  # today's windows and rates don't answer it
         for f in found:
             f.items = [e for e in f.items if not e.fact]
@@ -659,8 +694,9 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
             empty = [Found(Need("explanation", plan.topic or plan.standalone or question, plan.domain), "none")]
             found.append(empty[0])
         with clock("web"), ThreadPoolExecutor(max_workers=2) as pool:   # a citizen is waiting: at most two, together
-            looked = list(pool.map(lambda f: websearch.find(f.need.subject, place, plan.standalone or question, web,
-                                                            state=plan.state), empty[:2]))
+            looked = list(pool.map(lambda f: websearch.find(
+                f.need.subject, jurisdictions.name(f.need.state) if f.need.state else place, plan.standalone or question, web,
+                state=f.need.state or plan.state), empty[:2]))
         for f, (live, hosts) in zip(empty[:2], looked):
             web_hosts = hosts or web_hosts
             if live:

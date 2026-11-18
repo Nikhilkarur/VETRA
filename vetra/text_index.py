@@ -19,6 +19,7 @@ import os
 import re
 import unicodedata
 import sys
+import threading
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -152,6 +153,7 @@ def _view(domain: str, places: tuple[str, ...]):
     return items, bm25, {item["id"]: n for n, item in enumerate(items)}
 
 
+_INDEX_LOCK = threading.Lock()
 DENSE_DEPTH = 300   # how far down the meaning ranking is read; fusion gives a passage below this almost no weight
 
 
@@ -165,8 +167,9 @@ def _dense_many(texts: list[str], domain: str, places: tuple[str, ...], position
     # "Error finding id"). Try once more on a fresh connection; failing that, keyword search answers alone.
     for attempt in range(2):
         try:
-            found = _collection(domain).query(query_embeddings=vectors, n_results=min(DENSE_DEPTH, len(position)),
-                                              where=where, include=[])
+            with _INDEX_LOCK:   # the index's own client is not safe for queries from several threads at once
+                found = _collection(domain).query(query_embeddings=vectors, n_results=min(DENSE_DEPTH, len(position)),
+                                                  where=where, include=[])
             return [[position[i] for i in ids if i in position] for ids in found["ids"]]
         except Exception as exc:   # chromadb raises its own error types
             print(f"  meaning search failed ({type(exc).__name__}); {'retrying' if not attempt else 'keywords only'}",
