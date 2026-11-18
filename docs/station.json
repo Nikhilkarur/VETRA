@@ -1,7 +1,7 @@
 {
- "last_report": "2026-11-18T18:33",
+ "last_report": "2026-11-18T20:15",
  "state": "Working",
- "headline": "18 Nov: speed and robustness round done, search checked on 100 questions (right document in the top 6 for 83, top 10 for 90), data round 4 added 11 records. Completion (agriculture and finance, deep level, at least one exact record): Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100%; with three or more: AP 31/44 and 14/21, TN 38/44 and 15/21.",
+ "headline": "18 Nov: three improvement rounds done. AP vs TN comparisons now answer from both states' records; Telugu and Tamil questions find their schemes; records are used for every kind of question. Completion (agriculture and finance, deep level, at least one exact record): Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100%; with three or more: AP 31/44 and 14/21, TN 38/44 and 15/21.",
  "usage": {
   "five_hour": 0,
   "weekly": 0,
@@ -163,6 +163,11 @@
    "time": "18 Nov 18:33",
    "state": "Working",
    "text": "Update (18 Nov). Research on speed and robustness (cheap evidence checks, circuit breakers and visible fallbacks, no similar-question cache, BGE-M3 for Indian languages, a regression set). Built: parallel web page reads and 6-hour reuse of live searches; parallel look-further searches; a 60-second answer budget; fallback use recorded; a /health page; search survives an index rebuild; the closest citizen case is also searched on. Search test grown to 100 questions: 83 in the top 6 (was 82), reranking confirmed useless. Data round 4: 11 grounded records (AP EV road tax exemption, AP farm ponds, natural farming, drip, TN sericulture, debt and land revenue from PRS summaries labelled independent); aspects at 3+ records rose in all four tables. RBI tables and the AP Food Processing Policy stay blocked. 281 code tests pass."
+  },
+  {
+   "time": "18 Nov 20:15",
+   "state": "Working",
+   "text": "Rounds of 18 Nov. Round 1, comparisons: each state named is searched on its own records, and each gets a profile of one record per main aspect (stamp duty 5% vs 7%, old age pension Rs.4,000 vs Rs.1,200). Round 2, Telugu and Tamil: own words vote in search (85/100 in top 6), scheme names kept, ordinary words translated, held schemes no longer declined (Thalliki Vandanam Rs.15,000). Round 3, reading answers: checked records now used for explanations and procedures too. Still open: an old scheme name preferred over the current one, a citation repair case, free-tier waits on long answers, TN samba insurance date not held. Data gaps sent to the data session. 286 code tests pass."
   }
  ]
 }
