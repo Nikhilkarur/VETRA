@@ -180,6 +180,24 @@ def build() -> str:
     <tr><td>Explain crop insurance in Tamil Nadu in detail</td><td>deep</td><td>2-3.5 min range</td><td>29.2 s</td><td>write 11.5, look further 10.8</td></tr>
   </table></div>
   <p class="small">Facts and general questions now take 3 to 4 seconds; explanations about 30; deep answers 30 to 50 instead of 2 to 3.5 minutes. In every slow answer the free tiers still cost time: 3 to 8 refused calls per question (per-minute limits, requests too large for the free tier, one malformed reply), because questions ran back to back. The remaining real costs are the model calls themselves (plan about 2 s, write 1 to 3 s per try, verify 16 s on deep answers), looking further and the live web search.</p>
+  <h3>Round of 18 November: speed, robustness, a 100-question search test, more data</h3>
+  <p class="small"><strong>More research, on speed and robustness.</strong> What it says, and what we took:</p>
+  <ul class="small">
+    <li><strong>Judge the evidence cheaply first</strong> (Corrective RAG): the original method used a small evaluator, not a big model; production systems often use a model judge and pay for it. VETRA already checks code-side that passages are on the part's subject; the model judge now runs only for explanations and deep answers, and its searches run together.</li>
+    <li><strong>Circuit breakers, timeouts, visible fallbacks</strong>: a failing model is rested (30 minutes for a used-up quota), a hung one is dropped after 5 or 40 seconds, and every answer now records when a fallback model wrote it, because silent fallbacks lower quality unseen.</li>
+    <li><strong>No "similar question" answer cache</strong>: studies and practitioners warn it returns wrong or stale answers (a near-identical question can need a different rule). VETRA reuses only the same first question, same state and language, the same day, and never after the records change.</li>
+    <li><strong>Embedding model for Telugu and Tamil</strong>: an Indian-language benchmark (IndicRAGSuite, 2025) found BGE-M3 best or near best in 8 of 13 languages, ahead of the multilingual E5 we use. Worth testing on our set; it needs every passage re-embedded (hours on this laptop), so it is planned, not done.</li>
+    <li><strong>A regression set</strong> of real questions with known answers, run after every change (RAGAS and ARES style metrics: right document found, citation precision, faithfulness). Started: 100 questions for search.</li>
+  </ul>
+  <p class="small"><strong>Built:</strong> web pages of a round are read together and a live search is reused for 6 hours; look-further searches run together; a 60-second answer budget (past it, faulty sentences are cut, not rewritten); fallback use recorded; a <code>/health</code> page; meaning search survives an index rebuild (it crashed once when new documents were built during a test: now it retries, then answers from keywords); the closest citizen case (of the 264) is now also searched on.</p>
+  <div class="tw"><table class="small">
+    <tr><th>Setting, 100 questions</th><th>Right document in top 6</th><th>In top 10</th><th>MRR</th><th>Seconds per search</th></tr>
+    <tr><td><strong>HyDE + closest citizen case (now)</strong></td><td><strong>83</strong></td><td><strong>90</strong></td><td><strong>0.65</strong></td><td>1.07</td></tr>
+    <tr><td>HyDE, no rerank (before)</td><td>82</td><td>88</td><td>0.64</td><td>0.93</td></tr>
+    <tr><td>No HyDE</td><td>79</td><td>87</td><td>0.61</td><td>0.43</td></tr>
+    <tr><td>HyDE, rerank 30</td><td>80</td><td>88</td><td>0.65</td><td>4.69</td></tr>
+  </table></div>
+  <p class="small">The larger set confirms the 46-question result: reranking adds nothing and takes about 4 seconds; HyDE helps (3 more found); the citizen-case vote adds a little for 0.1 s. Plain questions are found 92% of the time, casual ones 80%, romanised Telugu and Tamil 4 of 7: the weakest group, and the reason to test BGE-M3.</p>
   <p class="small muted">Sources: PageIndex (VectifyAI, pypi.org/project/PageIndex) and reviews of it; "Long Context vs. RAG for LLMs" (arXiv 2501.01880); a 2026 financial retrieval benchmark (arXiv 2604.01733); Anthropic, "Contextual Retrieval" (September 2024); Adaptive-RAG and later routing studies; work on numbers and tables in RAG. Most speed and gain figures are from the authors or secondary write-ups, not checked by us; our own tests decide.</p>
 </section>
 

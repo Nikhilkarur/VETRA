@@ -211,7 +211,8 @@ def _with_amendments(chosen: list[int], ranking: list[int], items: list[dict]) -
     return extra[:MAX_AMENDMENTS]
 
 
-SUBASPECT_VOTE = False   # also search on the citizen case (knowledge/subaspects.json) closest to the question
+SUBASPECT_VOTE = True    # also search on the citizen case (knowledge/subaspects.json) closest to the question:
+                         # on 100 questions (18 Nov) 83 in the top 6 and 90 in the top 10, against 82 and 88, for 0.1 s
 SUBASPECT_MIN = 0.80     # how close, in meaning, a case must be to count
 
 
