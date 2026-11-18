@@ -1,7 +1,7 @@
 {
- "last_report": "2026-11-18T20:15",
- "state": "Working",
- "headline": "18 Nov: three improvement rounds done. AP vs TN comparisons now answer from both states' records; Telugu and Tamil questions find their schemes; records are used for every kind of question. Completion (agriculture and finance, deep level, at least one exact record): Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100%; with three or more: AP 31/44 and 14/21, TN 38/44 and 15/21.",
+ "last_report": "2026-11-18T22:48",
+ "state": "Paused",
+ "headline": "18 Nov night: round 4 done. The questions that failed now answer correctly from new records, and code works out costs from checked rates. Completion (agriculture and finance, deep level, at least one exact record): Andhra Pradesh 95% and 95%, Tamil Nadu 100% and 100%; with three or more: AP 32/44 and 16/21, TN 39/44 and 17/21.",
  "usage": {
   "five_hour": 0,
   "weekly": 0,
@@ -168,6 +168,11 @@
    "time": "18 Nov 20:15",
    "state": "Working",
    "text": "Rounds of 18 Nov. Round 1, comparisons: each state named is searched on its own records, and each gets a profile of one record per main aspect (stamp duty 5% vs 7%, old age pension Rs.4,000 vs Rs.1,200). Round 2, Telugu and Tamil: own words vote in search (85/100 in top 6), scheme names kept, ordinary words translated, held schemes no longer declined (Thalliki Vandanam Rs.15,000). Round 3, reading answers: checked records now used for explanations and procedures too. Still open: an old scheme name preferred over the current one, a citation repair case, free-tier waits on long answers, TN samba insurance date not held. Data gaps sent to the data session. 286 code tests pass."
+  },
+  {
+   "time": "18 Nov 22:48",
+   "state": "Paused",
+   "text": "Round 4 (18 Nov, night). Data session round: 13 new grounded records (TN samba insurance deadline 1 Dec 2026, TN crop loan waiver 2026, AP Vaddi Leni Runalu, TN sale deed documents, TN property, profession and electricity tax, TN market fee and eNAM, AP house sites). Re-asked the three failed questions: all now answer correctly. New: code works out costs from a checked rate and the amount the citizen gives, labelled as VETRA's own working. Smaller evidence sets so requests fit the free tier (sale deed 14 s, was 63). Still slow when questions come back to back on the free tier. 287 code tests pass."
   }
  ]
 }
