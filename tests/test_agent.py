@@ -2254,3 +2254,15 @@ def test_a_scheme_we_hold_is_not_declined_when_the_planner_calls_it_other(tmp_pa
     k = knowledge.Knowledge(tmp_path)
     assert agent.held_topic("thalliki vandanam ki entha dabbulu vastayi", k) == "finance"
     assert agent.held_topic("what is the capital of france", k) is None
+
+
+def test_code_works_out_a_cost_from_a_checked_rate_and_the_citizens_amount():
+    from vetra import calc
+    rate = Evidence("tn-stamp-sale", "number_lookup", "Tamil Nadu, Sale: stamp duty 7% of market value; registration fee 2% of market value.", "fee table")
+    passage = Evidence("c1", "text_search", "stamp duty 5% of market value", "a press note")
+    lines = calc.worked("how much will it cost for a 20 lakh property in Tamil Nadu?", [passage, rate])
+    assert lines == ["- Stamp duty: 7% of Rs 20,00,000 = Rs 1,40,000 [E2]",
+                     "- Registration fee: 2% of Rs 20,00,000 = Rs 40,000 [E2]",
+                     "- Together: Rs 1,80,000"]
+    assert calc.worked("stamp duty on a sale deed in 2026", [rate]) == []   # a year is not an amount
+    assert calc.asked_amount("Rs 15,00,000 flat") == 1500000 and calc.asked_amount("1.5 crore") == 15000000

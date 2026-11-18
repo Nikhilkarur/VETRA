@@ -28,7 +28,8 @@ class Depth:
     means: str              # for the planner
     passages: int           # per search
     each_part: bool         # search each part on its own, and read text alongside exact records
-    evidence: int           # most records the answer model is given
+    evidence: int           # most records the answer model is given. Each passage is about 300 tokens; on 18 Nov,
+                            # 18 of them (about 7,000 tokens) were more than the free model tier takes in a minute
     rounds: int             # how many times navigation may judge and look further
     moves: int              # how far it may look in one round
     calls: int              # LLM calls the whole question may use
@@ -46,14 +47,14 @@ QUICK = Depth(
 
 STANDARD = Depth(
     "standard", '''how to do something, or what to do in a situation. "how do I get a kisan credit card", "the dealer sold me fake seeds, what can I do"''',
-    passages=10, each_part=False, evidence=18, rounds=2, moves=2, calls=6, answer_calls=3, print_alone=True, verify=False, explore_always=True,
+    passages=10, each_part=False, evidence=12, rounds=2, moves=2, calls=6, answer_calls=3, print_alone=True, verify=False, explore_always=True,
     shape="Answer the question first, in one or two sentences. Then give what the person needs to act on it: the steps, "
           "conditions, limits and exceptions that could affect them. Use a short list where it helps. Leave out what "
           "doesn't bear on the question.")
 
 DEEP = Depth(
     "deep", '''understanding a whole scheme, rule or law; comparing; how something changed; why; several linked questions; or asking for detail. "what is PM-KISAN and who gets it", "compare PMFBY and RWBCIS", "explain crop insurance in detail"''',
-    passages=6, each_part=True, evidence=36, rounds=3, moves=3, calls=10, answer_calls=5, print_alone=False, verify=True,
+    passages=6, each_part=True, evidence=28, rounds=3, moves=3, calls=10, answer_calls=5, print_alone=False, verify=True,
     shape=_RESEARCH, explore_always=True)
 
 LEVELS = {d.name: d for d in (QUICK, STANDARD, DEEP)}

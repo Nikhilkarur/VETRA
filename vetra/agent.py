@@ -28,7 +28,7 @@ from dataclasses import dataclass, field, replace
 from datetime import date
 from pathlib import Path
 
-from . import checks, jurisdictions, languages, llm, messages, navigate, profiles, structure, verify, websearch
+from . import calc, checks, jurisdictions, languages, llm, messages, navigate, profiles, structure, verify, websearch
 from . import depth as depths
 from .datatypes import DATA_TYPES
 from .depth import Depth
@@ -586,10 +586,11 @@ def localise(items: list[Evidence], notes: list[str], asking: str, language: str
     return (rest[:-1], rest[-1]) if asking else (rest, "")
 
 
-def assemble(prose: str, items: list[Evidence], notes: list[str], heading: str = "") -> str:
-    """Code's facts first, the model's explanation after, then what we couldn't find."""
+def assemble(prose: str, items: list[Evidence], notes: list[str], heading: str = "", sums: list[str] | None = None) -> str:
+    """Code's facts first, the model's explanation after, code's worked figures, then what we couldn't find."""
     facts = checks.fact_lines(items)
-    return "\n\n".join(p for p in (heading if facts else "", facts, prose, "\n".join(notes)) if p)
+    worked = "\n".join(sums or [])
+    return "\n\n".join(p for p in (heading if facts else "", facts, prose, worked, "\n".join(notes)) if p)
 
 
 # ------------------------------------------------------------------ run
@@ -883,7 +884,10 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
         if not languages.is_templated(plan.language):
             note = languages.translate([note], plan.language, models, meter)[0] or note
         notes.append(note)
-    return finish(assemble(prose, items, notes, heading))
+    sums = calc.worked(question, items)
+    if sums:   # the writer does no arithmetic; code does, from checked records, and says so
+        sums = [messages.say("worked", plan.language), *sums] if languages.is_templated(plan.language) else []
+    return finish(assemble(prose, items, notes, heading, sums))
 
 
 def main() -> int:
