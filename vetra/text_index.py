@@ -245,7 +245,7 @@ def case_for(query: str, domain: str) -> str:
 
 
 def search(query: str, domain: str, state: str | None, passage: str = "", topic: str = "",
-           keywords: tuple[str, ...] = (), k: int = 10, rerank: bool = True) -> list[dict]:
+           keywords: tuple[str, ...] = (), k: int = 10, rerank: bool = True, original: str = "") -> list[dict]:
     """The best chunks for a question in this state, best first, then any amending orders."""
     R = _rag()
     places = _places(state)
@@ -259,7 +259,10 @@ def search(query: str, domain: str, state: str | None, passage: str = "", topic:
         query = legacy.expand_abbreviations(query, legacy.get(settings.abbreviations_from))
 
     case = case_for(query, domain) if SUBASPECT_VOTE else ""
-    texts = [t for t in (query, passage, topic, case) if t]
+    # The citizen's own words too, when the planner rewrote them: a scheme name typed in Telugu or Tamil
+    # ("magalir urimai thogai") can be lost in translation ("women's rights quota").
+    own = original if original and original.strip().lower() != query.strip().lower() else ""
+    texts = [t for t in (query, passage, topic, case, own) if t]
     votes = [R._rrf(dense, bm25.rank(text)) for text, dense in zip(texts, _dense_many(texts, domain, places, position))]
     if keywords:
         votes.append(bm25.rank(" ".join(keywords)))

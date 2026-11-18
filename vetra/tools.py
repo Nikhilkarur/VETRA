@@ -79,7 +79,10 @@ def _from_chunks(hits: list[dict], ctx: Context) -> list[Evidence]:
 
 
 def text_search(query: str, ctx: Context) -> list[Evidence]:
-    return _from_chunks(text_index.search(query, ctx.domain, ctx.state, ctx.passage, ctx.topic, ctx.keywords, ctx.k, ctx.rerank), ctx)
+    # A whole-question search (it has the planner's passage) also votes on the citizen's own words; a search
+    # for one part of a deep answer doesn't, or every part would be pulled back to the same general passages.
+    return _from_chunks(text_index.search(query, ctx.domain, ctx.state, ctx.passage, ctx.topic, ctx.keywords, ctx.k, ctx.rerank,
+                                          original=ctx.question if ctx.passage else ""), ctx)
 
 
 def read_around(chunk_id: str, ctx: Context) -> list[Evidence]:

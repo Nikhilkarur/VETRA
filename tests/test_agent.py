@@ -2243,3 +2243,14 @@ def test_a_state_profile_has_one_own_record_per_aspect(tmp_path):
     (tmp_path / "agriculture" / "numbers.jsonl").write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
     got = profiles.profile("agriculture", "AP", knowledge.Knowledge(tmp_path), "compare crop loans in AP and TN")
     assert [e.key for e in got] == ["ap-loan"]   # named for the aspect, the state's own, not the central one
+
+
+def test_a_scheme_we_hold_is_not_declined_when_the_planner_calls_it_other(tmp_path):
+    (tmp_path / "finance").mkdir()
+    (tmp_path / "finance" / "numbers.jsonl").write_text(json.dumps(
+        {"id": "ap-tv", "store": "numbers", "domain": "finance", "jurisdiction": "AP", "status": "in_force",
+         "subject": "Andhra Pradesh Thalliki Vandanam mother's education assistance", "text": "Rs 15,000 a year.",
+         "source": {"doc": "G.O."}}), encoding="utf-8")
+    k = knowledge.Knowledge(tmp_path)
+    assert agent.held_topic("thalliki vandanam ki entha dabbulu vastayi", k) == "finance"
+    assert agent.held_topic("what is the capital of france", k) is None

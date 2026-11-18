@@ -152,9 +152,9 @@ Return one JSON object with these keys:
 "domain": a topic name above.
 "state": the Indian state or union territory the question is about, as a full name, if the user or the earlier turns name one; otherwise null. Never guess it.
 "language": the language of the latest message, in any script, including typed in English letters. In English letters, the question word usually tells: kitna is hindi, kiti is marathi, koto is bengali, ketlu is gujarati, kinna is punjabi, entha is telugu, evvalavu is tamil, eshtu is kannada, ethra is malayalam. In Devanagari letters, tell apart hindi, marathi, nepali, maithili, dogri, konkani, bodo and sanskrit by their words and verb endings, not by the script. One of: {", ".join(languages.NAMES)}. If it's none of these, "english".
-"standalone": the latest message as one complete English question, using earlier turns to fill in what it refers to.
+"standalone": the latest message as one complete English question, using earlier turns to fill in what it refers to. Keep the proper names of schemes, offices and places as the user wrote them, never translated: "magalir urimai thogai" stays "Magalir Urimai Thogai", "vaddi leni runalu" stays "Vaddi Leni Runalu". Ordinary words are translated: "vruddhapya pension" is "old age pension".
 "depth": how far the answer should go, judged from the question itself: quick, standard or deep.
-"needs": every type of data a complete answer requires, as {{"type": a type above, "subject": what it's about, in a few English words naming the scheme or rule, "domain": its topic}}. Think about what the person really needs: "do I have to pay for crop insurance" needs an amount and a deadline. One or two for quick, one to three for standard. For deep, four to seven parts, split the way a careful researcher would, keeping only what fits the question: what it is, who qualifies, who is left out, how much, how to apply, deadlines, and what happens when something goes wrong. A type can repeat with different subjects, and every subject must name the scheme or rule. Empty for "other".
+"needs": every type of data a complete answer requires, as {{"type": a type above, "subject": what it's about, in a few English words naming the scheme or rule (ordinary words in English even when the user typed them in another language: "old age pension", not "vruddhapya pension"), "domain": its topic}}. Think about what the person really needs: "do I have to pay for crop insurance" needs an amount and a deadline. One or two for quick, one to three for standard. For deep, four to seven parts, split the way a careful researcher would, keeping only what fits the question: what it is, who qualifies, who is left out, how much, how to apply, deadlines, and what happens when something goes wrong. A type can repeat with different subjects, and every subject must name the scheme or rule. Empty for "other".
 "facts": what the user said about themselves that a rule may need, such as {{"crop_class": "paddy", "season": "rabi"}}. Empty if none.
 "passage": 40 to 80 English words in the formal style an official order would use to answer this, for searching only. Accuracy doesn't matter; vocabulary does.
 "topic": the name of the rule or scheme asked about, in English.
@@ -208,6 +208,32 @@ def make_plan(question: str, history: list[dict], models: llm.Models, meter: llm
         if plan:
             return plan
     return None
+
+
+def held_topic(text: str, knowledge: Knowledge) -> str | None:
+    """The topic whose exact records share a scheme's own name with the question, if any. The planner
+    doesn't know every scheme we hold: it sent "thalliki vandanam ki entha dabbulu vastayi" (an AP
+    education assistance filed under finance) to "other", and the citizen was declined (18 Nov)."""
+    from .knowledge import _words
+
+    asked = _words(text) - _COMMON
+    best, best_score = None, 1
+    for name, d in DOMAINS.items():
+        if d.legacy:
+            continue
+        for store in ("numbers", "rules", "dates"):
+            for r in knowledge.records.get((name, store), []):
+                named = _words(f"{r.get('subject', '')} {' '.join(r.get('topic_words') or [])}") - _COMMON
+                score = len(asked & named)
+                if score > best_score:
+                    best, best_score = name, score
+    return best
+
+
+# Words too common in records to show which scheme is meant.
+_COMMON = {"andhra", "pradesh", "tamil", "nadu", "scheme", "schemes", "rs", "amount", "rate", "fee", "subsidy", "the", "and",
+           "for", "of", "in", "a", "to", "is", "how", "much", "what", "per", "under", "state", "government", "india",
+           "central", "ap", "tn", "farmers", "farmer", "loan", "loans", "tax", "pension", "card"}
 
 
 # ------------------------------------------------------------------ 1b. a general question
@@ -603,6 +629,10 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
     if plan is None:
         return done(Result("failed", messages.say("rephrase", "english")))
     plan.language = languages.settle(plan.language, question)
+    if plan.domain == "other" and not plan.general:   # before declining: do we hold records on what was asked?
+        held = held_topic(f"{question} {plan.standalone}", knowledge)
+        if held:
+            plan.domain = held
     if plan.domain == "other" and plan.general:   # a general question about none of our topics is still answered
         plan.domain = "agriculture"   # a label for the trace only: the general path searches nothing
     if plan.domain == "other":
@@ -699,9 +729,11 @@ def answer(question: str, history: list[dict] | None = None, state: str | None =
                 state=f.need.state or plan.state), empty[:2]))
         for f, (live, hosts) in zip(empty[:2], looked):
             web_hosts = hosts or web_hosts
-            if live:
+            if live or any(g.level == "web" and g.need.subject == f.need.subject for g in found):
                 f.level, f.items = "web", live
                 items = tidy(items + live)
+                if not live:   # the same subject was found by the other search: nothing to report missing
+                    f.level, f.items = "web", []
             else:
                 web_none.append(f.need.subject)
     tell = record_gaps(found, plan, today, gaps)
