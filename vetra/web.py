@@ -61,7 +61,13 @@ CACHE_SIZE = 200
 def _cache_key(question: str, state: str | None, reply, history: list) -> tuple | None:
     if history:   # a follow-up depends on what came before
         return None
-    return (" ".join(question.lower().split()), state or "", str(reply or ""), time.strftime("%Y-%m-%d"))
+    return (" ".join(question.lower().split()), state or "", str(reply or ""), time.strftime("%Y-%m-%d"), _data_version())
+
+
+def _data_version() -> float:
+    """When the records or passages last changed: a saved answer is never reused across new data."""
+    root = Path(__file__).resolve().parent.parent / "knowledge"
+    return max((p.stat().st_mtime for p in root.glob("*/*.jsonl")), default=0.0) +         max((p.stat().st_mtime for p in root.glob("*/text/*.json")), default=0.0)
 
 _CITATION = re.compile(r"\[E(\d+)\]")
 

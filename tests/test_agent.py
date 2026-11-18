@@ -1935,6 +1935,14 @@ def test_a_record_filed_under_the_other_topic_is_still_found():
 from vetra import websearch  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def _fresh_web_memory():
+    """Each test searches the web anew: live results are remembered for hours inside one process."""
+    websearch._RECENT.clear()
+    yield
+    websearch._RECENT.clear()
+
+
 class FakeSearch:
     name = "fake"
 
@@ -2144,3 +2152,21 @@ def test_a_short_rate_limit_is_waited_out_instead_of_trying_slow_fallbacks(monke
     models = llm.Models(Provider(), {"compose": ("fast", "slow-fallback")})
     assert models.call("compose", [], llm.Meter()).model == "fast"
     assert tried == ["fast", "fast"] and slept == [2]
+
+
+def test_the_same_live_search_is_reused_for_a_few_hours(monkeypatch):
+    websearch._RECENT.clear()
+    read = []
+    monkeypatch.setattr(websearch, "fetch", lambda url: read.append(url) or ("Farm pond subsidy is given to farmers. " * 5, url))
+    s = FakeSearch(websearch.Hit("https://agri.ap.gov.in/pond", "Farm ponds"))
+    first = websearch.find("farm pond subsidy", "Andhra Pradesh", "farm pond subsidy?", s, state="AP")
+    again = websearch.find("farm pond subsidy", "Andhra Pradesh", "farm pond subsidy?", s, state="AP")
+    assert len(s.asked) == 1 and len(read) == 1 and [e.key for e in first[0]] == [e.key for e in again[0]]
+    websearch._RECENT.clear()
+
+
+def test_a_saved_answer_is_not_reused_once_the_data_changes(monkeypatch):
+    monkeypatch.setattr(web, "_data_version", lambda: 1.0)
+    before = web._cache_key("what is pm-kisan?", "AP", "auto", [])
+    monkeypatch.setattr(web, "_data_version", lambda: 2.0)
+    assert web._cache_key("what is pm-kisan?", "AP", "auto", []) != before

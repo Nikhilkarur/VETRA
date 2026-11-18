@@ -14,6 +14,7 @@ checks as the first look. Exact facts stay hidden: it sees that a record exists,
 from __future__ import annotations
 
 import json
+from concurrent.futures import ThreadPoolExecutor
 import re
 from dataclasses import dataclass, field
 from typing import Callable
@@ -119,9 +120,11 @@ def explore(question: str, subjects: list[str], domains: list[str], items: list[
             break
         have = {e.key for e in items}
         new: dict[str, Evidence] = {}
-        for move in moves:
-            done.add((move.action, move.target, move.query))
-            results = _carry_out(move, subjects, domains, base)
+        done.update((m.action, m.target, m.query) for m in moves)
+        # A round's moves are independent searches and reads, so they run together.
+        with ThreadPoolExecutor(max_workers=len(moves)) as pool:
+            outcomes = list(pool.map(lambda m: _carry_out(m, subjects, domains, base), moves))
+        for move, results in zip(moves, outcomes):
             route.moves.append({"action": move.action, "target": move.target, "query": move.query, "found": len(results)})
             new.update({e.key: e for e in results if e.key not in have})
         if not new:

@@ -19,6 +19,7 @@ Search needs a search service key in .env (none is used without one, and VETRA t
 from __future__ import annotations
 
 import hashlib
+from concurrent.futures import ThreadPoolExecutor
 import io
 import os
 import re
@@ -44,6 +45,8 @@ PASSAGE_CHARS = 1200
 PAGE_BYTES = 4_000_000  # bigger files are skipped, not half-read
 PDF_PAGES = 15
 TIME_BUDGET = 20.0      # seconds for one part: a citizen is waiting
+RECENT_SECONDS = 6 * 3600   # a live search is reused for a few hours: official pages don't change by the minute,
+_RECENT: dict = {}          # and a search and its page reads cost 5 to 10 s and the search service's free quota
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) VETRA official-information assistant"}
 
 
@@ -187,6 +190,11 @@ def find(subject: str, place: str, question: str, backend: Backend | None,
     """
     if backend is None:
         return [], []
+    asked = (subject.lower().strip(), place, state, question.lower().strip())
+    if fetcher is None and asked in _RECENT and time.time() - _RECENT[asked][0] < RECENT_SECONDS:
+        found, searched = _RECENT[asked][1]
+        return list(found), list(searched)   # the same part, asked again within hours: the same pages
+    remember = fetcher is None
     fetcher = fetcher or fetch
     started = time.perf_counter()
     query = f"{subject} {place}".strip()
@@ -203,12 +211,12 @@ def find(subject: str, place: str, question: str, backend: Backend | None,
             got = backend.search(query, limit=6, domains=domains)
         except Exception:  # the service is down or out of quota: say nothing was found live
             break
-        hits = [h for h in got if allowed(h.url) and not other_state(h.url, state) and h.url not in seen]
-        for hit in hits[:MAX_PAGES]:
-            seen.add(hit.url)
-            if time.perf_counter() - started > TIME_BUDGET:
-                break
-            page = fetcher(hit.url)
+        hits = [h for h in got if allowed(h.url) and not other_state(h.url, state) and h.url not in seen][:MAX_PAGES]
+        seen.update(h.url for h in hits)
+        # The pages of a round are read together, not one after another: each can take seconds.
+        with ThreadPoolExecutor(max_workers=max(1, len(hits))) as pool:
+            pages = list(pool.map(fetcher, [h.url for h in hits]))
+        for hit, page in zip(hits, pages):
             if not page:
                 continue
             text, final = page
@@ -217,4 +225,8 @@ def find(subject: str, place: str, question: str, backend: Backend | None,
                 key = "web:" + hashlib.sha256(f"{final}|{p[:80]}".encode()).hexdigest()[:12]
                 found.append(Evidence(key=key, tool=TOOL, text=p, doc=f"{hit.title or host} ({host})",
                                       jurisdiction=state or "", url=final, kind=KIND, status="unknown", reviewed=False))
+    if remember:
+        if len(_RECENT) >= 500:
+            _RECENT.pop(next(iter(_RECENT)))
+        _RECENT[asked] = (time.time(), (list(found), list(searched)))
     return found, searched
